@@ -1,0 +1,15 @@
+PODS:
+  - BNRCoreDataStack (1.2.5)
+  - GoogleMaps (1.13.2)
+
+DEPENDENCIES:
+  - BNRCoreDataStack
+  - GoogleMaps (~> 1.13.2)
+
+SPEC CHECKSUMS:
+  BNRCoreDataStack: 968926d1cef9d6eee5e7c18b57762aa270f9b96c
+  GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
+
+PODFILE CHECKSUM: e8f678496306d1b0b2dbf0d89e56460a8315488f
+
+COCOAPODS: 1.0.1
