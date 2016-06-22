@@ -19,15 +19,19 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, C
 
         view.backgroundColor = UIColor.whiteColor()
         
-        webService.getVenuesForSearch(nil) { (data, response, error) in
-            if error == nil {
-                if let data = data {
+        let location = CLLocation(latitude: 40.7,longitude: -74)
+//        webService.getPlacesNearLocation(location, searchTerm: nil) { (data, response, error) in
+//            if error == nil {
+//                if let data = data {
 //                    if let jsonString = NSString(data: data, encoding: NSUTF8StringEncoding) {
 //                        print(jsonString)
 //                    }
-                }
-            }
-        }
+//                }
+//            }
+//        }
+        
+
+        
         getLocation()
     }
     
@@ -39,7 +43,10 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, C
             locationManager.requestWhenInUseAuthorization()
             return
         } else if authStatus == .Denied || authStatus == .Restricted {
-            alertWithCancelButton(confirmButton: NSLocalizedString("Open Settings", comment: "open settings"), title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled")) { (value) in
+            alertWithCancelButton(confirmButton: NSLocalizedString("Open Settings", comment: "open settings"),
+                                  title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"),
+                                  message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.",
+                                    comment: "location services disabled")) { (value) in
                 if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
                     UIApplication.sharedApplication().openURL(url)
                 }
@@ -56,8 +63,10 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, C
         print("didFailWithError: \(error)")
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        print("didUpdateLocations \(newLocation)")
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("didUpdateLocations \(locations.first)")
+        // TDOO: Call current webService for places in location here
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {

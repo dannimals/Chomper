@@ -6,6 +6,7 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
+import CoreLocation
 import Foundation
 
 public struct ChomperURLRouter {
@@ -19,34 +20,40 @@ public struct ChomperURLRouter {
     private static let clientId = "MDNOUO12E1RRL20OOJZJHWGM5ZBLLKUHERL31DEHODYHYUK5"
     private static let clientSecret = "DIG45IF1K2FWUBGQLAZGYYJGLUCOZMTQRCPE0WQY5TMNH32B"
     private static let baseParameters = [
-        //TODO: hard-code location for now, need to figure out how to pass in coordinates
         "client_id": ChomperURLRouter.clientId,
         "client_secret": ChomperURLRouter.clientSecret,
-        "near": "New York, NY"
     ]
     
     //
-    // Enumeration that provides type-safe URL routing to Foursquare API endpoints.
+    // Enumeration that provides type-safe URL routing to Foursquare's API endpoints.
 
-    enum Method: String {
-        case getVenuesForSearch = "/venues/search"
+    enum Path: String {
+        case getPlacesNearLocation = "/venues/search"
     }
     
-    
-    //TODO: pass in user's location as parameter, hardcode for NYC for now
-    //TODO: default to current location, create another method that takes "near" as a param
-    static func getVenuesForSearch(searchTerm: String?) -> NSURLRequest {
-        var parameters: [String : String]?
+    static func getPlacesNearLocation(location: CLLocation, searchTerm: String?) -> NSURLRequest {
+        var parameters = [String: String]()
+        parameters["ll"] = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
+        
         if let searchTerm = searchTerm {
-            parameters = [String: String]()
-            parameters!["query"] = searchTerm
+            parameters["query"] = searchTerm
         }
         
-        // if let location = location {}
-        return chomperURL(method: .getVenuesForSearch, parameters: parameters)
+        return chomperURL(method: .getPlacesNearLocation, parameters: parameters)
+    }
+
+    static func getPlacesNearArea(area: String, searchTerm: String?) -> NSURLRequest {
+        var parameters = [String:String]()
+        parameters["near"] = area
+
+        if let searchTerm = searchTerm {
+            parameters["query"] = searchTerm
+        }
+        
+        return chomperURL(method: .getPlacesNearLocation, parameters: parameters)
     }
     
-    private static func chomperURL(method method: ChomperURLRouter.Method, parameters: [String: String]?) -> NSURLRequest {
+    private static func chomperURL(method method: ChomperURLRouter.Path, parameters: [String: String]?) -> NSURLRequest {
         var baseParams = baseParameters
         dateFormatter.dateFormat = dateFormat
         baseParams["v"] = dateFormatter.stringFromDate(NSDate())
@@ -69,9 +76,6 @@ public struct ChomperURLRouter {
         components?.queryItems = queryItems
         return NSURLRequest(URL: components?.URL ?? NSURL())
     }
-
-
-
 }
 
 

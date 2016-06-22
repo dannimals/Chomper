@@ -25,16 +25,6 @@ class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
         
         view.backgroundColor = UIColor.whiteColor()
         
-        webService.getVenuesForSearch(nil) { (data, response, error) in
-            if error == nil {
-                if let data = data {
-                    if let jsonString = NSString(data: data, encoding: NSUTF8StringEncoding) {
-//                        print(jsonString)
-                    }
-                }
-            }
-        }
-        
     }
 
 
