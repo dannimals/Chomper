@@ -13,7 +13,7 @@ import WebServices
 
 struct SearchResult {
     var name: String
-    var address: String
+    var address: String?
     var location: CLLocation
     var price: Double?
     var rating: Double?
@@ -41,6 +41,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, C
         
     }
     
+    //call the endpoint in viewDidLoad or appDelegate
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         let location = CLLocation(latitude: 40.7,longitude: -74)
@@ -56,18 +57,19 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, C
             if error == nil {
                 if let json = json {
                     self?.resultPlaces.removeAll()
-                    print(json)
-                    
-                    if let response = json["response"]["groups"].array, let results = response.first?["items"].dictionary {
-                        print(results)
-//                        for result in results {
-//                            let venue = result.1
-//                            let place = SearchResult(name: <#T##String#>, address: <#T##String#>, location: <#T##CLLocation#>, price: <#T##Double?#>, rating: <#T##Double?#>, venueId: <#T##String#>)
-//                        }
+                    if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
+                        for result in results {
+                            let venue = result["venue"]
+                            let name = venue["name"].string!
+                            let id = venue["id"].string!
+                            let address = venue["location"]["address"].string
+                            let location = CLLocation(latitude: venue["location"]["lat"].double!, longitude: venue["location"]["lng"].double!)
+                            let rating = venue["rating"].double
+                            let price = venue["price"]["tier"].double
+                            let place = SearchResult(name: name, address: address, location: location, price: price, rating: rating, venueId: id)
+                            self?.resultPlaces.append(place)
+                        }
                     }
-
-
-                    
                 }
             }
         }
