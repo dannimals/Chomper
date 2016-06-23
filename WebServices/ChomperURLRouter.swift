@@ -32,12 +32,18 @@ public enum ChomperURLRouter: URLRequestConvertible {
         case GET, POST, PUT, DELETE
     }
     
+    case ExplorePlacesNearArea(String, String?)
+    case ExplorePlacesNearLocation(CLLocation, String?)
     case GetPlacesNearArea(String, String?)
     case GetPlacesNearLocation(CLLocation, String?)
     case GetDetailsForPlace(String)
     
     var method: Method {
         switch self {
+        case .ExplorePlacesNearArea:
+            return .GET
+        case .ExplorePlacesNearLocation:
+            return .GET
         case .GetPlacesNearArea:
             return .GET
         case .GetPlacesNearLocation:
@@ -49,6 +55,10 @@ public enum ChomperURLRouter: URLRequestConvertible {
     
     var path: String {
         switch self {
+        case .ExplorePlacesNearArea:
+            return "/venues/explore/"
+        case .ExplorePlacesNearLocation:
+            return "/venues/explore/"
         case .GetPlacesNearArea:
             return "/venues/search/"
         case .GetPlacesNearLocation:
@@ -73,8 +83,31 @@ public enum ChomperURLRouter: URLRequestConvertible {
         parameters.append(NSURLQueryItem(name: "client_secret", value: ChomperURLRouter.clientSecret))
 
         switch self {
-        case .GetPlacesNearArea(let area, let searchTerm):
+        case .ExplorePlacesNearArea(let area, let searchTerm):
+            parameters.append(NSURLQueryItem(name: "near", value: area))
             
+            if let searchTerm = searchTerm {
+                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+            }
+            components?.queryItems = parameters
+            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearArea URL") }
+            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            
+            return mutableRequest
+            
+        case .ExplorePlacesNearLocation(let location, let searchTerm):
+            parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
+            
+            if let searchTerm = searchTerm {
+                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+            }
+            components?.queryItems = parameters
+            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearLocation URL") }
+            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            
+            return mutableRequest
+            
+        case .GetPlacesNearArea(let area, let searchTerm):
             parameters.append(NSURLQueryItem(name: "near", value: area))
             
             if let searchTerm = searchTerm {

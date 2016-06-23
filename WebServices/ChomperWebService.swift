@@ -8,17 +8,21 @@
 
 import CoreLocation
 import Foundation
+import SwiftyJSON
 
-public typealias GetPlacesCompletionHandler = (NSData?, NSURLResponse?, NSError?) -> Void
+public typealias GetPlacesCompletionHandler = (JSON?, NSURLResponse?, NSError?) -> Void
 
 public protocol ChomperWebServiceProtocol {
+    func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
+    func getRecommendedPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
     func getDetailsForPlace(id: String, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
     func getPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
     func getPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
 }
 
 public class ChomperWebService: ChomperWebServiceProtocol {
-    
+    //TODO: make sure these default to background thread
+
     // MARK: - Class properties
     
     static var session: NSURLSession {
@@ -35,6 +39,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         return ChomperWebService()
     }
     
+    
     // MARK: - Place Details
     
     public func getDetailsForPlace(id: String, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
@@ -42,7 +47,47 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         print(request)
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil {
-                completionHandler(data, response, nil)
+                var json: JSON? = nil
+                if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                    json = JSON(data: jsonData)
+                }
+                completionHandler(json, response, nil)
+            } else {
+                completionHandler(nil, nil, error)
+            }
+        }
+        task.resume()
+        return task
+    }
+    
+    // MARK: - Places from explore (user recommendation)
+    
+    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
+        let request = ChomperURLRouter.ExplorePlacesNearLocation(location, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            if error == nil {
+                var json: JSON? = nil
+                if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                        json = JSON(data: jsonData)
+                }
+                completionHandler(json, response, nil)
+            } else {
+                completionHandler(nil, nil, error)
+            }
+        }
+        task.resume()
+        return task
+    }
+    
+    public func getRecommendedPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
+        let request = ChomperURLRouter.ExplorePlacesNearArea(area, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
+            if error == nil {
+                var json: JSON? = nil
+                if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                    json = JSON(data: jsonData)
+                }
+                completionHandler(json, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
@@ -52,14 +97,18 @@ public class ChomperWebService: ChomperWebServiceProtocol {
     }
     
     
-    // MARK: - Places
-    //TODO: make sure these default to background thread
+    
+    // MARK: - Places from search
 
     public func getPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
         let request = ChomperURLRouter.GetPlacesNearLocation(location, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil {
-                completionHandler(data, response, nil)
+                var json: JSON? = nil
+                if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                    json = JSON(data: jsonData)
+                }
+                completionHandler(json, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
@@ -72,7 +121,11 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.GetPlacesNearArea(area, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil {
-                completionHandler(data, response, nil)
+                var json: JSON? = nil
+                if let data = data, jsonString = NSString(data: data, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                    json = JSON(data: jsonData)
+                }
+                completionHandler(json, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }

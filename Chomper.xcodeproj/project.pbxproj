@@ -14,6 +14,8 @@
 		6FEEE3057B70228BCD4A049B /* Pods_WebServicesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07EFEC56CE90128F23AC95A /* Pods_WebServicesTests.framework */; };
 		8DDE760333452A8A26210F55 /* Pods_ModelSyncTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52EC645F27FF68D8C5C45FF9 /* Pods_ModelSyncTests.framework */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
+		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
+		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
 		9EE215621D19B27C004C7C53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */; };
 		9EE2156D1D19B27C004C7C53 /* ChomperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2156C1D19B27C004C7C53 /* ChomperTests.swift */; };
@@ -191,6 +193,7 @@
 		90EB24C1E0DCBACFACADA3C6 /* Pods-ModelSyncTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelSyncTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelSyncTests/Pods-ModelSyncTests.debug.xcconfig"; sourceTree = "<group>"; };
 		927028BB66F362FE654ACE33 /* Pods_CommonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		984AE553BD2A5D1417DA75F2 /* Pods-CommonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommonTests/Pods-CommonTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EE215611D19B27C004C7C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -307,6 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */,
 				5828A48299A3B935ED75616F /* Pods_WebServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -382,6 +386,14 @@
 				D5301256DD6265AB540C9EA0 /* Pods-WebServicesTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		9EAF87C21D1C38A500C9FF59 /* Mappings */ = {
+			isa = PBXGroup;
+			children = (
+				9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */,
+			);
+			path = Mappings;
 			sourceTree = "<group>";
 		};
 		9EE215491D19B27C004C7C53 = {
@@ -487,6 +499,7 @@
 			children = (
 				9EE216111D19BA6F004C7C53 /* ChomperURLRouter.swift */,
 				9EE216121D19BA6F004C7C53 /* ChomperWebService.swift */,
+				9EAF87C21D1C38A500C9FF59 /* Mappings */,
 				9EE215C31D19B36D004C7C53 /* WebServices.h */,
 				9EE215C51D19B36D004C7C53 /* Info.plist */,
 			);
@@ -1443,6 +1456,7 @@
 			files = (
 				9EE216131D19BA6F004C7C53 /* ChomperURLRouter.swift in Sources */,
 				9EE216141D19BA6F004C7C53 /* ChomperWebService.swift in Sources */,
+				9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1641,7 +1655,7 @@
 			baseConfigurationReference = BE8B07A4C59DF558F28EB8A6 /* Pods-Chomper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Chomper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = danningge.Chomper;
@@ -1654,7 +1668,7 @@
 			baseConfigurationReference = 3650D99C75856071C5957FA8 /* Pods-Chomper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Chomper/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = danningge.Chomper;

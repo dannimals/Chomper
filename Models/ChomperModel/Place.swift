@@ -1,7 +1,7 @@
-
-import Foundation
 import CoreData
 import CoreLocation
+import Foundation
+
 
 public final class Place: ManagedObject {
     
@@ -24,7 +24,7 @@ public final class Place: ManagedObject {
     
     // MARK: - Relationships
 
-    @NSManaged public var placeList: NSManagedObject?
+    @NSManaged public var placeList: ManagedObject?
     
     // MARK: - Helpers
     
