@@ -21,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        setupTabBarVC()
         window?.makeKeyAndVisible()
+        UIApplication.sharedApplication().statusBarHidden = true
         
         //
         // Set up BNRCoreDataStack
@@ -39,6 +39,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // GoogleMaps authorization
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
         
+        
+        setupTabBarVC()
+
         return true
     }
     
@@ -96,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        let nc2 = UINavigationController(rootViewController: createPlaceVC)
         
         let browsePlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
         browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
@@ -108,9 +110,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nc3 = UINavigationController(rootViewController: browsePlacesVC)
         
         let tabBarVC = UITabBarController()
-        let controllers = [nc, nc2, nc3]
+        let controllers = [nc, createPlaceVC, nc3]
         tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = nc2
+        tabBarVC.selectedViewController = createPlaceVC
         window?.rootViewController = tabBarVC
         
     }
