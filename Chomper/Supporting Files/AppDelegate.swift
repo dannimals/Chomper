@@ -29,15 +29,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupCoreDataStack()
         
         //
-        // Set the web service singleton for use with dependency injection
-        // later
+        // Set the web service singleton for use with dependency injection later
         
         let webService = ChomperWebService.createWebService()
         DependencyInjector.sharedInstance.setSingleton(webService, proto: "\(ChomperWebServiceProtocol.self)")
         
         //
+        // Set the location manager singleton for use with dependency injection later
+        
+        let chomperLocationManager = ChomperLocationManager.createChomperLocationManager()
+        DependencyInjector.sharedInstance.setSingleton(chomperLocationManager, proto: "\(ChomperLocationManagerProtocol.self)")
+        getLocation()
+        
+        //
         // GoogleMaps authorization
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
+        
+        
         
         
         setupTabBarVC()
@@ -115,6 +123,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarVC.selectedViewController = createPlaceVC
         window?.rootViewController = tabBarVC
         
+    }
+    
+    // MARK: - Handlers
+    
+    func getNearbyPlaces() {
+        
+    }
+    
+    func getLocation() {
+        let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
+        let authStatus = CLLocationManager.authorizationStatus()
+        if authStatus == .NotDetermined {
+            CM.locationManager.requestWhenInUseAuthorization()
+            return
+        } else if authStatus == .Denied || authStatus == .Restricted {
+            // TODO: Handle this
+            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .Alert)
+
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel, handler: { (action) in
+                //
+            })
+            
+            alert.addAction(cancelAction)
+            
+            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .Default, handler: { (action) in
+                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            })
+            
+            alert.addAction(confirmAction)
+        }
+        CM.locationManager.startUpdatingLocation()
     }
 }
 
