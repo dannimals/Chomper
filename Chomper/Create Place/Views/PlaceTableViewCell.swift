@@ -20,6 +20,7 @@ class PlaceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        prepareForReuse()
         
         // TODO: Set fonts, colors etc.
     }

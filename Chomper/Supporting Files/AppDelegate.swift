@@ -39,15 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let chomperLocationManager = ChomperLocationManager.createChomperLocationManager()
         DependencyInjector.sharedInstance.setSingleton(chomperLocationManager, proto: "\(ChomperLocationManagerProtocol.self)")
-        getLocation()
         
         //
         // GoogleMaps authorization
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
         
-        
-        
-        
+        getLocation()
         setupTabBarVC()
 
         return true
@@ -101,12 +98,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nc = UINavigationController(rootViewController: myPlacesVC)
         
         let createPlaceVC = CreatePlaceViewController(nibName: nil, bundle: nil)
-        createPlaceVC.title = NSLocalizedString("Add", comment: "Add Tab Title")
+        createPlaceVC.title = NSLocalizedString("Add", comment: "Create Places Tab Title")
         createPlaceVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Add", comment: "My Places Tab Title"),
             image: nil,
             selectedImage: nil
         )
+        let nc2 = UINavigationController(rootViewController: createPlaceVC)
         
         let browsePlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
         browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
@@ -118,18 +116,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nc3 = UINavigationController(rootViewController: browsePlacesVC)
         
         let tabBarVC = UITabBarController()
-        let controllers = [nc, createPlaceVC, nc3]
+        let controllers = [nc, nc2, nc3]
         tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = createPlaceVC
+        tabBarVC.selectedViewController = nc2
         window?.rootViewController = tabBarVC
         
     }
     
     // MARK: - Handlers
-    
-    func getNearbyPlaces() {
-        
-    }
     
     func getLocation() {
         let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
@@ -155,7 +149,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             alert.addAction(confirmAction)
         }
-        CM.locationManager.startUpdatingLocation()
     }
 }
 

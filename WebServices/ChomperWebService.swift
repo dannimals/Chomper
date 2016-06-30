@@ -44,7 +44,6 @@ public class ChomperWebService: ChomperWebServiceProtocol {
     
     public func getDetailsForPlace(id: String, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
         let request = ChomperURLRouter.GetDetailsForPlace(id).URLRequest
-        print(request)
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil {
                 var json: JSON? = nil

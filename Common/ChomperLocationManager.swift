@@ -15,7 +15,6 @@ public protocol ChomperLocationManagerProtocol {
     var locationManager: CLLocationManager { get }
 }
 
-
 public class ChomperLocationManager: NSObject, CLLocationManagerDelegate, ChomperLocationManagerProtocol {
     
     public var locationManager = CLLocationManager()
@@ -38,7 +37,7 @@ public class ChomperLocationManager: NSObject, CLLocationManagerDelegate, Chompe
     
     
     public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("didUpdateLocations \(locations.first)")
+//        print("didUpdateLocations \(locations.first)")
     }
     
     public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
