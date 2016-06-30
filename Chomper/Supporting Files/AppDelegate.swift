@@ -98,9 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nc = UINavigationController(rootViewController: myPlacesVC)
         
         let createPlaceVC = CreatePlaceViewController(nibName: nil, bundle: nil)
-        createPlaceVC.title = NSLocalizedString("Add", comment: "Create Places Tab Title")
+        createPlaceVC.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
         createPlaceVC.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("Add", comment: "My Places Tab Title"),
+            title: NSLocalizedString("Search", comment: "My Places Tab Title"),
             image: nil,
             selectedImage: nil
         )

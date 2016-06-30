@@ -78,10 +78,9 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)   {
         super.init(nibName: nil, bundle: nil)
         
+        // Is this safe?
         guard let location = locationManager.location else { return }
         getRecommendedPlacesNearLocation(location, searchTerm: nil)
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -133,11 +132,13 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 82.0
     }
-}
-
-extension CreatePlaceViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        //
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        guard let object = viewModel?._results[indexPath.row] else { fatalError("Error selected object is invalid") }
+        let vc = PlaceDetailsViewController(venue: object)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

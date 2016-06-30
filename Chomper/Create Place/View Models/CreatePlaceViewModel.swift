@@ -11,15 +11,13 @@ import Foundation
 import SwiftyJSON
 
 struct SearchResult {
-    var name: String
     var address: String?
     var location: CLLocation
+    var name: String
     var price: Double?
     var rating: Double?
     var venueId: String
 }
-
-
 
 struct CreatePlaceViewModel {
     
@@ -45,7 +43,7 @@ struct CreatePlaceViewModel {
             let location = CLLocation(latitude: venue["location"]["lat"].double!, longitude: venue["location"]["lng"].double!)
             let rating = venue["rating"].double
             let price = venue["price"]["tier"].double
-            let place = SearchResult(name: name, address: address, location: location, price: price, rating: rating, venueId: id)
+            let place = SearchResult(address: address, location: location, name: name, price: price, rating: rating, venueId: id)
             _results.append(place)
         }
         

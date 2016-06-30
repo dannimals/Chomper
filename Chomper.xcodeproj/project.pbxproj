@@ -16,6 +16,7 @@
 		9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */; };
 		9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */; };
 		9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */; };
+		9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */; };
 		9E1D27971D21C2BF00728012 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */; };
 		9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
@@ -200,6 +201,7 @@
 		9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperLocationManager.swift; sourceTree = "<group>"; };
 		9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewController.swift; sourceTree = "<group>"; };
 		9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewModel.swift; sourceTree = "<group>"; };
+		9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			isa = PBXGroup;
 			children = (
 				9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */,
+				9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1435,6 +1438,7 @@
 			files = (
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
 				9EE2160D1D19B980004C7C53 /* BaseViewControllerProtocol.swift in Sources */,
+				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
 				9EE216081D19B972004C7C53 /* MyPlacesViewController.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
