@@ -6,8 +6,8 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import BNRCoreDataStack
 import Common
+import CoreData
 import GoogleMaps
 import Models
 import UIKit
@@ -17,7 +17,7 @@ import WebServices
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    private var coreDataStack: CoreDataStack?
+
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -25,9 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.sharedApplication().statusBarHidden = true
         
         //
-        // Set up BNRCoreDataStack
-        setupCoreDataStack()
+        // Set up Core Data stack
         
+        let defaultManagedContext = NSManagedObjectContext.mainContext()
+
         //
         // Set the web service singleton for use with dependency injection later
         
@@ -75,18 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Helpers
     
-    func setupCoreDataStack() {
-        
-        CoreDataStack.constructSQLiteStack(withModelName: "Model", inBundle: NSBundle(forClass: Place.self)) { result in
-            switch result {
-            case .Success(let stack):
-                self.coreDataStack = stack
-            case .Failure(let error):
-                fatalError("Error creating stack: \(error)")
-            }
-        }
-    }
-    
     func setupTabBarVC() {
         let myPlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
         myPlacesVC.title = NSLocalizedString("My Places", comment: "My Places Tab Title")
@@ -104,7 +93,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        let nc2 = UINavigationController(rootViewController: createPlaceVC)
         
         let browsePlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
         browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
@@ -116,9 +104,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nc3 = UINavigationController(rootViewController: browsePlacesVC)
         
         let tabBarVC = UITabBarController()
-        let controllers = [nc, nc2, nc3]
+        let controllers = [nc, createPlaceVC, nc3]
         tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = nc2
+        tabBarVC.selectedViewController = createPlaceVC
         window?.rootViewController = tabBarVC
         
     }

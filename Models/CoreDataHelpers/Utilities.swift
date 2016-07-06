@@ -14,3 +14,10 @@ extension SequenceType where Generator.Element: AnyObject {
         return contains { $0 === object }
     }
 }
+
+extension NSURL {
+    static var documentsDirectory: NSURL {
+        return try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+    }
+    
+}

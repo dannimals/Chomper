@@ -4,7 +4,6 @@ inhibit_all_warnings!
 use_frameworks!
 
 def production_pods
-    pod 'BNRCoreDataStack'
     pod 'GoogleMaps', '~> 1.13.2'
     pod 'ObjectMapper', '~> 1.3'
     pod 'SwiftyJSON'
