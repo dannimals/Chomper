@@ -1,21 +1,24 @@
 PODS:
   - BNRCoreDataStack (1.2.5)
+  - FLEX (2.3.0)
   - GoogleMaps (1.13.2)
   - ObjectMapper (1.3.0)
   - SwiftyJSON (2.3.2)
 
 DEPENDENCIES:
   - BNRCoreDataStack
+  - FLEX (~> 2.3.0)
   - GoogleMaps (~> 1.13.2)
   - ObjectMapper (~> 1.3)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   BNRCoreDataStack: 968926d1cef9d6eee5e7c18b57762aa270f9b96c
+  FLEX: ba80ea13d2c784e85e616137fd4eff164781e364
   GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
   ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: 48ba3c0b51e9c300a95f06f5fdf255a791341ab8
+PODFILE CHECKSUM: 7504dae221d4c2c130d1420d76a3c8e19afa5d61
 
 COCOAPODS: 1.0.1

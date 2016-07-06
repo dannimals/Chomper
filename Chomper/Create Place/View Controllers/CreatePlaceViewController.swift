@@ -19,10 +19,10 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     
     let locationManager = CLLocationManager()
     var viewModel: CreatePlaceViewModel?
-    var searchController: UISearchController!
-    var resultsViewController: GMSAutocompleteResultsViewController!
+    var searchView: CreatePlaceSearchView!
+    private var searchLocationCoord: CLLocationCoordinate2D?
+    private var searchTerm: String?
 
-    
     private var tableVC: UITableViewController!
     
     override func viewDidLoad() {
@@ -42,25 +42,29 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         tableVC.tableView.separatorStyle = .None
         registerNibs()
         
-        //
-        // Set up googleMaps address search
+        searchView = CreatePlaceSearchView()
+        searchView.cancelAction = { [weak self] in
+            self?.searchView.cancelSearch()
+            self?.searchLocationCoord = nil
+        }
+        searchView.searchAction = { [weak self] in
+            guard let coord = self?.searchLocationCoord else { return }
+            let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+            self?.getRecommendedPlacesNearLocation(location, searchTerm: self?.searchView.textSearch.text)
+        }
         
-        resultsViewController = GMSAutocompleteResultsViewController()
-        resultsViewController.delegate = self
+        searchView.textSearch.delegate = self
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchView)
         
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        searchController.searchResultsUpdater = resultsViewController
-        searchController.searchBar.sizeToFit()
-        searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.titleView = searchController.searchBar
-        definesPresentationContext = true
+        searchView.locationSearch.delegate = self
     
         let views: [String: AnyObject] = [
-            "tableVC": tableVC.view,
-            "topLayoutGuide": self.topLayoutGuide
+            "searchView": searchView,
+            "tableVC": tableVC.view
         ]
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[topLayoutGuide][tableVC]|",
+            "V:|[searchView][tableVC]|",
             options: [],
             metrics: nil,
             views: views)
@@ -71,8 +75,15 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             options: [],
             metrics: nil,
             views: views)
+            
         )
         
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|[searchView]|",
+            options: [],
+            metrics: nil,
+            views: views)
+        )
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)   {
@@ -138,31 +149,32 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         
         guard let object = viewModel?._results[indexPath.row] else { fatalError("Error selected object is invalid") }
         let vc = PlaceDetailsViewController(venue: object)
-        navigationController?.pushViewController(vc, animated: true)
+        let nc = UINavigationController(rootViewController: vc)
+        presentViewController(nc, animated: true, completion: nil)
     }
 }
 
-extension CreatePlaceViewController: GMSAutocompleteResultsViewControllerDelegate {
-    func resultsController(resultsController: GMSAutocompleteResultsViewController, didAutocompleteWithPlace place: GMSPlace) {
-        searchController?.active = false
-        // Do something with the selected place.
-        print("Place name: ", place.name)
-        print("Place address: ", place.formattedAddress)
-        print("Place attributions: ", place.attributions)
-    }
+extension CreatePlaceViewController: UITextFieldDelegate {
     
-    func resultsController(resultsController: GMSAutocompleteResultsViewController,didFailAutocompleteWithError error: NSError){
-        // TODO: handle the error.
-        print("Error: ", error.description)
-    }
-    
-    // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-    }
-    
-    func didUpdateAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    func textFieldDidBeginEditing(textField: UITextField) {
+        searchView.activateSearch()
     }
 }
+
+extension CreatePlaceViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        let vc = LocationSearchViewController()
+        vc.searchAction = { [weak self] (name, coordinate) in
+            self?.searchView.locationSearch.text = name
+            self?.searchLocationCoord = coordinate
+        }
+        vc.searchTerm = searchView.locationSearch.text
+        let nc = UINavigationController(rootViewController: vc)
+        presentViewController(nc, animated: true, completion: nil)
+    }
+  
+}
+
+
 

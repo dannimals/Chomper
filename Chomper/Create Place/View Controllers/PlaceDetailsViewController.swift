@@ -30,6 +30,7 @@ class PlaceDetailsViewController: UIViewController, BaseViewControllerProtocol {
         view.backgroundColor = UIColor.whiteColor()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Add", comment: "Add"), style: .Plain, target: self, action: #selector(add(_:)))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
         
         //getPlaceDetails()
     }
@@ -49,6 +50,10 @@ class PlaceDetailsViewController: UIViewController, BaseViewControllerProtocol {
     
     func add(sender: UIBarButtonItem) {
         
+    }
+    
+    func dismissVC(sender: UIBarButtonItem) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 }
