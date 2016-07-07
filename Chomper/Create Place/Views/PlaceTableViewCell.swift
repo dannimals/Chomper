@@ -6,7 +6,7 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import UIKit
+import Common
 
 class PlaceTableViewCell: UITableViewCell {
 
@@ -29,7 +29,9 @@ class PlaceTableViewCell: UITableViewCell {
         super.prepareForReuse()
         
         nameLabel.text = nil
+        nameLabel.font = UIFont.chomperFontForTextStye("p")
         addressLabel.text = nil
+        addressLabel.font = UIFont.chomperFontForTextStye("smallest")
         priceLabel.text = nil
         ratingLabel.text = nil
         distanceLabel.text = nil

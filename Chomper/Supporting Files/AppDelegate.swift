@@ -22,12 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.makeKeyAndVisible()
-        UIApplication.sharedApplication().statusBarHidden = true
         
         //
         // Set up Core Data stack
         
-        let defaultManagedContext = NSManagedObjectContext.mainContext()
+        let _ = NSManagedObjectContext.mainContext()
 
         //
         // Set the web service singleton for use with dependency injection later
@@ -43,11 +42,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //
         // GoogleMaps authorization
+        
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
+        
+        // 
+        // Ask user for location permission and set up tab view controllers
         
         getLocation()
         setupTabBarVC()
 
+        //
+        // Set up navigation bar appearances
+        
+        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).titleTextAttributes = [
+            NSFontAttributeName : UIFont.chomperFontForTextStye("h3"),
+            NSForegroundColorAttributeName: UIColor.whiteColor()
+        ]
+        
+        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).backgroundColor = UIColor.orangeColor()
+        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).barTintColor = UIColor.orangeColor()
+        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).tintColor = UIColor.whiteColor()
+        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).translucent = false
+        
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.chomperFontForTextStye("p-small")
+        
         return true
     }
     
@@ -84,7 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        let nc = UINavigationController(rootViewController: myPlacesVC)
+        let nc = BaseNavigationController(rootViewController: myPlacesVC)
         
         let createPlaceVC = CreatePlaceViewController(nibName: nil, bundle: nil)
         createPlaceVC.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
@@ -93,7 +111,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        
+
         let browsePlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
         browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
         browsePlacesVC.tabBarItem = UITabBarItem(
@@ -101,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        let nc3 = UINavigationController(rootViewController: browsePlacesVC)
+        let nc3 = BaseNavigationController(rootViewController: browsePlacesVC)
         
         let tabBarVC = UITabBarController()
         let controllers = [nc, createPlaceVC, nc3]

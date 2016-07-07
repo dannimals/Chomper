@@ -11,7 +11,7 @@ public final class Place: ManagedObject {
     @NSManaged public var creatorId: String?
     @NSManaged public var latitude: NSNumber?
     @NSManaged public var longitude: NSNumber?
-    @NSManaged public var name: String?
+    @NSManaged public var name: String
     @NSManaged public var notes: String?
     @NSManaged public var price: NSNumber?
     @NSManaged public var rating: NSNumber?

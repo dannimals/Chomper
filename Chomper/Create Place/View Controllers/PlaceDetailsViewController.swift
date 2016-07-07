@@ -6,8 +6,8 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
+import Common
 import Foundation
-import WebServices
 
 class PlaceDetailsViewController: UIViewController, BaseViewControllerProtocol {
     

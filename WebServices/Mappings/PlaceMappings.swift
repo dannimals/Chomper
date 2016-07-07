@@ -6,26 +6,40 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import Models
-import ObjectMapper
+import Common
+import CoreLocation
+import SwiftyJSON
 
-extension Place: Mappable {
+final class ChomperMapper {
+    var places: [SearchResult]? = nil
     
-    // MARK: - Mappable methods
-    
-    convenience public init?(_ map: Map) {
-        self.init()
-        self.mapping(map)
+    required init(response: NSData) {
+        if let jsonString = NSString(data: response, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+            mapResponse(JSON(data: jsonData))
+        }
     }
     
-    public func mapping(map: Map) {
-        city <- map["id"]
-        latitude <- map["latitude"]
-        longitude <- map["longitude"]
-        streetName <- map["streetName"]
-        state <- map["state"]
-        zipcode <- map["zipcode"]
-        price <- map["price"]
-        rating <- map["rating"]
+    func mapResponse(json: JSON) {
+        if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
+            parseJson(results)
+        }
     }
+    
+    
+    private func parseJson(results: [JSON]) {
+        places = [SearchResult]()
+        for result in results {
+            let venue = result["venue"]
+            let name = venue["name"].string!
+            let id = venue["id"].string!
+            let address = venue["location"]["address"].string
+            let location = CLLocation(latitude: venue["location"]["lat"].double!, longitude: venue["location"]["lng"].double!)
+            let rating = venue["rating"].double
+            let price = venue["price"]["tier"].double
+            let place = SearchResult(address: address, location: location, name: name, price: price, rating: rating, venueId: id)
+            places?.append(place)
+        }
+        
+    }
+    
 }

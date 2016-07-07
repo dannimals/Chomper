@@ -39,11 +39,16 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         tableVC.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableVC.view)
         tableVC.tableView.tableFooterView = UIView()
+        tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .None
         registerNibs()
         
+        //
+        // Set up search view
+        
         searchView = CreatePlaceSearchView()
         searchView.cancelAction = { [weak self] in
+            
             self?.searchView.cancelSearch()
             self?.searchLocationCoord = nil
         }
@@ -54,10 +59,9 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         }
         
         searchView.textSearch.delegate = self
+        searchView.locationSearch.delegate = self
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
-        
-        searchView.locationSearch.delegate = self
     
         let views: [String: AnyObject] = [
             "searchView": searchView,
@@ -84,14 +88,17 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             metrics: nil,
             views: views)
         )
+        
+        // 
+        // Call webService for recommended places near current location
+
+        guard let location = locationManager.location else { return }
+        getRecommendedPlacesNearLocation(location, searchTerm: nil)
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)   {
         super.init(nibName: nil, bundle: nil)
-        
-        // Is this safe?
-        guard let location = locationManager.location else { return }
-        getRecommendedPlacesNearLocation(location, searchTerm: nil)
+        getLocation()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,23 +108,47 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     // MARK: - Handlers
     
     private func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?) {
-        webService.getRecommendedPlacesNearLocation(location, searchTerm: searchTerm) { [weak self] (json, response, error) in
-            if error == nil {
-                if let json = json {
-                    if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
-                        self?.viewModel = CreatePlaceViewModel(jsonArray: results)
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self?.tableVC.tableView.reloadData()
-
-                        })
-                    }
-                }
+        webService.getRecommendedPlacesNearLocation(location, searchTerm: searchTerm) { [weak self] (places, response, error) in
+            if error == nil, let places = places {
+                self?.viewModel = CreatePlaceViewModel(results: places)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self?.tableVC.tableView.reloadData()
+                })
+                
             } else {
                 self?.viewModel = nil
                 // TODO: display no results placeholder view
             }
         }
 
+    }
+    
+    // MARK: - Helpers
+    
+    func getLocation() {
+        let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
+        let authStatus = CLLocationManager.authorizationStatus()
+        if authStatus == .NotDetermined {
+            CM.locationManager.requestWhenInUseAuthorization()
+            return
+        } else if authStatus == .Denied || authStatus == .Restricted {
+            // TODO: Handle this
+            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .Alert)
+            
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel, handler: { (action) in
+                //
+            })
+            
+            alert.addAction(cancelAction)
+            
+            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .Default, handler: { (action) in
+                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            })
+            
+            alert.addAction(confirmAction)
+        }
     }
     
     // MARK: - Helpers
@@ -133,7 +164,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell, let object = viewModel?._results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell, let object = viewModel?.results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
         cell.configureCell(withObject: object)
         return cell
     }
@@ -147,9 +178,9 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        guard let object = viewModel?._results[indexPath.row] else { fatalError("Error selected object is invalid") }
+        guard let object = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
         let vc = PlaceDetailsViewController(venue: object)
-        let nc = UINavigationController(rootViewController: vc)
+        let nc = BaseNavigationController(rootViewController: vc)
         presentViewController(nc, animated: true, completion: nil)
     }
 }

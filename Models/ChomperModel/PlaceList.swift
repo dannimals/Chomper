@@ -7,7 +7,7 @@ public final class PlaceList: ManagedObject {
     
     // MARK: - Properties
 
-    @NSManaged public var name: String?
+    @NSManaged public var name: String
     @NSManaged public var updatedAt: NSDate?
     @NSManaged public var numberOfPlaces: NSNumber?
     

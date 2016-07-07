@@ -7,20 +7,22 @@
 //
 
 import Common
+import CoreData
 import WebServices
 
 
 //
 // BaseViewControllerProtocol to be implemented by all UIViewController classes
+// With convenient accessors for webService, locationManager, and Core Data attributes
 
 protocol BaseViewControllerProtocol: class {
     var webService: ChomperWebServiceProtocol { get }
     var locationManager: ChomperLocationManagerProtocol { get }
-    // TODO: add CoreData attributes
+    var mainContext: NSManagedObjectContext { get }
 }
 
 extension BaseViewControllerProtocol where Self: UIViewController {
     var webService: ChomperWebServiceProtocol { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperWebServiceProtocol.self)") as! ChomperWebServiceProtocol }
     var locationManager: ChomperLocationManagerProtocol { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)") as! ChomperLocationManagerProtocol }
-
+    var mainContext: NSManagedObjectContext { return NSManagedObjectContext.mainContext() }
 }
