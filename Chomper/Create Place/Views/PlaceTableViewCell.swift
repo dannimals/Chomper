@@ -20,7 +20,7 @@ class PlaceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        separator.backgroundColor = UIColor.orangeColor()
+        separator.backgroundColor = UIColor.lightGrayColor()
 
         nameLabel.font = UIFont.chomperFontForTextStye("p")
         nameLabel.textColor = UIColor.darkGrayColor()
@@ -54,7 +54,7 @@ class PlaceTableViewCell: UITableViewCell {
     func configureCell(withObject object: SearchResult) {
         nameLabel.text = object.name
         addressLabel.text = object.address ?? "Address unknown"
-        ratingLabel.text = object.rating != nil ? "\(Int(floor(object.rating!/2))) stars" : nil
+        ratingLabel.text = object.rating != nil ? "\(floor(object.rating!/2)) stars" : nil
         if object.price == nil {
             priceLabel.hidden = true
         } else {

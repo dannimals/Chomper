@@ -38,6 +38,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         tableVC.tableView.delegate = self
         tableVC.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableVC.view)
+        tableVC.tableView.keyboardDismissMode = .OnDrag
         tableVC.tableView.tableFooterView = UIView()
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .None
@@ -88,6 +89,8 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             metrics: nil,
             views: views)
         )
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyBoardDismiss), name: UIKeyboardWillHideNotification, object: nil)
         
         // 
         // Call webService for recommended places near current location
@@ -155,6 +158,10 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     
     func registerNibs() {
         tableVC.tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
+    }
+    
+    func keyBoardDismiss() {
+        searchView.cancelSearch()
     }
     
     // MARK: - UITableViewDataSource methods

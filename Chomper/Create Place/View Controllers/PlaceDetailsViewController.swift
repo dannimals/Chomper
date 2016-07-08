@@ -28,10 +28,8 @@ class PlaceDetailsViewController: UIViewController, BaseViewControllerProtocol {
         
         title = venue.name
         view.backgroundColor = UIColor.whiteColor()
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("+", comment: "Add"), style: .Plain, target: self, action: #selector(add(_:)))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStye("h1")], forState: .Normal)
-
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
         //getPlaceDetails()
     }
