@@ -108,22 +108,23 @@ class CreatePlaceSearchView: UIView {
     // MARK: - Helpers
     
     func activateSearch() {
-        UIView.animateWithDuration(0.4, animations: { [weak self] in
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .CurveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.hidden = false
             self?.locationSearch.hidden = false
             self?.textSearch.becomeFirstResponder()
-        })
+        }, completion: nil)
     }
     
     func cancelSearch() {
-        UIView.animateWithDuration(0.4, animations: { [weak self] in
+        UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.8, options: .CurveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.hidden = true
             self?.locationSearch.hidden = true
             self?.textSearch.resignFirstResponder()
+            }, completion: { [weak self] bool in
+                self?.locationSearch.text = nil
+                self?.textSearch.text = nil
         })
-        
-        locationSearch.text = nil
-        textSearch.text = nil
+      
     }
     
     @IBAction
