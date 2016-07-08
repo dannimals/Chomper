@@ -15,7 +15,7 @@ class PlaceTableViewCell: UITableViewCell {
     @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
-    
+    @IBOutlet weak var separator: UIView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,10 +28,12 @@ class PlaceTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        separator.backgroundColor = UIColor.orangeColor()
         nameLabel.text = nil
         nameLabel.font = UIFont.chomperFontForTextStye("p")
         addressLabel.text = nil
         addressLabel.font = UIFont.chomperFontForTextStye("smallest")
+        addressLabel.textColor = UIColor.grayColor()
         priceLabel.text = nil
         ratingLabel.text = nil
         distanceLabel.text = nil

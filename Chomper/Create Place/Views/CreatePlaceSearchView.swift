@@ -62,7 +62,7 @@ class CreatePlaceSearchView: UIView {
         
         cancelButton = UIButton()
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
-        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStye("h4")
+        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStye("p-small")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
         cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
