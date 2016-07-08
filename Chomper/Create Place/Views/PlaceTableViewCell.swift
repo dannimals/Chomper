@@ -20,20 +20,31 @@ class PlaceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        prepareForReuse()
+        separator.backgroundColor = UIColor.orangeColor()
+
+        nameLabel.font = UIFont.chomperFontForTextStye("p")
+        nameLabel.textColor = UIColor.darkGrayColor()
         
-        // TODO: Set fonts, colors etc.
+        addressLabel.font = UIFont.chomperFontForTextStye("smallest")
+        addressLabel.textColor = UIColor.grayColor()
+        
+        priceLabel.font = UIFont.chomperFontForTextStye("smallest")
+        priceLabel.textColor = UIColor.orangeColor()
+        
+        ratingLabel.font = UIFont.chomperFontForTextStye("smallest")
+        ratingLabel.textColor = UIColor.orangeColor()
+        
+        distanceLabel.font = UIFont.chomperFontForTextStye("p-small")
+        distanceLabel.textColor = UIColor.orangeColor()
+        
+        prepareForReuse()
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        separator.backgroundColor = UIColor.orangeColor()
         nameLabel.text = nil
-        nameLabel.font = UIFont.chomperFontForTextStye("p")
         addressLabel.text = nil
-        addressLabel.font = UIFont.chomperFontForTextStye("smallest")
-        addressLabel.textColor = UIColor.grayColor()
         priceLabel.text = nil
         ratingLabel.text = nil
         distanceLabel.text = nil
@@ -42,8 +53,33 @@ class PlaceTableViewCell: UITableViewCell {
 
     func configureCell(withObject object: SearchResult) {
         nameLabel.text = object.name
-        addressLabel.text = object.address
-        
-        // TODO: config rest
+        addressLabel.text = object.address ?? "Address unknown"
+        ratingLabel.text = object.rating != nil ? "\(Int(floor(object.rating!/2))) stars" : nil
+        if object.price == nil {
+            priceLabel.hidden = true
+        } else {
+            priceLabel.text = convertPrice(object.price!)
+        }
+        // display distance
     }
+    
+    private func convertPrice(price: Double?) -> String? {
+        if price == nil {
+            return nil
+        }
+        switch price! {
+            case 1.0:
+                return "$"
+            case 2.0:
+                return "$$"
+            case 3.0:
+                return "$$$"
+            case 4.0:
+                return "$$$$"
+            default:
+                return nil
+        }
+        
+    }
+    
 }
