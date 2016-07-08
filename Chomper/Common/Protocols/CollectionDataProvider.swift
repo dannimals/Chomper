@@ -15,7 +15,6 @@ import CoreData
 protocol CollectionDataProvider: class {
     associatedtype Object
     func objectAtIndexPath(indexPath: NSIndexPath) -> Object?
-    weak var collectionView: UICollectionView! { get set }
     func numberOfItemsInSection(section: Int) -> Int
     func numberOfSections() -> Int
     var sections: [NSFetchedResultsSectionInfo]? { get }

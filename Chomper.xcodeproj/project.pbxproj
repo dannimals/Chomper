@@ -28,6 +28,12 @@
 		9E67366D1D2EB14F00C00995 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67366C1D2EB14F00C00995 /* SearchResult.swift */; };
 		9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */; };
 		9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */; };
+		9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */; };
+		9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */; };
+		9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A11D3024F400C00995 /* TableDataProvider.swift */; };
+		9E6736A91D30252700C00995 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A71D30252700C00995 /* MyPlacesViewController.swift */; };
+		9E6736AB1D30278700C00995 /* MyPlacesTileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */; };
+		9E6736AD1D302B7100C00995 /* MyPlacesTileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
@@ -53,10 +59,8 @@
 		9EE216001D19B783004C7C53 /* ModelSync.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EE215E51D19B387004C7C53 /* ModelSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9EE216011D19B7A2004C7C53 /* WebServices.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EE215C31D19B36D004C7C53 /* WebServices.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9EE216021D19B7B6004C7C53 /* Models.h in Headers */ = {isa = PBXBuildFile; fileRef = 9EE215A11D19B355004C7C53 /* Models.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9EE216081D19B972004C7C53 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216041D19B972004C7C53 /* MyPlacesViewController.swift */; };
 		9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216061D19B972004C7C53 /* AppDelegate.swift */; };
 		9EE2160A1D19B972004C7C53 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9EE216071D19B972004C7C53 /* Info.plist */; };
-		9EE2160D1D19B980004C7C53 /* BaseViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2160C1D19B980004C7C53 /* BaseViewControllerProtocol.swift */; };
 		9EE216131D19BA6F004C7C53 /* ChomperURLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216111D19BA6F004C7C53 /* ChomperURLRouter.swift */; };
 		9EE216141D19BA6F004C7C53 /* ChomperWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216121D19BA6F004C7C53 /* ChomperWebService.swift */; };
 		9EE2161D1D19BA78004C7C53 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216161D19BA78004C7C53 /* Place.swift */; };
@@ -220,6 +224,12 @@
 		9E67366C1D2EB14F00C00995 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerProtocol.swift; sourceTree = "<group>"; };
+		9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionDataProvider.swift; sourceTree = "<group>"; };
+		9E6736A11D3024F400C00995 /* TableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataProvider.swift; sourceTree = "<group>"; };
+		9E6736A71D30252700C00995 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
+		9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewModel.swift; sourceTree = "<group>"; };
+		9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewController.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -251,10 +261,8 @@
 		9EE215EC1D19B387004C7C53 /* ModelSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE215F31D19B387004C7C53 /* ModelSyncTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSyncTests.swift; sourceTree = "<group>"; };
 		9EE215F51D19B387004C7C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9EE216041D19B972004C7C53 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
 		9EE216061D19B972004C7C53 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9EE216071D19B972004C7C53 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9EE2160C1D19B980004C7C53 /* BaseViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerProtocol.swift; sourceTree = "<group>"; };
 		9EE216111D19BA6F004C7C53 /* ChomperURLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperURLRouter.swift; sourceTree = "<group>"; };
 		9EE216121D19BA6F004C7C53 /* ChomperWebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperWebService.swift; sourceTree = "<group>"; };
 		9EE216161D19BA78004C7C53 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
@@ -450,6 +458,40 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		9E67369E1D3024F400C00995 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */,
+				9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */,
+				9E6736A11D3024F400C00995 /* TableDataProvider.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9E6736A51D30252700C00995 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E6736A61D30252700C00995 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9E6736A71D30252700C00995 /* MyPlacesViewController.swift */,
+				9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9E6736A81D30252700C00995 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		9EAF87C21D1C38A500C9FF59 /* Mappings */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,7 +643,9 @@
 		9EE216031D19B972004C7C53 /* My Places */ = {
 			isa = PBXGroup;
 			children = (
-				9EE216041D19B972004C7C53 /* MyPlacesViewController.swift */,
+				9E6736A51D30252700C00995 /* Models */,
+				9E6736A61D30252700C00995 /* View Controllers */,
+				9E6736A81D30252700C00995 /* Views */,
 			);
 			path = "My Places";
 			sourceTree = "<group>";
@@ -618,8 +662,8 @@
 		9EE2160B1D19B980004C7C53 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				9EE2160C1D19B980004C7C53 /* BaseViewControllerProtocol.swift */,
 				9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */,
+				9E67369E1D3024F400C00995 /* Protocols */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1470,11 +1514,15 @@
 			files = (
 				9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
+				9E6736AB1D30278700C00995 /* MyPlacesTileViewModel.swift in Sources */,
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
-				9EE2160D1D19B980004C7C53 /* BaseViewControllerProtocol.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
-				9EE216081D19B972004C7C53 /* MyPlacesViewController.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
+				9E6736AD1D302B7100C00995 /* MyPlacesTileViewController.swift in Sources */,
+				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,
+				9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */,
+				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,
+				9E6736A91D30252700C00995 /* MyPlacesViewController.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */,

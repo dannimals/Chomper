@@ -133,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabBarVC = UITabBarController()
         let controllers = [nc, createPlaceVC, nc3]
         tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = createPlaceVC
+        tabBarVC.selectedViewController = nc
         window?.rootViewController = tabBarVC
         
     }
