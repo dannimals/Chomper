@@ -81,6 +81,7 @@ class CreatePlaceSearchView: UIView {
         searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor).active = true
         
         textSearch = UITextField()
+        textSearch.clearButtonMode = .WhileEditing
         textSearch.returnKeyType = .Search
         textSearch.font = UIFont.chomperFontForTextStye("p-small")
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")

@@ -20,7 +20,9 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     let locationManager = CLLocationManager()
     var viewModel: CreatePlaceViewModel?
     var searchView: CreatePlaceSearchView!
-    private var searchLocationCoord: CLLocationCoordinate2D?
+    private var loadingView: UIView!
+    private var loadingLabel: UILabel!
+    private var searchLocationCoord: CLLocation?
     private var searchTerm: String?
 
     private var tableVC: UITableViewController!
@@ -53,8 +55,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             self?.searchLocationCoord = nil
         }
         searchView.searchAction = { [weak self] in
-            guard let coord = self?.searchLocationCoord else { return }
-            let location = CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+            guard let location = self?.searchLocationCoord else { return }
             self?.getRecommendedPlacesNearLocation(location, searchTerm: self?.searchView.textSearch.text)
         }
         
@@ -62,16 +63,30 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         searchView.locationSearch.delegate = self
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
-    
+        
+        //
+        // Set up loading view
+        
+        createLoadingView()
+        
         let views: [String: AnyObject] = [
             "searchView": searchView,
-            "tableVC": tableVC.view
+            "tableVC": tableVC.view,
+            "loadingView": loadingView
         ]
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "V:|[searchView][tableVC]|",
             options: [],
             metrics: nil,
             views: views)
+        )
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|[searchView][loadingView]|",
+            options: [],
+            metrics: nil,
+            views: views)
+            
         )
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -88,7 +103,15 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             metrics: nil,
             views: views)
         )
-                
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|[loadingView]|",
+            options: [],
+            metrics: nil,
+            views: views)
+            
+        )
+        
         // 
         // Call webService for recommended places near current location
 
@@ -98,7 +121,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)   {
         super.init(nibName: nil, bundle: nil)
-        getLocation()
+        checkLocationPermission()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -108,15 +131,21 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     // MARK: - Handlers
     
     private func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?) {
+        showLoadingView(true)
         webService.getRecommendedPlacesNearLocation(location, searchTerm: searchTerm) { [weak self] (places, response, error) in
             if error == nil, let places = places {
                 self?.viewModel = CreatePlaceViewModel(results: places)
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self?.tableVC.tableView.reloadData()
+                    self?.showLoadingView(false)
                 })
                 
             } else {
-                self?.viewModel = nil
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self?.showLoadingView(false)
+                    self?.viewModel = nil
+                })
+
                 // TODO: display no results placeholder view
             }
         }
@@ -125,7 +154,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     
     // MARK: - Helpers
     
-    func getLocation() {
+    func checkLocationPermission() {
         let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
         let authStatus = CLLocationManager.authorizationStatus()
         if authStatus == .NotDetermined {
@@ -157,8 +186,36 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         tableVC.tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
     }
     
-    func keyBoardDismiss() {
-        searchView.cancelSearch()
+    func showLoadingView(show: Bool = false) {
+        if show {
+            loadingView.hidden = false
+            loadingLabel.alpha = 0
+            UIView.animateWithDuration(1.5, delay: 0.0, options: .Repeat, animations: { [weak self] in
+                self?.loadingLabel.alpha = 1
+                }, completion: nil)
+            view.bringSubviewToFront(loadingView)
+        } else {
+            UIView.animateWithDuration(0.4, animations: { [weak self] in
+                self?.loadingView.hidden = true
+            })
+        }
+    }
+    
+    func createLoadingView() {
+        loadingView = UIView()
+        loadingView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(loadingView)
+        loadingView.backgroundColor = UIColor.whiteColor()
+        loadingView.hidden = true
+        
+        loadingLabel = UILabel()
+        loadingLabel.translatesAutoresizingMaskIntoConstraints = false
+        loadingView.addSubview(loadingLabel)
+        loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
+        loadingLabel.textColor = UIColor.orangeColor()
+        loadingLabel.font = UIFont.chomperFontForTextStye("h4")
+        loadingLabel.centerYAnchor.constraintEqualToAnchor(loadingView.centerYAnchor).active = true
+        loadingLabel.centerXAnchor.constraintEqualToAnchor(loadingView.centerXAnchor).active = true
     }
     
     // MARK: - UITableViewDataSource methods
@@ -197,8 +254,7 @@ extension CreatePlaceViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        guard let searchLocation = searchLocationCoord else { return false }
-        let location = CLLocation(latitude: searchLocation.latitude, longitude: searchLocation.longitude)
+        guard let location = searchLocationCoord ?? locationManager.location else { return false }
         getRecommendedPlacesNearLocation(location, searchTerm: textField.text)
         return true
     }

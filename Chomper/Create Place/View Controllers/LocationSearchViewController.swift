@@ -17,9 +17,9 @@ class LocationSearchViewController: UIViewController, BaseViewControllerProtocol
     private var searchBar: UISearchBar!
     private var searchController: UISearchController!
     
-    var searchAction: ((locationName: String, coordinate: CLLocationCoordinate2D) -> Void)?
+    var searchAction: ((locationName: String, coordinate: CLLocation) -> Void)?
     var searchTerm: String?
-    var searchLocation: CLLocationCoordinate2D?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ class LocationSearchViewController: UIViewController, BaseViewControllerProtocol
 extension LocationSearchViewController: GMSAutocompleteResultsViewControllerDelegate {
     func resultsController(resultsController: GMSAutocompleteResultsViewController, didAutocompleteWithPlace place: GMSPlace) {
         searchController?.searchBar.text = place.name
-        searchAction?(locationName: searchController?.searchBar.text ?? "", coordinate: place.coordinate)
+        searchAction?(locationName: searchController?.searchBar.text ?? "", coordinate: CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
         dismissVC()
 
         print("Place name: ", place.name)
