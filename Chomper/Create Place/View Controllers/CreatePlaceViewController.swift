@@ -49,7 +49,6 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         
         searchView = CreatePlaceSearchView()
         searchView.cancelAction = { [weak self] in
-            
             self?.searchView.cancelSearch()
             self?.searchLocationCoord = nil
         }
@@ -89,9 +88,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             metrics: nil,
             views: views)
         )
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyBoardDismiss), name: UIKeyboardWillHideNotification, object: nil)
-        
+                
         // 
         // Call webService for recommended places near current location
 
@@ -197,6 +194,14 @@ extension CreatePlaceViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(textField: UITextField) {
         searchView.activateSearch()
     }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        guard let searchLocation = searchLocationCoord else { return false }
+        let location = CLLocation(latitude: searchLocation.latitude, longitude: searchLocation.longitude)
+        getRecommendedPlacesNearLocation(location, searchTerm: textField.text)
+        return true
+    }
 }
 
 extension CreatePlaceViewController: UISearchBarDelegate {
@@ -206,6 +211,7 @@ extension CreatePlaceViewController: UISearchBarDelegate {
         vc.searchAction = { [weak self] (name, coordinate) in
             self?.searchView.locationSearch.text = name
             self?.searchLocationCoord = coordinate
+            self?.searchView.textSearch.becomeFirstResponder()
         }
         vc.searchTerm = searchView.locationSearch.text
         let nc = UINavigationController(rootViewController: vc)

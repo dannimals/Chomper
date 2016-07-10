@@ -68,11 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let attributes = [
             NSFontAttributeName: UIFont.chomperFontForTextStye("p-small"),
-            NSForegroundColorAttributeName: UIColor.whiteColor()
+            NSForegroundColorAttributeName: UIColor.lightGrayColor()
         ]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, forState: .Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.grayColor()], forState: .Selected)
-        UITabBar.appearance().barTintColor = UIColor.orangeColor()
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.orangeColor()], forState: .Selected)
         
 
         return true

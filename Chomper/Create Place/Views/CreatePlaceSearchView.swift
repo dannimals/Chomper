@@ -81,6 +81,7 @@ class CreatePlaceSearchView: UIView {
         searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor).active = true
         
         textSearch = UITextField()
+        textSearch.returnKeyType = .Search
         textSearch.font = UIFont.chomperFontForTextStye("p-small")
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
         textSearch.backgroundColor = UIColor.whiteColor()
@@ -88,6 +89,9 @@ class CreatePlaceSearchView: UIView {
         textSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(textSearch)
         textSearch.heightAnchor.constraintEqualToConstant(25.0).active = true
+        let paddingView = UIView(frame: CGRectMake(0, 0, 15.0, 25.0))
+        textSearch.leftView = paddingView
+        textSearch.leftViewMode = .Always
         
         locationSearch = UISearchBar()
         locationSearch.layer.cornerRadius = 5.0
@@ -96,7 +100,6 @@ class CreatePlaceSearchView: UIView {
         locationSearch.layer.borderColor = UIColor.whiteColor().CGColor
         locationSearch.placeholder = NSLocalizedString("Current location", comment: "Current location")
         locationSearch.backgroundImage = UIImage.fromColor(UIColor.whiteColor())
-        locationSearch.barTintColor = UIColor.whiteColor()
         locationSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(locationSearch)
         locationSearch.heightAnchor.constraintEqualToConstant(25.0).active = true
