@@ -17,6 +17,7 @@ class CreatePlaceSearchView: UIView {
     var locationSearch: UISearchBar!
     var searchButton: UIButton!
     var textSearch: UITextField!
+    var view: UIView!
     
     var cancelAction: (() -> Void)?
     var searchAction: (() -> Void)?
@@ -32,7 +33,7 @@ class CreatePlaceSearchView: UIView {
     }
     
     func initialize() {
-        let view = UIView()
+        view = UIView()
         view.backgroundColor = UIColor.orangeColor()
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
@@ -117,21 +118,26 @@ class CreatePlaceSearchView: UIView {
     
     func enableSearch() {
         UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: { [weak self] in
+            self?.layer.shadowOpacity = 0
             self?.buttonContainerView.hidden = false
             self?.locationSearch.hidden = false
             self?.textSearch.becomeFirstResponder()
-        }, completion: nil)
+            }, completion: { [weak self] finished in
+                self?.setShadow()
+        })
     }
     
     func cancelSearch() {
+        setShadow(UIColor.lightGrayColor().CGColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0, y: 65.0, width: bounds.width, height: 3.5))
         UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.hidden = true
             self?.locationSearch.hidden = true
             self?.textSearch.resignFirstResponder()
-            }, completion: { [weak self] bool in
+            }, completion: { [weak self] finished in
                 self?.locationSearch.text = nil
                 self?.textSearch.text = nil
         })
+        
       
     }
     

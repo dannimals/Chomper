@@ -6,8 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import UIKit
-
 public typealias DismissAlertBlock = (confirmed: Bool) -> Void
 
 extension UIViewController {

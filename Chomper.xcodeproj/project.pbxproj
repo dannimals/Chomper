@@ -34,6 +34,7 @@
 		9E6736A91D30252700C00995 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A71D30252700C00995 /* MyPlacesViewController.swift */; };
 		9E6736AB1D30278700C00995 /* MyPlacesTileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */; };
 		9E6736AD1D302B7100C00995 /* MyPlacesTileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */; };
+		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
@@ -230,6 +231,7 @@
 		9E6736A71D30252700C00995 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
 		9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewModel.swift; sourceTree = "<group>"; };
 		9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewController.swift; sourceTree = "<group>"; };
+		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 			children = (
 				9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */,
 				9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */,
+				9E90F6171D33F968005A380B /* UIView+Extensions.swift */,
 				9EE216281D19BAA7004C7C53 /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
@@ -1541,6 +1544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */,
 				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
 				9E67366D1D2EB14F00C00995 /* SearchResult.swift in Sources */,

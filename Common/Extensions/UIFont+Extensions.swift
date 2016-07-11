@@ -6,7 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-
 extension UIFont {
     /*
         Returns a UIFont of the specified style and weight:

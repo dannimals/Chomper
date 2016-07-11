@@ -6,8 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import Foundation
-
 extension UIImage {
     
     public static func fromColor(color: UIColor) -> UIImage {

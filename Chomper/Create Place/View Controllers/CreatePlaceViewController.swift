@@ -116,12 +116,21 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             views: views)
             
         )
+
         
         // 
         // Call webService for recommended places near current location
 
         guard let location = locationManager.location else { return }
         getRecommendedPlacesNearLocation(location, searchTerm: nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if searchView.layer.shadowPath == nil {
+            searchView.setShadow()
+        }
+
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)   {
