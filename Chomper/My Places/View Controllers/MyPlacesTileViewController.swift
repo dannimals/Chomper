@@ -24,8 +24,9 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = MyPlacesTileViewModel(delegate: self)
+        collectionView!.backgroundColor = UIColor.whiteColor()
         
-        
+        collectionView!.registerClass(MyPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
     }
     
     // MARK: - UICollectionViewDataSource methods
@@ -35,11 +36,14 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.numberOfItemsInSection(section)
+        return dataSource.numberOfItemsInSection(section) + 1
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? MyPlacesCollectionViewCell else { fatalError("PlaceListCell not found") }
+        cell.configureCell("+")
+        
+        return cell
     }
     
     // MARK: - UICollectionViewDelegate methods
@@ -51,6 +55,12 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         //
     }
+    
+  
+
+    
+    // MARK: - Handlers
+
     
     
 }

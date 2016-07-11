@@ -12,8 +12,8 @@ import WebServices
 class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
     
     private var viewModeControl: UISegmentedControl!
-    private var collectionViewController: UICollectionViewController!
-    private var tableViewController: UITableViewController!
+    private var tileViewController: MyPlacesTileViewController!
+    private var listViewController: UITableViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +21,11 @@ class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
         view.backgroundColor = UIColor.whiteColor()
 
         //
-        // Set up viewModeControl
+        // Set up segmented control as titleView
         
         let viewModeObjects = [NSLocalizedString("Tile", comment: "Collection view"), NSLocalizedString("List", comment: "Table view")]
         viewModeControl = UISegmentedControl(items: viewModeObjects)
+        viewModeControl.addTarget(self, action: #selector(handleViewMode(_:)), forControlEvents: .ValueChanged)
         view.addSubview(viewModeControl)
         var frame = viewModeControl.frame
         frame.size = CGSize(width: 150, height: frame.size.height)
@@ -35,10 +36,41 @@ class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
         //
         // Set up view controllers
         
+        createListViewController()
+        createTileViewController()
         
-        
-    
     }
 
+    
+    // MARK: - Helpers
+    
+    private func createTileViewController() {
+        let layout = MyPlacesCollectionViewLayout()
+        tileViewController = MyPlacesTileViewController(collectionViewLayout: layout)
+        
+        addChildViewController(tileViewController)
+        view.addSubview(tileViewController.view)
+        tileViewController.didMoveToParentViewController(self)
+        tileViewController.collectionView?.scrollsToTop = false
+    }
+    
+    private func createListViewController() {
+        listViewController = UITableViewController()
+        addChildViewController(listViewController)
+        view.addSubview(listViewController.view)
+        listViewController.didMoveToParentViewController(self)
+    }
+    
+    // MARK: - Handlers
+    
+    func handleViewMode(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            listViewController.view.removeFromSuperview()
+            view.addSubview(tileViewController.view)
+        } else {
+            tileViewController.view.removeFromSuperview()
+            view.addSubview(listViewController.view)
+        }
+    }
 
 }
