@@ -42,9 +42,13 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         view.addSubview(tableVC.view)
         tableVC.tableView.keyboardDismissMode = .OnDrag
         tableVC.tableView.tableFooterView = UIView()
+        tableVC.refreshControl = UIRefreshControl()
+        tableVC.refreshControl?.enabled = true
+        tableVC.refreshControl?.addTarget(self, action: #selector(handleRefresh), forControlEvents: .ValueChanged)
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .None
         registerNibs()
+        
         
         //
         // Set up search view
@@ -130,26 +134,33 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
     
     // MARK: - Handlers
     
-    private func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?) {
-        showLoadingView(true)
+    private func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, showLoading: Bool = true) {
+        showLoadingView(showLoading)
         webService.getRecommendedPlacesNearLocation(location, searchTerm: searchTerm) { [weak self] (places, response, error) in
             if error == nil, let places = places {
                 self?.viewModel = CreatePlaceViewModel(results: places)
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self?.tableVC.tableView.reloadData()
                     self?.showLoadingView(false)
+                    self?.tableVC.refreshControl?.endRefreshing()
                 })
                 
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self?.showLoadingView(false)
                     self?.viewModel = nil
+                    self?.tableVC.refreshControl?.endRefreshing()
                 })
 
                 // TODO: display no results placeholder view
             }
         }
 
+    }
+    
+    func handleRefresh() {
+        guard let location = searchLocationCoord ?? locationManager.location else { return }
+        getRecommendedPlacesNearLocation(location, searchTerm: searchView.textSearch.text, showLoading: false)
     }
 
     
@@ -250,7 +261,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
 extension CreatePlaceViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(textField: UITextField) {
-        searchView.activateSearch()
+        searchView.enableSearch()
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {

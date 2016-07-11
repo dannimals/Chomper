@@ -66,7 +66,7 @@ class CreatePlaceSearchView: UIView {
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStye("p-small")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
+        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         buttonContainerView.addSubview(cancelButton)
         cancelButton.leftAnchor.constraintEqualToAnchor(buttonContainerView.leftAnchor).active = true
@@ -76,7 +76,7 @@ class CreatePlaceSearchView: UIView {
         searchButton.addTarget(self, action: #selector(searchAction(_:)), forControlEvents: .TouchUpInside)
         searchButton.titleLabel?.font = UIFont.chomperFontForTextStye("h4")
         searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), forState: .Normal)
-        searchButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
+        searchButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         buttonContainerView.addSubview(searchButton)
         searchButton.rightAnchor.constraintEqualToAnchor(buttonContainerView.rightAnchor).active = true
@@ -115,7 +115,7 @@ class CreatePlaceSearchView: UIView {
     
     // MARK: - Helpers
     
-    func activateSearch() {
+    func enableSearch() {
         UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.hidden = false
             self?.locationSearch.hidden = false
