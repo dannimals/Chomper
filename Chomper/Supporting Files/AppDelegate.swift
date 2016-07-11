@@ -119,7 +119,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: nil
         )
 
-        let browsePlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
+        let browsePlacesVC = UIViewController()
+        browsePlacesVC.view.backgroundColor = UIColor.whiteColor()
         browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
         browsePlacesVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Browse", comment: "Browse Tab Title"),

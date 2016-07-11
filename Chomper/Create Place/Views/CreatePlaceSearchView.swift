@@ -58,7 +58,9 @@ class CreatePlaceSearchView: UIView {
         buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(buttonContainerView)
-        buttonContainerView.heightAnchor.constraintEqualToConstant(30.0).active = true
+        let constraint = buttonContainerView.heightAnchor.constraintEqualToConstant(30.0)
+        constraint.priority = UILayoutPriorityDefaultHigh
+        constraint.active = true
         
         cancelButton = UIButton()
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
@@ -103,7 +105,9 @@ class CreatePlaceSearchView: UIView {
         locationSearch.backgroundImage = UIImage.fromColor(UIColor.whiteColor())
         locationSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(locationSearch)
-        locationSearch.heightAnchor.constraintEqualToConstant(25.0).active = true
+        let heightConstraint = locationSearch.heightAnchor.constraintEqualToConstant(25.0)
+        heightConstraint.priority = UILayoutPriorityDefaultHigh
+        heightConstraint.active = true
         
         buttonContainerView.hidden = true
         locationSearch.hidden = true

@@ -55,7 +55,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
             self?.searchLocationCoord = nil
         }
         searchView.searchAction = { [weak self] in
-            guard let location = self?.searchLocationCoord else { return }
+            guard let location = self?.searchLocationCoord ?? self?.locationManager.location else { return }
             self?.getRecommendedPlacesNearLocation(location, searchTerm: self?.searchView.textSearch.text)
         }
         
@@ -151,6 +151,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         }
 
     }
+
     
     // MARK: - Helpers
     
@@ -190,7 +191,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         if show {
             loadingView.hidden = false
             loadingLabel.alpha = 0
-            UIView.animateWithDuration(1.5, delay: 0.0, options: .Repeat, animations: { [weak self] in
+            UIView.animateWithDuration(1.0, delay: 0.0, options: [.Repeat, .Autoreverse], animations: { [weak self] in
                 self?.loadingLabel.alpha = 1
                 }, completion: nil)
             view.bringSubviewToFront(loadingView)
