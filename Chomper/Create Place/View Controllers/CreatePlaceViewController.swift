@@ -43,6 +43,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         tableVC.tableView.keyboardDismissMode = .OnDrag
         tableVC.tableView.tableFooterView = UIView()
         tableVC.refreshControl = UIRefreshControl()
+        tableVC.refreshControl?.tintColor = UIColor.orangeColor()
         tableVC.refreshControl?.enabled = true
         tableVC.refreshControl?.addTarget(self, action: #selector(handleRefresh), forControlEvents: .ValueChanged)
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
