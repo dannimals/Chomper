@@ -17,11 +17,11 @@ extension UIFont {
                     -h4
                     -h5
                     -p
-                    -p-small
+                    -p small
                     -smallest
     */
     
-    public static func chomperFontForTextStye(style: String, weight: CGFloat? = nil, maxDynamicTypeRatio: CGFloat = 1.5, minDynamicTypeRatio: CGFloat = 0.5) -> UIFont {
+    public static func chomperFontForTextStyle(style: String, weight: CGFloat? = nil, size: CGFloat? = nil, maxDynamicTypeRatio: CGFloat = 1.5, minDynamicTypeRatio: CGFloat = 0.5) -> UIFont {
         var pointSize: CGFloat
         var fontWeight: CGFloat? = nil
         
@@ -66,10 +66,14 @@ extension UIFont {
 
         
         //
-        // If weight was passed in, use value
+        // If weight or pointSize was passed in, use value
         
         if weight != nil {
             fontWeight = weight
+        }
+        
+        if size != nil {
+            pointSize = size!
         }
         
         return UIFont.systemFontOfSize(pointSize, weight: fontWeight!)

@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up navigation bar and other shared UI appearances
         
         UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).titleTextAttributes = [
-            NSFontAttributeName: UIFont.chomperFontForTextStye("h3"),
+            NSFontAttributeName: UIFont.chomperFontForTextStyle("h3"),
             NSForegroundColorAttributeName: UIColor.whiteColor()
         ]
         
@@ -63,10 +63,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).tintColor = UIColor.whiteColor()
         UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).translucent = false
         
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.chomperFontForTextStye("p-small")
+        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.chomperFontForTextStyle("p-small")
         
         let attributes = [
-            NSFontAttributeName: UIFont.chomperFontForTextStye("p-small"),
+            NSFontAttributeName: UIFont.chomperFontForTextStyle("p-small"),
             NSForegroundColorAttributeName: UIColor.lightGrayColor()
         ]
         UITabBarItem.appearance().setTitleTextAttributes(attributes, forState: .Normal)

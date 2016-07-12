@@ -235,7 +235,7 @@ class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, U
         loadingView.addSubview(loadingLabel)
         loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
         loadingLabel.textColor = UIColor.orangeColor()
-        loadingLabel.font = UIFont.chomperFontForTextStye("h4")
+        loadingLabel.font = UIFont.chomperFontForTextStyle("h4")
         loadingLabel.centerYAnchor.constraintEqualToAnchor(loadingView.centerYAnchor).active = true
         loadingLabel.centerXAnchor.constraintEqualToAnchor(loadingView.centerXAnchor).active = true
     }

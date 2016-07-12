@@ -46,7 +46,7 @@ class CreatePlaceSearchView: UIView {
         containerView.axis = .Vertical
         containerView.alignment = .Fill
         containerView.distribution = .Fill
-        containerView.layoutMargins = UIEdgeInsetsMake(10, 15, 10, 15)
+        containerView.layoutMargins = UIEdgeInsetsMake(8, 15, 8, 15)
         containerView.layoutMarginsRelativeArrangement = true
         containerView.spacing = 8.0
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,7 @@ class CreatePlaceSearchView: UIView {
         
         cancelButton = UIButton()
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
-        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStye("p-small")
+        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p-small")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
         cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +75,7 @@ class CreatePlaceSearchView: UIView {
         
         searchButton = UIButton()
         searchButton.addTarget(self, action: #selector(searchAction(_:)), forControlEvents: .TouchUpInside)
-        searchButton.titleLabel?.font = UIFont.chomperFontForTextStye("h4")
+        searchButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), forState: .Normal)
         searchButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         searchButton.translatesAutoresizingMaskIntoConstraints = false
@@ -86,14 +86,15 @@ class CreatePlaceSearchView: UIView {
         textSearch = UITextField()
         textSearch.clearButtonMode = .WhileEditing
         textSearch.returnKeyType = .Search
-        textSearch.font = UIFont.chomperFontForTextStye("p-small")
+        textSearch.font = UIFont.chomperFontForTextStyle("p")
+        textSearch.textColor = UIColor.darkGrayColor()
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
         textSearch.backgroundColor = UIColor.whiteColor()
         textSearch.layer.cornerRadius = 5.0
         textSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(textSearch)
-        textSearch.heightAnchor.constraintEqualToConstant(25.0).active = true
-        let paddingView = UIView(frame: CGRectMake(0, 0, 15.0, 25.0))
+        textSearch.heightAnchor.constraintEqualToConstant(30.0).active = true
+        let paddingView = UIView(frame: CGRectMake(0, 0, 15.0, 30.0))
         textSearch.leftView = paddingView
         textSearch.leftViewMode = .Always
         
@@ -106,7 +107,7 @@ class CreatePlaceSearchView: UIView {
         locationSearch.backgroundImage = UIImage.fromColor(UIColor.whiteColor())
         locationSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(locationSearch)
-        let heightConstraint = locationSearch.heightAnchor.constraintEqualToConstant(25.0)
+        let heightConstraint = locationSearch.heightAnchor.constraintEqualToConstant(30.0)
         heightConstraint.priority = UILayoutPriorityDefaultHigh
         heightConstraint.active = true
         
