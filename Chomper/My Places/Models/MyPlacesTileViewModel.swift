@@ -27,7 +27,7 @@ class MyPlacesTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collect
     }
     
     func numberOfItemsInSection(section: Int) -> Int {
-        return 1
+        return 9
     }
     
 }

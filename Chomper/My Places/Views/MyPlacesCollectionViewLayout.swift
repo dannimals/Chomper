@@ -11,12 +11,14 @@ import Common
 class MyPlacesCollectionViewLayout: UICollectionViewLayout {
     
     private var contentSize = CGSizeZero
+    private var horizontalPadding: CGFloat = 15.0
+    private var verticalPadding: CGFloat = 10.0
     private var horizontalInset: CGFloat =  0.0
     private var verticalInset: CGFloat =  0.0
     private var itemWidth: CGFloat = 0.0
-    private var numberOfColumns = 3
     private var layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
     
+    var numberOfColumns = 2
     
     override func collectionViewContentSize() -> CGSize {
         return contentSize
@@ -27,39 +29,36 @@ class MyPlacesCollectionViewLayout: UICollectionViewLayout {
         
         layoutAttributes.removeAll()
         let numberOfSections = collectionView!.numberOfSections()
-        var yOffset = horizontalInset
-        let totalGutterWidth = horizontalInset * (CGFloat(numberOfColumns + 1))
+        var yOffset = verticalInset + verticalPadding
+        var xOffset = horizontalInset + horizontalPadding
+        let totalGutterWidth = horizontalInset * (CGFloat(numberOfColumns + 1)) + 2 * horizontalPadding
         itemWidth = (collectionView!.bounds.width - totalGutterWidth) / CGFloat(numberOfColumns)
         
         for section in 0..<numberOfSections {
             let numberOfItems = collectionView!.numberOfItemsInSection(section)
             for item in 0..<numberOfItems {
-                var xOffset = horizontalInset
                 let indexPath = NSIndexPath(forItem: item, inSection: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                
                 let itemSize = CGSize(width: itemWidth, height: itemWidth)
                 var increaseRow = false
                 
-                if collectionView!.frame.size.width - xOffset < itemWidth {
+                if collectionView!.frame.size.width - xOffset - horizontalPadding < itemWidth {
                     increaseRow = true
+                }
+              
+                if increaseRow { //&& !(item == numberOfItems - 1 && section == numberOfSections - 1) {
+                    yOffset = yOffset + verticalInset + itemSize.height
+                    xOffset = horizontalInset + horizontalPadding
                 }
                 
                 attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height))
                 layoutAttributes[layoutKeyforIndexPath(indexPath)] = attributes
                 
-                xOffset = xOffset + itemSize.width
-                xOffset = xOffset + horizontalInset
-                
-                if increaseRow && !(item == numberOfItems - 1 && section == numberOfSections - 1) {
-                    yOffset = yOffset + verticalInset
-                    yOffset = yOffset + itemSize.height
-                    xOffset = horizontalInset
-                }
+                xOffset = xOffset + itemSize.width + horizontalInset
             }
         }
         
-        contentSize = CGSizeMake(collectionView!.frame.size.width, yOffset + verticalInset)
+        contentSize = CGSizeMake(collectionView!.frame.size.width, yOffset + itemWidth)
     }
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {

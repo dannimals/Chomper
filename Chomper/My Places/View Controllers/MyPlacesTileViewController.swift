@@ -23,9 +23,18 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = MyPlacesTileViewModel(delegate: self)
-        collectionView!.backgroundColor = UIColor.whiteColor()
         
+        //
+        // Create data source
+        
+        dataSource = MyPlacesTileViewModel(delegate: self)
+        
+        //
+        // Set up collection view
+        
+        collectionView!.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
+        collectionView!.showsVerticalScrollIndicator = false
+        collectionView!.backgroundColor = UIColor.whiteColor()
         collectionView!.registerClass(MyPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
     }
     
@@ -41,10 +50,14 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? MyPlacesCollectionViewCell else { fatalError("PlaceListCell not found") }
-        cell.configureCell("+")
-        
+        if indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) {
+            cell.configureAddCell(isEndRow(indexPath))
+        } else {
+            cell.configureCell("WHEE", count: indexPath.row, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+        }
         return cell
     }
+    
     
     // MARK: - UICollectionViewDelegate methods
     
@@ -56,11 +69,24 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         //
     }
     
-  
-
-    
     // MARK: - Handlers
-
     
+    func isEndRow(indexPath: NSIndexPath) -> Bool {
+         return indexPath.row % 2 != 0
+    }
     
+    func isBottomRow(indexPath: NSIndexPath) -> Bool {
+        if  collectionView!.numberOfItemsInSection(indexPath.section) % 2 == 0 {
+            return indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) || indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) - 1
+        } else {
+            return indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) - 1
+        }
+    }
 }
+
+
+
+
+
+
+
