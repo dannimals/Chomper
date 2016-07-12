@@ -21,20 +21,21 @@ class PlaceTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         separator.backgroundColor = UIColor.lightGrayColor()
+        separator.heightAnchor.constraintEqualToConstant(0.75).active = true
 
-        nameLabel.font = UIFont.chomperFontForTextStye("p")
+        nameLabel.font = UIFont.chomperFontForTextStyle("p")
         nameLabel.textColor = UIColor.darkGrayColor()
         
-        addressLabel.font = UIFont.chomperFontForTextStye("smallest")
+        addressLabel.font = UIFont.chomperFontForTextStyle("smallest")
         addressLabel.textColor = UIColor.grayColor()
         
-        priceLabel.font = UIFont.chomperFontForTextStye("smallest")
+        priceLabel.font = UIFont.chomperFontForTextStyle("smallest")
         priceLabel.textColor = UIColor.orangeColor()
         
-        ratingLabel.font = UIFont.chomperFontForTextStye("smallest")
+        ratingLabel.font = UIFont.chomperFontForTextStyle("smallest")
         ratingLabel.textColor = UIColor.orangeColor()
         
-        distanceLabel.font = UIFont.chomperFontForTextStye("p-small")
+        distanceLabel.font = UIFont.chomperFontForTextStyle("p small")
         distanceLabel.textColor = UIColor.orangeColor()
         
         prepareForReuse()

@@ -36,7 +36,7 @@
                         <rect key="frame" x="0.0" y="128" width="422" height="1"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="1" id="3jH-1S-6gC"/>
+                            <constraint firstAttribute="height" priority="750" constant="1" id="3jH-1S-6gC"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="76k-SE-33H" userLabel="Rating/Price">
@@ -60,7 +60,7 @@
                 <constraints>
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="trailing" secondItem="swS-8A-xvo" secondAttribute="trailing" id="7I6-DB-7HA"/>
                     <constraint firstAttribute="bottom" secondItem="ioR-BQ-bVk" secondAttribute="bottom" id="8cw-mR-wcI"/>
-                    <constraint firstAttribute="trailing" secondItem="ioR-BQ-bVk" secondAttribute="trailing" id="Dz4-Hs-xNz"/>
+                    <constraint firstAttribute="trailing" secondItem="ioR-BQ-bVk" secondAttribute="trailing" constant="15" id="Dz4-Hs-xNz"/>
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="leading" secondItem="swS-8A-xvo" secondAttribute="leading" id="Fcs-5j-NFG"/>
                     <constraint firstItem="swS-8A-xvo" firstAttribute="left" secondItem="KvY-zs-ZiH" secondAttribute="left" constant="15" id="OsQ-ha-cxr"/>
                     <constraint firstItem="swS-8A-xvo" firstAttribute="top" secondItem="KvY-zs-ZiH" secondAttribute="top" constant="10" id="SI8-EF-m4v"/>
@@ -70,7 +70,7 @@
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="top" secondItem="swS-8A-xvo" secondAttribute="bottom" constant="2" id="dFw-Rq-c6V"/>
                     <constraint firstAttribute="bottom" secondItem="76k-SE-33H" secondAttribute="bottom" constant="10" id="oeY-Km-3tW"/>
                     <constraint firstItem="76k-SE-33H" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" constant="15" id="ojh-aE-NGX"/>
-                    <constraint firstItem="ioR-BQ-bVk" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" id="tSg-Cd-gmX"/>
+                    <constraint firstItem="ioR-BQ-bVk" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" constant="15" id="tSg-Cd-gmX"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
