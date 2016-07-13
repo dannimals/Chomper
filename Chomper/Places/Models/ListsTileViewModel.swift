@@ -12,7 +12,7 @@ protocol CollectionViewDelegate: class {
     associatedtype Object
 }
 
-class MyPlacesTileViewModel<Delegate: CollectionViewDelegate>: NSObject, CollectionDataProvider {
+class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, CollectionDataProvider {
     typealias Object = Delegate.Object
     
     weak var delegate: Delegate!
@@ -27,7 +27,7 @@ class MyPlacesTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collect
     }
     
     func numberOfItemsInSection(section: Int) -> Int {
-        return 9
+        return 5
     }
     
 }

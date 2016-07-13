@@ -8,7 +8,7 @@
 
 import Common
 
-class MyPlacesCollectionViewCell: UICollectionViewCell {
+class ListsCollectionViewCell: UICollectionViewCell {
     private(set) var addButton: UIButton!
     private(set) var titleLabel: UILabel!
     private var countLabel: UILabel!

@@ -8,7 +8,7 @@
 
 import Common
 
-class MyPlacesCollectionViewLayout: UICollectionViewLayout {
+class ListsCollectionViewLayout: UICollectionViewLayout {
     
     private var contentSize = CGSizeZero
     private var horizontalPadding: CGFloat = 15.0

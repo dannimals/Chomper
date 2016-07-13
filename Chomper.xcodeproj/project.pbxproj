@@ -31,12 +31,7 @@
 		9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */; };
 		9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */; };
 		9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A11D3024F400C00995 /* TableDataProvider.swift */; };
-		9E6736A91D30252700C00995 /* MyPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A71D30252700C00995 /* MyPlacesViewController.swift */; };
-		9E6736AB1D30278700C00995 /* MyPlacesTileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */; };
-		9E6736AD1D302B7100C00995 /* MyPlacesTileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
-		9E90F61A1D341C2D005A380B /* MyPlacesCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6191D341C2D005A380B /* MyPlacesCollectionViewLayout.swift */; };
-		9E90F61C1D3433AC005A380B /* MyPlacesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F61B1D3433AC005A380B /* MyPlacesCollectionViewCell.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
@@ -75,6 +70,12 @@
 		9EE216251D19BA99004C7C53 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216231D19BA99004C7C53 /* Model.xcdatamodeld */; };
 		9EE216291D19BAA7004C7C53 /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */; };
 		9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE216281D19BAA7004C7C53 /* UIViewController+Extensions.swift */; };
+		9EE754901D36C5FB0070779E /* ListsTileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */; };
+		9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548A1D36C5FB0070779E /* CreateListViewController.swift */; };
+		9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */; };
+		9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548C1D36C5FB0070779E /* ListsViewController.swift */; };
+		9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */; };
+		9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */; };
 		D6082ED5A12E3B80FC5C2AE2 /* Pods_ChomperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254582385B690B80281BB094 /* Pods_ChomperTests.framework */; };
 		F2CA7216F1775B1C7D857C1A /* Pods_ModelsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BF00A750A39A74AD5727AD /* Pods_ModelsTests.framework */; };
 		F66B95C1455CBFD78D0BDE03 /* Pods_Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F725F4349F335A78B085D768 /* Pods_Models.framework */; };
@@ -230,12 +231,7 @@
 		9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerProtocol.swift; sourceTree = "<group>"; };
 		9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionDataProvider.swift; sourceTree = "<group>"; };
 		9E6736A11D3024F400C00995 /* TableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataProvider.swift; sourceTree = "<group>"; };
-		9E6736A71D30252700C00995 /* MyPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesViewController.swift; sourceTree = "<group>"; };
-		9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewModel.swift; sourceTree = "<group>"; };
-		9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesTileViewController.swift; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		9E90F6191D341C2D005A380B /* MyPlacesCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesCollectionViewLayout.swift; sourceTree = "<group>"; };
-		9E90F61B1D3433AC005A380B /* MyPlacesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPlacesCollectionViewCell.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -280,6 +276,12 @@
 		9EE216241D19BA99004C7C53 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		9EE216281D19BAA7004C7C53 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTileViewModel.swift; sourceTree = "<group>"; };
+		9EE7548A1D36C5FB0070779E /* CreateListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateListViewController.swift; sourceTree = "<group>"; };
+		9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTileViewController.swift; sourceTree = "<group>"; };
+		9EE7548C1D36C5FB0070779E /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
+		9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewCell.swift; sourceTree = "<group>"; };
+		9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewLayout.swift; sourceTree = "<group>"; };
 		A90EB2D62FB363656118D18A /* Pods-Models.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Models.release.xcconfig"; path = "Pods/Target Support Files/Pods-Models/Pods-Models.release.xcconfig"; sourceTree = "<group>"; };
 		BE8B07A4C59DF558F28EB8A6 /* Pods-Chomper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chomper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chomper/Pods-Chomper.debug.xcconfig"; sourceTree = "<group>"; };
 		C07EFEC56CE90128F23AC95A /* Pods_WebServicesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebServicesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -474,32 +476,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		9E6736A51D30252700C00995 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9E6736AA1D30278700C00995 /* MyPlacesTileViewModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		9E6736A61D30252700C00995 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				9E6736A71D30252700C00995 /* MyPlacesViewController.swift */,
-				9E6736AC1D302B7100C00995 /* MyPlacesTileViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		9E6736A81D30252700C00995 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				9E90F6191D341C2D005A380B /* MyPlacesCollectionViewLayout.swift */,
-				9E90F61B1D3433AC005A380B /* MyPlacesCollectionViewCell.swift */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		9EAF87C21D1C38A500C9FF59 /* Mappings */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,7 +527,7 @@
 				9EE2160B1D19B980004C7C53 /* Common */,
 				9EE2160E1D19B98E004C7C53 /* Create Place */,
 				9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */,
-				9EE216031D19B972004C7C53 /* My Places */,
+				9EE754851D36C5FB0070779E /* Places */,
 				9EE216051D19B972004C7C53 /* Supporting Files */,
 			);
 			path = Chomper;
@@ -648,16 +624,6 @@
 			path = ModelSyncTests;
 			sourceTree = "<group>";
 		};
-		9EE216031D19B972004C7C53 /* My Places */ = {
-			isa = PBXGroup;
-			children = (
-				9E6736A51D30252700C00995 /* Models */,
-				9E6736A61D30252700C00995 /* View Controllers */,
-				9E6736A81D30252700C00995 /* Views */,
-			);
-			path = "My Places";
-			sourceTree = "<group>";
-		};
 		9EE216051D19B972004C7C53 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +683,43 @@
 				9EE216281D19BAA7004C7C53 /* UIViewController+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9EE754851D36C5FB0070779E /* Places */ = {
+			isa = PBXGroup;
+			children = (
+				9EE754861D36C5FB0070779E /* Models */,
+				9EE754891D36C5FB0070779E /* View Controllers */,
+				9EE7548D1D36C5FB0070779E /* Views */,
+			);
+			path = Places;
+			sourceTree = "<group>";
+		};
+		9EE754861D36C5FB0070779E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9EE754891D36C5FB0070779E /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9EE7548A1D36C5FB0070779E /* CreateListViewController.swift */,
+				9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */,
+				9EE7548C1D36C5FB0070779E /* ListsViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		9EE7548D1D36C5FB0070779E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */,
+				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1521,21 +1524,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9E90F61C1D3433AC005A380B /* MyPlacesCollectionViewCell.swift in Sources */,
-				9E90F61A1D341C2D005A380B /* MyPlacesCollectionViewLayout.swift in Sources */,
 				9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
-				9E6736AB1D30278700C00995 /* MyPlacesTileViewModel.swift in Sources */,
+				9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */,
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
-				9E6736AD1D302B7100C00995 /* MyPlacesTileViewController.swift in Sources */,
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,
+				9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */,
 				9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */,
 				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,
-				9E6736A91D30252700C00995 /* MyPlacesViewController.swift in Sources */,
+				9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */,
+				9EE754901D36C5FB0070779E /* ListsTileViewModel.swift in Sources */,
+				9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
+				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
 				9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

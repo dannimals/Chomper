@@ -102,10 +102,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Helpers
     
     func setupTabBarVC() {
-        let myPlacesVC = MyPlacesViewController(nibName: nil, bundle: nil)
-        myPlacesVC.title = NSLocalizedString("My Places", comment: "My Places Tab Title")
+        let myPlacesVC = ListsViewController(nibName: nil, bundle: nil)
+        myPlacesVC.title = NSLocalizedString("Places", comment: "Places Tab Title")
         myPlacesVC.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("My Places", comment: "My Places Tab Title"),
+            title: NSLocalizedString("Places", comment: "Places Tab Title"),
             image: nil,
             selectedImage: nil
         )

@@ -9,10 +9,10 @@
 import Common
 import WebServices
 
-class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
+class ListsViewController: UIViewController, BaseViewControllerProtocol {
     
     private var viewModeControl: UISegmentedControl!
-    private var tileViewController: MyPlacesTileViewController!
+    private var tileViewController: ListsTileViewController!
     private var listViewController: UITableViewController!
     
     override func viewDidLoad() {
@@ -45,8 +45,8 @@ class MyPlacesViewController: UIViewController, BaseViewControllerProtocol {
     // MARK: - Helpers
     
     private func createTileViewController() {
-        let layout = MyPlacesCollectionViewLayout()
-        tileViewController = MyPlacesTileViewController(collectionViewLayout: layout)
+        let layout = ListsCollectionViewLayout()
+        tileViewController = ListsTileViewController(collectionViewLayout: layout)
         
         addChildViewController(tileViewController)
         view.addSubview(tileViewController.view)

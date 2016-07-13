@@ -16,10 +16,10 @@ struct FakeData {
     }
 }
 
-class MyPlacesTileViewController: UICollectionViewController, BaseViewControllerProtocol, CollectionViewDelegate {
+class ListsTileViewController: UICollectionViewController, BaseViewControllerProtocol, CollectionViewDelegate {
     typealias Object = FakeData
     
-    private var dataSource: MyPlacesTileViewModel<MyPlacesTileViewController>!
+    private var dataSource: ListsTileViewModel<ListsTileViewController>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +27,7 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         //
         // Create data source
         
-        dataSource = MyPlacesTileViewModel(delegate: self)
+        dataSource = ListsTileViewModel(delegate: self)
         
         //
         // Set up collection view
@@ -35,7 +35,7 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         collectionView!.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.whiteColor()
-        collectionView!.registerClass(MyPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
+        collectionView!.registerClass(ListsCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
 
     }
     
@@ -50,12 +50,15 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? MyPlacesCollectionViewCell else { fatalError("PlaceListCell not found") }
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
         if indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) {
             cell.configureAddCell(isEndRow(indexPath))
             cell.isAddCell = true
-            cell.addAction = {
-                //TODO: present the transition VC
+            cell.addAction = { [weak self] in
+                let vc = CreateListViewController()
+                vc.modalTransitionStyle = .CrossDissolve
+                vc.modalPresentationStyle = .FullScreen
+                self?.presentViewController(vc, animated: true, completion: nil)
             }
         } else {
             cell.configureCell("GoodEats", count: indexPath.row, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
@@ -71,7 +74,7 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MyPlacesCollectionViewCell {
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ListsCollectionViewCell {
           //
         }
     }
