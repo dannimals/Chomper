@@ -9,12 +9,13 @@
 import Common
 
 class MyPlacesCollectionViewCell: UICollectionViewCell {
-    private var addButton: UIButton!
-    private(set) var titleTextView: UITextView!
+    private(set) var addButton: UIButton!
+    private(set) var titleLabel: UILabel!
     private var countLabel: UILabel!
     private var separatorColor = UIColor.lightGrayColor()
     var trailingSeparator: UIView!
     var bottomSeparator: UIView!
+    var isAddCell: Bool = false
     
     var addAction: (() -> ())?
     var titleAction: (() -> ())?
@@ -57,18 +58,18 @@ class MyPlacesCollectionViewCell: UICollectionViewCell {
         //
         // Title text view
         
-        titleTextView = UITextView()
-        titleTextView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(titleTextView)
-        titleTextView.scrollEnabled = false
-        titleTextView.tintColor = UIColor.orangeColor()
-        titleTextView.text = nil
-        titleTextView.textColor = UIColor.lightGrayColor()
-        titleTextView.font = UIFont.chomperFontForTextStyle("p")
-        let titleLeading = titleTextView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
+        titleLabel = UILabel()
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(titleLabel)
+        titleLabel.setContentCompressionResistancePriority(249, forAxis: .Vertical)
+        titleLabel.numberOfLines = 0
+        titleLabel.text = nil
+        titleLabel.textColor = UIColor.lightGrayColor()
+        titleLabel.font = UIFont.chomperFontForTextStyle("p")
+        let titleLeading = titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
         titleLeading.active = true
         titleLeading.priority = UILayoutPriorityRequired
-        let titleTrailing = titleTextView.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.trailingAnchor, constant: -10.0)
+        let titleTrailing = titleLabel.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.trailingAnchor, constant: -10.0)
         titleTrailing.active = true
         titleTrailing.priority = UILayoutPriorityRequired
         
@@ -81,19 +82,19 @@ class MyPlacesCollectionViewCell: UICollectionViewCell {
         countLabel.text = nil
         countLabel.font = UIFont.chomperFontForTextStyle("smallest")
         countLabel.textColor = UIColor.orangeColor()
-        let countLeading = countLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 13.5)
+        let countLeading = countLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
         countLeading.active = true
         countLeading.priority = UILayoutPriorityRequired
 
 
         let views: [String: AnyObject] = [
-            "titleView": titleTextView,
+            "titleLabel": titleLabel,
             "countLabel": countLabel,
             "bottomSeparator": bottomSeparator
         ]
         
         contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-10-[titleView][countLabel]->=10@750-[bottomSeparator]|",
+            "V:|-10-[titleLabel][countLabel]->=10@750-[bottomSeparator]|",
             options: [],
             metrics: nil,
             views: views))
@@ -125,15 +126,14 @@ class MyPlacesCollectionViewCell: UICollectionViewCell {
     // MARK: - Helpers
     
     func configureCell(title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false) {
-        titleTextView.text = NSLocalizedString(title, comment: "title")
-        titleTextView.sizeToFit()
+        titleLabel.text = NSLocalizedString(title, comment: "title")
         countLabel.text = count == 0 ? nil : NSLocalizedString(String(count), comment: "count")
         trailingSeparator.hidden = hideTrailingSeparator!
         bottomSeparator.hidden = hideBottomSeparator!
     }
     
     func configureAddCell(hideTrailingSeparator: Bool = false) {
-        titleTextView.hidden = true
+        titleLabel.hidden = true
         countLabel.hidden = true
         addButton.hidden = false
         trailingSeparator.hidden = hideTrailingSeparator
