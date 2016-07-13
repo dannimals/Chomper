@@ -84,6 +84,7 @@ class CreatePlaceSearchView: UIView {
         searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor).active = true
         
         textSearch = UITextField()
+        textSearch.tintColor = UIColor.orangeColor()
         textSearch.clearButtonMode = .WhileEditing
         textSearch.returnKeyType = .Search
         textSearch.font = UIFont.chomperFontForTextStyle("p")

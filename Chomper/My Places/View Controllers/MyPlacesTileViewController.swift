@@ -20,6 +20,7 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
     typealias Object = FakeData
     
     private var dataSource: MyPlacesTileViewModel<MyPlacesTileViewController>!
+    private var textViewMaxY: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,8 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.whiteColor()
         collectionView!.registerClass(MyPlacesCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
+        collectionView!.keyboardDismissMode = .OnDrag
+
     }
     
     // MARK: - UICollectionViewDataSource methods
@@ -53,7 +56,9 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         if indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) {
             cell.configureAddCell(isEndRow(indexPath))
         } else {
-            cell.configureCell("WHEE", count: indexPath.row, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+            cell.configureCell("sdfsdfsdfsdfsdfsdfsdfsdfdsdfdjfssdfsdfsfsdfsfsdfsd", count: indexPath.row, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+            cell.titleTextView.delegate = self
+            textViewMaxY = cell.frame.height - 30.0
         }
         return cell
     }
@@ -83,6 +88,49 @@ class MyPlacesTileViewController: UICollectionViewController, BaseViewController
         }
     }
 }
+
+extension MyPlacesTileViewController: UITextViewDelegate {
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        //
+        // Limit text to the height of the cell - paddinng - countLabel height
+        
+        let currentText = (textView.text as NSString).stringByReplacingCharactersInRange(range, withString: text)
+        
+        let attributedText = NSMutableAttributedString(string: currentText)
+        attributedText.addAttribute(NSFontAttributeName, value: textView.font!, range: NSMakeRange(0, attributedText.length))
+        
+        let padding = textView.textContainer.lineFragmentPadding
+        let boundingSize = CGSizeMake(textView.frame.size.width - padding * 2, CGFloat.max)
+        let boundingRect = attributedText.boundingRectWithSize(boundingSize, options: .UsesLineFragmentOrigin, context: nil)
+        
+        return boundingRect.size.height + padding * 2 <= textViewMaxY ?? CGFloat.max
+    }
+    
+    func textViewShouldReturn(textView: UITextView) -> Bool {
+        textView.resignFirstResponder()
+        // Todo: Save changes to core data
+        return true
+    }
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
