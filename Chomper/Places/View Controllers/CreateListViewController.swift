@@ -7,8 +7,10 @@
 //
 
 import Common
+import Models
 
 class CreateListViewController: UIViewController, BaseViewControllerProtocol, UITextFieldDelegate {
+    private var backgroundContext: NSManagedObjectContext!
     var cancelButton: UIButton!
     var containerView: UIView!
     var containerBottomLayout: NSLayoutConstraint!
@@ -21,6 +23,11 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //
+        // Set up background context
+
+        backgroundContext = mainContext.createBackgroundContext()
+
         //
         // Set up view
         
@@ -147,7 +154,16 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
         }
     }
     
-    // TODO:
+    func createNewList() {
+        PlaceList.insertIntoContext(backgroundContext, name: textField.text!, updatedAt: NSDate())
+        try! backgroundContext.save()
+        // TODO: Do I need to merge changes here into main if main is using nsfetchedresultscontroller?
+        saveAction?()
+        textField.resignFirstResponder()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // TODO: error handling
     func textIsValid(textField: UITextField) -> Bool {
         //
         // Check there is text and is not a duplicate
@@ -174,9 +190,7 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
             handleError()
             return
         }
-        saveAction?()
-        textField.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        createNewList()
     }
     
     // MARK: - UITextField delegate methods
@@ -186,8 +200,7 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
             handleError()
             return false
         }
-        textField.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        createNewList()
         return true
     }
 

@@ -22,6 +22,7 @@
 		9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
 		9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736DE1D3954D500463665 /* ListsTableViewController.swift */; };
+		9E4736E11D39747B00463665 /* NSFetchedResultsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
@@ -223,6 +224,7 @@
 		9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9E4736DE1D3954D500463665 /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
+		9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFetchedResultsController+Extensions.swift"; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 			isa = PBXGroup;
 			children = (
 				9E67366A1D2DA17600C00995 /* NSManagedObjectContext+Extensions.swift */,
+				9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1591,6 +1594,7 @@
 				9EE216201D19BA78004C7C53 /* ModelBuilders.swift in Sources */,
 				9EE2161E1D19BA78004C7C53 /* PlaceList.swift in Sources */,
 				9EE2161F1D19BA78004C7C53 /* ManagedObjectObserver.swift in Sources */,
+				9E4736E11D39747B00463665 /* NSFetchedResultsController+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

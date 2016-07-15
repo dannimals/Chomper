@@ -14,7 +14,7 @@ import CoreData
 
 protocol TableDataProvider: class {
     associatedtype Object
-    weak var tableView: UITableView! { get set }
+    weak var tableView: UITableView! { get }
     func objectForIndexPath(indexPath: NSIndexPath) -> Object?
     func numberOfItemsInSection(section: Int) -> Int
     func numberOfSections() -> Int

@@ -20,12 +20,11 @@ extension NSManagedObjectContext {
     
     //
     // Convenience method for creating background context
-    // Must be used with mainContext as receiver
+    // Must be used with mainContext as receiver 
     
     public func createBackgroundContext() -> NSManagedObjectContext {
         let context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         context.persistentStoreCoordinator = persistentStoreCoordinator
-        print(persistentStoreCoordinator === NSManagedObjectContext.mainContext().persistentStoreCoordinator)
         return context
     }
     

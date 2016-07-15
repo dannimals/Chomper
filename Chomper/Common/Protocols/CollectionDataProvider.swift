@@ -9,6 +9,16 @@
 import Common
 import CoreData
 
+enum DataProviderUpdate<Object> {
+    case Insert(NSIndexPath)
+    case Update(NSIndexPath, Object)
+    case Move(NSIndexPath, NSIndexPath)
+    case Delete(NSIndexPath)
+    
+    case InsertSection(NSIndexSet)
+    case DeleteSection(NSIndexSet)
+}
+
 //
 // CollectionDataProvider protocol to be implemented by collection views that use a NSFetchedResultsController
 

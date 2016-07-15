@@ -20,7 +20,7 @@ public final class PlaceList: ManagedObject {
     public static func insertIntoContext(moc: NSManagedObjectContext, name: String, updatedAt: NSDate?) -> PlaceList {
         let placeList: PlaceList = moc.insertObject()
         placeList.name = name
-        placeList.updatedAt = updatedAt
+        placeList.updatedAt = updatedAt ?? NSDate()
         return placeList
     }
     

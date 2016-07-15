@@ -9,15 +9,8 @@
 import Common
 import Models
 
-struct FakeData {
-    var title: String!
-    init(title: String) {
-        self.title = title
-    }
-}
-
 class ListsTileViewController: UICollectionViewController, BaseViewControllerProtocol, CollectionViewDelegate {
-    typealias Object = FakeData
+    typealias Object = PlaceList
     
     private var dataSource: ListsTileViewModel<ListsTileViewController>!
     
@@ -27,7 +20,10 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         //
         // Create data source
         
-        dataSource = ListsTileViewModel(delegate: self)
+        let fetchRequest = NSFetchRequest(entityName: "PlaceList")
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "name", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext.createBackgroundContext(), sectionNameKeyPath: nil, cacheName: nil)
+        dataSource = ListsTileViewModel(delegate: self, fetchedResultsController: frc)
         
         //
         // Set up collection view
@@ -46,26 +42,30 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.numberOfItemsInSection(section) + 1
+        return dataSource.numberOfItemsInSection(section)
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
-        if indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) {
+        if let object = dataSource.objectAtIndexPath(indexPath) {
+            cell.configureCell(object.name, count: Int(object.numberOfPlaces!), hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+        } else {
             cell.configureAddCell(isEndRow(indexPath))
-            cell.isAddCell = true
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.modalPresentationStyle = .OverCurrentContext
                 self?.presentViewController(vc, animated: true, completion: nil)
             }
-        } else {
-            cell.configureCell("GoodEats", count: indexPath.row, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
         }
         return cell
     }
     
+    // MARK: - CollectionViewDelegate methods
+    
+    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]) {
+        
+    }
     
     // MARK: - UICollectionViewDelegate methods
     
@@ -86,13 +86,12 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     }
     
     func isBottomRow(indexPath: NSIndexPath) -> Bool {
-        if  collectionView!.numberOfItemsInSection(indexPath.section) % 2 == 0 {
-            return indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) || indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) - 1
-        } else {
-            return indexPath.row == dataSource.numberOfItemsInSection(indexPath.section) - 1
+        let numRows = dataSource.numberOfItemsInSection(indexPath.section)
+        if  numRows % 2 == 0 {
+            return indexPath.row == numRows - 1 || indexPath.row == numRows - 2
         }
+        return false
     }
-    
     
 }
 

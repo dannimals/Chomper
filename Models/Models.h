@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 //! Project version number for Models.
 FOUNDATION_EXPORT double ModelsVersionNumber;

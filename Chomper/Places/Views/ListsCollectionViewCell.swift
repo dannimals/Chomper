@@ -15,7 +15,6 @@ class ListsCollectionViewCell: UICollectionViewCell {
     private var separatorColor = UIColor.lightGrayColor()
     var trailingSeparator: UIView!
     var bottomSeparator: UIView!
-    var isAddCell: Bool = false
     
     var addAction: (() -> ())?
     var titleAction: (() -> ())?
