@@ -57,7 +57,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()
                 vc.modalTransitionStyle = .CrossDissolve
-                vc.modalPresentationStyle = .FullScreen
+                vc.modalPresentationStyle = .OverCurrentContext
                 self?.presentViewController(vc, animated: true, completion: nil)
             }
         } else {
@@ -93,24 +93,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         }
     }
     
+    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
