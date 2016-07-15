@@ -49,7 +49,7 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
         containerView.addSubview(cancelButton)
         cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
         cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p small")
+        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), forState: .Normal)
         
         saveButton = UIButton()
@@ -114,14 +114,15 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
         lineView.trailingAnchor.constraintEqualToAnchor(textField.trailingAnchor, constant: 2.5).active = true
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
         textField.becomeFirstResponder()
     }
     
@@ -136,16 +137,11 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
         }
     }
     
-    func keyboardWillHide(notif: NSNotification) {
-        containerBottomLayout.constant = -(tabBarController?.view.frame.height ?? 0)
-    }
-    
     func textIsValid(textField: UITextField) -> Bool {
         let trimmedText = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? ""
         return !(textField.text?.isEmpty ?? false) && (trimmedText.characters.count > 0)
 
     }
-    
     
     @IBAction
     func cancelTapped(sender: UIButton) {
@@ -168,7 +164,6 @@ class CreateListViewController: UIViewController, BaseViewControllerProtocol, UI
         textField.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
         return true
-    
     }
 
 

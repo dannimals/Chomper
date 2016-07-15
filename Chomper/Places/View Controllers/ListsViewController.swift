@@ -34,7 +34,7 @@ class ListsViewController: UIViewController, BaseViewControllerProtocol {
         navigationItem.titleView = viewModeControl
         
         //
-        // Set up view controllers
+        // Set up child view controllers
         
         createListViewController()
         createTileViewController()
