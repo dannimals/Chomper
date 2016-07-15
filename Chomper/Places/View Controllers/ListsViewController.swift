@@ -55,7 +55,7 @@ class ListsViewController: UIViewController, BaseViewControllerProtocol {
     }
     
     private func createListViewController() {
-        listViewController = UITableViewController()
+        listViewController = ListsTableViewController()
         addChildViewController(listViewController)
         view.addSubview(listViewController.view)
         listViewController.didMoveToParentViewController(self)
