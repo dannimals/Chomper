@@ -15,6 +15,21 @@ class ListsCollectionViewCell: UICollectionViewCell {
     private var separatorColor = UIColor.lightGrayColor()
     var trailingSeparator: UIView!
     var bottomSeparator: UIView!
+    private var isAdd: Bool = false {
+        didSet {
+            if isAdd {
+                addButton.hidden = false
+                titleLabel.hidden = true
+                countLabel.hidden = true
+                bottomSeparator.hidden = true
+            } else {
+                addButton.hidden = true
+                titleLabel.hidden = false
+                countLabel.hidden = false
+
+            }
+        }
+    }
     
     var addAction: (() -> ())?
     var titleAction: (() -> ())?
@@ -122,9 +137,11 @@ class ListsCollectionViewCell: UICollectionViewCell {
 
     }
     
+    
     // MARK: - Helpers
     
     func configureCell(title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false) {
+        isAdd = false
         titleLabel.text = NSLocalizedString(title, comment: "title")
         countLabel.text = count == 0 ? nil : NSLocalizedString(String(count), comment: "count")
         trailingSeparator.hidden = hideTrailingSeparator!
@@ -132,11 +149,8 @@ class ListsCollectionViewCell: UICollectionViewCell {
     }
     
     func configureAddCell(hideTrailingSeparator: Bool = false) {
-        titleLabel.hidden = true
-        countLabel.hidden = true
-        addButton.hidden = false
+        isAdd = true
         trailingSeparator.hidden = hideTrailingSeparator
-        bottomSeparator.hidden = true
     }
     
     @IBAction
