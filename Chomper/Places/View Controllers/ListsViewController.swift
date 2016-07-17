@@ -9,7 +9,7 @@
 import Common
 import WebServices
 
-class ListsViewController: UIViewController, BaseViewControllerProtocol {
+class ListsViewController: BaseViewController {
     
     private var viewModeControl: UISegmentedControl!
     private var tileViewController: ListsTileViewController!
@@ -19,6 +19,7 @@ class ListsViewController: UIViewController, BaseViewControllerProtocol {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.whiteColor()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("+", comment: "Add"), style: .Plain, target: self, action: #selector(createNewList))
 
         //
         // Set up segmented control as titleView
@@ -33,6 +34,7 @@ class ListsViewController: UIViewController, BaseViewControllerProtocol {
         viewModeControl.selectedSegmentIndex = 0
         navigationItem.titleView = viewModeControl
         
+        
         //
         // Set up child view controllers
         
@@ -40,9 +42,16 @@ class ListsViewController: UIViewController, BaseViewControllerProtocol {
         createTileViewController()
         
     }
-
     
     // MARK: - Helpers
+    
+    func createNewList() {
+        let vc = CreateListViewController()
+        vc.modalTransitionStyle = .CrossDissolve
+        vc.modalPresentationStyle = .OverCurrentContext
+        vc.modalPresentationCapturesStatusBarAppearance = true
+        presentViewController(vc, animated: true, completion: nil)
+    }
     
     private func createTileViewController() {
         let layout = ListsCollectionViewLayout()

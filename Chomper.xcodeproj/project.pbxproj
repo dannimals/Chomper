@@ -23,6 +23,8 @@
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
 		9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736DE1D3954D500463665 /* ListsTableViewController.swift */; };
 		9E4736E11D39747B00463665 /* NSFetchedResultsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */; };
+		9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E21D39835A00463665 /* ListDetailsViewController.swift */; };
+		9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E41D3C0F8A00463665 /* BaseViewController.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
@@ -225,6 +227,8 @@
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9E4736DE1D3954D500463665 /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
 		9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFetchedResultsController+Extensions.swift"; sourceTree = "<group>"; };
+		9E4736E21D39835A00463665 /* ListDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailsViewController.swift; sourceTree = "<group>"; };
+		9E4736E41D3C0F8A00463665 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
@@ -642,6 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */,
+				9E4736E41D3C0F8A00463665 /* BaseViewController.swift */,
 				9E67369E1D3024F400C00995 /* Protocols */,
 			);
 			path = Common;
@@ -715,6 +720,7 @@
 				9E4736DE1D3954D500463665 /* ListsTableViewController.swift */,
 				9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */,
 				9EE7548C1D36C5FB0070779E /* ListsViewController.swift */,
+				9E4736E21D39835A00463665 /* ListDetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -1530,10 +1536,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */,
 				9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
 				9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */,
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
+				9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,

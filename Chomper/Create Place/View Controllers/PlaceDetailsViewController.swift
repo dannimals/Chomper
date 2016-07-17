@@ -9,7 +9,7 @@
 import Common
 import Foundation
 
-class PlaceDetailsViewController: UIViewController, BaseViewControllerProtocol {
+class PlaceDetailsViewController: BaseViewController {
     
     private var venue: SearchResult!
     

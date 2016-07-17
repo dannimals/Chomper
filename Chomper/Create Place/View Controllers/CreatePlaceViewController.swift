@@ -13,7 +13,7 @@ import Models
 import SwiftyJSON
 import WebServices
 
-class CreatePlaceViewController: UIViewController, BaseViewControllerProtocol, UITableViewDataSource, UITableViewDelegate {
+class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Properties
     

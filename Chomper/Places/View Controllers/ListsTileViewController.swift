@@ -50,11 +50,14 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         if let object = dataSource.objectAtIndexPath(indexPath) {
             cell.configureCell(object.name, count: Int(object.numberOfPlaces!), hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
         } else {
+            //
+            // Object is nil means cell is a "+"
             cell.configureAddCell(isEndRow(indexPath))
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()
                 vc.modalTransitionStyle = .CrossDissolve
                 vc.modalPresentationStyle = .OverCurrentContext
+                vc.modalPresentationCapturesStatusBarAppearance = true
                 self?.presentViewController(vc, animated: true, completion: nil)
             }
         }
@@ -74,8 +77,10 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? ListsCollectionViewCell {
-          //
+        if let list = dataSource.objectAtIndexPath(indexPath) {
+            let vc = ListDetailsViewController()
+            vc.title = list.name
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     

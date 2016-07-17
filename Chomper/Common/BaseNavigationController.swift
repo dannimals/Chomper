@@ -12,5 +12,7 @@ import UIKit
 // Class for overriding elements in UINavigationController for Chomper customization
 
 class BaseNavigationController: UINavigationController {
-
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
 }

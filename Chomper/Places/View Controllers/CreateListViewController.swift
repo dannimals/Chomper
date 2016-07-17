@@ -9,7 +9,7 @@
 import Common
 import Models
 
-class CreateListViewController: UIViewController, BaseViewControllerProtocol, UITextFieldDelegate {
+class CreateListViewController: BaseViewController, UITextFieldDelegate {
     private var backgroundContext: NSManagedObjectContext!
     var cancelButton: UIButton!
     var containerView: UIView!
