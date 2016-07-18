@@ -34,9 +34,15 @@ extension CollectionViewDelegate {
             case .DeleteSection(let section):
                 collectionView?.deleteSections(section)
 
-              // handle empty view
+              // TODO: handle empty view
                 
             }
+        }
+        //
+        // Need to force refresh UI on visible cells 
+        
+        if let visibleCells = collectionView?.indexPathsForVisibleItems() {
+            collectionView?.reloadItemsAtIndexPaths(visibleCells)
         }
     }
 }
