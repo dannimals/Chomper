@@ -49,12 +49,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
-        if let object = dataSource.objectAtIndexPath(indexPath) {
-            cell.configureCell(object.name, count: Int(object.numberOfPlaces!), hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
-        } else {
-            //
-            // Object is nil means cell is a "+"
-            cell.configureAddCell(isEndRow(indexPath))
+        if dataSource.objectAtIndexPath(indexPath) == nil {
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()
                 vc.modalTransitionStyle = .CrossDissolve
@@ -69,7 +64,14 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     // MARK: - UICollectionViewDelegate methods
     
     override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        //
+        guard let cell = cell as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
+        if let object = dataSource.objectAtIndexPath(indexPath) {
+            cell.configureCell(object.name, count: Int(object.numberOfPlaces!), hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+        } else {
+            //
+            // Object is nil means cell is a "+"
+            cell.configureAddCell(isEndRow(indexPath))
+        }
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
