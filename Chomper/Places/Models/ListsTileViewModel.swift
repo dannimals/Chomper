@@ -9,39 +9,6 @@
 import Common
 import Models
 
-protocol CollectionViewDelegate: class {
-    associatedtype Object
-    var collectionView: UICollectionView? { get }
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>])
-    
-}
-
-extension CollectionViewDelegate {
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]) {
-        for update in updates {
-            switch update {
-            case .Insert(let indexPath):
-                collectionView?.insertItemsAtIndexPaths([indexPath])
-            case .Update(let indexPath, _):
-                collectionView?.reloadItemsAtIndexPaths([indexPath])
-            case .Move(let indexPath, let newIndexPath):
-                guard indexPath != newIndexPath else { return }
-                collectionView?.deleteItemsAtIndexPaths([indexPath])
-                collectionView?.insertItemsAtIndexPaths([newIndexPath])
-            case .Delete(let indexPath):
-                collectionView?.deleteItemsAtIndexPaths([indexPath])
-            case .InsertSection(let section):
-                collectionView?.insertSections(section)
-            case .DeleteSection(let section):
-                collectionView?.deleteSections(section)
-                
-              // handle empty view
-                
-            }
-        }
-    }
-}
-
 class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, CollectionDataProvider, NSFetchedResultsControllerDelegate {
     typealias Object = Delegate.Object
     
@@ -70,7 +37,8 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     
     func numberOfItemsInSection(section: Int) -> Int {
         //
-        // Add a "+" cell in collectionView
+        // Add an extra "+" cell in collectionView
+        
         guard let sec = sections?[section] else { return 1 }
         return sec.numberOfObjects + 1
     }
@@ -116,7 +84,7 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        delegate.dataProviderDidUpdate(updates)
+        self.delegate.dataProviderDidUpdate(self.updates)
     }
     
 }

@@ -22,8 +22,10 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         
         let fetchRequest = NSFetchRequest(entityName: "PlaceList")
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "name", ascending: true)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext.createBackgroundContext(), sectionNameKeyPath: nil, cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
         dataSource = ListsTileViewModel(delegate: self, fetchedResultsController: frc)
+   
+        
         
         //
         // Set up collection view
@@ -62,12 +64,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             }
         }
         return cell
-    }
-    
-    // MARK: - CollectionViewDelegate methods
-    
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]) {
-        
     }
     
     // MARK: - UICollectionViewDelegate methods

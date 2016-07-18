@@ -28,4 +28,27 @@ extension NSManagedObjectContext {
         return context
     }
     
+    
+    public func insertObject<A: ManagedObject where A: ManagedObjectType>() -> A {
+        guard let obj = NSEntityDescription.insertNewObjectForEntityForName(A.entityName, inManagedObjectContext: self) as? A else { fatalError("Wrong object type") }
+        return obj
+    }
+    
+    public func saveOrRollback() -> Bool {
+        do {
+            try save()
+            return true
+        } catch {
+            rollback()
+            return false
+        }
+    }
+
+    
+    public func performChanges(block: () -> ()) {
+        performBlock {
+            block()
+            self.saveOrRollback()
+        }
+    }
 }

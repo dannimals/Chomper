@@ -11,6 +11,7 @@ import Models
 
 class CreateListViewController: BaseViewController, UITextFieldDelegate {
     private var backgroundContext: NSManagedObjectContext!
+    
     var cancelButton: UIButton!
     var containerView: UIView!
     var containerBottomLayout: NSLayoutConstraint!
@@ -24,10 +25,15 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         //
-        // Set up background context
-
+        // Set up background context and observers
+        
         backgroundContext = mainContext.createBackgroundContext()
-
+        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: backgroundContext, queue: nil) { [weak self] (note) in
+            self?.mainContext.performChanges {
+                self?.mainContext.mergeChangesFromContextDidSaveNotification(note)
+            }
+        }
+        
         //
         // Set up view
         
@@ -155,9 +161,9 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
     }
     
     func createNewList() {
-        PlaceList.insertIntoContext(backgroundContext, name: textField.text!, updatedAt: NSDate())
-        try! backgroundContext.save()
-        // TODO: Do I need to merge changes here into main if main is using nsfetchedresultscontroller?
+        backgroundContext.performChanges { [unowned self] in
+            PlaceList.insertIntoContext(self.backgroundContext, name: (self.textField.text)!, updatedAt: NSDate())
+        }
         saveAction?()
         textField.resignFirstResponder()
         dismissViewControllerAnimated(true, completion: nil)
