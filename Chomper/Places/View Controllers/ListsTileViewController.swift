@@ -76,9 +76,14 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let list = dataSource.objectAtIndexPath(indexPath) {
-            let vc = ListDetailsViewController()
+            let vc = ListDetailsViewController(placeList: list)
+            let nc = BaseNavigationController(rootViewController: vc)
             vc.title = list.name
-            navigationController?.pushViewController(vc, animated: true)
+            nc.modalTransitionStyle = .CrossDissolve
+            nc.modalPresentationStyle = .OverCurrentContext
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            presentViewController(nc, animated: true, completion: nil)
+           
         }
     }
     
