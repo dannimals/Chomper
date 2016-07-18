@@ -11,7 +11,7 @@ import Foundation
 
 public struct ObjectsDidChangeNotification {
     
-    // MARK: Used to observe changes on entity object 
+    // MARK: Used to observe changes on an entity object from an NSNotification
     
     private let notification: NSNotification
     public var managedObjectContext: NSManagedObjectContext {
@@ -50,18 +50,5 @@ public struct ObjectsDidChangeNotification {
     
     private func objectsForKey(key: String) -> Set<ManagedObject> {
         return (notification.userInfo?[key] as? Set<ManagedObject>) ?? Set()
-    }
-}
-
-extension NSManagedObjectContext {
-    
-    // MARK: Adds the given block to the default `NSNotificationCenter`'s dispatch table for the given context's objects-did-change notifications. Returns an opaque object to act as the observer. This must be sent to the default `NSNotificationCenter`'s `removeObserver()`.
-    
-    public func addObjectsDidChangeNotificationObserver(handler: ObjectsDidChangeNotification -> ()) -> NSObjectProtocol {
-        let nc = NSNotificationCenter.defaultCenter()
-        return nc.addObserverForName(NSManagedObjectContextObjectsDidChangeNotification, object: self, queue: nil) { note in
-            let wrappedNote = ObjectsDidChangeNotification(note: note)
-            handler(wrappedNote)
-        }
     }
 }

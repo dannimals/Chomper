@@ -11,14 +11,14 @@ import Models
 
 class CreateListViewController: BaseViewController, UITextFieldDelegate {
     private var backgroundContext: NSManagedObjectContext!
+    private var cancelButton: UIButton!
+    private var containerView: UIView!
+    private var containerBottomLayout: NSLayoutConstraint!
+    private var errorLabel: UILabel!
+    private var saveButton: UIButton!
+    private var textField: UITextField!
+    private var titleTopLayout: NSLayoutConstraint!
     
-    var cancelButton: UIButton!
-    var containerView: UIView!
-    var containerBottomLayout: NSLayoutConstraint!
-    var errorLabel: UILabel!
-    var saveButton: UIButton!
-    var textField: UITextField!
-    var titleTopLayout: NSLayoutConstraint!
     var saveAction: (() -> ())?
     
     override func viewDidLoad() {
@@ -28,11 +28,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         // Set up background context and observers
         
         backgroundContext = mainContext.createBackgroundContext()
-        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: backgroundContext, queue: nil) { [weak self] (note) in
-            self?.mainContext.performChanges {
-                self?.mainContext.mergeChangesFromContextDidSaveNotification(note)
-            }
-        }
+        backgroundContext.addNSManagedObjectContextDidSaveNotificationObserver(mainContext)
         
         //
         // Set up view
@@ -214,6 +210,4 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         errorLabel.text = ""
         return true
     }
-
-
 }

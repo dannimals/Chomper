@@ -11,7 +11,7 @@ import CoreData
 extension NSManagedObjectContext {
     
     //
-    // Convenience method for accessing global main context
+    // Convenience method for accessing global main context, used for UI
     
     public static func mainContext() -> NSManagedObjectContext {
         let mainContext = createChomperMainContext
@@ -49,6 +49,30 @@ extension NSManagedObjectContext {
         performBlock {
             block()
             self.saveOrRollback()
+        }
+    }
+    
+    //
+    // Returns an NSNotification NSManagedObjectContextDidSaveNotification observer on the source managed object context's save()
+    // Handles ObjectsDidChangeNotification as callback
+    
+    public func addObjectsDidChangeNotificationObserver(handler: ObjectsDidChangeNotification -> ()) -> NSObjectProtocol {
+        let nc = NSNotificationCenter.defaultCenter()
+        return nc.addObserverForName(NSManagedObjectContextDidSaveNotification, object: self, queue: nil) { note in
+            let wrappedNote = ObjectsDidChangeNotification(note: note)
+            handler(wrappedNote)
+        }
+    }
+    
+    //
+    // Adds an NSNotification NSManagedObjectContextDidSaveNotification observer on the source managed object context's save()
+    // And saves the changes from merge on target context
+
+    public func addNSManagedObjectContextDidSaveNotificationObserver(targetContext: NSManagedObjectContext) {
+        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: self, queue: nil) { note in
+            targetContext.performChanges {
+                targetContext.mergeChangesFromContextDidSaveNotification(note)
+            }
         }
     }
 }
