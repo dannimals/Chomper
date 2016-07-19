@@ -26,11 +26,12 @@
 		9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E21D39835A00463665 /* ListDetailsViewController.swift */; };
 		9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E41D3C0F8A00463665 /* BaseViewController.swift */; };
 		9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */; };
+		9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A451D3EA041001E3B39 /* Constants.swift */; };
+		9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A471D3EA130001E3B39 /* SearchResult.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
 		9E67366B1D2DA17600C00995 /* NSManagedObjectContext+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67366A1D2DA17600C00995 /* NSManagedObjectContext+Extensions.swift */; };
-		9E67366D1D2EB14F00C00995 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67366C1D2EB14F00C00995 /* SearchResult.swift */; };
 		9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */; };
 		9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */; };
 		9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */; };
@@ -231,11 +232,12 @@
 		9E4736E21D39835A00463665 /* ListDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailsViewController.swift; sourceTree = "<group>"; };
 		9E4736E41D3C0F8A00463665 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegate.swift; sourceTree = "<group>"; };
+		9E4F0A451D3EA041001E3B39 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9E4F0A471D3EA130001E3B39 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
 		9E67366A1D2DA17600C00995 /* NSManagedObjectContext+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Extensions.swift"; sourceTree = "<group>"; };
-		9E67366C1D2EB14F00C00995 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerProtocol.swift; sourceTree = "<group>"; };
@@ -468,6 +470,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		9E4F0A441D3EA02F001E3B39 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				9E4F0A451D3EA041001E3B39 /* Constants.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		9E6736691D2DA15F00C00995 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -559,10 +569,11 @@
 			children = (
 				9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */,
 				9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */,
-				9E67366C1D2EB14F00C00995 /* SearchResult.swift */,
+				9E4F0A471D3EA130001E3B39 /* SearchResult.swift */,
 				9EE216271D19BAA7004C7C53 /* Extensions */,
-				9EE215801D19B347004C7C53 /* Info.plist */,
 				9EE2157E1D19B347004C7C53 /* Common.h */,
+				9EE215801D19B347004C7C53 /* Info.plist */,
+				9E4F0A441D3EA02F001E3B39 /* Misc */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1577,9 +1588,10 @@
 			files = (
 				9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */,
 				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
+				9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */,
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
-				9E67366D1D2EB14F00C00995 /* SearchResult.swift in Sources */,
 				9EE216291D19BAA7004C7C53 /* DependencyInjector.swift in Sources */,
+				9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */,
 				9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */,
 				9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */,
 			);

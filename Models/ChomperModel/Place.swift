@@ -28,7 +28,7 @@ public final class Place: ManagedObject {
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, city: String? = nil, creatorId: String? = nil, location: CLLocation?, name: String, notes: String? = nil, price: NSNumber? = nil, rating: NSNumber? = nil, streetName: String? = nil, state: String? = nil, updatedAt: NSDate? = nil, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, placeListName: String) -> Place {
+    public static func insertIntoContext(moc: NSManagedObjectContext, city: String?, creatorId: String? = nil, location: CLLocation?, name: String, notes: String? = nil, price: NSNumber?, rating: NSNumber?, streetName: String?, state: String?, updatedAt: NSDate? = nil, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, placeListName: String) -> Place {
         let place: Place = moc.insertObject()
         place.city = city
         place.creatorId = creatorId

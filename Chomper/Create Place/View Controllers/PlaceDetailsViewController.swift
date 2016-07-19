@@ -7,14 +7,14 @@
 //
 
 import Common
-import Foundation
+import Models
 
 class PlaceDetailsViewController: BaseViewController {
     
-    private var venue: SearchResult!
+    private var place: SearchResult!
     
-    required init(venue: SearchResult) {
-        self.venue = venue
+    required init(place: SearchResult) {
+        self.place = place
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,7 +29,7 @@ class PlaceDetailsViewController: BaseViewController {
         //
         // Set up view
         
-        title = venue.name
+        title = place.name
         view.backgroundColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("+", comment: "Add"), style: .Plain, target: self, action: #selector(add(_:)))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
@@ -41,7 +41,7 @@ class PlaceDetailsViewController: BaseViewController {
     // MARK: - Handlers
     
     func getPlaceDetails() {
-        webService.getDetailsForPlace(venue.venueId) { (json, response, error) in
+        webService.getDetailsForPlace(place.venueId) { (json, response, error) in
             if error == nil {
                 print(json)
             } else {
@@ -51,30 +51,20 @@ class PlaceDetailsViewController: BaseViewController {
     }
     
     func add(sender: UIBarButtonItem) {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-//            let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
-//                if action.enabled {
-//                    self.alertWithCancelButton(
-//                        NSLocalizedString("Cancel", comment: "cancel"),
-//                        confirmButton: NSLocalizedString("Confirm", comment: "confirm"),
-//                        title: NSLocalizedString("Are you sure?", comment: "check"),
-//                        message: NSLocalizedString("Deleting list will also delete its associated places.", comment: "message"),
-//                        destructiveStyle: true, confirmBold: true, style: .Alert) { bool in
-//                            if bool {
-//                                self.mainContext.performChanges {
-//                                    self.mainContext.deleteObject(self.list)
-//                                }
-//                                self.dismissVC()
-//                            }
-//                    }
-//                }
-//            }
-//            alertController.addAction(deleteAction)
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-//            alertController.addAction(cancelAction)
-//            
-//            self.presentViewController(alertController, animated: true, completion: nil)
-        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let quickSave = UIAlertAction(title: NSLocalizedString("Quick save", comment: "quick save"), style: .Default) { [unowned self] (action) in
+            if action.enabled {
+                self.mainContext.performChanges {
+                    Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
+                }
+                self.dismissVC(UIBarButtonItem())
+            }
+          
+        }
+        alertController.addAction(quickSave)
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        presentViewController(alertController, animated: true, completion: nil)
     }
     
     func dismissVC(sender: UIBarButtonItem) {

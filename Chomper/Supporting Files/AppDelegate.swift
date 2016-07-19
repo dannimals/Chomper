@@ -26,13 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up Core Data stack
         
         let moc = NSManagedObjectContext.mainContext()
-        let predicate = NSPredicate(format: "name == %@", NSLocalizedString("Saved", comment: "saved"))
         let fetchRequest = NSFetchRequest(entityName: "PlaceList")
-        fetchRequest.predicate = predicate
         var fetchError : NSError?
         if moc.countForFetchRequest(fetchRequest, error: &fetchError) == 0 {
             moc.performChanges {
-                let saved = PlaceList.insertIntoContext(moc, name: NSLocalizedString("Saved", comment: "saved"), updatedAt: NSDate())
+                let saved = PlaceList.insertIntoContext(moc, name: defaultSavedList, updatedAt: NSDate())
                 saved.sequenceNum = 1
             }
         }

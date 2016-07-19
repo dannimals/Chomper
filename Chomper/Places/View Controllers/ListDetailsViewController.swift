@@ -38,12 +38,6 @@ class ListDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("1: \(list)")
-        print("2: \(list.places)")
-        print("3: \(list.places?.count)")
-        print("4: \(list.places)")
-        
-        
         // 
         // Configure view
         
@@ -84,7 +78,9 @@ class ListDetailsViewController: BaseViewController {
     func handleEdit() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
-        if list.name != NSLocalizedString("Saved", comment: "saved") {
+        //
+        // Check to make sure list is deletable ie. not the default saved list
+        if list.sequenceNum != 1 {
             let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
                 if action.enabled {
                     self.alertWithCancelButton(

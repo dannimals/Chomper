@@ -262,7 +262,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         guard let object = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
-        let vc = PlaceDetailsViewController(venue: object)
+        let vc = PlaceDetailsViewController(place: object)
         let nc = BaseNavigationController(rootViewController: vc)
         presentViewController(nc, animated: true, completion: nil)
     }
