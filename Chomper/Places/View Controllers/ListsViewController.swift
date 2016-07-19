@@ -19,8 +19,8 @@ class ListsViewController: BaseViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.whiteColor()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("+", comment: "Add"), style: .Plain, target: self, action: #selector(createNewList))
-
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(createNewList))
+        
         //
         // Set up segmented control as titleView
         

@@ -7,6 +7,7 @@
 //
 
 import Common
+import CoreLocation
 import Models
 
 class ListDetailsViewController: BaseViewController {
@@ -23,6 +24,7 @@ class ListDetailsViewController: BaseViewController {
     }*/
     private var observer: ManagedObjectObserver?
     private var tableView: UITableView!
+    private var viewModel: [Place]!
     
     required init(placeList: PlaceList) {
         super.init(nibName: nil, bundle: nil)
@@ -38,6 +40,8 @@ class ListDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        viewModel = list.places?.sort { $0.name < $1.name } ?? []
+        
         // 
         // Configure view
         
@@ -49,9 +53,13 @@ class ListDetailsViewController: BaseViewController {
         // Configure table view
         
         tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.tableFooterView = UIView()
+        tableView.separatorStyle = .None
         
         let views: [String: AnyObject] = [
             "topLayout": topLayoutGuide,
@@ -110,7 +118,35 @@ class ListDetailsViewController: BaseViewController {
     func dismissVC() {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-  
-    
 }
+
+extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate  {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell else { fatalError("cell not dequeued") }
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = cell as? PlaceTableViewCell else { fatalError("cell not found") }
+        let place = viewModel[indexPath.row]
+        var location: CLLocation? = nil
+        if let lat = place.latitude, long = place.longitude {
+            location = CLLocation(latitude: Double(lat), longitude: Double(long))
+        }
+        cell.configurePlaceCell(place.name, address: place.streetName, rating: place.rating, price: place.price, location: location)
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 82.0
+    }
+}
+
+
+
+
+
+

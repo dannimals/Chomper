@@ -6,6 +6,7 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
+import CoreLocation
 import Common
 
 class PlaceTableViewCell: UITableViewCell {
@@ -62,6 +63,20 @@ class PlaceTableViewCell: UITableViewCell {
             priceLabel.text = convertPrice(object.price!)
         }
         // display distance
+    }
+    
+    func configurePlaceCell(name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: Bool? = false) {
+        
+        nameLabel.text = name
+        addressLabel.text = address ?? "Address unknown"
+        ratingLabel.text = rating != nil ? "\(floor(rating!.doubleValue/2)) stars" : nil
+        if price == nil {
+            priceLabel.hidden = true
+        } else {
+            priceLabel.text = convertPrice(Double(price!))
+        }
+        // display distance
+
     }
     
     private func convertPrice(price: Double?) -> String? {
