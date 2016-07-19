@@ -7,7 +7,7 @@
 //
 
 import Common
-import CoreData
+import Models
 import WebServices
 
 

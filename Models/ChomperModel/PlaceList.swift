@@ -10,6 +10,11 @@ public final class PlaceList: ManagedObject {
     @NSManaged public var name: String
     @NSManaged public var updatedAt: NSDate?
     @NSManaged public var numberOfPlaces: NSNumber?
+    //
+    // Only used for default "Saved" list
+    // "Saved" list sequence num is set to 1
+    @NSManaged public var sequenceNum: NSNumber?
+
     
     // MARK: - Relationships
     
@@ -40,6 +45,9 @@ extension PlaceList: ManagedObjectType {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         return [NSSortDescriptor(key: "updatedAt", ascending: false)]
     }
+    
+//    public static var defaultPredicate: NSPredicate {
+//    }
 
 }
 

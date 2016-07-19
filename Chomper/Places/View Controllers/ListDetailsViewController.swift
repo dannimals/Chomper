@@ -10,14 +10,14 @@ import Common
 import Models
 
 class ListDetailsViewController: BaseViewController {
-    private var listObject: PlaceList! /*{
+    private var list: PlaceList! /*{
         didSet {
-            observer = ManagedObjectObserver(object: listObject) { [unowned self] type in
+            observer = ManagedObjectObserver(object: list) { [unowned self] type in
                 guard type == .Delete else { return }
                 self.mainContext.performChanges {
-                    self.mainContext.deleteObject(self.listObject)
+                    self.mainContext.deleteObject(self.list)
                 }
-                self.navigationController?.popViewControllerAnimated(true)
+                self.dismissVC()
             }
         }
     }*/
@@ -27,7 +27,7 @@ class ListDetailsViewController: BaseViewController {
     required init(placeList: PlaceList) {
         super.init(nibName: nil, bundle: nil)
         mainContext.performBlock {
-            self.listObject = self.mainContext.objectWithID(placeList.objectID) as? PlaceList
+            self.list = self.mainContext.objectWithID(placeList.objectID) as? PlaceList
         }
     }
     
@@ -37,6 +37,12 @@ class ListDetailsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("1: \(list)")
+        print("2: \(list.places)")
+        print("3: \(list.places?.count)")
+        print("4: \(list.places)")
+        
         
         // 
         // Configure view
@@ -77,25 +83,38 @@ class ListDetailsViewController: BaseViewController {
     
     func handleEdit() {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
-            if action.enabled {
-                self.mainContext.performChanges {
-                    self.mainContext.deleteObject(self.listObject)
+        
+        if list.name != NSLocalizedString("Saved", comment: "saved") {
+            let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
+                if action.enabled {
+                    self.alertWithCancelButton(
+                        NSLocalizedString("Cancel", comment: "cancel"),
+                        confirmButton: NSLocalizedString("Confirm", comment: "confirm"),
+                        title: NSLocalizedString("Are you sure?", comment: "check"),
+                        message: NSLocalizedString("Deleting list will also delete its associated places.", comment: "message"),
+                        destructiveStyle: true, confirmBold: true, style: .Alert) { bool in
+                            if bool {
+                                self.mainContext.performChanges {
+                                    self.mainContext.deleteObject(self.list)
+                                }
+                                self.dismissVC()
+                            }
+                    }
                 }
-                self.dismissVC()
             }
+            alertController.addAction(deleteAction)
         }
-        alertController.addAction(deleteAction)
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true) {
-            // ...
-        }
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func dismissVC() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+  
     
 }

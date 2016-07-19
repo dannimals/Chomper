@@ -7,7 +7,7 @@
 //
 
 import Common
-import CoreData
+import Models
 
 //
 // TableDataProvider protocol to be implemented by table views that use a NSFetchedResultsController

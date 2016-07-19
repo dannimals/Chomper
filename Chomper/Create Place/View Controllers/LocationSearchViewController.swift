@@ -7,7 +7,6 @@
 //
 
 import GoogleMaps
-import UIKit
 
 class LocationSearchViewController: UIViewController, BaseViewControllerProtocol {
     

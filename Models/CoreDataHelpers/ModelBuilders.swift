@@ -6,8 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import CoreData
-
 public class ManagedObject: NSManagedObject {
     //
     // All model entity classes must subclass ManagedObject

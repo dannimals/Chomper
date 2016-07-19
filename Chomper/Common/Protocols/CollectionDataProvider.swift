@@ -7,7 +7,7 @@
 //
 
 import Common
-import CoreData
+import Models
 
 enum DataProviderUpdate<Object> {
     case Insert(NSIndexPath)

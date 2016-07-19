@@ -6,8 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import CoreData
-import Foundation
 
 public enum ChangeType {
     case Delete

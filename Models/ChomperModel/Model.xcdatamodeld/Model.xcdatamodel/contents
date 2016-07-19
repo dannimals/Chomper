@@ -19,11 +19,12 @@
     <entity name="PlaceList" representedClassName=".PlaceList" syncable="YES">
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="numberOfPlaces" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="sequenceNum" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Place" inverseName="placeList" inverseEntity="Place" syncable="YES"/>
     </entity>
     <elements>
         <element name="Place" positionX="-63" positionY="-18" width="128" height="255"/>
-        <element name="PlaceList" positionX="-54" positionY="-9" width="128" height="105"/>
+        <element name="PlaceList" positionX="-54" positionY="-9" width="128" height="120"/>
     </elements>
 </model>

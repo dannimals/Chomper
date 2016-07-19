@@ -26,6 +26,9 @@ class PlaceDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //
+        // Set up view
+        
         title = venue.name
         view.backgroundColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("+", comment: "Add"), style: .Plain, target: self, action: #selector(add(_:)))
@@ -48,6 +51,29 @@ class PlaceDetailsViewController: BaseViewController {
     }
     
     func add(sender: UIBarButtonItem) {
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+//            let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
+//                if action.enabled {
+//                    self.alertWithCancelButton(
+//                        NSLocalizedString("Cancel", comment: "cancel"),
+//                        confirmButton: NSLocalizedString("Confirm", comment: "confirm"),
+//                        title: NSLocalizedString("Are you sure?", comment: "check"),
+//                        message: NSLocalizedString("Deleting list will also delete its associated places.", comment: "message"),
+//                        destructiveStyle: true, confirmBold: true, style: .Alert) { bool in
+//                            if bool {
+//                                self.mainContext.performChanges {
+//                                    self.mainContext.deleteObject(self.list)
+//                                }
+//                                self.dismissVC()
+//                            }
+//                    }
+//                }
+//            }
+//            alertController.addAction(deleteAction)
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+//            alertController.addAction(cancelAction)
+//            
+//            self.presentViewController(alertController, animated: true, completion: nil)
         
     }
     

@@ -21,11 +21,10 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         // Create data source
         
         let fetchRequest = NSFetchRequest(entityName: "PlaceList")
-        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sequenceNum", ascending: false), NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
         dataSource = ListsTileViewModel(delegate: self, fetchedResultsController: frc)
    
-        
         
         //
         // Set up collection view
@@ -53,7 +52,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()
                 vc.modalTransitionStyle = .CrossDissolve
-                vc.modalPresentationStyle = .OverCurrentContext
                 vc.modalPresentationCapturesStatusBarAppearance = true
                 self?.presentViewController(vc, animated: true, completion: nil)
             }
@@ -80,7 +78,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             let nc = BaseNavigationController(rootViewController: vc)
             vc.title = list.name
             nc.modalTransitionStyle = .CrossDissolve
-            nc.modalPresentationStyle = .OverCurrentContext
             vc.modalPresentationCapturesStatusBarAppearance = true
             presentViewController(nc, animated: true, completion: nil)
            
@@ -100,6 +97,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         }
         return false
     }
+
     
 }
 
