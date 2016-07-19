@@ -20,6 +20,7 @@ class ListsViewController: BaseViewController {
         
         view.backgroundColor = UIColor.whiteColor()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(createNewList))
+        navigationController?.navigationBar.setShadow()
         
         //
         // Set up segmented control as titleView

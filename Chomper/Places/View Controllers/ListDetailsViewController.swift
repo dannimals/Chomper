@@ -26,11 +26,9 @@ class ListDetailsViewController: BaseViewController {
     private var tableView: UITableView!
     private var viewModel: [Place]!
     
-    required init(placeList: PlaceList) {
+    required init(placeListId: NSManagedObjectID) {
         super.init(nibName: nil, bundle: nil)
-        mainContext.performBlock {
-            self.list = self.mainContext.objectWithID(placeList.objectID) as? PlaceList
-        }
+        list = mainContext.objectWithID(placeListId) as? PlaceList
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +37,7 @@ class ListDetailsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         viewModel = list.places?.sort { $0.name < $1.name } ?? []
         
         // 
