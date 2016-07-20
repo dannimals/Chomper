@@ -207,7 +207,7 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         delete.backgroundColor = UIColor.redColor()
         
         let place = viewModel[indexPath.row]
-        let visitedTitle = place.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Mark Visted", comment: "visited")
+        let visitedTitle = place.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Mark Visited", comment: "visited")
         let visited = UITableViewRowAction(style: .Normal, title: visitedTitle) { [unowned self] (_, indexPath) in
             self.markItemAtIndexPath(indexPath)
         }

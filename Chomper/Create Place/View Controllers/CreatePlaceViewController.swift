@@ -240,6 +240,14 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         loadingLabel.centerXAnchor.constraintEqualToAnchor(loadingView.centerXAnchor).active = true
     }
     
+    func quickSave(indexPath: NSIndexPath) {
+        guard let place = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
+        mainContext.performChanges {
+            Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: place.location, name: place.name, notes: nil, price: place.price, rating: place.rating, streetName: place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
+        }
+        tableVC.tableView.setEditing(false, animated: true)
+    }
+    
     // MARK: - UITableViewDataSource methods
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -266,6 +274,23 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         let nc = BaseNavigationController(rootViewController: vc)
         presentViewController(nc, animated: true, completion: nil)
     }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        quickSave(indexPath)
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let save = UITableViewRowAction(style: .Normal, title: NSLocalizedString("Quick save", comment: "quick save")) { [unowned self] (_, indexPath) in
+            self.quickSave(indexPath)
+        }
+        save.backgroundColor = UIColor.orangeColor()
+        return [save]
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
 }
 
 extension CreatePlaceViewController: UITextFieldDelegate {
