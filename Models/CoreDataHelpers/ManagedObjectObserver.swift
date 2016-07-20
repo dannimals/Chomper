@@ -6,6 +6,9 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
+//
+// Adapted from "objc Core Data" book by Florian Kugler and Daneil Eggert
+// https://www.objc.io/books/core-data/
 
 public enum ChangeType {
     case Delete
