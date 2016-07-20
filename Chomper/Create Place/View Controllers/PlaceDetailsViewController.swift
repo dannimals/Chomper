@@ -13,7 +13,7 @@ class PlaceDetailsViewController: BaseViewController {
     
     private var place: SearchResult!
     
-    required init(place: SearchResult) {
+    init(place: SearchResult) {
         self.place = place
         super.init(nibName: nil, bundle: nil)
     }

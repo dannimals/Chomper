@@ -17,7 +17,8 @@ class PlaceTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var separator: UIView!
-
+    @IBOutlet weak var visitedLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -36,6 +37,9 @@ class PlaceTableViewCell: UITableViewCell {
         ratingLabel.font = UIFont.chomperFontForTextStyle("smallest")
         ratingLabel.textColor = UIColor.orangeColor()
         
+        visitedLabel.font = UIFont.chomperFontForTextStyle("smallest")
+        visitedLabel.textColor = UIColor.orangeColor()
+        
         distanceLabel.font = UIFont.chomperFontForTextStyle("p small")
         distanceLabel.textColor = UIColor.orangeColor()
         
@@ -49,6 +53,7 @@ class PlaceTableViewCell: UITableViewCell {
         addressLabel.text = nil
         priceLabel.text = nil
         ratingLabel.text = nil
+        visitedLabel.text = nil
         distanceLabel.text = nil
     }
 
@@ -65,7 +70,7 @@ class PlaceTableViewCell: UITableViewCell {
         // display distance
     }
     
-    func configurePlaceCell(name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: Bool? = false) {
+    func configurePlaceCell(name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: NSNumber = NSNumber(int: 0)) {
         
         nameLabel.text = name
         addressLabel.text = address ?? "Address unknown"
@@ -75,7 +80,12 @@ class PlaceTableViewCell: UITableViewCell {
         } else {
             priceLabel.text = convertPrice(Double(price!))
         }
-        // display distance
+        
+        if visited.boolValue {
+            visitedLabel.text = "Visited"
+            // TODO: Change to an icon
+        }
+        // TODO: display distance
 
     }
     

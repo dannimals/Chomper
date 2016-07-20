@@ -10,6 +10,9 @@ import Common
 import CoreLocation
 import Models
 
+//
+// TODO: Refactor this class to be reused by ListsTableVC
+
 class ListDetailsViewController: BaseViewController {
     private var list: PlaceList! /*{
         didSet {
@@ -85,7 +88,7 @@ class ListDetailsViewController: BaseViewController {
         
         //
         // Check to make sure list is deletable ie. not the default saved list
-        if list.sequenceNum != 1 {
+        if list.name != defaultSavedList {
             let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             let editAction = UIAlertAction(title: NSLocalizedString("Edit list", comment: "edit"), style: .Default) { [unowned self] action in
                 if action.enabled {
@@ -123,6 +126,24 @@ class ListDetailsViewController: BaseViewController {
     
     // MARK: - Handlers
     
+    func deleteItemAtIndexPath(indexPath: NSIndexPath) {
+        let place = viewModel[indexPath.row]
+        viewModel.removeAtIndex(indexPath.row)
+        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        mainContext.performChanges {
+            self.mainContext.deleteObject(place)
+        }
+    }
+    
+    func markItemAtIndexPath(indexPath: NSIndexPath) {
+        let place = viewModel[indexPath.row]
+        let visited = place.visited == NSNumber(int: 0) ? NSNumber(int: 1) : NSNumber(int: 0)
+        mainContext.performChanges {
+            place.visited = visited
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
+    }
+    
     func beginEditing() {
         tableView.setEditing(true, animated: true)
         let cancel = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelEditing))
@@ -142,6 +163,9 @@ class ListDetailsViewController: BaseViewController {
 }
 
 extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate  {
+    
+    // MARK: - UITableViewDelegate delegate methods
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.count
     }
@@ -151,6 +175,8 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         return cell
     }
     
+    // MARK: - UITableViewDataSource delegate methods
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("cell not found") }
         let place = viewModel[indexPath.row]
@@ -158,27 +184,40 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         if let lat = place.latitude, long = place.longitude {
             location = CLLocation(latitude: Double(lat), longitude: Double(long))
         }
-        cell.configurePlaceCell(place.name, address: place.streetName, rating: place.rating, price: place.price, location: location)
-    }
-    
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        let place = viewModel[indexPath.row]
-
-        if editingStyle == .Delete {
-            viewModel.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            mainContext.performChanges { [weak self] in
-                self?.mainContext.deleteObject(place)
-            }
-        }
-    }
-    
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        cell.configurePlaceCell(place.name, address: place.streetName, rating: place.rating, price: place.price, location: location, visited: place.visited ?? 0)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+
+        if editingStyle == .Delete {
+            deleteItemAtIndexPath(indexPath)
+        } else {
+            markItemAtIndexPath(indexPath)
+        }
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let delete = UITableViewRowAction(style: .Destructive, title: NSLocalizedString("Delete", comment: "delete")) { [unowned self] (_, indexPath) in
+            self.deleteItemAtIndexPath(indexPath)
+        }
+        delete.backgroundColor = UIColor.redColor()
+        
+        let place = viewModel[indexPath.row]
+        let visitedTitle = place.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Mark Visted", comment: "visited")
+        let visited = UITableViewRowAction(style: .Normal, title: visitedTitle) { [unowned self] (_, indexPath) in
+            self.markItemAtIndexPath(indexPath)
+        }
+        visited.backgroundColor = UIColor.orangeColor()
+        
+        return [visited, delete]
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

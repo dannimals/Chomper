@@ -40,7 +40,7 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="76k-SE-33H" userLabel="Rating/Price">
-                        <rect key="frame" x="15" y="69" width="96" height="21"/>
+                        <rect key="frame" x="15" y="69" width="157" height="21"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHC-Xz-bqT" userLabel="Price">
                                 <rect key="frame" x="0.0" y="0.0" width="39" height="21"/>
@@ -52,6 +52,12 @@
                                 <rect key="frame" x="47" y="0.0" width="49" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visited" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-pm-oDd" userLabel="Visited">
+                                <rect key="frame" x="104" y="0.0" width="53" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -80,6 +86,7 @@
                 <outlet property="priceLabel" destination="eHC-Xz-bqT" id="an0-WG-IR9"/>
                 <outlet property="ratingLabel" destination="taf-3h-VcW" id="mbX-7i-F6K"/>
                 <outlet property="separator" destination="ioR-BQ-bVk" id="MP9-Ne-BUS"/>
+                <outlet property="visitedLabel" destination="5Wv-pm-oDd" id="zrf-2c-Wjv"/>
             </connections>
             <point key="canvasLocation" x="366" y="165.5"/>
         </tableViewCell>
