@@ -39,7 +39,7 @@ class ListDetailsViewController: BaseViewController {
         super.viewDidLoad()
                 
         viewModel = list.places?.sort { $0.name < $1.name } ?? []
-        
+                
         // 
         // Configure view
         
@@ -82,12 +82,18 @@ class ListDetailsViewController: BaseViewController {
     // MARK - Helpers
     
     func handleEdit() {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         //
         // Check to make sure list is deletable ie. not the default saved list
         if list.sequenceNum != 1 {
-            let deleteAction = UIAlertAction(title: "Delete List", style: .Destructive) { [unowned self] (action) in
+            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            let editAction = UIAlertAction(title: NSLocalizedString("Edit list", comment: "edit"), style: .Default) { [unowned self] action in
+                if action.enabled {
+                    self.tableView.setEditing(true, animated: true)
+                }
+            }
+            alertController.addAction(editAction)
+            let deleteAction = UIAlertAction(title: NSLocalizedString("Delete List", comment: "delete"), style: .Destructive) { [unowned self] (action) in
                 if action.enabled {
                     self.alertWithCancelButton(
                         NSLocalizedString("Cancel", comment: "cancel"),
@@ -105,12 +111,29 @@ class ListDetailsViewController: BaseViewController {
                 }
             }
             alertController.addAction(deleteAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else {
+            beginEditing()
         }
 
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-        alertController.addAction(cancelAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Handlers
+    
+    func beginEditing() {
+        tableView.setEditing(true, animated: true)
+        let cancel = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelEditing))
+        navigationItem.setRightBarButtonItem(cancel, animated: true)
+
+    }
+    
+    func cancelEditing() {
+        tableView.setEditing(false, animated: true)
+        let edit = UIBarButtonItem(title: NSLocalizedString("Edit", comment: "edit"), style: .Plain, target: self, action: #selector(handleEdit))
+        navigationItem.setRightBarButtonItem(edit, animated: true)
     }
     
     func dismissVC() {
@@ -136,6 +159,26 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
             location = CLLocation(latitude: Double(lat), longitude: Double(long))
         }
         cell.configurePlaceCell(place.name, address: place.streetName, rating: place.rating, price: place.price, location: location)
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        let place = viewModel[indexPath.row]
+
+        if editingStyle == .Delete {
+            viewModel.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            mainContext.performChanges { [weak self] in
+                self?.mainContext.deleteObject(place)
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
