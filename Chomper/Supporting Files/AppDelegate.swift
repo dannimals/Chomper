@@ -127,15 +127,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: nil
         )
 
-        let browsePlacesVC = UIViewController()
-        browsePlacesVC.view.backgroundColor = UIColor.whiteColor()
-        browsePlacesVC.title = NSLocalizedString("Browse", comment: "Browse Tab Title")
-        browsePlacesVC.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("Browse", comment: "Browse Tab Title"),
+        let discoverVC = UIViewController()
+        discoverVC.view.backgroundColor = UIColor.whiteColor()
+        discoverVC.title = NSLocalizedString("Discover", comment: "Discover Tab Title")
+        discoverVC.tabBarItem = UITabBarItem(
+            title: NSLocalizedString("Discover", comment: "Discover Tab Title"),
             image: nil,
             selectedImage: nil
         )
-        let nc3 = BaseNavigationController(rootViewController: browsePlacesVC)
+        let nc3 = BaseNavigationController(rootViewController: discoverVC)
         
         let tabBarVC = UITabBarController()
         let controllers = [nc, createPlaceVC, nc3]

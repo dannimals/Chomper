@@ -13,7 +13,7 @@ class ListsViewController: BaseViewController {
     
     private var viewModeControl: UISegmentedControl!
     private var tileViewController: ListsTileViewController!
-    private var listViewController: UITableViewController!
+    private var listViewController: ListsTableViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +41,13 @@ class ListsViewController: BaseViewController {
         
         createListViewController()
         createTileViewController()
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        listViewController.view.frame = view.bounds
+//        tableVC.View.Autoresizingmask = UIViewAutoresizing.FlexibleWidth
+//        listViewController.view.translatesAutoresizingMaskIntoConstraints = false
     }
     
     // MARK: - Helpers

@@ -28,6 +28,8 @@
 		9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */; };
 		9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A451D3EA041001E3B39 /* Constants.swift */; };
 		9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A471D3EA130001E3B39 /* SearchResult.swift */; };
+		9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */; };
+		9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
@@ -234,6 +236,8 @@
 		9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegate.swift; sourceTree = "<group>"; };
 		9E4F0A451D3EA041001E3B39 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9E4F0A471D3EA130001E3B39 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
+		9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableSectionHeaderView.swift; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
@@ -494,6 +498,7 @@
 				9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */,
 				9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */,
 				9E6736A11D3024F400C00995 /* TableDataProvider.swift */,
+				9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -731,10 +736,10 @@
 			isa = PBXGroup;
 			children = (
 				9EE7548A1D36C5FB0070779E /* CreateListViewController.swift */,
+				9E4736E21D39835A00463665 /* ListDetailsViewController.swift */,
 				9E4736DE1D3954D500463665 /* ListsTableViewController.swift */,
 				9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */,
 				9EE7548C1D36C5FB0070779E /* ListsViewController.swift */,
-				9E4736E21D39835A00463665 /* ListDetailsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -744,6 +749,7 @@
 			children = (
 				9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */,
 				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
+				9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1552,6 +1558,7 @@
 			files = (
 				9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */,
 				9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */,
+				9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
 				9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */,
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
@@ -1570,6 +1577,7 @@
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
 				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
+				9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */,
 				9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
