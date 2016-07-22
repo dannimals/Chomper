@@ -280,7 +280,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-        let save = UITableViewRowAction(style: .Normal, title: NSLocalizedString("Quick save", comment: "quick save")) { [unowned self] (_, indexPath) in
+        let save = UITableViewRowAction(style: .Normal, title: NSLocalizedString("Save", comment: "quick save")) { [unowned self] (_, indexPath) in
             self.quickSave(indexPath)
         }
         save.backgroundColor = UIColor.orangeColor()

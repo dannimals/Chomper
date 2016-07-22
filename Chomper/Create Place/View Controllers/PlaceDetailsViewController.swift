@@ -52,7 +52,7 @@ class PlaceDetailsViewController: BaseViewController {
     
     func add(sender: UIBarButtonItem) {
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let quickSave = UIAlertAction(title: NSLocalizedString("Quick save", comment: "quick save"), style: .Default) { [unowned self] (action) in
+        let quickSave = UIAlertAction(title: NSLocalizedString("Save", comment: "quick save"), style: .Default) { [unowned self] (action) in
             if action.enabled {
                 self.mainContext.performChanges {
                     Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
