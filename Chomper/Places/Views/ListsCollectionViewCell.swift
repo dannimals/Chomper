@@ -53,27 +53,17 @@ class ListsCollectionViewCell: UICollectionViewCell {
         // Separators
         
         trailingSeparator = UIView()
-        trailingSeparator.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(trailingSeparator)
         trailingSeparator.backgroundColor = separatorColor
-        trailingSeparator.widthAnchor.constraintEqualToConstant(0.75).active = true
-        trailingSeparator.topAnchor.constraintEqualToAnchor(contentView.topAnchor).active = true
-        trailingSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor).active = true
-        trailingSeparator.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor).active = true
         
         bottomSeparator = UIView()
-        bottomSeparator.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(bottomSeparator)
         bottomSeparator.backgroundColor = separatorColor
-        bottomSeparator.heightAnchor.constraintEqualToConstant(0.75).active = true
-        bottomSeparator.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor).active = true
-        bottomSeparator.trailingAnchor.constraintEqualToAnchor(trailingSeparator.leadingAnchor).active = true
         
         //
         // Title text view
         
         titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         titleLabel.setContentCompressionResistancePriority(249, forAxis: .Vertical)
         titleLabel.numberOfLines = 0
@@ -81,10 +71,8 @@ class ListsCollectionViewCell: UICollectionViewCell {
         titleLabel.textColor = UIColor.lightGrayColor()
         titleLabel.font = UIFont.chomperFontForTextStyle("p")
         let titleLeading = titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
-        titleLeading.active = true
         titleLeading.priority = UILayoutPriorityRequired
         let titleTrailing = titleLabel.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.trailingAnchor, constant: -10.0)
-        titleTrailing.active = true
         titleTrailing.priority = UILayoutPriorityRequired
         
         //
@@ -97,7 +85,6 @@ class ListsCollectionViewCell: UICollectionViewCell {
         countLabel.font = UIFont.chomperFontForTextStyle("smallest")
         countLabel.textColor = UIColor.orangeColor()
         let countLeading = countLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
-        countLeading.active = true
         countLeading.priority = UILayoutPriorityRequired
 
 
@@ -114,26 +101,37 @@ class ListsCollectionViewCell: UICollectionViewCell {
             views: views))
             
         
-        
         //
         // "+" button
         
         addButton = UIButton()
         addButton.addTarget(self, action: #selector(handleAddPressed), forControlEvents: .TouchUpInside)
-        addButton.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(addButton)
         addButton.setTitle("+", forState: .Normal)
         addButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h1", weight: UIFontWeightThin, size: 75.0, maxDynamicTypeRatio: 1.5, minDynamicTypeRatio: 1.5)
         addButton.setTitleColor(UIColor.orangeColor(), forState: .Normal)
         addButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         let addCenterX = addButton.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor)
-        addCenterX.active = true
         addCenterX.priority = UILayoutPriorityRequired
         let addCenterY = addButton.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor)
-        addCenterY.active = true
         addCenterY.priority = UILayoutPriorityRequired
         
         addButton.hidden = true
+        
+        NSLayoutConstraint.useAndActivateConstraints([
+            trailingSeparator.widthAnchor.constraintEqualToConstant(0.75),
+            trailingSeparator.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
+            trailingSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
+            trailingSeparator.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
+            bottomSeparator.heightAnchor.constraintEqualToConstant(0.75),
+            bottomSeparator.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
+            bottomSeparator.trailingAnchor.constraintEqualToAnchor(trailingSeparator.leadingAnchor),
+            titleLeading,
+            titleTrailing,
+            countLeading,
+            addCenterX,
+            addCenterY
+        ])
 
     }
     

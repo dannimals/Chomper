@@ -41,6 +41,7 @@
 		9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A11D3024F400C00995 /* TableDataProvider.swift */; };
 		9E690AB51D4530AC009574DF /* ToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB41D4530AC009574DF /* ToggleControl.swift */; };
 		9E690AB71D4530D0009574DF /* ListsToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB61D4530D0009574DF /* ListsToggleControl.swift */; };
+		9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
@@ -251,6 +252,7 @@
 		9E6736A11D3024F400C00995 /* TableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataProvider.swift; sourceTree = "<group>"; };
 		9E690AB41D4530AC009574DF /* ToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleControl.swift; sourceTree = "<group>"; };
 		9E690AB61D4530D0009574DF /* ListsToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsToggleControl.swift; sourceTree = "<group>"; };
+		9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -711,6 +713,7 @@
 		9EE216271D19BAA7004C7C53 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */,
 				9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */,
 				9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */,
 				9E90F6171D33F968005A380B /* UIView+Extensions.swift */,
@@ -1606,6 +1609,7 @@
 				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
 				9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */,
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
+				9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */,
 				9EE216291D19BAA7004C7C53 /* DependencyInjector.swift in Sources */,
 				9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */,
 				9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */,

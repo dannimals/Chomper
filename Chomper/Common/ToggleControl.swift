@@ -78,7 +78,7 @@ class ToggleControl: UIControl {
     
     // MARK: - Handlers 
     
-    func setup() {
+    private func setup() {
         labels = [UILabel]()
         underlineView = UIView()
         underlineView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +103,7 @@ class ToggleControl: UIControl {
         backgroundColor = UIColor.whiteColor()
     }
     
-    func setSelectedIndex(index: Int, animated: Bool, completionHandler: ((completed: Bool) -> Void)? = nil) {
+    final func setSelectedIndex(index: Int, animated: Bool, completionHandler: ((completed: Bool) -> Void)? = nil) {
         guard index < labels.count else { fatalError("index out of bounds") }
         for (i, label) in labels.enumerate() {
             label.textColor = i == index ? selectedColor : unselectedColor
@@ -118,20 +118,20 @@ class ToggleControl: UIControl {
         }
     }
     
-    func setSelectedColors() {
+    private func setSelectedColors() {
         for (index, label) in labels.enumerate() {
             label.textColor = index == selectedIndex ? selectedColor : unselectedColor
         }
         underlineView.backgroundColor = selectedColor
     }
     
-    func setFonts() {
+    private func setFonts() {
         for label in labels {
             label.font = font
         }
     }
     
-    func labelTapped(sender: UITapGestureRecognizer) {
+    final func labelTapped(sender: UITapGestureRecognizer) {
         guard let label = sender.view as? UILabel else { fatalError("label cannot be found from tap") }
         labelTappedWithIndex(labels.indexOf(label) ?? 0)
     }

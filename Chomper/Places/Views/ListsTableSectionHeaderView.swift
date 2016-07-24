@@ -36,23 +36,23 @@ class ListsTableSectionHeaderView: UITableViewHeaderFooterView {
     
     private func initialize() {
         titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         titleLabel.font = UIFont.chomperFontForTextStyle("h4")
         titleLabel.text = nil
         titleLabel.textColor = UIColor.whiteColor()
         
         countLabel = UILabel()
-        countLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countLabel)
         countLabel.font = UIFont.chomperFontForTextStyle("h4")
         countLabel.text = nil
         countLabel.textColor = UIColor.whiteColor()
         
-        titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 15.0).active = true
-        titleLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor).active = true
-        countLabel.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: -15.0).active = true
-        countLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor).active = true
+        NSLayoutConstraint.useAndActivateConstraints([
+            titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 15.0),
+            titleLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor),
+            countLabel.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: -15.0),
+            countLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor)
+        ])
 
     }
     

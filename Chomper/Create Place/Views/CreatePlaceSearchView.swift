@@ -35,12 +35,7 @@ class CreatePlaceSearchView: UIView {
     func initialize() {
         view = UIView()
         view.backgroundColor = UIColor.orangeColor()
-        view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
-        view.topAnchor.constraintEqualToAnchor(topAnchor).active = true
-        view.leftAnchor.constraintEqualToAnchor(leftAnchor).active = true
-        view.bottomAnchor.constraintEqualToAnchor(bottomAnchor).active = true
-        view.rightAnchor.constraintEqualToAnchor(rightAnchor).active = true
         
         containerView = UIStackView()
         containerView.axis = .Vertical
@@ -49,39 +44,27 @@ class CreatePlaceSearchView: UIView {
         containerView.layoutMargins = UIEdgeInsetsMake(8, 15, 8, 15)
         containerView.layoutMarginsRelativeArrangement = true
         containerView.spacing = 8.0
-        containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
-        containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 20).active = true
-        containerView.leftAnchor.constraintEqualToAnchor(view.leftAnchor).active = true
-        containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor).active = true
-        containerView.rightAnchor.constraintEqualToAnchor(view.rightAnchor).active = true
         
         buttonContainerView = UIView()
-        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(buttonContainerView)
         let constraint = buttonContainerView.heightAnchor.constraintEqualToConstant(30.0)
         constraint.priority = UILayoutPriorityDefaultHigh
-        constraint.active = true
         
         cancelButton = UIButton()
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p-small")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
         cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
         buttonContainerView.addSubview(cancelButton)
-        cancelButton.leftAnchor.constraintEqualToAnchor(buttonContainerView.leftAnchor).active = true
-        cancelButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor).active = true
         
         searchButton = UIButton()
         searchButton.addTarget(self, action: #selector(searchAction(_:)), forControlEvents: .TouchUpInside)
         searchButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), forState: .Normal)
         searchButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
         buttonContainerView.addSubview(searchButton)
-        searchButton.rightAnchor.constraintEqualToAnchor(buttonContainerView.rightAnchor).active = true
-        searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor).active = true
+
         
         textSearch = UITextField()
         textSearch.tintColor = UIColor.orangeColor()
@@ -92,9 +75,7 @@ class CreatePlaceSearchView: UIView {
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
         textSearch.backgroundColor = UIColor.whiteColor()
         textSearch.layer.cornerRadius = 5.0
-        textSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(textSearch)
-        textSearch.heightAnchor.constraintEqualToConstant(30.0).active = true
         let paddingView = UIView(frame: CGRectMake(0, 0, 15.0, 30.0))
         textSearch.leftView = paddingView
         textSearch.leftViewMode = .Always
@@ -110,10 +91,27 @@ class CreatePlaceSearchView: UIView {
         containerView.addArrangedSubview(locationSearch)
         let heightConstraint = locationSearch.heightAnchor.constraintEqualToConstant(30.0)
         heightConstraint.priority = UILayoutPriorityDefaultHigh
-        heightConstraint.active = true
         
         buttonContainerView.hidden = true
         locationSearch.hidden = true
+        
+        NSLayoutConstraint.useAndActivateConstraints([
+            view.topAnchor.constraintEqualToAnchor(topAnchor),
+            view.leftAnchor.constraintEqualToAnchor(leftAnchor),
+            view.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
+            view.rightAnchor.constraintEqualToAnchor(rightAnchor),
+            constraint,
+            containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 20),
+            containerView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
+            containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
+            containerView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
+            cancelButton.leftAnchor.constraintEqualToAnchor(buttonContainerView.leftAnchor),
+            cancelButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor),
+            searchButton.rightAnchor.constraintEqualToAnchor(buttonContainerView.rightAnchor),
+            searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor),
+            textSearch.heightAnchor.constraintEqualToConstant(30.0),
+            heightConstraint
+        ])
     }
     
     // MARK: - Helpers

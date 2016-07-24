@@ -231,13 +231,15 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         loadingView.hidden = true
         
         loadingLabel = UILabel()
-        loadingLabel.translatesAutoresizingMaskIntoConstraints = false
         loadingView.addSubview(loadingLabel)
         loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
         loadingLabel.textColor = UIColor.orangeColor()
         loadingLabel.font = UIFont.chomperFontForTextStyle("h4")
-        loadingLabel.centerYAnchor.constraintEqualToAnchor(loadingView.centerYAnchor).active = true
-        loadingLabel.centerXAnchor.constraintEqualToAnchor(loadingView.centerXAnchor).active = true
+       
+        NSLayoutConstraint.useAndActivateConstraints([
+            loadingLabel.centerYAnchor.constraintEqualToAnchor(loadingView.centerYAnchor),
+            loadingLabel.centerXAnchor.constraintEqualToAnchor(loadingView.centerXAnchor)
+        ])
     }
     
     func quickSave(indexPath: NSIndexPath) {

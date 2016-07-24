@@ -101,7 +101,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         
         textField = UITextField()
         textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(textField)
         textField.autocorrectionType = .No
         textField.returnKeyType = .Done
@@ -111,27 +110,27 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         textField.placeholder = NSLocalizedString("Create a new list", comment: "list name")
         titleTopLayout = NSLayoutConstraint(item: textField, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0)
         view.addConstraint(titleTopLayout)
-        textField.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 50.0).active = true
-        textField.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -50.0).active = true
-        
+      
         let lineView = UIView()
-        lineView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(lineView)
         lineView.heightAnchor.constraintEqualToConstant(0.75).active = true
         lineView.backgroundColor = UIColor.lightGrayColor()
-        lineView.topAnchor.constraintEqualToAnchor(textField.bottomAnchor, constant: 5.0).active = true
-        lineView.leadingAnchor.constraintEqualToAnchor(textField.leadingAnchor, constant: -2.5).active = true
-        lineView.trailingAnchor.constraintEqualToAnchor(textField.trailingAnchor, constant: 2.5).active = true
         
         errorLabel = UILabel()
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(errorLabel)
         errorLabel.font = UIFont.chomperFontForTextStyle("p small")
         errorLabel.textColor = UIColor.orangeColor()
-        errorLabel.leadingAnchor.constraintEqualToAnchor(lineView.leadingAnchor).active = true
-        errorLabel.trailingAnchor.constraintEqualToAnchor(lineView.trailingAnchor).active = true
-        errorLabel.topAnchor.constraintEqualToAnchor(lineView.bottomAnchor, constant: 2.5).active = true
-        
+       
+        NSLayoutConstraint.useAndActivateConstraints([
+            errorLabel.leadingAnchor.constraintEqualToAnchor(lineView.leadingAnchor),
+            errorLabel.trailingAnchor.constraintEqualToAnchor(lineView.trailingAnchor),
+            errorLabel.topAnchor.constraintEqualToAnchor(lineView.bottomAnchor, constant: 2.5),
+            lineView.topAnchor.constraintEqualToAnchor(textField.bottomAnchor, constant: 5.0),
+            lineView.leadingAnchor.constraintEqualToAnchor(textField.leadingAnchor, constant: -2.5),
+            lineView.trailingAnchor.constraintEqualToAnchor(textField.trailingAnchor, constant: 2.5),
+            textField.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 50.0),
+            textField.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -50.0)
+        ])
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
     }
