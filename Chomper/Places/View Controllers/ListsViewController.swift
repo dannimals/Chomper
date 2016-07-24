@@ -15,7 +15,7 @@ class ListsViewController: BaseViewController {
     private var tileViewController: ListsTileViewController!
     private var listViewController: ListsTableViewController!
     private var scrollView: UIScrollView!
-    private var toggle: ToggleControl!
+    private var toggle: ListsToggleControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class ListsViewController: BaseViewController {
             views: views)
         )
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide][toggle(40)]-(-1)-[scrollView]|",
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide][toggle(50)]-(-1)-[scrollView]|",
             options: [],
             metrics: nil,
             views: views)
@@ -76,10 +76,26 @@ class ListsViewController: BaseViewController {
     // MARK: - Helpers
     
     func createToggle() {
-        toggle = ToggleControl(titles: [NSLocalizedString("Tile", comment: "tile"), NSLocalizedString("List", comment: "list")])
+        toggle = ListsToggleControl(titles: [NSLocalizedString("Tile", comment: "tile"), NSLocalizedString("List", comment: "list")])
+        toggle.labelTappedAction = { [unowned self] (index) in
+            self.toggleViews(index)
+        }
         toggle.setShadow()
         toggle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(toggle)
+    }
+    
+    func toggleViews(index: Int) {
+        let contentOffsetY = self.scrollView.contentOffset.y
+        if index == 0 {
+            UIView.animateWithDuration(0.4) {
+                self.scrollView.contentOffset = CGPointMake(0, contentOffsetY)
+            }
+        } else {
+            UIView.animateWithDuration(0.4) {
+                self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width, contentOffsetY)
+            }
+        }
     }
     
     func createScrollView() {
@@ -118,22 +134,11 @@ class ListsViewController: BaseViewController {
         listViewController.didMoveToParentViewController(self)
         scrollView.addSubview(listViewController.view)
     }
-    
-  
-    // MARK: - Handlers
-    
-    func handleViewMode(sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            listViewController.view.removeFromSuperview()
-            view.addSubview(tileViewController.view)
-        } else {
-            tileViewController.view.removeFromSuperview()
-            view.addSubview(listViewController.view)
-        }
-    }
 }
 
 extension ListsViewController: UIScrollViewDelegate {
+    //
+    // TODO: refine the toggle animation
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.x < view.bounds.width {
             toggle.setSelectedIndex(0, animated: true)
@@ -141,4 +146,5 @@ extension ListsViewController: UIScrollViewDelegate {
             toggle.setSelectedIndex(1, animated: true)
         }
     }
+    
 }

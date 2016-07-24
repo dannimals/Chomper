@@ -30,7 +30,6 @@
 		9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A471D3EA130001E3B39 /* SearchResult.swift */; };
 		9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */; };
 		9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */; };
-		9E4F0A4E1D415A45001E3B39 /* ToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A4D1D415A45001E3B39 /* ToggleControl.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
@@ -40,6 +39,8 @@
 		9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */; };
 		9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */; };
 		9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736A11D3024F400C00995 /* TableDataProvider.swift */; };
+		9E690AB51D4530AC009574DF /* ToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB41D4530AC009574DF /* ToggleControl.swift */; };
+		9E690AB71D4530D0009574DF /* ListsToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB61D4530D0009574DF /* ListsToggleControl.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
@@ -239,7 +240,6 @@
 		9E4F0A471D3EA130001E3B39 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
 		9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableSectionHeaderView.swift; sourceTree = "<group>"; };
-		9E4F0A4D1D415A45001E3B39 /* ToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleControl.swift; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
@@ -249,6 +249,8 @@
 		9E67369F1D3024F400C00995 /* BaseViewControllerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewControllerProtocol.swift; sourceTree = "<group>"; };
 		9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionDataProvider.swift; sourceTree = "<group>"; };
 		9E6736A11D3024F400C00995 /* TableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableDataProvider.swift; sourceTree = "<group>"; };
+		9E690AB41D4530AC009574DF /* ToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleControl.swift; sourceTree = "<group>"; };
+		9E690AB61D4530D0009574DF /* ListsToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsToggleControl.swift; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -668,6 +670,7 @@
 			children = (
 				9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */,
 				9E4736E41D3C0F8A00463665 /* BaseViewController.swift */,
+				9E690AB41D4530AC009574DF /* ToggleControl.swift */,
 				9E67369E1D3024F400C00995 /* Protocols */,
 			);
 			path = Common;
@@ -752,7 +755,7 @@
 				9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */,
 				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
 				9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */,
-				9E4F0A4D1D415A45001E3B39 /* ToggleControl.swift */,
+				9E690AB61D4530D0009574DF /* ListsToggleControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1560,7 +1563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */,
-				9E4F0A4E1D415A45001E3B39 /* ToggleControl.swift in Sources */,
+				9E690AB51D4530AC009574DF /* ToggleControl.swift in Sources */,
 				9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */,
 				9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
@@ -1571,6 +1574,7 @@
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,
 				9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */,
+				9E690AB71D4530D0009574DF /* ListsToggleControl.swift in Sources */,
 				9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */,
 				9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */,
 				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,

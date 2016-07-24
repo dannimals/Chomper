@@ -8,6 +8,9 @@
 
 import Common
 
+//
+// Subclass and override labelTappedWithIndex
+
 @IBDesignable
 class ToggleControl: UIControl {
     
@@ -46,8 +49,6 @@ class ToggleControl: UIControl {
             setFonts()
         }
     }
-    
-    
 
     // MARK: - Initializers
     
@@ -68,11 +69,10 @@ class ToggleControl: UIControl {
 
         for (index, label) in labels.enumerate() {
             frame = label.frame
-            frame = CGRectMake(CGFloat(index) * buttonWidth, frame.minY, buttonWidth , bounds.height)
+            frame = CGRectMake(CGFloat(index) * buttonWidth, self.frame.minY, buttonWidth , bounds.height)
             label.frame = frame
         }
-        
-        frame = CGRectMake(CGFloat(selectedIndex) * bounds.width, self.bounds.height, buttonWidth, 5.0)
+        frame = CGRectMake(CGFloat(selectedIndex) * buttonWidth, self.frame.maxY - 3.0, buttonWidth, 3.0)
         underlineView.frame = frame
     }
     
@@ -86,30 +86,35 @@ class ToggleControl: UIControl {
         
         for title in labelTitles {
             let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .Center
             label.text = title
-            label.translatesAutoresizingMaskIntoConstraints = false
             addSubview(label)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
+            label.userInteractionEnabled = true
+            label.addGestureRecognizer(tap)
             labels.append(label)
         }
         setSelectedColors()
         setFonts()
         setSelectedIndex(selectedIndex, animated: false)
         
-        underlineView = UIView()
-        addSubview(underlineView)
-        
         backgroundColor = UIColor.whiteColor()
     }
     
     func setSelectedIndex(index: Int, animated: Bool, completionHandler: ((completed: Bool) -> Void)? = nil) {
         guard index < labels.count else { fatalError("index out of bounds") }
-        for (index, label) in labels.enumerate() {
-            label.textColor = index == selectedIndex ? selectedColor : unselectedColor
+        for (i, label) in labels.enumerate() {
+            label.textColor = i == index ? selectedColor : unselectedColor
         }
         
-        UIView.animateWithDuration(0.5) { [weak self] in
-            self?.underlineView.frame = self?.labels[index].frame ?? CGRectZero
+        if animated {
+            UIView.animateWithDuration(0.4) { [weak self] in
+                var frame = self?.underlineView.frame ?? CGRectZero
+                frame.origin.x = self?.labels[index].frame.minX ?? 0.0
+                self?.underlineView.frame = frame
+            }
         }
     }
     
@@ -125,5 +130,14 @@ class ToggleControl: UIControl {
             label.font = font
         }
     }
+    
+    func labelTapped(sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else { fatalError("label cannot be found from tap") }
+        labelTappedWithIndex(labels.indexOf(label) ?? 0)
+    }
+    
+    // MARK: - Override
+    
+    func labelTappedWithIndex(index: Int) {}
     
 }
