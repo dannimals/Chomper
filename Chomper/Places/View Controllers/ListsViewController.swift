@@ -137,14 +137,12 @@ class ListsViewController: BaseViewController {
 }
 
 extension ListsViewController: UIScrollViewDelegate {
-    //
-    // TODO: refine the toggle animation
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        toggle.scrollOffSetX(scrollView.contentOffset.x)
         if scrollView.contentOffset.x < view.bounds.width {
-            toggle.setSelectedIndex(0, animated: true)
+            toggle.setSelectedIndex(0)
         } else {
-            toggle.setSelectedIndex(1, animated: true)
+            toggle.setSelectedIndex(1)
         }
     }
-    
 }

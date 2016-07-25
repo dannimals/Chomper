@@ -25,10 +25,11 @@ class ToggleControl: UIControl {
         }
         return bounds.width / CGFloat(labels.count)
     }
+    private var startCenter: CGFloat = -1
     
     @IBInspectable var selectedIndex: Int = 0 {
         didSet {
-            setSelectedIndex(selectedIndex, animated: true)
+            setSelectedIndex(selectedIndex)
         }
     }
     
@@ -74,6 +75,7 @@ class ToggleControl: UIControl {
         }
         frame = CGRectMake(CGFloat(selectedIndex) * buttonWidth, self.frame.maxY - 3.0, buttonWidth, 3.0)
         underlineView.frame = frame
+        startCenter = underlineView.center.x
     }
     
     // MARK: - Handlers 
@@ -103,7 +105,7 @@ class ToggleControl: UIControl {
         backgroundColor = UIColor.whiteColor()
     }
     
-    final func setSelectedIndex(index: Int, animated: Bool, completionHandler: ((completed: Bool) -> Void)? = nil) {
+    final func setSelectedIndex(index: Int, animated: Bool = false, completionHandler: ((completed: Bool) -> Void)? = nil) {
         guard index < labels.count else { fatalError("index out of bounds") }
         for (i, label) in labels.enumerate() {
             label.textColor = i == index ? selectedColor : unselectedColor
@@ -116,6 +118,13 @@ class ToggleControl: UIControl {
                 self?.underlineView.frame = frame
             }
         }
+        
+        completionHandler?(completed: true)
+    }
+    
+    final func scrollOffSetX(offsetX: CGFloat) {
+        let center = startCenter + offsetX / CGFloat(labels.count)
+        underlineView.center = CGPoint(x: center, y: underlineView.center.y)
     }
     
     private func setSelectedColors() {
