@@ -124,7 +124,7 @@ class ToggleControl: UIControl {
         }
         
         if animated {
-            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+            UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
                 var frame = self.underlineView.frame ?? CGRectZero
                 frame.origin.x = self.labels[index].frame.minX ?? 0.0
                 self.underlineView.frame = frame }, completion: { (bool) in
@@ -136,7 +136,7 @@ class ToggleControl: UIControl {
     
     final func scrollOffSetX(offsetX: CGFloat) {
         let center = startCenter + offsetX / CGFloat(labels.count)
-        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+        UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
             self.underlineView.center = CGPoint(x: center, y: self.underlineView.center.y)
         }, completion: nil)
     }

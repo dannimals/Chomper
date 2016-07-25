@@ -86,13 +86,9 @@ class ListsViewController: BaseViewController {
     func toggleViews(index: Int) {
         let contentOffsetY = self.scrollView.contentOffset.y
         if index == 0 {
-            UIView.animateWithDuration(0.4) {
-                self.scrollView.contentOffset = CGPointMake(0, contentOffsetY)
-            }
+            self.scrollView.contentOffset = CGPointMake(0, contentOffsetY)
         } else {
-            UIView.animateWithDuration(0.4) {
-                self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width, contentOffsetY)
-            }
+            self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width, contentOffsetY)
         }
     }
     
