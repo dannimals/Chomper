@@ -42,6 +42,7 @@
 		9E690AB51D4530AC009574DF /* ToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB41D4530AC009574DF /* ToggleControl.swift */; };
 		9E690AB71D4530D0009574DF /* ListsToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB61D4530D0009574DF /* ListsToggleControl.swift */; };
 		9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */; };
+		9E690ABB1D4687E2009574DF /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABA1D4687E2009574DF /* ActionListViewController.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
@@ -253,6 +254,7 @@
 		9E690AB41D4530AC009574DF /* ToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleControl.swift; sourceTree = "<group>"; };
 		9E690AB61D4530D0009574DF /* ListsToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsToggleControl.swift; sourceTree = "<group>"; };
 		9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
+		9E690ABA1D4687E2009574DF /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -455,6 +457,7 @@
 		9E096D641D2573D2002A59E1 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9E690ABA1D4687E2009574DF /* ActionListViewController.swift */,
 				9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */,
 				9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */,
 				9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */,
@@ -1584,6 +1587,7 @@
 				9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */,
 				9EE754901D36C5FB0070779E /* ListsTileViewModel.swift in Sources */,
 				9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */,
+				9E690ABB1D4687E2009574DF /* ActionListViewController.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,

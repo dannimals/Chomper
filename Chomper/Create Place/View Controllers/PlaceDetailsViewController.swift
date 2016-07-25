@@ -51,7 +51,14 @@ class PlaceDetailsViewController: BaseViewController {
     }
     
     func add(sender: UIBarButtonItem) {
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let vc = ActionListViewController()
+        vc.modalTransitionStyle = .CrossDissolve
+        vc.modalPresentationStyle = .OverCurrentContext
+        presentViewController(vc, animated: true, completion: nil)
+        
+        
+        
+        /*let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let quickSave = UIAlertAction(title: NSLocalizedString("Save", comment: "quick save"), style: .Default) { [unowned self] (action) in
             if action.enabled {
                 self.mainContext.performChanges {
@@ -64,7 +71,7 @@ class PlaceDetailsViewController: BaseViewController {
         alertController.addAction(quickSave)
         let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "cancel"), style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
-        presentViewController(alertController, animated: true, completion: nil)
+        presentViewController(alertController, animated: true, completion: nil)*/
     }
     
     func dismissVC(sender: UIBarButtonItem) {
