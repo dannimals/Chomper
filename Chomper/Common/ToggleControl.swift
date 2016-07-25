@@ -78,9 +78,25 @@ class ToggleControl: UIControl {
         startCenter = underlineView.center.x
     }
     
+    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
+        let location = touch.locationInView(self)
+        var calcIndex: Int?
+        for (index, item) in labels.enumerate() {
+            if item.frame.contains(location) {
+                calcIndex = index
+            }
+        }
+        if let calcIndex = calcIndex {
+            selectedIndex = calcIndex
+            sendActionsForControlEvents(.TouchUpInside)
+        }
+        return false
+    }
+    
     // MARK: - Handlers 
     
     private func setup() {
+        addTarget(self, action: #selector(labelTapped), forControlEvents: .TouchUpInside)
         labels = [UILabel]()
         underlineView = UIView()
         underlineView.translatesAutoresizingMaskIntoConstraints = false
@@ -92,10 +108,6 @@ class ToggleControl: UIControl {
             label.textAlignment = .Center
             label.text = title
             addSubview(label)
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(labelTapped(_:)))
-            label.userInteractionEnabled = true
-            label.addGestureRecognizer(tap)
             labels.append(label)
         }
         setSelectedColors()
@@ -112,19 +124,21 @@ class ToggleControl: UIControl {
         }
         
         if animated {
-            UIView.animateWithDuration(0.4) { [weak self] in
-                var frame = self?.underlineView.frame ?? CGRectZero
-                frame.origin.x = self?.labels[index].frame.minX ?? 0.0
-                self?.underlineView.frame = frame
-            }
+            UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+                var frame = self.underlineView.frame ?? CGRectZero
+                frame.origin.x = self.labels[index].frame.minX ?? 0.0
+                self.underlineView.frame = frame }, completion: { (bool) in
+                    completionHandler?(completed: bool)
+            })
         }
         
-        completionHandler?(completed: true)
     }
     
     final func scrollOffSetX(offsetX: CGFloat) {
         let center = startCenter + offsetX / CGFloat(labels.count)
-        underlineView.center = CGPoint(x: center, y: underlineView.center.y)
+        UIView.animateWithDuration(0.3, delay: 0.0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+            self.underlineView.center = CGPoint(x: center, y: self.underlineView.center.y)
+        }, completion: nil)
     }
     
     private func setSelectedColors() {
@@ -140,12 +154,11 @@ class ToggleControl: UIControl {
         }
     }
     
-    final func labelTapped(sender: UITapGestureRecognizer) {
-        guard let label = sender.view as? UILabel else { fatalError("label cannot be found from tap") }
-        labelTappedWithIndex(labels.indexOf(label) ?? 0)
+    final func labelTapped() {
+        labelTappedWithIndex(selectedIndex ?? 0)
     }
     
-    // MARK: - Override
+    // MARK: - Override points
     
     func labelTappedWithIndex(index: Int) {}
     

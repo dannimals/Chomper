@@ -64,8 +64,6 @@ class ListsViewController: BaseViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        // TODO: WTF are autoresizing masks??!!!!
-
         var scrollBounds = scrollView.bounds
         scrollBounds.origin.x = scrollBounds.width
         scrollView.contentSize = CGSizeMake(2 * scrollBounds.width, scrollBounds.height)
