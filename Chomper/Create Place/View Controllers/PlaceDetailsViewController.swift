@@ -52,7 +52,7 @@ class PlaceDetailsViewController: BaseViewController {
     
     func add(sender: UIBarButtonItem) {
         let vc = ActionListViewController()
-        vc.modalTransitionStyle = .CrossDissolve
+        vc.modalTransitionStyle = .CoverVertical
         vc.modalPresentationStyle = .OverCurrentContext
         presentViewController(vc, animated: true, completion: nil)
         

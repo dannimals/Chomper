@@ -18,33 +18,57 @@ enum ActionValues {
     static let allValues = [QuickSave, AddToList]
 }
 
-
 class ActionListViewController: BaseViewController {
     var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
+        //
+        // Create blur background view
+        if !UIAccessibilityIsReduceTransparencyEnabled() {
+            view.backgroundColor = UIColor.clearColor()
+            
+            let blurEffect = UIBlurEffect(style: .Dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = view.bounds
+            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            view.addSubview(blurEffectView)
+        } else {
+            view.backgroundColor = UIColor.lightGrayColor()
+        }
+        
+        //
+        // Create tableView
         
         tableView = UITableView()
+        tableView.separatorStyle = .None
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        let footer = ActionListFooterView()
-        footer.buttonAction = { [unowned self] in
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        tableView.addSubview(footer)
-        tableView.tableFooterView = footer
         registerNibs()
+        
+        //
+        // Create bottom cancel button
+        
+        let cancelButton = UIButton()
+        cancelButton.tintColor = UIColor.whiteColor()
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
+        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p")
+        cancelButton.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
+        view.addSubview(cancelButton)
+        cancelButton.setShadow(UIColor.lightGrayColor().CGColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
         
         NSLayoutConstraint.useAndActivateConstraints([
             tableView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
             tableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
-            tableView.topAnchor.constraintEqualToAnchor(view.topAnchor),
+            tableView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: view.bounds.height * 0.5),
             tableView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            (tableView.tableFooterView?.heightAnchor.constraintEqualToConstant(50.0))!
+            cancelButton.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
+            cancelButton.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
+            cancelButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
+            cancelButton.heightAnchor.constraintEqualToConstant(50.0)
         ])
         
     }
@@ -53,7 +77,6 @@ class ActionListViewController: BaseViewController {
     
     func registerNibs() {
         tableView.registerClass(ActionTableCell.self, forCellReuseIdentifier: "ActionCell")
-        tableView.registerClass(ActionListFooterView.self, forHeaderFooterViewReuseIdentifier: "FooterView")
     }
 }
 
@@ -72,8 +95,11 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         let actionValue = ActionValues.allValues[indexPath.row]
         switch actionValue {
             case .QuickSave:
-                cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) {
-                    //do something
+                cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
+//                    self.mainContext.performChanges {
+//                        Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
+//                    }
+//                    
                 }
             case .AddToList:
                 cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) {
@@ -86,88 +112,13 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         return 50.0
     }
     
-}
-
-class ActionTableCell: UITableViewCell {
-    private var button: UIButton!
-    private var buttonAction: (() -> Void)?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-         setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        button.titleLabel?.text = nil
-        buttonAction = nil
-    }
-    
-    private func setup() {
-        button = UIButton()
-        addSubview(button)
-        button.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
-        button.setTitleColor(UIColor.orangeColor(), forState: .Normal)
-        button.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
-
-        NSLayoutConstraint.useAndActivateConstraints([
-            button.leadingAnchor.constraintEqualToAnchor(leadingAnchor),
-            button.trailingAnchor.constraintEqualToAnchor(trailingAnchor),
-            button.topAnchor.constraintEqualToAnchor(topAnchor),
-            button.bottomAnchor.constraintEqualToAnchor(bottomAnchor)
-        ])
-    }
-    
-    func setTitleForAction(title: String, action: () -> Void) {
-        button.setTitle(title, forState: .Normal)
-        buttonAction = action
-    }
-    
-    func buttonTapped() {
-        buttonAction?()
-    }
-}
-
-class ActionListFooterView: UITableViewHeaderFooterView {
-    private var cancelButton: UIButton!
-    var buttonAction: (() -> Void)?
-    
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setup()
-    }
-    
     // MARK: - Handlers
     
-    func setup() {
-        cancelButton = UIButton()
-        addSubview(cancelButton)
-        cancelButton.tintColor = UIColor.whiteColor()
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p")
-        cancelButton.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
-
-        NSLayoutConstraint.useAndActivateConstraints([
-            cancelButton.leadingAnchor.constraintEqualToAnchor(leadingAnchor),
-            cancelButton.trailingAnchor.constraintEqualToAnchor(trailingAnchor),
-            cancelButton.topAnchor.constraintEqualToAnchor(topAnchor),
-            cancelButton.bottomAnchor.constraintEqualToAnchor(bottomAnchor)
-        ])
-    }
-    
-    
     func buttonTapped() {
-        buttonAction?()
+        dismissViewControllerAnimated(true, completion: nil)
     }
+    
 }
+
+
+
