@@ -478,10 +478,10 @@
 		9E1D27951D21C2BF00728012 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */,
-				9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */,
-				9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */,
 				9E690ABC1D47B523009574DF /* ActionTableCell.swift */,
+				9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */,
+				9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */,
+				9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";

@@ -19,7 +19,17 @@ enum ActionValues {
 }
 
 class ActionListViewController: BaseViewController {
-    var tableView: UITableView!
+    private var tableView: UITableView!
+    private var place: SearchResult!
+    
+    required init(place: SearchResult) {
+        super.init(nibName: nil, bundle: nil)
+        self.place = place
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,10 +106,10 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         switch actionValue {
             case .QuickSave:
                 cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
-//                    self.mainContext.performChanges {
-//                        Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
-//                    }
-//                    
+                    self.mainContext.performChanges {
+                        Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: defaultSavedList)
+                    }
+                    self.dismissViewControllerAnimated(true, completion: nil)
                 }
             case .AddToList:
                 cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) {
