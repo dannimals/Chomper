@@ -52,8 +52,8 @@ class ListsViewController: BaseViewController {
             metrics: nil,
             views: views)
         )
-        
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide][toggle(50)]-(-1)-[scrollView]|",
+    
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide][toggle(50)]-(4)-[scrollView]|",
             options: [],
             metrics: nil,
             views: views)
@@ -69,6 +69,8 @@ class ListsViewController: BaseViewController {
         scrollView.contentSize = CGSizeMake(2 * scrollBounds.width, scrollBounds.height)
         tileViewController.view.frame = CGRect(origin: CGPointZero, size: scrollView.bounds.size)
         listViewController.view.frame = scrollBounds
+        
+        toggle.setShadow()
     }
     
     // MARK: - Helpers
@@ -78,7 +80,6 @@ class ListsViewController: BaseViewController {
         toggle.labelTappedAction = { [unowned self] (index) in
             self.toggleViews(index)
         }
-        toggle.setShadow()
         toggle.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(toggle)
     }

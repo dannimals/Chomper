@@ -73,7 +73,7 @@ class ToggleControl: UIControl {
             frame = CGRectMake(CGFloat(index) * buttonWidth, self.frame.minY, buttonWidth , bounds.height)
             label.frame = frame
         }
-        frame = CGRectMake(CGFloat(selectedIndex) * buttonWidth, self.frame.maxY - 3.0, buttonWidth, 3.0)
+        frame = CGRectMake(CGFloat(selectedIndex) * buttonWidth, self.frame.maxY - 2.5, buttonWidth, 2.5)
         underlineView.frame = frame
         startCenter = underlineView.center.x
     }
