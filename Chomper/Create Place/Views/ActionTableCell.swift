@@ -34,7 +34,8 @@ class ActionTableCell: UITableViewCell {
         
         button = UIButton()
         contentView.addSubview(button)
-        button.titleLabel?.textAlignment = .Left
+        button.contentHorizontalAlignment = .Left
+        button.contentEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 0)
         button.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         button.setTitleColor(UIColor.orangeColor(), forState: .Normal)
         button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
@@ -53,7 +54,7 @@ class ActionTableCell: UITableViewCell {
             separator.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -15.0),
             separator.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
             separator.heightAnchor.constraintEqualToConstant(0.75)
-            ])
+        ])
     }
     
     func setTitleForAction(title: String, action: () -> Void) {

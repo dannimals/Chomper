@@ -87,23 +87,33 @@ class ActionListViewController: BaseViewController {
     
     func registerNibs() {
         tableView.registerClass(ActionTableCell.self, forCellReuseIdentifier: "ActionCell")
+        tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
     }
 }
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ActionValues.allValues.count
+        return ActionValues.allValues.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
-        return cell
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell else { fatalError("Cannot dequeue place cell") }
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
+            return cell
+        }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = cell as? ActionTableCell else { fatalError("wrong type: action cell") }
-        let actionValue = ActionValues.allValues[indexPath.row]
-        switch actionValue {
+        if indexPath.row == 0 {
+            guard let cell = cell as? PlaceTableViewCell else { fatalError("wrong type: action cell") }
+            cell.configureCell(withObject: place)
+        } else {
+            guard let cell = cell as? ActionTableCell else { fatalError("wrong type: action cell") }
+            let actionValue = ActionValues.allValues[indexPath.row - 1]
+            switch actionValue {
             case .QuickSave:
                 cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
                     self.mainContext.performChanges {
@@ -121,10 +131,15 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
                         nav?.presentViewController(nc, animated: true, completion: nil)
                     }
                 }
+            }
+            
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 82.0
+        }
         return 60.0
     }
     
