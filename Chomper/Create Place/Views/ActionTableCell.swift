@@ -37,6 +37,7 @@ class ActionTableCell: UITableViewCell {
         button.titleLabel?.textAlignment = .Left
         button.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         button.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+        button.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
         button.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
         
         separator = UIView()
@@ -49,7 +50,7 @@ class ActionTableCell: UITableViewCell {
             button.topAnchor.constraintEqualToAnchor(topAnchor),
             button.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
             separator.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 15.0),
-            separator.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: 15.0),
+            separator.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -15.0),
             separator.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
             separator.heightAnchor.constraintEqualToConstant(0.75)
             ])

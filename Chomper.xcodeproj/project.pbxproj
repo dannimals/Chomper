@@ -44,6 +44,8 @@
 		9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */; };
 		9E690ABB1D4687E2009574DF /* ActionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABA1D4687E2009574DF /* ActionListViewController.swift */; };
 		9E690ABD1D47B523009574DF /* ActionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABC1D47B523009574DF /* ActionTableCell.swift */; };
+		9E690ABF1D492399009574DF /* AddToListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABE1D492399009574DF /* AddToListViewController.swift */; };
+		9E690AC11D4933CD009574DF /* AddToListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AC01D4933CD009574DF /* AddToListCell.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* PlaceMappings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
@@ -257,6 +259,8 @@
 		9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Extensions.swift"; sourceTree = "<group>"; };
 		9E690ABA1D4687E2009574DF /* ActionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionListViewController.swift; sourceTree = "<group>"; };
 		9E690ABC1D47B523009574DF /* ActionTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionTableCell.swift; sourceTree = "<group>"; };
+		9E690ABE1D492399009574DF /* AddToListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToListViewController.swift; sourceTree = "<group>"; };
+		9E690AC01D4933CD009574DF /* AddToListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToListCell.swift; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* PlaceMappings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMappings.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -460,6 +464,7 @@
 			isa = PBXGroup;
 			children = (
 				9E690ABA1D4687E2009574DF /* ActionListViewController.swift */,
+				9E690ABE1D492399009574DF /* AddToListViewController.swift */,
 				9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */,
 				9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */,
 				9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */,
@@ -479,6 +484,7 @@
 			isa = PBXGroup;
 			children = (
 				9E690ABC1D47B523009574DF /* ActionTableCell.swift */,
+				9E690AC01D4933CD009574DF /* AddToListCell.swift */,
 				9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */,
 				9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */,
 				9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */,
@@ -1585,7 +1591,9 @@
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,
 				9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */,
 				9E690AB71D4530D0009574DF /* ListsToggleControl.swift in Sources */,
+				9E690AC11D4933CD009574DF /* AddToListCell.swift in Sources */,
 				9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */,
+				9E690ABF1D492399009574DF /* AddToListViewController.swift in Sources */,
 				9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */,
 				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,
 				9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */,

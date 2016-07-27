@@ -9,8 +9,6 @@
 import Common
 import Models
 
-
-
 enum ActionValues {
     case QuickSave
     case AddToList
@@ -34,12 +32,13 @@ class ActionListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         //
         // Create blur background view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             view.backgroundColor = UIColor.clearColor()
             
-            let blurEffect = UIBlurEffect(style: .Dark)
+            let blurEffect = UIBlurEffect(style: .ExtraLight)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = view.bounds
             blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
@@ -64,8 +63,9 @@ class ActionListViewController: BaseViewController {
         let cancelButton = UIButton()
         cancelButton.tintColor = UIColor.whiteColor()
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p")
+        cancelButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
+        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+        cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         cancelButton.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
         view.addSubview(cancelButton)
         cancelButton.setShadow(UIColor.lightGrayColor().CGColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
@@ -78,9 +78,9 @@ class ActionListViewController: BaseViewController {
             cancelButton.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
             cancelButton.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
             cancelButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            cancelButton.heightAnchor.constraintEqualToConstant(50.0)
+            cancelButton.heightAnchor.constraintEqualToConstant(55.0)
         ])
-        
+
     }
     
     // MARK: - Handlers
@@ -88,7 +88,7 @@ class ActionListViewController: BaseViewController {
     func registerNibs() {
         tableView.registerClass(ActionTableCell.self, forCellReuseIdentifier: "ActionCell")
     }
-}
+  }
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,14 +112,18 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             case .AddToList:
-                cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) {
-                    // do something
+                cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) { [unowned self] in
+                    let nc = BaseNavigationController(rootViewController: AddToListViewController(place: self.place))
+                    nc.modalTransitionStyle = .CoverVertical
+                    nc.modalPresentationStyle = .OverCurrentContext
+                    self.presentViewController(nc, animated: true, completion: nil)
+                    // TODO: Dismiss self
                 }
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50.0
+        return 60.0
     }
     
     // MARK: - Handlers
@@ -127,8 +131,9 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func buttonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
 }
+
+
 
 
 
