@@ -88,7 +88,7 @@ class ActionListViewController: BaseViewController {
     func registerNibs() {
         tableView.registerClass(ActionTableCell.self, forCellReuseIdentifier: "ActionCell")
     }
-  }
+}
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,12 +112,14 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }
             case .AddToList:
+                let nav = presentingViewController
                 cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) { [unowned self] in
                     let nc = BaseNavigationController(rootViewController: AddToListViewController(place: self.place))
                     nc.modalTransitionStyle = .CoverVertical
                     nc.modalPresentationStyle = .OverCurrentContext
-                    self.presentViewController(nc, animated: true, completion: nil)
-                    // TODO: Dismiss self
+                    self.dismissViewControllerAnimated(true) {
+                        nav?.presentViewController(nc, animated: true, completion: nil)
+                    }
                 }
         }
     }
@@ -131,6 +133,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func buttonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
 }
 
 
