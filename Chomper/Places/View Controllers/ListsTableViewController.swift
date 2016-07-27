@@ -26,6 +26,7 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         dataSource = TableViewDataModel(tableViewDelegate: self, frc: frc)
         
         tableView.tableFooterView = UIView()
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
         tableView.registerClass(ListsTableSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "HeaderView")
