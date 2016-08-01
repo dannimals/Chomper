@@ -14,7 +14,7 @@ import Models
 // TODO: Refactor this class to be reused by ListsTableVC
 
 class ListDetailsViewController: BaseViewController {
-    private var list: PlaceList! /*{
+    private var list: List! /*{
         didSet {
             observer = ManagedObjectObserver(object: list) { [unowned self] type in
                 guard type == .Delete else { return }
@@ -29,9 +29,9 @@ class ListDetailsViewController: BaseViewController {
     private var tableView: UITableView!
     private var viewModel: [Place]!
     
-    required init(placeListId: NSManagedObjectID) {
+    required init(listId: NSManagedObjectID) {
         super.init(nibName: nil, bundle: nil)
-        list = mainContext.objectWithID(placeListId) as? PlaceList
+        list = mainContext.objectWithID(listId) as? List
     }
     
     required init?(coder aDecoder: NSCoder) {

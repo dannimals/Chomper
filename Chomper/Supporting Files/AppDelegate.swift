@@ -23,14 +23,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         //
+        // Set up user email
+        
+        // TODO: Hardcode my email for now
+        AppData.sharedInstance.ownerUserEmail = "danning.ge@gmail.com"
+
+        //
         // Set up Core Data stack
         
         let moc = NSManagedObjectContext.mainContext()
-        let fetchRequest = NSFetchRequest(entityName: "PlaceList")
+        let fetchRequest = NSFetchRequest(entityName: "List")
         var fetchError : NSError?
         if moc.countForFetchRequest(fetchRequest, error: &fetchError) == 0 {
             moc.performChanges {
-                let saved = PlaceList.insertIntoContext(moc, name: defaultSavedList, updatedAt: NSDate())
+                User.insertIntoContext(moc, email: AppData.sharedInstance.ownerUserEmail)
+                let saved = List.insertIntoContext(moc, name: defaultSavedList, ownerEmail: AppData.sharedInstance.ownerUserEmail)
                 saved.sequenceNum = 1
             }
         }

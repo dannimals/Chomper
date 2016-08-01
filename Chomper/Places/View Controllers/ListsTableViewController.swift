@@ -22,7 +22,7 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         
         let fetchRequest = NSFetchRequest(entityName: Place.entityName)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "placeList.name", cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "list.name", cacheName: nil)
         dataSource = TableViewDataModel(tableViewDelegate: self, frc: frc)
         
         tableView.tableFooterView = UIView()

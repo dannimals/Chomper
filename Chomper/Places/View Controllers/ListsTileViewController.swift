@@ -10,7 +10,7 @@ import Common
 import Models
 
 class ListsTileViewController: UICollectionViewController, BaseViewControllerProtocol, CollectionViewDelegate {
-    typealias Object = PlaceList
+    typealias Object = List
     
     private var dataSource: ListsTileViewModel<ListsTileViewController>!
     
@@ -20,7 +20,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         //
         // Create data source
         
-        let fetchRequest = NSFetchRequest(entityName: "PlaceList")
+        let fetchRequest = NSFetchRequest(entityName: List.entityName)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sequenceNum", ascending: false), NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
         dataSource = ListsTileViewModel(delegate: self, fetchedResultsController: frc)
@@ -74,7 +74,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if let list = dataSource.objectAtIndexPath(indexPath) {
-            let vc = ListDetailsViewController(placeListId: list.objectID)
+            let vc = ListDetailsViewController(listId: list.objectID)
             let nc = BaseNavigationController(rootViewController: vc)
             vc.title = list.name
             nc.modalTransitionStyle = .CrossDissolve

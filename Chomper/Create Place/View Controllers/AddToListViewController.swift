@@ -11,7 +11,7 @@ import Models
 
 class AddToListViewController: BaseViewController {
     private var tableView: UITableView!
-    private var lists: [PlaceList]!
+    private var lists: [List]!
     private var place: SearchResult!
     
     required init(place: SearchResult) {
@@ -62,10 +62,10 @@ class AddToListViewController: BaseViewController {
         //
         // Create data model
         
-        let request = NSFetchRequest(entityName: PlaceList.entityName)
+        let request = NSFetchRequest(entityName: List.entityName)
         request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         do {
-            lists = try mainContext.executeFetchRequest(request) as! [PlaceList]
+            lists = try mainContext.executeFetchRequest(request) as! [List]
         } catch {
             fatalError("Could not load lists: \(error)")
         }
@@ -109,7 +109,7 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let list = lists[indexPath.row]
         mainContext.performChanges {
-            Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, updatedAt: NSDate(), visited: false, zipcode: nil, placeListName: list.name)
+            Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listName: list.name)
         }
         dismissViewControllerAnimated(true, completion: nil)
     }

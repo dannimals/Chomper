@@ -8,3 +8,4 @@
 
 
 public let defaultSavedList = NSLocalizedString("Saved", comment: "default saved list name")
+public let ownerEmail = "OwnerEmail"
