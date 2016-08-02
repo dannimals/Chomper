@@ -7,10 +7,8 @@
 //
 
 import CoreLocation
-import Foundation
 
 public protocol URLRequestConvertible {
-    /// The URL request.
     var URLRequest: NSURLRequest { get }
 }
 

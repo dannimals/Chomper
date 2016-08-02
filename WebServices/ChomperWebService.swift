@@ -8,7 +8,6 @@
 
 import Common
 import CoreLocation
-import Foundation
 import SwiftyJSON
 
 public typealias GetPlacesCompletionHandler = ([SearchResult]?, NSURLResponse?, NSError?) -> Void
@@ -23,16 +22,15 @@ public protocol ChomperWebServiceProtocol {
 }
 
 public class ChomperWebService: ChomperWebServiceProtocol {
-    //TODO: make sure these default to background thread
 
     // MARK: - Class properties
     
-    static var session: NSURLSession {
+    static var session: NSURLSession = {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         let _session = NSURLSession(configuration: config)
         
         return _session
-    }
+    }()
 
 
     // MARK: - Class methods
@@ -88,7 +86,6 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         task.resume()
         return task
     }
-    
     
     
     // MARK: - Places from search
