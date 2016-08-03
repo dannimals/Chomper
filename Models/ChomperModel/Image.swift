@@ -16,8 +16,10 @@ public final class Image: ManagedObject {
     // MARK: - Properties
     
     @NSManaged public var createdAt: NSDate
-    @NSManaged public var url: String
-    
+    @NSManaged public private(set) var id: String
+    @NSManaged public var imageData: NSData
+    @NSManaged public var thumbData: NSData?
+
 
     // MARK: - Relationships
     
@@ -27,10 +29,18 @@ public final class Image: ManagedObject {
 
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, url: String, createdAt: NSDate) -> Image {
+    public static func insertIntoContext(moc: NSManagedObjectContext, createdAt: NSDate = NSDate(), imageData: NSData, thumbData: NSData?) -> Image {
         let image: Image = moc.insertObject()
-        image.url = url
+        image.id = NSUUID().UUIDString
         image.createdAt = createdAt
+        image.imageData = imageData
+        image.thumbData = thumbData
+        return image
+    }
+    
+    static func findOrCreateImage(id: String, imageData: NSData, inContext moc: NSManagedObjectContext) -> Image {
+        let predicate = NSPredicate(format: "id == %@", id)
+        let image = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.imageData = imageData; $0.id = id }
         return image
     }
 }

@@ -21,6 +21,17 @@ public final class List: ManagedObject {
     @NSManaged public var owner: User?
     @NSManaged public var places: Set<Place>?
 
+    public override func prepareForDeletion() {
+        //
+        // Delete Places that are only associated with this List
+        if let places = places {
+            for place in places {
+                if place.lists?.count == 1 {
+                    managedObjectContext?.deleteObject(place)
+                }
+            }
+        }
+    }
     
     // MARK: - Helpers
     

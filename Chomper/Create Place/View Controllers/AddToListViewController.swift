@@ -109,7 +109,7 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let list = lists[indexPath.row]
         mainContext.performChanges {
-            Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.price, rating: self.place.rating, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listName: list.name)
+            Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.price, rating: self.place.rating, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listNames: [list.name])
         }
         dismissViewControllerAnimated(true, completion: nil)
     }

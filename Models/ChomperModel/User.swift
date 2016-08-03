@@ -49,5 +49,9 @@ extension User: ManagedObjectType {
     public static var entityName: String {
         return "User"
     }
+    
+    public static var defaultSortDescriptors: [NSSortDescriptor] {
+        return [NSSortDescriptor(key: "firstName", ascending: true), NSSortDescriptor(key: "lastName", ascending: true)]
+    }
 }
 

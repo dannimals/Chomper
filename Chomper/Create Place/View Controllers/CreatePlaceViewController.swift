@@ -245,7 +245,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     func quickSave(indexPath: NSIndexPath) {
         guard let place = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
         mainContext.performChanges {
-            Place.insertIntoContext(self.mainContext, city: nil, creatorId: nil, location: place.location, name: place.name, neighborhood: nil, notes: nil, price: place.price, rating: place.rating, streetName: place.address, state: nil, visited: false, zipcode: nil, listName: defaultSavedList)
+            Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: place.location, name: place.name, neighborhood: nil, notes: nil, price: place.price, rating: place.rating, remoteId: place.venueId, streetName: place.address, state: nil, visited: false, zipcode: nil, listNames: [defaultSavedList])
         }
         tableVC.tableView.setEditing(false, animated: true)
     }

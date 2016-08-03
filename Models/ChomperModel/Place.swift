@@ -9,7 +9,6 @@ public final class Place: ManagedObject {
 
     @NSManaged public var category: String?
     @NSManaged public var city: String?
-    @NSManaged public var creatorId: String?
     @NSManaged public var latitude: NSNumber?
     @NSManaged public var longitude: NSNumber?
     @NSManaged public var name: String
@@ -18,6 +17,7 @@ public final class Place: ManagedObject {
     @NSManaged public var phone: String?
     @NSManaged public var price: NSNumber?
     @NSManaged public var rating: NSNumber?
+    @NSManaged public var remoteId: String
     @NSManaged public var streetName: String?
     @NSManaged public var state: String?
     @NSManaged public var visited: NSNumber?
@@ -26,16 +26,28 @@ public final class Place: ManagedObject {
     
     // MARK: - Relationships
 
-    @NSManaged public var lists: Set<ManagedObject>?
-    @NSManaged public var images: Set<ManagedObject>?
+    @NSManaged public var lists: Set<List>?
+    @NSManaged public var images: Set<Image>?
+    
+    public override func prepareForDeletion() {
+        //
+        // Delete Images that are only associated with this Place
+        // i.e. image is associated with a profile or list
+        if let images = images {
+            for image in images {
+                if image.user == nil && image.list == nil {
+                    managedObjectContext?.deleteObject(image)
+                }
+            }
+        }
+    }
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, creatorId: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, price: NSNumber?, rating: NSNumber?, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listName: String) -> Place {
+    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, price: NSNumber?, rating: NSNumber?, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listNames: [String]) -> Place {
         
         let place: Place = moc.insertObject()
         place.city = city
-        place.creatorId = creatorId
         if let coord = location?.coordinate {
             place.latitude = coord.latitude
             place.longitude = coord.longitude
@@ -52,14 +64,21 @@ public final class Place: ManagedObject {
         place.visited = visited
         place.zipcode = zipcode
         
-        if let list = List.findOrCreateList(listName, inContext: moc) {
-            place.lists?.insert(list)
+        for listName in listNames {
+            if let list = List.findOrCreateList(listName, inContext: moc) {
+                place.lists?.insert(list)
+            }
         }
-   
         return place
     }
+    
+    public static func findOrCreatePlace(remoteId: String, name: String, inContext moc: NSManagedObjectContext) -> Place? {
+        guard !remoteId.isEmpty else { return nil }
 
-    // TODO: need an update method to link with images and/or update lists
+        let predicate = NSPredicate(format: "remoteId == %@", remoteId)
+        let place = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.remoteId = remoteId; $0.name = name }
+        return place
+    }
 
 }
 
