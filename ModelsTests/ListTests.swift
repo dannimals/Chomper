@@ -21,9 +21,13 @@ class ListTests: XCTestCase {
         super.setUp()
         moc = setupTestingManagedContext()
         
-        List.insertIntoContext(self.moc, name: listName, ownerEmail: email)
-        Place.insertIntoContext(self.moc, location: nil, name: placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [listName])
-        let _ = try? moc.save()
+        moc.performChangesAndWait {
+            List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
+        }
+        
+        moc.performChangesAndWait {
+            Place.insertIntoContext(self.moc, location: nil, name: self.placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [self.listName])
+        }
         
         let fetch = NSFetchRequest(entityName: List.entityName)
         list = try! moc.executeFetchRequest(fetch).first as? List
@@ -59,8 +63,10 @@ class ListTests: XCTestCase {
     }
     
     override func tearDown() {
-        moc.refreshAllObjects()
         moc = nil
+        list = nil
+        place = nil
+        super.tearDown()
     }
     
 }

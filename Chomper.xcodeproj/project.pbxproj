@@ -52,6 +52,7 @@
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
 		9EDB67261D4FD6EC001E74A6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67251D4FD6EC001E74A6 /* Image.swift */; };
 		9EDB67281D4FE4CC001E74A6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67271D4FE4CC001E74A6 /* AppData.swift */; };
+		9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
 		9EE215621D19B27C004C7C53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */; };
 		9EE2156D1D19B27C004C7C53 /* ChomperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2156C1D19B27C004C7C53 /* ChomperTests.swift */; };
@@ -269,6 +270,7 @@
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		9EDB67271D4FE4CC001E74A6 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
+		9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelsTestHelpers.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EE215611D19B27C004C7C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -622,9 +624,9 @@
 			children = (
 				9EE216151D19BA78004C7C53 /* ChomperModel */,
 				9EE216181D19BA78004C7C53 /* CoreDataHelpers */,
+				9E6736691D2DA15F00C00995 /* Extensions */,
 				9EE215A31D19B355004C7C53 /* Info.plist */,
 				9EE215A11D19B355004C7C53 /* Models.h */,
-				9E6736691D2DA15F00C00995 /* Extensions */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -632,8 +634,9 @@
 		9EE215AE1D19B355004C7C53 /* ModelsTests */ = {
 			isa = PBXGroup;
 			children = (
-				9EE215AF1D19B355004C7C53 /* ListTests.swift */,
 				9EE215B11D19B355004C7C53 /* Info.plist */,
+				9EE215AF1D19B355004C7C53 /* ListTests.swift */,
+				9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */,
 			);
 			path = ModelsTests;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EE215B01D19B355004C7C53 /* ListTests.swift in Sources */,
+				9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

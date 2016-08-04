@@ -59,6 +59,7 @@ public final class Place: ManagedObject {
         place.notes = notes
         place.price = price
         place.rating = rating
+        place.remoteId = remoteId
         place.streetName = streetName
         place.state = state
         place.visited = visited
