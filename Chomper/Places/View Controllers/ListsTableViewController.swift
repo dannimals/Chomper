@@ -12,7 +12,7 @@ import Models
 
 class ListsTableViewController: UITableViewController, BaseViewControllerProtocol, TableViewDelegate {
     private var dataSource: TableViewDataModel<ListsTableViewController>!
-    typealias Object = Place
+    typealias Object = List
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +20,9 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         //
         // Create data source
         
-        let fetchRequest = NSFetchRequest(entityName: Place.entityName)
+        let fetchRequest = NSFetchRequest(entityName: List.entityName)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "list.name", cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "name", cacheName: nil)
         dataSource = TableViewDataModel(tableViewDelegate: self, frc: frc)
         
         tableView.tableFooterView = UIView()
@@ -53,12 +53,16 @@ extension ListsTableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("Cannot dequeue PlaceCell in ListsTableVC") }
-        let object = dataSource.objectAtIndexPath(indexPath)
-        var location: CLLocation? = nil
-        if let lat = object?.latitude, long = object?.longitude {
-            location = CLLocation(latitude: Double(lat), longitude: Double(long))
+        let list = dataSource.objectAtIndexPath(indexPath)
+        let objects = list?.places?.sort { $0.name < $1.name }
+        guard indexPath.row < objects?.count && objects?.count > 0  else { return }
+        if let object = objects?[indexPath.row] {
+            var location: CLLocation? = nil
+            if let lat = object.latitude, long = object.longitude {
+                location = CLLocation(latitude: Double(lat), longitude: Double(long))
+            }
+            cell.configurePlaceCell(object.name, address: object.streetName, rating: object.rating, price: object.price, location: location)
         }
-        cell.configurePlaceCell((object?.name)!, address: object?.streetName, rating: object?.rating, price: object?.price, location: location)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
