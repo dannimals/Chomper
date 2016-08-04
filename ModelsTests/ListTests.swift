@@ -11,8 +11,6 @@ import XCTest
 
 class ListTests: XCTestCase {
     var moc: NSManagedObjectContext!
-    var list: List?
-    var place: Place?
     let email = "test@email.com"
     let listName = "list"
     let placeName = "place"
@@ -20,21 +18,6 @@ class ListTests: XCTestCase {
     override func setUp() {
         super.setUp()
         moc = setupTestingManagedContext()
-        
-        moc.performChangesAndWait {
-            List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
-        }
-        
-        moc.performChangesAndWait {
-            Place.insertIntoContext(self.moc, location: nil, name: self.placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [self.listName])
-        }
-        
-        let fetch = NSFetchRequest(entityName: List.entityName)
-        list = try! moc.executeFetchRequest(fetch).first as? List
-
-        
-        let f = NSFetchRequest(entityName: Place.entityName)
-        place = try! moc.executeFetchRequest(f).first as? Place
     }
     
     func testMoc() {
@@ -42,20 +25,43 @@ class ListTests: XCTestCase {
     }
     
     func testAddList() {
+        // Given
+        var list = NSObject()
+        
+        // When
+        moc.performChangesAndWait {
+           list = List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
+        }
+        
+        // Then
         XCTAssertNotNil(list)
     }
 
     func testAddPlace() {
+        // Given
+        var place =  NSObject()
+        
+        // When
+        moc.performChangesAndWait {
+            place = Place.insertIntoContext(self.moc, location: nil, name: self.placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [self.listName])
+        }
+        
+        // Then
         XCTAssertNotNil(place)
     }
     
     func testAddPlaceToList() {
-        XCTAssertEqual(list!.name, listName)
-        XCTAssertEqual(place!.name, placeName)
-
-        //
-        // Test relationship exists between list and place
+        // Given
+        
+        let f1 = NSFetchRequest(entityName: List.entityName)
+        let f2 = NSFetchRequest(entityName: Place.entityName)
+        
+        // When
+        let list = try! moc.executeFetchRequest(f1).first as? List
+        let place = try! moc.executeFetchRequest(f2).first as? Place
         let placeList = place!.lists!.first!
+
+        // Then
         XCTAssertEqual(place!.lists?.count, 1)
         XCTAssertEqual(placeList.name, list!.name)
         XCTAssertEqual(placeList.owner?.email, email)
@@ -64,8 +70,6 @@ class ListTests: XCTestCase {
     
     override func tearDown() {
         moc = nil
-        list = nil
-        place = nil
         super.tearDown()
     }
     
