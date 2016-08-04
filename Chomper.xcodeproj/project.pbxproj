@@ -62,7 +62,7 @@
 		9EE215911D19B347004C7C53 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2157C1D19B347004C7C53 /* Common.framework */; };
 		9EE215921D19B347004C7C53 /* Common.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2157C1D19B347004C7C53 /* Common.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EE215A91D19B355004C7C53 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
-		9EE215B01D19B355004C7C53 /* ListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE215AF1D19B355004C7C53 /* ListTests.swift */; };
+		9EE215B01D19B355004C7C53 /* CreateListWithPlacesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE215AF1D19B355004C7C53 /* CreateListWithPlacesTest.swift */; };
 		9EE215B41D19B355004C7C53 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE215B51D19B355004C7C53 /* Models.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EE215CB1D19B36D004C7C53 /* WebServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE215C11D19B36D004C7C53 /* WebServices.framework */; };
@@ -287,7 +287,7 @@
 		9EE215A11D19B355004C7C53 /* Models.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Models.h; sourceTree = "<group>"; };
 		9EE215A31D19B355004C7C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EE215A81D19B355004C7C53 /* ModelsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EE215AF1D19B355004C7C53 /* ListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTests.swift; sourceTree = "<group>"; };
+		9EE215AF1D19B355004C7C53 /* CreateListWithPlacesTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListWithPlacesTest.swift; sourceTree = "<group>"; };
 		9EE215B11D19B355004C7C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EE215C11D19B36D004C7C53 /* WebServices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WebServices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE215C31D19B36D004C7C53 /* WebServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebServices.h; sourceTree = "<group>"; };
@@ -635,7 +635,7 @@
 			isa = PBXGroup;
 			children = (
 				9EE215B11D19B355004C7C53 /* Info.plist */,
-				9EE215AF1D19B355004C7C53 /* ListTests.swift */,
+				9EE215AF1D19B355004C7C53 /* CreateListWithPlacesTest.swift */,
 				9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */,
 			);
 			path = ModelsTests;
@@ -1677,7 +1677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EE215B01D19B355004C7C53 /* ListTests.swift in Sources */,
+				9EE215B01D19B355004C7C53 /* CreateListWithPlacesTest.swift in Sources */,
 				9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

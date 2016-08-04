@@ -9,7 +9,7 @@
 import XCTest
 @testable import Models
 
-class ListTests: XCTestCase {
+class CreateListWithPlacesTest: XCTestCase {
     var moc: NSManagedObjectContext!
     let email = "test@email.com"
     let listName = "list"
@@ -66,6 +66,29 @@ class ListTests: XCTestCase {
         XCTAssertEqual(placeList.name, list!.name)
         XCTAssertEqual(placeList.owner?.email, email)
         
+    }
+    
+    func testDeleteListAndPlace() {
+        // Given
+        
+        let f1 = NSFetchRequest(entityName: List.entityName)
+        let f2 = NSFetchRequest(entityName: Place.entityName)
+        let list = try! moc.executeFetchRequest(f1).first as? List
+        let listId = list?.objectID
+        
+        // Relationship cycle is created when deleting!
+
+        
+        // When
+        moc.performChangesAndWait {
+            self.moc.deleteObject(list!)
+        }
+        let deletedList = moc.objectRegisteredForID(listId!)
+        let deletedPlace = try! moc.executeFetchRequest(f2).first as? Place
+
+        // Then
+        XCTAssertNil(deletedPlace)
+        XCTAssertNil(deletedList)
     }
     
     override func tearDown() {
