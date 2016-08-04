@@ -23,3 +23,19 @@ var createChomperMainContext: NSManagedObjectContext = {
     return context
 }()
 
+//
+// Create an in-memory context for unit testing
+
+func setupTestingManagedContext() -> NSManagedObjectContext {
+    let tempURL = NSURL.documentsDirectory.URLByAppendingPathComponent("Chomper.modelTest")
+    let model = NSManagedObjectModel.mergedModelFromBundles([NSBundle(forClass: Place.self)])
+    let psc = NSPersistentStoreCoordinator(managedObjectModel: model!)
+    do {
+        try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: tempURL, options: nil)
+    } catch {
+        print("adding in-memory test MOC failed")
+    }
+    let moc = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+    moc.persistentStoreCoordinator = psc
+    return moc
+}
