@@ -73,6 +73,17 @@ public final class Place: ManagedObject {
         return place
     }
     
+    public static func addToLists(moc: NSManagedObjectContext, remoteId: String, name: String, listNames: [String]) -> Place? {
+        let place = Place.findOrCreatePlace(remoteId, name: name, inContext: moc)
+        
+        for name in listNames {
+            if let list = List.findOrCreateList(name, inContext: moc) {
+                place?.lists?.insert(list)
+            }
+        }
+        return place
+    }
+    
     public static func findOrCreatePlace(remoteId: String, name: String, inContext moc: NSManagedObjectContext) -> Place? {
         guard !remoteId.isEmpty else { return nil }
 

@@ -34,7 +34,7 @@
         <attribute name="visited" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="place" inverseEntity="Image" syncable="YES"/>
-        <relationship name="lists" optional="YES" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="places" inverseEntity="List" syncable="YES"/>
+        <relationship name="lists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="places" inverseEntity="List" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -42,7 +42,7 @@
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="favoriteLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="favoritedUsers" inverseEntity="List" syncable="YES"/>
         <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="friends" inverseEntity="User" syncable="YES"/>
-        <relationship name="lists" toMany="YES" minCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="owner" inverseEntity="List" syncable="YES"/>
+        <relationship name="lists" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="owner" inverseEntity="List" syncable="YES"/>
         <relationship name="profileImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="user" inverseEntity="Image" syncable="YES"/>
     </entity>
     <elements>

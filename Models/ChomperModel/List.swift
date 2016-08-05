@@ -31,7 +31,6 @@ public final class List: ManagedObject {
                 }
             }
         }
-        managedObjectContext?.refreshAllObjects()
     }
     
     // MARK: - Helpers

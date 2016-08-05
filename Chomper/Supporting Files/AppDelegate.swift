@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //
         // Set up Core Data stack
-        
+
         let moc = NSManagedObjectContext.mainContext()
         let fetchRequest = NSFetchRequest(entityName: List.entityName)
         var fetchError : NSError?
