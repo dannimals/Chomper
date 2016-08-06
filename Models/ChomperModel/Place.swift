@@ -23,11 +23,14 @@ public final class Place: ManagedObject {
     @NSManaged public var visited: NSNumber?
     @NSManaged public var zipcode: String?
 
+    // Transient property - Do NOT access directly
+    @NSManaged public var ownerId: String?
     
     // MARK: - Relationships
 
-    @NSManaged public var lists: Set<List>?
     @NSManaged public var images: Set<Image>?
+    @NSManaged public var lists: Set<List>?
+    @NSManaged public var owner: User
     
     public override func prepareForDeletion() {
         //
@@ -44,7 +47,9 @@ public final class Place: ManagedObject {
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, price: NSNumber?, rating: NSNumber?, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listNames: [String]) -> Place {
+    //
+    // Every time a new place is created, the ownerUserEmail in AppData will be automatically associated with it
+    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, price: NSNumber?, rating: NSNumber?, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listNames: [String]) -> Place {
         
         let place: Place = moc.insertObject()
         place.city = city
@@ -57,6 +62,7 @@ public final class Place: ManagedObject {
         place.name = name
         place.neighborhood = neighborhood
         place.notes = notes
+        place.ownerId = ownerId // Transient property
         place.price = price
         place.rating = rating
         place.remoteId = remoteId
@@ -66,10 +72,13 @@ public final class Place: ManagedObject {
         place.zipcode = zipcode
         
         for listName in listNames {
-            if let list = List.findOrCreateList(listName, inContext: moc) {
+            if let list = List.findOrCreateList(listName, ownerId: ownerId!, inContext: moc) {
                 place.lists?.insert(list)
             }
         }
+        
+        place.owner = User.findOrCreateUser(ownerEmail, inContext: moc)!
+        
         return place
     }
     
@@ -77,7 +86,7 @@ public final class Place: ManagedObject {
         let place = Place.findOrCreatePlace(remoteId, name: name, inContext: moc)
         
         for name in listNames {
-            if let list = List.findOrCreateList(name, inContext: moc) {
+            if let list = List.findOrCreateList(name, ownerId: ownerEmail, inContext: moc) {
                 place?.lists?.insert(list)
             }
         }

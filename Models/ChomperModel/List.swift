@@ -16,9 +16,9 @@ public final class List: ManagedObject {
     
     // MARK: - Relationships
     
-    @NSManaged public var image: Image?
     @NSManaged public var favoritedUsers: Set<User>?
-    @NSManaged public var owner: User?
+    @NSManaged public var image: Image?
+    @NSManaged public var owner: User
     @NSManaged public var places: Set<Place>?
 
     public override func prepareForDeletion() {
@@ -43,10 +43,10 @@ public final class List: ManagedObject {
         return list
     }
     
-    static func findOrCreateList(name: String, inContext moc: NSManagedObjectContext) -> List? {
+    static func findOrCreateList(name: String, ownerId: String, inContext moc: NSManagedObjectContext) -> List? {
         guard !name.isEmpty else { return nil }
-        let predicate = NSPredicate(format: "name == %@", name)
-        let list = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.name = name}
+        let predicate = NSPredicate(format: "name == %@ && owner.email == %@", name, ownerId)
+        let list = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.name = name; $0.owner = User.findOrCreateUser(ownerId, inContext: moc)!}
         return list
     }
 }

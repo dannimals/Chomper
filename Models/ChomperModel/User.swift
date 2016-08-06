@@ -25,6 +25,7 @@ public final class User: ManagedObject {
     @NSManaged public var favoriteLists: Set<List>?
     @NSManaged public var friends: Set<User>?
     @NSManaged public var lists: Set<List>?
+    @NSManaged public var places: Set<Place>?
     @NSManaged public var profileImage: Image?
     
     // MARK: - Helpers

@@ -25,6 +25,7 @@
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ownerId" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Integer 32" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -35,6 +36,7 @@
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="place" inverseEntity="Image" syncable="YES"/>
         <relationship name="lists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="places" inverseEntity="List" syncable="YES"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="places" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".User" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
@@ -43,12 +45,13 @@
         <relationship name="favoriteLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="favoritedUsers" inverseEntity="List" syncable="YES"/>
         <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="friends" inverseEntity="User" syncable="YES"/>
         <relationship name="lists" toMany="YES" deletionRule="Nullify" destinationEntity="List" inverseName="owner" inverseEntity="List" syncable="YES"/>
+        <relationship name="places" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Place" inverseName="owner" inverseEntity="Place" syncable="YES"/>
         <relationship name="profileImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="user" inverseEntity="Image" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Place" positionX="-63" positionY="-18" width="128" height="300"/>
-        <element name="List" positionX="-54" positionY="-9" width="128" height="135"/>
         <element name="Image" positionX="-54" positionY="99" width="128" height="150"/>
-        <element name="User" positionX="-45" positionY="108" width="128" height="150"/>
+        <element name="List" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="Place" positionX="-63" positionY="-18" width="128" height="330"/>
+        <element name="User" positionX="-45" positionY="108" width="128" height="165"/>
     </elements>
 </model>

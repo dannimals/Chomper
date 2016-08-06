@@ -6,7 +6,6 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-import Common
 import CoreData
 import CoreLocation
 

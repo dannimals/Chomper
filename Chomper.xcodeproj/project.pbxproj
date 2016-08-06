@@ -18,6 +18,7 @@
 		9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */; };
 		9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */; };
 		9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */; };
+		9E1B4BCA1D5661B0009855FF /* DeleteListsWithPlacesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */; };
 		9E1D27971D21C2BF00728012 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */; };
 		9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
@@ -238,6 +239,7 @@
 		9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewModel.swift; sourceTree = "<group>"; };
 		9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceSearchView.swift; sourceTree = "<group>"; };
+		9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteListsWithPlacesTest.swift; sourceTree = "<group>"; };
 		9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9E4736DE1D3954D500463665 /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
@@ -634,8 +636,9 @@
 		9EE215AE1D19B355004C7C53 /* ModelsTests */ = {
 			isa = PBXGroup;
 			children = (
-				9EE215B11D19B355004C7C53 /* Info.plist */,
 				9EE215AF1D19B355004C7C53 /* CreateListWithPlacesTest.swift */,
+				9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */,
+				9EE215B11D19B355004C7C53 /* Info.plist */,
 				9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */,
 			);
 			path = ModelsTests;
@@ -1678,6 +1681,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EE215B01D19B355004C7C53 /* CreateListWithPlacesTest.swift in Sources */,
+				9E1B4BCA1D5661B0009855FF /* DeleteListsWithPlacesTest.swift in Sources */,
 				9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

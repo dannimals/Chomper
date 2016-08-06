@@ -9,41 +9,25 @@
 import CoreData
 @testable import Models
 
-let tempURL = NSURL.documentsDirectory.URLByAppendingPathComponent("Chomper.modelTest")
-
-//
-// Create a SQLite store context for unit testing
-func setupTestingManagedContext() -> NSManagedObjectContext {
-    let model = NSManagedObjectModel.mergedModelFromBundles([NSBundle(forClass: Place.self)])
-    let psc = NSPersistentStoreCoordinator(managedObjectModel: model!)
-    do {
-        try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: tempURL, options: nil)
-    } catch let error as NSError {
-        handlePSCError(psc, model: model!, error: error)
-    }
-    let moc = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-    moc.persistentStoreCoordinator = psc
-    return moc
-}
-		
-func handlePSCError(psc: NSPersistentStoreCoordinator, model: NSManagedObjectModel, error: NSError) -> NSPersistentStoreCoordinator? {
-    if error.domain == NSCocoaErrorDomain {
-        #if DEBUG
-            let stores = psc.persistentStores
-            for store in stores {
-                try! psc.removePersistentStore(store)
-            }
-            try! NSFileManager.defaultManager().removeItemAtURL(tempURL)
-            let newPsc = NSPersistentStoreCoordinator(managedObjectModel: model)
-            try! newPsc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: tempURL, options: nil)
-            
-            return newPsc
-        #endif
-    }
-    return nil
-}
-
 extension NSManagedObjectContext {
+    
+    static func chomperInMemoryTestContext() -> NSManagedObjectContext {
+        return chomperTestContext { $0.addInMemoryTestStore() }
+    }
+    
+    static func chomperSQLiteTestContext() -> NSManagedObjectContext {
+        return chomperTestContext { $0.addSQLiteTestStore() }
+    }
+    
+    static func chomperTestContext(addStore: NSPersistentStoreCoordinator -> ()) -> NSManagedObjectContext {
+        // TODO: refactor later after versioning
+        let model = NSManagedObjectModel.mergedModelFromBundles([NSBundle(forClass: Place.self)])!
+        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+        addStore(coordinator)
+        let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        context.persistentStoreCoordinator = coordinator
+        return context
+    }
     
     //
     // Synchronous performChanges on context
@@ -54,3 +38,19 @@ extension NSManagedObjectContext {
         }
     }
 }
+
+extension NSPersistentStoreCoordinator {
+    
+    func addInMemoryTestStore() {
+        try! addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+    }
+    
+    func addSQLiteTestStore() {
+        let storeURL = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).URLByAppendingPathComponent("Chomper.modelTest")
+        if NSFileManager.defaultManager().fileExistsAtPath(storeURL.path!) {
+            try! destroyPersistentStoreAtURL(storeURL, withType: NSSQLiteStoreType, options: nil)
+        }
+        try! addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+    }
+}
+
