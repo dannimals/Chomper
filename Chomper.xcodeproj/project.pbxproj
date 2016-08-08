@@ -19,6 +19,7 @@
 		9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */; };
 		9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */; };
 		9E1B4BCA1D5661B0009855FF /* DeleteListsWithPlacesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */; };
+		9E1B4BCC1D58FF4E009855FF /* ChomperWebServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BCB1D58FF4E009855FF /* ChomperWebServiceTests.swift */; };
 		9E1D27971D21C2BF00728012 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */; };
 		9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
@@ -67,7 +68,7 @@
 		9EE215B41D19B355004C7C53 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EE215B51D19B355004C7C53 /* Models.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EE215CB1D19B36D004C7C53 /* WebServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE215C11D19B36D004C7C53 /* WebServices.framework */; };
-		9EE215D21D19B36D004C7C53 /* WebServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE215D11D19B36D004C7C53 /* WebServicesTests.swift */; };
+		9EE215D21D19B36D004C7C53 /* ExplorePlacesNearAreaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE215D11D19B36D004C7C53 /* ExplorePlacesNearAreaTest.swift */; };
 		9EE215D61D19B36D004C7C53 /* WebServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE215C11D19B36D004C7C53 /* WebServices.framework */; };
 		9EE215D71D19B36D004C7C53 /* WebServices.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE215C11D19B36D004C7C53 /* WebServices.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EE215ED1D19B387004C7C53 /* ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE215E31D19B387004C7C53 /* ModelSync.framework */; };
@@ -240,6 +241,7 @@
 		9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceSearchView.swift; sourceTree = "<group>"; };
 		9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteListsWithPlacesTest.swift; sourceTree = "<group>"; };
+		9E1B4BCB1D58FF4E009855FF /* ChomperWebServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperWebServiceTests.swift; sourceTree = "<group>"; };
 		9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9E4736DE1D3954D500463665 /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
@@ -295,7 +297,7 @@
 		9EE215C31D19B36D004C7C53 /* WebServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebServices.h; sourceTree = "<group>"; };
 		9EE215C51D19B36D004C7C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EE215CA1D19B36D004C7C53 /* WebServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9EE215D11D19B36D004C7C53 /* WebServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServicesTests.swift; sourceTree = "<group>"; };
+		9EE215D11D19B36D004C7C53 /* ExplorePlacesNearAreaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorePlacesNearAreaTest.swift; sourceTree = "<group>"; };
 		9EE215D31D19B36D004C7C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EE215E31D19B387004C7C53 /* ModelSync.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ModelSync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE215E51D19B387004C7C53 /* ModelSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelSync.h; sourceTree = "<group>"; };
@@ -659,7 +661,8 @@
 		9EE215D01D19B36D004C7C53 /* WebServicesTests */ = {
 			isa = PBXGroup;
 			children = (
-				9EE215D11D19B36D004C7C53 /* WebServicesTests.swift */,
+				9E1B4BCB1D58FF4E009855FF /* ChomperWebServiceTests.swift */,
+				9EE215D11D19B36D004C7C53 /* ExplorePlacesNearAreaTest.swift */,
 				9EE215D31D19B36D004C7C53 /* Info.plist */,
 			);
 			path = WebServicesTests;
@@ -1700,7 +1703,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9EE215D21D19B36D004C7C53 /* WebServicesTests.swift in Sources */,
+				9EE215D21D19B36D004C7C53 /* ExplorePlacesNearAreaTest.swift in Sources */,
+				9E1B4BCC1D58FF4E009855FF /* ChomperWebServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

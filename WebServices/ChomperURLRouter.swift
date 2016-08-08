@@ -81,7 +81,7 @@ public enum ChomperURLRouter: URLRequestConvertible {
         parameters.append(NSURLQueryItem(name: "client_secret", value: ChomperURLRouter.clientSecret))
 
         switch self {
-        case .ExplorePlacesNearArea(let area, let searchTerm):
+        case let .ExplorePlacesNearArea(area, searchTerm):
             parameters.append(NSURLQueryItem(name: "near", value: area))
             
             if let searchTerm = searchTerm {
@@ -93,7 +93,7 @@ public enum ChomperURLRouter: URLRequestConvertible {
             
             return mutableRequest
             
-        case .ExplorePlacesNearLocation(let location, let searchTerm):
+        case let .ExplorePlacesNearLocation(location, searchTerm):
             parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
             
             if let searchTerm = searchTerm {
@@ -105,7 +105,7 @@ public enum ChomperURLRouter: URLRequestConvertible {
             
             return mutableRequest
             
-        case .GetPlacesNearArea(let area, let searchTerm):
+        case let .GetPlacesNearArea(area, searchTerm):
             parameters.append(NSURLQueryItem(name: "near", value: area))
             
             if let searchTerm = searchTerm {
@@ -117,7 +117,7 @@ public enum ChomperURLRouter: URLRequestConvertible {
             
             return mutableRequest
         
-        case .GetPlacesNearLocation(let location, let searchTerm):
+        case let .GetPlacesNearLocation(location, searchTerm):
           
             parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
             
