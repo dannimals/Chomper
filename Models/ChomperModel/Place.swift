@@ -77,7 +77,7 @@ public final class Place: ManagedObject {
             }
         }
         
-        place.owner = User.findOrCreateUser(ownerEmail, inContext: moc)!
+        place.owner = User.findOrCreateUser(ownerId!, inContext: moc)!
         
         return place
     }

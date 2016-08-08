@@ -19,6 +19,7 @@ class DeleteListsWithPlacesTest: XCTestCase {
     override func setUp() {
         super.setUp()
         moc = NSManagedObjectContext.chomperInMemoryTestContext()
+        moc.retainsRegisteredObjects = true
     }
     
     override func tearDown() {
@@ -28,7 +29,6 @@ class DeleteListsWithPlacesTest: XCTestCase {
     
     func testDeleteListAndPlace() {
         // Given
-        moc.retainsRegisteredObjects = true
         moc.performChangesAndWait {
             List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
         }
@@ -65,7 +65,6 @@ class DeleteListsWithPlacesTest: XCTestCase {
     
     func testDeletePlaceWithManyLists() {
         // Given
-        moc.retainsRegisteredObjects = true
         let f1 = NSFetchRequest(entityName: List.entityName)
         let f2 = NSFetchRequest(entityName: Place.entityName)
         var place = NSObject()

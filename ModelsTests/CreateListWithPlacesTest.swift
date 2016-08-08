@@ -7,11 +7,12 @@
 //
 
 import XCTest
+@testable import Common
 @testable import Models
 
 class CreateListWithPlacesTest: XCTestCase {
     var moc: NSManagedObjectContext!
-    let email = "test@email.com"
+    let email = AppData.sharedInstance.ownerUserEmail
     let listName = "list"
     let placeName = "place"
     
@@ -87,7 +88,7 @@ class CreateListWithPlacesTest: XCTestCase {
         
         // Given
         moc.performChangesAndWait {
-            List.insertIntoContext(self.moc, name: self.listName, ownerEmail: "OwnerEmail")
+            List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
         }
         
         moc.performChangesAndWait {
@@ -103,6 +104,9 @@ class CreateListWithPlacesTest: XCTestCase {
         let place = try! moc.executeFetchRequest(f2).first as? Place
         let placeList = place!.lists!.first!
         
+        for list in lists {
+            print((list as! List).name)
+        }
         // Then
         XCTAssertEqual(lists.count, 1)
         XCTAssertEqual(place!.lists?.count, 1)

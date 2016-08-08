@@ -33,15 +33,11 @@ var createChomperMainContext: NSManagedObjectContext = {
 func handlePSCError(psc: NSPersistentStoreCoordinator, model: NSManagedObjectModel, error: NSError) -> NSPersistentStoreCoordinator? {
     if error.domain == NSCocoaErrorDomain {
         #if DEBUG
-            let stores = psc.persistentStores
-            for store in stores {
-                try! psc.removePersistentStore(store)
+            if NSFileManager.defaultManager().fileExistsAtPath(StoreURL.path!) {
+                try! psc.destroyPersistentStoreAtURL(StoreURL, withType: NSSQLiteStoreType, options: nil)
             }
-            try! NSFileManager.defaultManager().removeItemAtURL(StoreURL)
-            let newPsc = NSPersistentStoreCoordinator(managedObjectModel: model)
-            try! newPsc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
-            
-            return newPsc
+            try! psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
+            return psc
         #endif
     }
     return nil
