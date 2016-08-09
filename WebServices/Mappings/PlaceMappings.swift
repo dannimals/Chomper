@@ -23,9 +23,7 @@ final class ChomperMapper {
     
     required init(response: NSData, mapperType: MapperType) {
         self.mapperType = mapperType
-        if let jsonString = NSString(data: response, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            mapResponse(JSON(data: jsonData), mapperType: mapperType)
-        }
+        mapResponse(JSON(data: response), mapperType: mapperType)
     }
     
     func mapResponse(json: JSON, mapperType: MapperType) {
