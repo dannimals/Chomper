@@ -57,13 +57,15 @@ final class ChomperMapper {
             case .GetRecommended:
                 venue = result["venue"]
             }
-            let name = venue["name"].string!
-            let id = venue["id"].string!
             let address = venue["location"]["address"].string
+            let id = venue["id"].string!
             let location = CLLocation(latitude: venue["location"]["lat"].double!, longitude: venue["location"]["lng"].double!)
-            let rating = venue["rating"].double
+            let name = venue["name"].string!
+            let phone = venue["contact"]["formattedPhone"].string
             let price = venue["price"]["tier"].double
-            let place = SearchResult(address: address, location: location, name: name, price: price, rating: rating, venueId: id)
+            let rating = venue["rating"].double
+
+            let place = SearchResult(address: address, location: location, name: name, phone: phone, price: price, rating: rating, venueId: id)
             places?.append(place)
         }
         
