@@ -1,5 +1,5 @@
 //
-//  PlaceMappings.swift
+//  ChomperMapper.swift
 //  Chomper
 //
 //  Created by Danning Ge on 6/23/16.
