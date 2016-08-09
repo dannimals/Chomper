@@ -46,7 +46,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.GetDetailsForPlace(id).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data).places
+                let results = ChomperMapper(response: data, mapperType: .GetPlaceDetails).places
                 completionHandler(results?.first, response, nil)
 
             } else {
@@ -63,7 +63,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.ExplorePlacesNearLocation(location, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data).places
+                let results = ChomperMapper(response: data, mapperType: .GetRecommended).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
@@ -77,7 +77,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.ExplorePlacesNearArea(area, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data).places
+                let results = ChomperMapper(response: data, mapperType: .GetRecommended).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
@@ -94,7 +94,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.GetPlacesNearLocation(location, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data).places
+                let results = ChomperMapper(response: data, mapperType: .GetPlaces).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
@@ -108,7 +108,7 @@ public class ChomperWebService: ChomperWebServiceProtocol {
         let request = ChomperURLRouter.GetPlacesNearArea(area, searchTerm).URLRequest
         let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) -> Void in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data).places
+                let results = ChomperMapper(response: data, mapperType: .GetPlaces).places
                 completionHandler(results, response, nil)
 
             } else {

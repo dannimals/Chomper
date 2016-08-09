@@ -1,19 +1,20 @@
 //
-//  WebServicesTests.swift
-//  WebServicesTests
+//  GetPlacesNearLocationTest.swift
+//  Chomper
 //
-//  Created by Danning Ge on 6/21/16.
+//  Created by Danning Ge on 8/9/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
 import XCTest
+import CoreLocation
 @testable import Common
 @testable import SwiftyJSON
 @testable import WebServices
 
-class ExplorePlacesNearAreaTest: XCTestCase {
+class GetPlacesNearLocationTest: XCTestCase {
     let searchTerm = "cafes"
-    let searchArea = "manhattan"
+    let searchLocation = CLLocation(latitude: 40.7, longitude: -74.0)
     var chomperWebService: ChomperWebServiceProtocol!
     var data: NSData?
     
@@ -29,7 +30,7 @@ class ExplorePlacesNearAreaTest: XCTestCase {
     }
     
     func testAsyncExplorePlacesAndChomperMapper() {
-        let request = ChomperURLRouter.ExplorePlacesNearArea(searchArea, searchTerm).URLRequest
+        let request = ChomperURLRouter.GetPlacesNearLocation(searchLocation, searchTerm).URLRequest
         let expectation = expectationWithDescription("GET \(request)")
         let session = ChomperWebService.session
         
@@ -60,16 +61,15 @@ class ExplorePlacesNearAreaTest: XCTestCase {
                 let jsonString = NSString(data: self.data!, encoding: NSUTF8StringEncoding)!
                 let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
                 let json = JSON(data: jsonData)
-                let mapper = ChomperMapper(response: self.data!, mapperType: .GetRecommended)
+                let mapper = ChomperMapper(response: self.data!, mapperType: .GetPlaces)
                 
                 // When
-                let response = json["response"]["groups"].array!
-                let results = response.first?["items"].array!
-                let testResult = results!.first!
-                let venue = testResult["venue"]
+                let response = json["response"].dictionary!
+                let results = response["venues"]!.array!
+                let venue = results.first!
                 
                 // Then
-                XCTAssertEqual(mapper.places?.count, results?.count)
+                XCTAssertEqual(mapper.places?.count, results.count)
                 XCTAssertNotNil(results)
                 XCTAssertNotNil(venue)
                 XCTAssertNotNil(venue["name"].string)
@@ -85,5 +85,5 @@ class ExplorePlacesNearAreaTest: XCTestCase {
             }
         }
     }
-
+    
 }

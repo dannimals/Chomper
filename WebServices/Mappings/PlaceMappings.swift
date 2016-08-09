@@ -10,26 +10,55 @@ import Common
 import CoreLocation
 import SwiftyJSON
 
+enum MapperType {
+    case GetPlaceDetails
+    case GetPlaces
+    case GetRecommended
+}
+
 final class ChomperMapper {
+
     var places: [SearchResult]? = nil
+    private var mapperType: MapperType
     
-    required init(response: NSData) {
+    required init(response: NSData, mapperType: MapperType) {
+        self.mapperType = mapperType
         if let jsonString = NSString(data: response, encoding: NSUTF8StringEncoding), jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
-            mapResponse(JSON(data: jsonData))
+            mapResponse(JSON(data: jsonData), mapperType: mapperType)
         }
     }
     
-    func mapResponse(json: JSON) {
-        if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
-            parseJson(results)
+    func mapResponse(json: JSON, mapperType: MapperType) {
+        switch mapperType {
+            case .GetPlaces:
+                if let response = json["response"].dictionary, let results = response["venues"]?.array {
+                    parseJson(results)
+                }
+            case .GetPlaceDetails:
+                if let response = json["response"].dictionary, let results = response["venue"] {
+                    parseJson([results])
+            }
+            case .GetRecommended:
+                if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
+                    parseJson(results)
+                }
+            
         }
+        
     }
     
     
     private func parseJson(results: [JSON]) {
         places = [SearchResult]()
+        var venue: JSON!
+ 
         for result in results {
-            let venue = result["venue"]
+            switch mapperType {
+            case .GetPlaces, .GetPlaceDetails:
+                venue = result
+            case .GetRecommended:
+                venue = result["venue"]
+            }
             let name = venue["name"].string!
             let id = venue["id"].string!
             let address = venue["location"]["address"].string

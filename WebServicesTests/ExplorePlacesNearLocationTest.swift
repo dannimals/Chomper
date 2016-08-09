@@ -1,19 +1,20 @@
 //
-//  WebServicesTests.swift
-//  WebServicesTests
+//  ExplorePlacesNearLocationTest.swift
+//  Chomper
 //
-//  Created by Danning Ge on 6/21/16.
+//  Created by Danning Ge on 8/9/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
 import XCTest
+import CoreLocation
 @testable import Common
 @testable import SwiftyJSON
 @testable import WebServices
 
-class ExplorePlacesNearAreaTest: XCTestCase {
+class ExplorePlacesNearLocationTest: XCTestCase {
     let searchTerm = "cafes"
-    let searchArea = "manhattan"
+    let searchLocation = CLLocation(latitude: 40.7, longitude: -74.0)
     var chomperWebService: ChomperWebServiceProtocol!
     var data: NSData?
     
@@ -29,7 +30,7 @@ class ExplorePlacesNearAreaTest: XCTestCase {
     }
     
     func testAsyncExplorePlacesAndChomperMapper() {
-        let request = ChomperURLRouter.ExplorePlacesNearArea(searchArea, searchTerm).URLRequest
+        let request = ChomperURLRouter.ExplorePlacesNearLocation(searchLocation, searchTerm).URLRequest
         let expectation = expectationWithDescription("GET \(request)")
         let session = ChomperWebService.session
         
@@ -85,5 +86,5 @@ class ExplorePlacesNearAreaTest: XCTestCase {
             }
         }
     }
-
+    
 }
