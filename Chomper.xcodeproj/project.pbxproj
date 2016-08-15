@@ -21,6 +21,8 @@
 		9E1B4BCA1D5661B0009855FF /* DeleteListsWithPlacesTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */; };
 		9E1B4BCC1D58FF4E009855FF /* ChomperWebServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BCB1D58FF4E009855FF /* ChomperWebServiceTests.swift */; };
 		9E1B4BD61D5A5C68009855FF /* WebServicesTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BD51D5A5C68009855FF /* WebServicesTestHelper.swift */; };
+		9E1B4BD81D5B7E15009855FF /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BD71D5B7E15009855FF /* TableViewDataSource.swift */; };
+		9E1B4BDA1D5F98AA009855FF /* FetchedResultsTableDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1B4BD91D5F98AA009855FF /* FetchedResultsTableDataProvider.swift */; };
 		9E1D27971D21C2BF00728012 /* PlaceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */; };
 		9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */; };
 		9E35F2F21D984F6D54939E55 /* Pods_ModelSync.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD3DE133C2C16F05D41FC56 /* Pods_ModelSync.framework */; };
@@ -244,6 +246,8 @@
 		9E1B4BC91D5661B0009855FF /* DeleteListsWithPlacesTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteListsWithPlacesTest.swift; sourceTree = "<group>"; };
 		9E1B4BCB1D58FF4E009855FF /* ChomperWebServiceTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperWebServiceTests.swift; sourceTree = "<group>"; };
 		9E1B4BD51D5A5C68009855FF /* WebServicesTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebServicesTestHelper.swift; sourceTree = "<group>"; };
+		9E1B4BD71D5B7E15009855FF /* TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
+		9E1B4BD91D5F98AA009855FF /* FetchedResultsTableDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchedResultsTableDataProvider.swift; sourceTree = "<group>"; };
 		9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceTableViewCell.xib; sourceTree = "<group>"; };
 		9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTableViewCell.swift; sourceTree = "<group>"; };
 		9E4736DE1D3954D500463665 /* ListsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableViewController.swift; sourceTree = "<group>"; };
@@ -532,6 +536,7 @@
 				9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */,
 				9E6736A11D3024F400C00995 /* TableDataProvider.swift */,
 				9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */,
+				9E1B4BD71D5B7E15009855FF /* TableViewDataSource.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -703,8 +708,9 @@
 			children = (
 				9E67366E1D2ED33300C00995 /* BaseNavigationController.swift */,
 				9E4736E41D3C0F8A00463665 /* BaseViewController.swift */,
-				9E690AB41D4530AC009574DF /* ToggleControl.swift */,
+				9E1B4BD91D5F98AA009855FF /* FetchedResultsTableDataProvider.swift */,
 				9E67369E1D3024F400C00995 /* Protocols */,
+				9E690AB41D4530AC009574DF /* ToggleControl.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1604,6 +1610,7 @@
 				9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */,
 				9E096D711D26ED50002A59E1 /* CreatePlaceSearchView.swift in Sources */,
 				9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */,
+				9E1B4BD81D5B7E15009855FF /* TableViewDataSource.swift in Sources */,
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
 				9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
@@ -1623,6 +1630,7 @@
 				9E690ABB1D4687E2009574DF /* ActionListViewController.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
+				9E1B4BDA1D5F98AA009855FF /* FetchedResultsTableDataProvider.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
 				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
 				9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */,

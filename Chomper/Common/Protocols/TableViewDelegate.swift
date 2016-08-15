@@ -13,6 +13,8 @@ protocol TableViewDelegate: class {
     associatedtype Object
     var tableView: UITableView! { get }
     func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>])
+    func cellIdentifierForObject(object: Object) -> String
+    func configureCell(cell: UITableViewCell, forObject: Object, atIndexPath: NSIndexPath)
 }
 
 extension TableViewDelegate {
@@ -40,4 +42,8 @@ extension TableViewDelegate {
         tableView.endUpdates()
     }
     
+    // MARK: - Override points
+    
+    func configureCell(cell: UITableViewCell, forObject: Object, atIndexPath: NSIndexPath) {}
+
 }

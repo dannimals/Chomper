@@ -11,52 +11,52 @@ import CoreLocation
 import Models 
 
 class ListsTableViewController: UITableViewController, BaseViewControllerProtocol, TableViewDelegate {
-    private var dataSource: TableViewDataModel<ListsTableViewController>!
-    typealias Object = List
+    typealias Data = FetchedResultsTableDataProvider<ListsTableViewController>
+    private var dataProvider: Data!
+    private var dataSource: TableViewDataSource<Data, ListsTableViewController, PlaceTableViewCell>!
+    
+    typealias Object = Place
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //
-        // Create data source
+        // Set up dataSource
         
-        let fetchRequest = NSFetchRequest(entityName: List.entityName)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "name", cacheName: nil)
-        dataSource = TableViewDataModel(tableViewDelegate: self, frc: frc)
+        setupDataSource()
         
+        //
+        // Set up tableView
+
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableView.separatorStyle = .None
         tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
         tableView.registerClass(ListsTableSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "HeaderView")
     }
+    
+    func cellIdentifierForObject(object: Object) -> String {
+        return "PlaceCell"
+    }
+    
+    func setupDataSource() {
+        let fetchRequest = NSFetchRequest(entityName: Place.entityName)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
+
+        dataProvider = FetchedResultsTableDataProvider(tableViewDelegate: self, frc: frc)
+        dataSource = TableViewDataSource(dataProvider: dataProvider, tableDelegate: self)
+    }
 
 }
 
 extension ListsTableViewController {
     
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return dataSource.numberOfSections()
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.numberOfItemsInSection(section)
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell else { fatalError("Cannot dequeue PlaceCell in ListsTableVC") }
-        return cell
-    }
+    // MARK: - TableView delegate methods
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("Cannot dequeue PlaceCell in ListsTableVC") }
-        let list = dataSource.objectAtIndexPath(indexPath)
-        let objects = list?.places?.sort { $0.name < $1.name }
-        guard indexPath.row < objects?.count && objects?.count > 0  else { return }
-        if let object = objects?[indexPath.row] {
+        if let object = dataProvider.objectAtIndexPath(indexPath) {
             var location: CLLocation? = nil
             if let lat = object.latitude, long = object.longitude {
                 location = CLLocation(latitude: Double(lat), longitude: Double(long))
@@ -75,7 +75,7 @@ extension ListsTableViewController {
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let view = view as? ListsTableSectionHeaderView else { fatalError("wrong headerView in ListsTableVC") }
-        view.configureHeader(dataSource.nameOfSection(section)!, count: dataSource.numberOfItemsInSection(section))
+        view.configureHeader(NSLocalizedString("Places", comment: "Places"), count: dataProvider.numberOfItemsInSection(section))
         view.backgroundView?.backgroundColor = UIColor.clearColor()
     }
     
