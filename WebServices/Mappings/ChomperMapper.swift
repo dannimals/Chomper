@@ -64,8 +64,16 @@ final class ChomperMapper {
             let phone = venue["contact"]["formattedPhone"].string
             let price = venue["price"]["tier"].double
             let rating = venue["rating"].double
-
-            let place = SearchResult(address: address, location: location, name: name, phone: phone, price: price, rating: rating, venueId: id)
+            var photoUrl: String?
+            if let photoDict = venue["bestPhoto"].dictionary {
+                let prefix = photoDict["prefix"] ?? ""
+                let size = "\(photoDict["width"] ?? "")x\(photoDict["height"] ?? "")"
+                let suffix = photoDict["suffix"] ?? ""
+                photoUrl = "\(prefix)\(size)\(suffix)"
+            }
+            
+            
+            let place = SearchResult(address: address, location: location, name: name, phone: phone, photoUrl: photoUrl, price: price, rating: rating, venueId: id)
             places?.append(place)
         }
         

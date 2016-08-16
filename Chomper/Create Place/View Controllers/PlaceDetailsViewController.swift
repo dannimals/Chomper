@@ -34,16 +34,16 @@ class PlaceDetailsViewController: BaseViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
-        //getPlaceDetails()
+        getPlaceDetails()
     }
     
     
     // MARK: - Handlers
     
     func getPlaceDetails() {
-        webService.getDetailsForPlace(place.venueId) { (json, response, error) in
+        webService.getDetailsForPlace(place.venueId) { (result, response, error) in
             if error == nil {
-                print(json)
+                print(result)
             } else {
                 // TODO: Handle error
             }

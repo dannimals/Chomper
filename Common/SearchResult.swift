@@ -16,11 +16,13 @@ public struct SearchResult {
     public var rating: Double?
     public var venueId: String
     public var phone: String?
+    public var photoUrl: String?
     
-    public init(address: String?, location: CLLocation, name: String, phone: String? = nil, price: Double?, rating: Double?, venueId: String) {
+    public init(address: String?, location: CLLocation, name: String, phone: String? = nil, photoUrl: String? = nil, price: Double?, rating: Double?, venueId: String) {
         self.address = address
         self.location = location
         self.name = name
+        self.photoUrl = photoUrl
         self.price = price
         self.rating = rating
         self.venueId = venueId
