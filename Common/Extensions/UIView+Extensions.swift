@@ -18,5 +18,11 @@ extension UIView {
         layer.shadowColor = color
         layer.shadowOpacity = opacity
     }
+    
+    public class func loadNibWithName<T: UIView>(viewType: T.Type) -> T {
+        let namedClassName = String(viewType)
+        let className = namedClassName.componentsSeparatedByString(".").first!
+        return UINib(nibName: className, bundle: nil).instantiateWithOwner(nil, options: nil).first as! T
+    }
    
 }

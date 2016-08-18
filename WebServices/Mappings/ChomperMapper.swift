@@ -58,14 +58,27 @@ final class ChomperMapper {
                 venue = result["venue"]
             }
             let address = venue["location"]["address"].string
+            let city = venue["location"]["city"].string
             let id = venue["id"].string!
+            var formattedAddress: [String]? = nil
+            if let address = venue["location"]["formattedAddress"].array {
+                formattedAddress = [String]()
+                for element in address  {
+                    formattedAddress?.append(element.stringValue)
+                }
+            }
             let location = CLLocation(latitude: venue["location"]["lat"].double!, longitude: venue["location"]["lng"].double!)
             let name = venue["name"].string!
             let phone = venue["contact"]["formattedPhone"].string
             let price = venue["price"]["tier"].double
             let rating = venue["rating"].double
+            let state = venue["location"]["state"].string
+            let zipcode = venue["location"]["postalCode"].string
+
             var photoUrl: String?
+            var photoId: String?
             if let photoDict = venue["bestPhoto"].dictionary {
+                photoId = photoDict["id"]?.string ?? ""
                 let prefix = photoDict["prefix"] ?? ""
                 let size = "\(photoDict["width"] ?? "")x\(photoDict["height"] ?? "")"
                 let suffix = photoDict["suffix"] ?? ""
@@ -73,7 +86,7 @@ final class ChomperMapper {
             }
             
             
-            let place = SearchResult(address: address, location: location, name: name, phone: phone, photoUrl: photoUrl, price: price, rating: rating, venueId: id)
+            let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, photoId: photoId, photoUrl: photoUrl, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)
         }
         
