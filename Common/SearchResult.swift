@@ -30,6 +30,7 @@ public struct SearchResult {
         self.formattedAddress = formattedAddress
         self.location = location
         self.name = name
+        self.phone = phone
         self.photoId = photoId
         self.photoUrl = photoUrl
         self.price = price
