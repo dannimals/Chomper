@@ -7,7 +7,7 @@
 //
 
 extension NSCache {
-    subscript(key: AnyObject) -> AnyObject? {
+    public subscript(key: AnyObject) -> AnyObject? {
         get {
             return objectForKey(key)
         }

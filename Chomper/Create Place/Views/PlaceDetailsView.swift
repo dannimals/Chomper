@@ -21,10 +21,10 @@ class PlaceDetailsView: UIView {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var notesView: UITextView!
     
-    var address: String? {
+    var formattedAddress: NSAttributedString? {
         didSet {
-            if address != nil {
-                addressLabel.text = address!
+            if formattedAddress != nil {
+                addressLabel.attributedText = formattedAddress
                 addressLabel.hidden = false
             }
         }
@@ -49,7 +49,7 @@ class PlaceDetailsView: UIView {
     }
     
     override func sizeThatFits(size: CGSize) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.width, 400)
+        return CGSizeMake(UIScreen.mainScreen().bounds.width, notesView.frame.maxY)
     }
     
     
@@ -58,7 +58,8 @@ class PlaceDetailsView: UIView {
     
         addressLabel.font = UIFont.chomperFontForTextStyle("p small")
         addressLabel.textColor = UIColor.darkTextColor()
-        
+        addressLabel.numberOfLines = 2
+
         phoneLabel.font = UIFont.chomperFontForTextStyle("p small")
         phoneLabel.textColor = UIColor.darkTextColor()
 

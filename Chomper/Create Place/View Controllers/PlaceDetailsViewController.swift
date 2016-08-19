@@ -10,6 +10,13 @@ import Common
 import Models
 
 class PlaceDetailsViewController: BaseViewController {
+    static let imageCache: NSCache = {
+        let cache = NSCache()
+        cache.name = "ChomperImageCache"
+        cache.countLimit = 20
+        cache.totalCostLimit = 10 * 1024 * 1024
+        return cache
+    }()
     
     private var place: SearchResult!
     private var detailsView: PlaceDetailsView!
@@ -55,8 +62,11 @@ class PlaceDetailsViewController: BaseViewController {
         
         //
         // Get Place Details
-        
-        getPlaceDetails()
+        if let image = PlaceDetailsViewController.imageCache[place.venueId] as? UIImage {
+            detailsView.imageView.image = image
+        } else {
+            getPlaceDetails()
+        }
 
         // Set details
         
@@ -68,16 +78,44 @@ class PlaceDetailsViewController: BaseViewController {
     // MARK: - Handlers
     
     func getPlaceDetails() {
-        webService.getDetailsForPlace(place.venueId) { (result, response, error) in
+        webService.getDetailsForPlace(place.venueId) { [weak self] (result, response, error) in
             if error == nil {
+                if let url = NSURL(string: result?.photoUrl ?? "") {
+                    self?.downloadImageForUrl(url)
+                }
             } else {
                 // TODO: Handle error
             }
         }
     }
     
+    func downloadImageForUrl(url: NSURL) {
+        NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
+            if error == nil, let data = data, let id = self?.place.venueId {
+                let image = UIImage(data: data)
+                PlaceDetailsViewController.imageCache[id] = image
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    self?.detailsView.imageView.image = image
+                }
+            }
+        }.resume()
+    }
+    
     func setPlaceDetails() {
-        detailsView.address = place.address
+        let attrText = NSMutableAttributedString()
+        if let address = place.address {
+            attrText.appendAttributedString(NSAttributedString(string: address))
+            if let city = place.city, state = place.state {
+                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
+            }
+        } else {
+            if let city = place.city, state = place.state {
+                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
+            }
+        }
+
+        detailsView.formattedAddress = attrText
         detailsView.price = place.price
         detailsView.phone = place.phone
     }
@@ -93,4 +131,7 @@ class PlaceDetailsViewController: BaseViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    deinit {
+//        print("placeDetailsVC deinit")
+    }
 }
