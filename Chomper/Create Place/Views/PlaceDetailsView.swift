@@ -30,6 +30,14 @@ class PlaceDetailsView: UIView {
         }
     }
     
+    var location: CLLocation? {
+        didSet {
+            if let coord = location?.coordinate {
+               setMapViewToCoord(coord)
+            }
+        }
+    }
+    
     var phone: String? {
         didSet {
             if phone != nil {
@@ -55,7 +63,7 @@ class PlaceDetailsView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-    
+            
         addressLabel.font = UIFont.chomperFontForTextStyle("p small")
         addressLabel.textColor = UIColor.darkTextColor()
         addressLabel.numberOfLines = 2
@@ -70,13 +78,27 @@ class PlaceDetailsView: UIView {
         listsLabel.textColor = UIColor.darkTextColor()
 
         notesView.font = UIFont.chomperFontForTextStyle("h5")
-        notesView.text = NSLocalizedString("Notes", comment: "notes")
+        notesView.text = NSLocalizedString("Add a note", comment: "notes")
         
         addressLabel.hidden = true
         phoneLabel.hidden = true
         priceLabel.hidden = true
         listsLabel.hidden = true
         
+    }
+    
+    // MARK: - Helpers
+    
+    private func setMapViewToCoord(coord: CLLocationCoordinate2D) {
+        let dropPin = MKPointAnnotation()
+        dropPin.coordinate = coord
+        mapView.addAnnotation(dropPin)
+        
+        let latDelta: CLLocationDegrees = 0.01
+        let longDelta: CLLocationDegrees = 0.01
+        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+        let region = MKCoordinateRegion(center: coord, span: span)
+        mapView.setRegion(region, animated: true)
     }
     
     

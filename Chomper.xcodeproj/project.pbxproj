@@ -1082,7 +1082,7 @@
 					};
 					9EE2157B1D19B347004C7C53 = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = D6MR8F7K82;
+						DevelopmentTeam = 34YPGE6KL3;
 					};
 					9EE215841D19B347004C7C53 = {
 						CreatedOnToolsVersion = 7.3;

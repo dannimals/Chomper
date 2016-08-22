@@ -8,8 +8,9 @@
 
 import Common
 import Models
+import MapKit
 
-class PlaceDetailsViewController: BaseViewController {
+class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     static let imageCache: NSCache = {
         let cache = NSCache()
         cache.name = "ChomperImageCache"
@@ -37,15 +38,9 @@ class PlaceDetailsViewController: BaseViewController {
         detailsView = UIView.loadNibWithName(PlaceDetailsView.self)
         scrollView.addSubview(detailsView)
         detailsView.sizeToFit()
-
-        scrollView.contentSize = detailsView.bounds.size
-        view = scrollView
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
-        // set the frame of the detailsView here
+        scrollView.contentSize = CGSize(width: detailsView.bounds.width, height: UIScreen.mainScreen().bounds.height)
+        view = scrollView
     }
     
     override func viewDidLoad() {
@@ -61,7 +56,8 @@ class PlaceDetailsViewController: BaseViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
         
         //
-        // Get Place Details
+        // Download, if needed, and set the place image
+        
         if let image = PlaceDetailsViewController.imageCache[place.venueId] as? UIImage {
             detailsView.imageView.image = image
         } else {
@@ -96,13 +92,20 @@ class PlaceDetailsViewController: BaseViewController {
                 PlaceDetailsViewController.imageCache[id] = image
 
                 dispatch_async(dispatch_get_main_queue()) {
+                    self?.detailsView.imageView.alpha = 0
                     self?.detailsView.imageView.image = image
+
+                    UIView.animateWithDuration(0.4) { [weak self] in
+                        self?.detailsView.imageView.alpha = 1
+                    }
                 }
             }
         }.resume()
     }
     
     func setPlaceDetails() {
+        detailsView.mapView.delegate = self
+        
         let attrText = NSMutableAttributedString()
         if let address = place.address {
             attrText.appendAttributedString(NSAttributedString(string: address))
@@ -116,6 +119,7 @@ class PlaceDetailsViewController: BaseViewController {
         }
 
         detailsView.formattedAddress = attrText
+        detailsView.location = place.location
         detailsView.price = place.price
         detailsView.phone = place.phone
     }
@@ -129,9 +133,5 @@ class PlaceDetailsViewController: BaseViewController {
     
     func dismissVC(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    deinit {
-//        print("placeDetailsVC deinit")
     }
 }
