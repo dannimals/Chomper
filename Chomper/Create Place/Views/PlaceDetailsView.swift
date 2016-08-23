@@ -20,6 +20,7 @@ class PlaceDetailsView: UIView {
     @IBOutlet weak private(set)var listsLabel: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var notesView: UITextView!
+    @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
     
     var formattedAddress: NSAttributedString? {
         didSet {
@@ -77,8 +78,9 @@ class PlaceDetailsView: UIView {
         listsLabel.font = UIFont.chomperFontForTextStyle("p small")
         listsLabel.textColor = UIColor.darkTextColor()
 
-        notesView.font = UIFont.chomperFontForTextStyle("h5")
-        notesView.text = NSLocalizedString("Add a note", comment: "notes")
+        notesView.font = UIFont.chomperFontForTextStyle("h4")
+        notesView.textContainerInset = UIEdgeInsetsMake(0, 8, 0, 8)
+        notesView.textColor = UIColor.darkGrayColor()
         
         addressLabel.hidden = true
         phoneLabel.hidden = true

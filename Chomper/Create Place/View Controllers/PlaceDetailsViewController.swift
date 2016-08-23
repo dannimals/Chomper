@@ -11,6 +11,9 @@ import Models
 import MapKit
 
 class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
+    
+    // MARK: - Properties
+    
     static let imageCache: NSCache = {
         let cache = NSCache()
         cache.name = "ChomperImageCache"
@@ -21,6 +24,8 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     private var place: SearchResult!
     private var detailsView: PlaceDetailsView!
+    private let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
+    private var scrollView: UIScrollView!
     
     // TODO: Rethink the logic of having to pass in an actual place rather than a placeId
     // and then calling webservice for details
@@ -34,7 +39,8 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     }
     
     override func loadView() {
-        let scrollView = UIScrollView()
+        scrollView = UIScrollView()
+        scrollView.keyboardDismissMode = .OnDrag
         detailsView = UIView.loadNibWithName(PlaceDetailsView.self)
         scrollView.addSubview(detailsView)
         detailsView.sizeToFit()
@@ -54,6 +60,8 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         //
         // Download, if needed, and set the place image
@@ -95,7 +103,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
                     self?.detailsView.imageView.alpha = 0
                     self?.detailsView.imageView.image = image
 
-                    UIView.animateWithDuration(0.4) { [weak self] in
+                    UIView.animateWithDuration(0.4) {
                         self?.detailsView.imageView.alpha = 1
                     }
                 }
@@ -105,6 +113,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     func setPlaceDetails() {
         detailsView.mapView.delegate = self
+        detailsView.notesView.delegate = self
         
         let attrText = NSMutableAttributedString()
         if let address = place.address {
@@ -122,6 +131,23 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         detailsView.location = place.location
         detailsView.price = place.price
         detailsView.phone = place.phone
+        detailsView.notesView.text = placeHolderText
+    }
+    
+    func keyboardWillAppear(notif: NSNotification) {
+        if let userInfo = notif.userInfo, keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+            UIView.animateWithDuration(0.4) {
+//                self.detailsView.detailsViewBottomConstraint.constant = keyboardFrame.size.height
+                self.scrollView.contentOffset = CGPoint(x: 0, y: self.detailsView.frame.maxY - keyboardFrame.minY + self.detailsView.notesView.bounds.height )
+            }
+        }
+    }
+    
+    func keyboardWillDisappear(notif: NSNotification) {
+        detailsView.notesView.resignFirstResponder()
+        if detailsView.notesView.text.isEmpty {
+            detailsView.notesView.text = placeHolderText
+        }
     }
     
     func add(sender: UIBarButtonItem) {
@@ -135,3 +161,35 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
+
+extension PlaceDetailsViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(textView: UITextView) {
+        UIView.animateWithDuration(0.4) {
+            if textView.text == self.placeHolderText {
+                textView.text = ""
+            }
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        if textView.text.isEmpty {
+            UIView.animateWithDuration(0.4) {
+                textView.text = self.placeHolderText
+            }
+        }
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if textView.text == placeHolderText {
+            UIView.animateWithDuration(0.4) {
+                textView.text.removeAll()
+            }
+        }
+        return true
+    }
+
+}
+
+
+
+
