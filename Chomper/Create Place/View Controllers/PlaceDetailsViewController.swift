@@ -113,6 +113,20 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     func setPlaceDetails() {
         detailsView.mapView.delegate = self
+        detailsView.mapViewAction = { [unowned self] in
+            let mapVC = MapDetailsViewController(placeLocation: self.place.location)
+            self.navigationController?.pushViewController(mapVC, animated: true)
+        }
+        
+        detailsView.phoneAction = { [unowned self] in
+            let formattedPhone = self.place?.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
+                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
+                    UIApplication.sharedApplication().openURL(phoneUrl)
+                }
+            }
+        }
+        
         detailsView.notesView.delegate = self
         
         let attrText = NSMutableAttributedString()
@@ -132,6 +146,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         detailsView.price = place.price
         detailsView.phone = place.phone
         detailsView.notesView.text = placeHolderText
+        detailsView.rating = place.rating
     }
     
     func keyboardWillAppear(notif: NSNotification) {
@@ -159,6 +174,11 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     func dismissVC(sender: UIBarButtonItem) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        detailsView.notesView.resignFirstResponder()
     }
 }
 
