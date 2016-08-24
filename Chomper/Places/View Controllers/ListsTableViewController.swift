@@ -67,6 +67,11 @@ extension ListsTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let object = dataProvider.objectAtIndexPath(indexPath) {
+            let vc = PlaceDetailsViewController(place: object.remoteId)
+            let nc = BaseNavigationController(rootViewController: vc)
+            presentViewController(nc, animated: true, completion: nil)
+        }
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -14,24 +14,21 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     // MARK: - Properties
     
-    static let imageCache: NSCache = {
-        let cache = NSCache()
-        cache.name = "ChomperImageCache"
-        cache.countLimit = 20
-        cache.totalCostLimit = 10 * 1024 * 1024
-        return cache
-    }()
-    
-    private var place: SearchResult!
+    private var searchResult: SearchResult?
+    private var place: Place?
     private var detailsView: PlaceDetailsView!
     private let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
     private var scrollView: UIScrollView!
     
     // TODO: Rethink the logic of having to pass in an actual place rather than a placeId
     // and then calling webservice for details
-    required init(place: SearchResult) {
-        self.place = place
+    required init(place: Any) {
         super.init(nibName: nil, bundle: nil)
+        if let place = place as? SearchResult {
+            self.searchResult = place
+        } else if let placeId = place as? String {
+            self.place = Place.findOrCreatePlace(placeId, name: "", inContext: self.mainContext)
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -55,10 +52,15 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         //
         // Set up view controller
         
-        title = place.name
+        title = place?.name ?? searchResult?.name
         view.backgroundColor = UIColor.whiteColor()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
-        navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
+        if searchResult != nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action:  #selector(edit(_:)))
+        }
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
           NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
@@ -66,23 +68,25 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         //
         // Download, if needed, and set the place image
         
-        if let image = PlaceDetailsViewController.imageCache[place.venueId] as? UIImage {
-            detailsView.imageView.image = image
-        } else {
-            getPlaceDetails()
+        if let venueId = searchResult?.venueId {
+            if let image = imageCache[venueId] as? UIImage {
+                detailsView.imageView.image = image
+            } else {
+                getPlaceDetails(venueId)
+            }
         }
-
+        
+        //
         // Set details
         
         setPlaceDetails()
-        
     }
     
     
     // MARK: - Handlers
     
-    func getPlaceDetails() {
-        webService.getDetailsForPlace(place.venueId) { [weak self] (result, response, error) in
+    func getPlaceDetails(id: String) {
+        webService.getDetailsForPlace(id) { [weak self] (result, response, error) in
             if error == nil {
                 if let url = NSURL(string: result?.photoUrl ?? "") {
                     self?.downloadImageForUrl(url)
@@ -95,9 +99,9 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     func downloadImageForUrl(url: NSURL) {
         NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-            if error == nil, let data = data, let id = self?.place.venueId {
+            if error == nil, let data = data, let id = self?.searchResult?.venueId {
                 let image = UIImage(data: data)
-                PlaceDetailsViewController.imageCache[id] = image
+                self?.imageCache[id] = image
 
                 dispatch_async(dispatch_get_main_queue()) {
                     self?.detailsView.imageView.alpha = 0
@@ -114,7 +118,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     func setPlaceDetails() {
         detailsView.mapView.delegate = self
         detailsView.mapViewAction = { [unowned self] in
-            let mapVC = MapDetailsViewController(placeLocation: self.place.location)
+            let mapVC = MapDetailsViewController(placeLocation: self.searchResult?.location ?? CLLocation(latitude: Double(self.place!.latitude!), longitude: Double(self.place!.longitude!)))
             self.navigationController?.pushViewController(mapVC, animated: true)
         }
         
@@ -130,23 +134,23 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         detailsView.notesView.delegate = self
         
         let attrText = NSMutableAttributedString()
-        if let address = place.address {
+        if let address = searchResult?.address {
             attrText.appendAttributedString(NSAttributedString(string: address))
-            if let city = place.city, state = place.state {
+            if let city = searchResult?.city ?? place?.city, state = searchResult?.state ?? place?.state {
                 attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
             }
         } else {
-            if let city = place.city, state = place.state {
+            if let city = searchResult?.city ?? place?.city, state = searchResult?.state ?? place?.state  {
                 attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
             }
         }
 
         detailsView.formattedAddress = attrText
-        detailsView.location = place.location
-        detailsView.price = place.price
-        detailsView.phone = place.phone
+        detailsView.location = searchResult?.location ?? CLLocation(latitude: Double(self.place!.latitude!), longitude: Double(self.place!.longitude!))
+        detailsView.price = searchResult?.price ?? Double(place?.price ?? 0)
+        detailsView.phone = searchResult?.phone ?? place?.phone
         detailsView.notesView.text = placeHolderText
-        detailsView.rating = place.rating
+        detailsView.rating = searchResult?.rating ?? Double(place?.rating ?? 0)
     }
     
     func keyboardWillAppear(notif: NSNotification) {
@@ -166,10 +170,14 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     }
     
     func add(sender: UIBarButtonItem) {
-        let vc = ActionListViewController(place: place)
+        let vc = ActionListViewController(place: searchResult!)
         vc.modalTransitionStyle = .CoverVertical
         vc.modalPresentationStyle = .OverCurrentContext
         presentViewController(vc, animated: true, completion: nil)
+    }
+    
+    func edit(sender: UIBarButtonItem) {
+        // TODO
     }
     
     func dismissVC(sender: UIBarButtonItem) {
