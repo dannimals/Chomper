@@ -56,6 +56,7 @@
 		9EA30C761D64DB3300CDCE64 /* PlaceDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */; };
 		9EA30C781D64E21600CDCE64 /* PlaceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C771D64E21600CDCE64 /* PlaceDetailsView.swift */; };
 		9EA30C7A1D6CC58500CDCE64 /* MapDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C791D6CC58400CDCE64 /* MapDetailsViewController.swift */; };
+		9EA30C7C1D6DF28000CDCE64 /* ChomperImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* ChomperMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
@@ -284,6 +285,7 @@
 		9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceDetailsView.xib; sourceTree = "<group>"; };
 		9EA30C771D64E21600CDCE64 /* PlaceDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsView.swift; sourceTree = "<group>"; };
 		9EA30C791D6CC58400CDCE64 /* MapDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailsViewController.swift; sourceTree = "<group>"; };
+		9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperImageCache.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperMapper.swift; sourceTree = "<group>"; };
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -622,12 +624,13 @@
 			isa = PBXGroup;
 			children = (
 				9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */,
-				9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */,
-				9E4F0A471D3EA130001E3B39 /* SearchResult.swift */,
-				9EE216271D19BAA7004C7C53 /* Extensions */,
 				9EE2157E1D19B347004C7C53 /* Common.h */,
+				9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */,
+				9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */,
+				9EE216271D19BAA7004C7C53 /* Extensions */,
 				9EE215801D19B347004C7C53 /* Info.plist */,
 				9E4F0A441D3EA02F001E3B39 /* Misc */,
+				9E4F0A471D3EA130001E3B39 /* SearchResult.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1671,6 +1674,7 @@
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
 				9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */,
 				9EE216291D19BAA7004C7C53 /* DependencyInjector.swift in Sources */,
+				9EA30C7C1D6DF28000CDCE64 /* ChomperImageCache.swift in Sources */,
 				9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */,
 				9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */,
 				9EA30C741D64D6EB00CDCE64 /* NSCache+Extensions.swift in Sources */,

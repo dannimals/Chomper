@@ -55,6 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DependencyInjector.sharedInstance.setSingleton(chomperLocationManager, proto: "\(ChomperLocationManagerProtocol.self)")
         
         //
+        // Set the image cache singleton for use with dependency injection later
+        
+        let chomperImageCache = ChomperImageCache.createImageCache()
+        DependencyInjector.sharedInstance.setSingleton(chomperImageCache, proto: "\(ChomperImageCacheProtocol.self)")
+        
+        //
         // GoogleMaps authorization
         
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
