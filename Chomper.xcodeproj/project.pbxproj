@@ -57,6 +57,8 @@
 		9EA30C781D64E21600CDCE64 /* PlaceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C771D64E21600CDCE64 /* PlaceDetailsView.swift */; };
 		9EA30C7A1D6CC58500CDCE64 /* MapDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C791D6CC58400CDCE64 /* MapDetailsViewController.swift */; };
 		9EA30C7C1D6DF28000CDCE64 /* ChomperImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */; };
+		9EA30C7E1D6E171F00CDCE64 /* ListPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */; };
+		9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* ChomperMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
@@ -286,6 +288,8 @@
 		9EA30C771D64E21600CDCE64 /* PlaceDetailsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsView.swift; sourceTree = "<group>"; };
 		9EA30C791D6CC58400CDCE64 /* MapDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailsViewController.swift; sourceTree = "<group>"; };
 		9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperImageCache.swift; sourceTree = "<group>"; };
+		9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlace.swift; sourceTree = "<group>"; };
+		9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsObjectProtocol.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperMapper.swift; sourceTree = "<group>"; };
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -548,8 +552,8 @@
 				9E6736A01D3024F400C00995 /* CollectionDataProvider.swift */,
 				9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */,
 				9E6736A11D3024F400C00995 /* TableDataProvider.swift */,
-				9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */,
 				9E1B4BD71D5B7E15009855FF /* TableViewDataSource.swift */,
+				9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -623,13 +627,14 @@
 		9EE2157D1D19B347004C7C53 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */,
 				9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */,
 				9EE2157E1D19B347004C7C53 /* Common.h */,
 				9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */,
-				9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */,
 				9EE216271D19BAA7004C7C53 /* Extensions */,
 				9EE215801D19B347004C7C53 /* Info.plist */,
 				9E4F0A441D3EA02F001E3B39 /* Misc */,
+				9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */,
 				9E4F0A471D3EA130001E3B39 /* SearchResult.swift */,
 			);
 			path = Common;
@@ -743,6 +748,7 @@
 			isa = PBXGroup;
 			children = (
 				9EDB67251D4FD6EC001E74A6 /* Image.swift */,
+				9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */,
 				9EE216171D19BA78004C7C53 /* List.swift */,
 				9EE216231D19BA99004C7C53 /* Model.xcdatamodeld */,
 				9EE216161D19BA78004C7C53 /* Place.swift */,
@@ -1670,6 +1676,7 @@
 			files = (
 				9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */,
 				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
+				9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */,
 				9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */,
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
 				9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */,
@@ -1698,6 +1705,7 @@
 				9EE216221D19BA78004C7C53 /* Utilities.swift in Sources */,
 				9EDB67261D4FD6EC001E74A6 /* Image.swift in Sources */,
 				9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */,
+				9EA30C7E1D6E171F00CDCE64 /* ListPlace.swift in Sources */,
 				9E67366B1D2DA17600C00995 /* NSManagedObjectContext+Extensions.swift in Sources */,
 				9EE216211D19BA78004C7C53 /* Notifications.swift in Sources */,
 				9EE2161D1D19BA78004C7C53 /* Place.swift in Sources */,

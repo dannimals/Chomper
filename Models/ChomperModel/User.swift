@@ -1,11 +1,3 @@
-//
-//  User.swift
-//  Chomper
-//
-//  Created by Danning Ge on 8/1/16.
-//  Copyright © 2016 Danning Ge. All rights reserved.
-//
-
 import Common
 import CoreData
 import CoreLocation

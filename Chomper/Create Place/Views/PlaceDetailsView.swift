@@ -55,7 +55,7 @@ class PlaceDetailsView: UIView {
     
     var price: Double? {
         didSet {
-            if price != nil || price != 0 {
+            if price != nil && price != 0 {
                 switch price! {
                 case 1.0:
                     priceLabel.text = "$"

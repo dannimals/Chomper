@@ -1,14 +1,5 @@
-//
-//  Image.swift
-//  Chomper
-//
-//  Created by Danning Ge on 8/1/16.
-//  Copyright © 2016 Danning Ge. All rights reserved.
-//
-
 import CoreData
 import CoreLocation
-
 
 public final class Image: ManagedObject {
     
@@ -22,8 +13,7 @@ public final class Image: ManagedObject {
 
     // MARK: - Relationships
     
-    @NSManaged public var list: List?
-    @NSManaged public var place: Place?
+    @NSManaged public var listPlace: ListPlace?
     @NSManaged public var user: User?
 
     // MARK: - Helpers

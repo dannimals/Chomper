@@ -13,10 +13,7 @@ public final class Place: ManagedObject {
     @NSManaged public var longitude: NSNumber?
     @NSManaged public var name: String
     @NSManaged public var neighborhood: String?
-    @NSManaged public var notes: String?
     @NSManaged public var phone: String?
-    @NSManaged public var price: NSNumber?
-    @NSManaged public var rating: NSNumber?
     @NSManaged public var remoteId: String
     @NSManaged public var streetName: String?
     @NSManaged public var state: String?
@@ -28,22 +25,9 @@ public final class Place: ManagedObject {
     
     // MARK: - Relationships
 
-    @NSManaged public var images: Set<Image>?
-    @NSManaged public var lists: Set<List>?
+    @NSManaged public var listPlaces: Set<ListPlace>?
     @NSManaged public var owner: User
     
-    public override func prepareForDeletion() {
-        //
-        // Delete Images that are only associated with this Place
-        // i.e. image is associated with a profile or list
-        if let images = images {
-            for image in images {
-                if image.user == nil && image.list == nil {
-                    managedObjectContext?.deleteObject(image)
-                }
-            }
-        }
-    }
     
     // MARK: - Helpers
     
@@ -61,10 +45,7 @@ public final class Place: ManagedObject {
         place.category = category
         place.name = name
         place.neighborhood = neighborhood
-        place.notes = notes
         place.ownerId = ownerId // Transient property
-        place.price = price
-        place.rating = rating
         place.remoteId = remoteId
         place.streetName = streetName
         place.state = state
@@ -72,9 +53,8 @@ public final class Place: ManagedObject {
         place.zipcode = zipcode
         
         for listName in listNames {
-            if let list = List.findOrCreateList(listName, ownerId: ownerId!, inContext: moc) {
-                place.lists?.insert(list)
-            }
+            let listPlace = ListPlace.findOrCreateListPlace(remoteId, listName: listName, inContext: moc)
+            place.listPlaces?.insert(listPlace)
         }
         
         place.owner = User.findOrCreateUser(ownerId!, inContext: moc)!
@@ -82,13 +62,12 @@ public final class Place: ManagedObject {
         return place
     }
     
-    public static func addToLists(moc: NSManagedObjectContext, remoteId: String, name: String, listNames: [String]) -> Place? {
-        let place = Place.findOrCreatePlace(remoteId, name: name, inContext: moc)
+    public static func addToLists(moc: NSManagedObjectContext, placeId: String, name: String, listNames: [String]) -> Place? {
+        let place = Place.findOrCreatePlace(placeId, name: name, inContext: moc)
         
         for name in listNames {
-            if let list = List.findOrCreateList(name, ownerId: ownerEmail, inContext: moc) {
-                place?.lists?.insert(list)
-            }
+            let list = ListPlace.findOrCreateListPlace(placeId, listName: name, inContext: moc)
+            place?.listPlaces?.insert(list)
         }
         return place
     }

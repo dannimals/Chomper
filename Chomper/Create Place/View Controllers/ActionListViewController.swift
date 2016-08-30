@@ -18,9 +18,9 @@ enum ActionValues {
 
 class ActionListViewController: BaseViewController {
     private var tableView: UITableView!
-    private var place: SearchResult!
+    private var place: PlaceDetailsObjectProtocol!
     
-    required init(place: SearchResult) {
+    required init(place: PlaceDetailsObjectProtocol) {
         super.init(nibName: nil, bundle: nil)
         self.place = place
     }
@@ -117,7 +117,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
             case .QuickSave:
                 cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
                     self.mainContext.performChanges {
-                        Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.price, rating: self.place.rating, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listNames: [defaultSavedList])
+                        Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.priceValue, rating: self.place.ratingValue, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listNames: [defaultSavedList])
                     }
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }

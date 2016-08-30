@@ -64,7 +64,8 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
         if let object = dataSource.objectAtIndexPath(indexPath) {
-            cell.configureCell(object.name, count: object.places?.count ?? 0 ,hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+            //TODO: do calc of places count by counting number of ListPlaces with same name?
+            cell.configureCell(object.name, count: 100 ,hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
         } else {
             //
             // Object is nil means cell is a "+"

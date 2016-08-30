@@ -15,7 +15,7 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
     private var dataProvider: Data!
     private var dataSource: TableViewDataSource<Data, ListsTableViewController, PlaceTableViewCell>!
     
-    typealias Object = Place
+    typealias Object = PlaceDetailsObjectProtocol
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,9 +40,9 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
     }
     
     func setupDataSource() {
-        let fetchRequest = NSFetchRequest(entityName: Place.entityName)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
+        let fetchRequest = NSFetchRequest(entityName: ListPlace.entityName)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "listName", ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "listName", cacheName: nil)
 
         dataProvider = FetchedResultsTableDataProvider(tableViewDelegate: self, frc: frc)
         dataSource = TableViewDataSource(dataProvider: dataProvider, tableDelegate: self)
@@ -57,18 +57,14 @@ extension ListsTableViewController {
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("Cannot dequeue PlaceCell in ListsTableVC") }
         if let object = dataProvider.objectAtIndexPath(indexPath) {
-            var location: CLLocation? = nil
-            if let lat = object.latitude, long = object.longitude {
-                location = CLLocation(latitude: Double(lat), longitude: Double(long))
-            }
-            cell.configurePlaceCell(object.name, address: object.streetName, rating: object.rating, price: object.price, location: location)
+            cell.configurePlaceCell(object.name ?? "", address: object.address, rating: object.ratingValue, price: object.priceValue, location: object.location)
         }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if let object = dataProvider.objectAtIndexPath(indexPath) {
-            let vc = PlaceDetailsViewController(place: object.remoteId)
+            let vc = PlaceDetailsViewController(place: object)
             let nc = BaseNavigationController(rootViewController: vc)
             presentViewController(nc, animated: true, completion: nil)
         }
@@ -80,7 +76,8 @@ extension ListsTableViewController {
     
     override func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let view = view as? ListsTableSectionHeaderView else { fatalError("wrong headerView in ListsTableVC") }
-        view.configureHeader(NSLocalizedString("Places", comment: "Places"), count: dataProvider.numberOfItemsInSection(section))
+        let sectionName = dataProvider.nameOfSection(section) ?? ""
+        view.configureHeader(sectionName, count: dataProvider.numberOfItemsInSection(section))
         view.backgroundView?.backgroundColor = UIColor.clearColor()
     }
     

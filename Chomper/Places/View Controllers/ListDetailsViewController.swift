@@ -27,7 +27,7 @@ class ListDetailsViewController: BaseViewController {
     }*/
     private var observer: ManagedObjectObserver?
     private var tableView: UITableView!
-    private var viewModel: [Place]!
+    private var viewModel: [ListPlace]!
     
     required init(listId: NSManagedObjectID) {
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +41,7 @@ class ListDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        viewModel = list.places?.sort { $0.name < $1.name } ?? []
+        viewModel = list.listPlaces?.sort { $0.placeName < $1.placeName } ?? []
                 
         // 
         // Configure view
@@ -136,10 +136,10 @@ class ListDetailsViewController: BaseViewController {
     }
     
     func markItemAtIndexPath(indexPath: NSIndexPath) {
-        let place = viewModel[indexPath.row]
-        let visited = place.visited == NSNumber(int: 0) ? NSNumber(int: 1) : NSNumber(int: 0)
+        let listPlace = viewModel[indexPath.row]
+        let visited = listPlace.place?.visited == NSNumber(int: 0) ? NSNumber(int: 1) : NSNumber(int: 0)
         mainContext.performChanges {
-            place.visited = visited
+            listPlace.place?.visited = visited
             self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         }
     }
@@ -179,18 +179,18 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("cell not found") }
-        let place = viewModel[indexPath.row]
+        let listPlace = viewModel[indexPath.row]
         var location: CLLocation? = nil
-        if let lat = place.latitude, long = place.longitude {
+        if let lat = listPlace.place?.latitude, long = listPlace.place?.longitude {
             location = CLLocation(latitude: Double(lat), longitude: Double(long))
         }
-        cell.configurePlaceCell(place.name, address: place.streetName, rating: place.rating, price: place.price, location: location, visited: place.visited ?? 0)
+        cell.configurePlaceCell(listPlace.place!.name, address: listPlace.place?.streetName, rating: listPlace.rating, price: listPlace.price, location: location, visited: listPlace.place?.visited ?? 0)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let object = viewModel[indexPath.row]
-        let vc = PlaceDetailsViewController(place: object.remoteId)
+        let vc = PlaceDetailsViewController(place: object)
         let nc = BaseNavigationController(rootViewController: vc)
         presentViewController(nc, animated: true, completion: nil)
     }
@@ -210,8 +210,8 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         }
         delete.backgroundColor = UIColor.redColor()
         
-        let place = viewModel[indexPath.row]
-        let visitedTitle = place.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Visited", comment: "visited")
+        let listPlace = viewModel[indexPath.row]
+        let visitedTitle = listPlace.place?.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Visited", comment: "visited")
         let visited = UITableViewRowAction(style: .Normal, title: visitedTitle) { [unowned self] (_, indexPath) in
             self.markItemAtIndexPath(indexPath)
         }

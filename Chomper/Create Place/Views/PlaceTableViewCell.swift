@@ -58,14 +58,14 @@ class PlaceTableViewCell: UITableViewCell {
     }
 
 
-    func configureCell(withObject object: SearchResult) {
+    func configureCell(withObject object: PlaceDetailsObjectProtocol) {
         nameLabel.text = object.name
         addressLabel.text = object.address ?? "Address unknown"
-        ratingLabel.text = object.rating != nil ? "\(floor(object.rating!/2)) stars" : nil
-        if object.price == nil {
+        ratingLabel.text = object.ratingValue != nil ? "\(floor(object.ratingValue!/2)) stars" : nil
+        if object.priceValue == nil {
             priceLabel.hidden = true
         } else {
-            priceLabel.text = convertPrice(object.price!)
+            priceLabel.text = convertPrice(object.priceValue!)
         }
         // display distance
     }

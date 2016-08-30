@@ -1,5 +1,4 @@
-
-import Foundation
+import Common
 import CoreData
 
 
@@ -8,30 +7,17 @@ public final class List: ManagedObject {
     // MARK: - Properties
 
     @NSManaged public var name: String
+
     //
     // Only used for default "Saved" list
     // "Saved" list sequence num is set to 1
     @NSManaged public var sequenceNum: NSNumber?
-
     
     // MARK: - Relationships
     
     @NSManaged public var favoritedUsers: Set<User>?
-    @NSManaged public var image: Image?
     @NSManaged public var owner: User
-    @NSManaged public var places: Set<Place>?
-
-    public override func prepareForDeletion() {
-        //
-        // Delete Places that are only associated with this List
-        if let places = places {
-            for place in places {
-                if place.lists?.count == 1 {
-                    managedObjectContext?.deleteObject(place)
-                }
-            }
-        }
-    }
+    @NSManaged public var listPlaces: Set<ListPlace>?
     
     // MARK: - Helpers
     
