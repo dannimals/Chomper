@@ -27,7 +27,7 @@ public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
     public var location = CLLocation(latitude: 0, longitude: 0)
     public var name = ""
     public var phone: String?
-    public var photoUrl: String?
+    public var imageUrl: String?
     public var priceValue: Double?
     public var ratingValue: Double?
     public var state: String?
@@ -52,7 +52,7 @@ public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
         listPlace.listImageId = downloadImageUrl
         listPlace.listName = listName
         listPlace.notes = notes
-        listPlace.photoUrl = downloadImageUrl
+        listPlace.imageUrl = downloadImageUrl
         listPlace.placeId = placeId
         listPlace.placeName = placeName
         listPlace.price = price
@@ -87,6 +87,8 @@ public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
     public static func findOrCreateListPlace(placeId: String, listName: String, inContext moc: NSManagedObjectContext) -> ListPlace {
         let predicate = NSPredicate(format: "placeId == %@ && listName == %@", placeId, listName)
         let listPlace = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.listName = listName; $0.placeId = placeId }
+        let list = List.findOrCreateList(listName, ownerId: AppData.sharedInstance.ownerUserEmail, inContext: moc)
+        listPlace.list = list
         return listPlace
     }
 }
@@ -101,31 +103,6 @@ extension ListPlace: ManagedObjectType {
     }
 }
 
-//extension ListPlace: PlaceDetailsObjectProtocol {
-//    
-//    var city = place?.city
-//    var location: CLLocation {
-//        let lat = Double(place?.latitude ?? 0), long = Double(place?.longitude ?? 0)
-//        return CLLocation(latitude: lat, longitude: long)
-//    }
-//    var name = place?.name ?? ""
-//    var phone = place?.phone
-//    var photoUrl = downloadImageUrl
-//    var type = "\(ListPlace.self)"
-//    var venueId = place?.remoteId ?? ""
-//    var ratingValue: Double? {
-//        if let rating = self.rating {
-//            return Double(rating)
-//        }
-//        return nil
-//    }
-//    var priceValue: Double? {
-//        if let price = self.price {
-//            return Double(price)
-//        }
-//        return nil
-//    }
-//}
 
 
 

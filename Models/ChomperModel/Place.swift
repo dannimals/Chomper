@@ -33,7 +33,7 @@ public final class Place: ManagedObject {
     
     //
     // Every time a new place is created, the ownerUserEmail in AppData will be automatically associated with it
-    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, price: NSNumber?, rating: NSNumber?, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listNames: [String]) -> Place {
+    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, price: NSNumber?, rating: NSNumber?, imageUrl: String?, userRated:Bool?, userPriced: Bool?, listPlaces: [String]) -> Place {
         
         let place: Place = moc.insertObject()
         place.city = city
@@ -52,8 +52,14 @@ public final class Place: ManagedObject {
         place.visited = visited
         place.zipcode = zipcode
         
-        for listName in listNames {
-            let listPlace = ListPlace.findOrCreateListPlace(remoteId, listName: listName, inContext: moc)
+        for listPlace in listPlaces {
+            let listPlace = ListPlace.findOrCreateListPlace(remoteId, listName: listPlace, inContext: moc)
+            listPlace.userRated = userRated
+            listPlace.rating = rating
+            listPlace.userPriced = userPriced
+            listPlace.price = price
+            listPlace.downloadImageUrl = imageUrl
+            listPlace.notes = notes
             place.listPlaces?.insert(listPlace)
         }
         
@@ -62,11 +68,11 @@ public final class Place: ManagedObject {
         return place
     }
     
-    public static func addToLists(moc: NSManagedObjectContext, placeId: String, name: String, listNames: [String]) -> Place? {
+    public static func addToLists(moc: NSManagedObjectContext, placeId: String, name: String, listPlaces: [String]) -> Place? {
         let place = Place.findOrCreatePlace(placeId, name: name, inContext: moc)
         
-        for name in listNames {
-            let list = ListPlace.findOrCreateListPlace(placeId, listName: name, inContext: moc)
+        for listPlace in listPlaces {
+            let list = ListPlace.findOrCreateListPlace(placeId, listName: listPlace, inContext: moc)
             place?.listPlaces?.insert(list)
         }
         return place

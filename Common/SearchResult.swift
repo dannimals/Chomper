@@ -23,8 +23,8 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
     public var location: CLLocation
     public var name: String
     public var phone: String?
-    public var photoId: String?
-    public var photoUrl: String?
+    public var imageId: String?
+    public var imageUrl: String?
     public var priceValue: Double?
     public var ratingValue: Double?
     public var state: String? {
@@ -42,15 +42,15 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
         }
     }
     
-    public init (address: String?, city: String?, formattedAddress: [String]?, location: CLLocation, name: String, phone: String?, photoId: String?, photoUrl: String?, price: Double?, rating: Double?, state: String?, venueId: String, zipcode: String?) {
+    public init (address: String?, city: String?, formattedAddress: [String]?, location: CLLocation, name: String, phone: String?, imageId: String?, imageUrl: String?, price: Double?, rating: Double?, state: String?, venueId: String, zipcode: String?) {
         self.address = address
         self.city = city
         self.formattedAddress = formattedAddress
         self.location = location
         self.name = name
         self.phone = phone
-        self.photoId = photoId
-        self.photoUrl = photoUrl
+        self.imageId = imageId
+        self.imageUrl = imageUrl
         self.priceValue = price
         self.ratingValue = rating
         self.state = state

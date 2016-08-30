@@ -75,18 +75,18 @@ final class ChomperMapper {
             let state = venue["location"]["state"].string
             let zipcode = venue["location"]["postalCode"].string
 
-            var photoUrl: String?
-            var photoId: String?
+            var imageUrl: String?
+            var imageId: String?
             if let photoDict = venue["bestPhoto"].dictionary {
-                photoId = photoDict["id"]?.string ?? ""
+                imageId = photoDict["id"]?.string ?? ""
                 let prefix = photoDict["prefix"] ?? ""
                 let size = "\(photoDict["width"] ?? "")x\(photoDict["height"] ?? "")"
                 let suffix = photoDict["suffix"] ?? ""
-                photoUrl = "\(prefix)\(size)\(suffix)"
+                imageUrl = "\(prefix)\(size)\(suffix)"
             }
             
             
-            let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, photoId: photoId, photoUrl: photoUrl, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
+            let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)
         }
         

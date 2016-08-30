@@ -117,7 +117,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
             case .QuickSave:
                 cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
                     self.mainContext.performChanges {
-                        Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, price: self.place.priceValue, rating: self.place.ratingValue, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, listNames: [defaultSavedList])
+                        Place.insertIntoContext(self.mainContext, city: nil, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, price: self.place.priceValue, rating: self.place.ratingValue, imageUrl: self.place.imageUrl, userRated: self.place.userRate?.boolValue ?? false, userPriced: self.place.userPrice?.boolValue ?? false, listPlaces: [defaultSavedList])
                     }
                     self.dismissViewControllerAnimated(true, completion: nil)
                 }

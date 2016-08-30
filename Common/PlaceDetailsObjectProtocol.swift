@@ -14,7 +14,7 @@ public protocol PlaceDetailsObjectProtocol {
     var location: CLLocation { get }
     var name: String { get }
     var phone: String? { get set }
-    var photoUrl: String? { get set }
+    var imageUrl: String? { get set }
     var priceValue: Double? { get set }
     var ratingValue: Double? { get set }
     var state: String? { get set }

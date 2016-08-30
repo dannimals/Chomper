@@ -75,7 +75,7 @@ class PlaceDetailsView: UIView {
     
     var rating: Double? {
         didSet {
-            if rating != nil || rating != 0 {
+            if rating != nil && rating != 0 {
                 ratingLabel.text = "\(floor(rating!/2)) stars"
                 ratingLabel.hidden = false
             }

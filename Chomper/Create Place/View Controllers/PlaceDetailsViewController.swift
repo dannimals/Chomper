@@ -23,8 +23,8 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     // and then calling webservice for details
     required init(place: PlaceDetailsObjectProtocol) {
         super.init(nibName: nil, bundle: nil)
-        if place.type == "\(ListPlace.self)" {
-            self.placeModel = ListPlace.findOrCreateListPlace(place.venueId, listName: place.name, inContext: self.mainContext)
+        if let place = place as? ListPlace {
+            self.placeModel = ListPlace.findOrCreateListPlace(place.placeId, listName: place.listName, inContext: self.mainContext)
         } else {
             self.placeModel = place
         }
@@ -85,7 +85,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     func getPlaceDetails(id: String) {
         webService.getDetailsForPlace(id) { [weak self] (result, response, error) in
             if error == nil {
-                if let url = NSURL(string: result?.photoUrl ?? "") {
+                if let url = NSURL(string: result?.imageUrl ?? "") {
                     self?.downloadImageForUrl(url)
                 }
             } else {
