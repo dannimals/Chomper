@@ -108,9 +108,10 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let list = lists[indexPath.row]
-        mainContext.performChanges {
-            Place.insertIntoContext(self.mainContext, city: self.place.city, category: nil, location: self.place.location, name: self.place.name, neighborhood: nil, notes: nil, remoteId: self.place.venueId, streetName: self.place.address, state: nil, visited: false, zipcode: nil, price: self.place.priceValue, rating: self.place.ratingValue, imageUrl: self.place.imageUrl, userRated: self.place.userRate?.boolValue ?? false, userPriced: self.place.userPrice?.boolValue ?? false, listPlaces: [list.name])
+        self.mainContext.performChanges {
+            ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: list.name, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue, notes: self.place.userNotes, rating: self.place.ratingValue, state: self.place.state)
         }
+
         dismissViewControllerAnimated(true, completion: nil)
     }
 }
