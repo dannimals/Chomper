@@ -146,7 +146,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         detailsView.location = placeModel.location
         detailsView.price = placeModel.priceValue
         detailsView.phone = placeModel.phone
-        detailsView.notesView.text = placeHolderText
+        detailsView.notesView.text = placeModel.userNotes ?? placeHolderText
         detailsView.rating = placeModel.ratingValue
     }
     
@@ -167,6 +167,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     }
     
     func add(sender: UIBarButtonItem) {
+        placeModel.userNotes = detailsView.notesView.text
         let vc = ActionListViewController(place: placeModel)
         vc.modalTransitionStyle = .CoverVertical
         vc.modalPresentationStyle = .OverCurrentContext

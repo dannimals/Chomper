@@ -19,7 +19,11 @@ public protocol PlaceDetailsObjectProtocol {
     var ratingValue: Double? { get set }
     var state: String? { get set }
     var type: String { get }
+    
+    // Boolean for user set values
     var userPrice: NSNumber? { get set }
+    // Boolean for user set values
     var userRate: NSNumber? { get set }
+    var userNotes: String? { get set }
     var venueId: String { get }
 }

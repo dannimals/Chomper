@@ -86,7 +86,7 @@ final class ChomperMapper {
             }
             
             
-            let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
+            let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, notes: nil, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)
         }
         

@@ -33,6 +33,7 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
         }
     }
     public var type = "\(SearchResult.self)"
+    public var userNotes: String?
     public var userPrice: NSNumber? = NSNumber(bool: false)
     public var userRate: NSNumber? = NSNumber(bool: false)
     public var venueId: String
@@ -42,7 +43,7 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
         }
     }
     
-    public init (address: String?, city: String?, formattedAddress: [String]?, location: CLLocation, name: String, phone: String?, imageId: String?, imageUrl: String?, price: Double?, rating: Double?, state: String?, venueId: String, zipcode: String?) {
+    public init (address: String?, city: String?, formattedAddress: [String]?, location: CLLocation, name: String, phone: String?, imageId: String?, imageUrl: String?, notes: String?, price: Double?, rating: Double?, state: String?, venueId: String, zipcode: String?) {
         self.address = address
         self.city = city
         self.formattedAddress = formattedAddress
@@ -56,6 +57,7 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
         self.state = state
         self.venueId = venueId
         self.zipcode = zipcode
+        self.userNotes = notes
     }
 }
 
