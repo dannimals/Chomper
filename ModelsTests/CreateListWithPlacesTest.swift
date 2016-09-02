@@ -6,14 +6,21 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
+import CoreLocation
 import XCTest
 @testable import Common
 @testable import Models
 
 class CreateListWithPlacesTest: XCTestCase {
+    
     var moc: NSManagedObjectContext!
+
+    let address = "123 streetName"
+    let city = "new york"
     let email = AppData.sharedInstance.ownerUserEmail
     let listName = "list"
+    let location = CLLocation(latitude: 0, longitude: 0)
+    let placeId = "123placeID"
     let placeName = "place"
     
     override func setUp() {
@@ -30,7 +37,7 @@ class CreateListWithPlacesTest: XCTestCase {
         XCTAssertNotNil(moc)
     }
     
-    func testAddList() {
+    func testCreateList() {
         // Given
         var list = NSObject()
         
@@ -43,98 +50,83 @@ class CreateListWithPlacesTest: XCTestCase {
         XCTAssertNotNil(list)
     }
 
-    func testAddPlace() {
+    func testCreateListPlace() {
         // Given
-        var place =  NSObject()
+        var listPlace: ListPlace!
         
         // When
         moc.performChangesAndWait {
-            place = Place.insertIntoContext(self.moc,
-                location: nil,
-                name: self.placeName,
-                neighborhood: nil,
-                price: nil,
-                rating: nil,
-                remoteId: "123",
-                streetName: nil,
-                state: nil,
-                listNames: [self.listName]
-            )}
-        
-        // Then
-        XCTAssertNotNil(place)
-    }
-    
-    func testAddPlaceToList() {
-        // Given
-        moc.performChangesAndWait {
-            Place.insertIntoContext(self.moc, location: nil, name: self.placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [self.listName])
+            listPlace = ListPlace.insertIntoContext(self.moc, address: self.address, city: self.city, downloadImageUrl: nil, listName: self.listName, location: self.location, phone: nil, placeId: self.placeId, placeName: self.placeName, price: nil, notes: nil, rating: nil, state: nil) as ListPlace
         }
         
-        let f1 = NSFetchRequest(entityName: List.entityName)
-        let f2 = NSFetchRequest(entityName: Place.entityName)
+        let placeRequest = NSFetchRequest(entityName: Place.entityName)
+        var error : NSError?
+        let placeCount = moc.countForFetchRequest(placeRequest, error: &error)
+        let listRequest = NSFetchRequest(entityName: List.entityName)
+        let listCount = moc.countForFetchRequest(listRequest, error: &error)
+        
+        let place = listPlace.place
+        let list = listPlace.list
+        
+        // Then
+        XCTAssertNotNil(listPlace)
+        XCTAssertEqual(listPlace.place?.name, placeName)
+        XCTAssertEqual(listPlace.list?.name, listName)
+        XCTAssertNil(error)
+        XCTAssertEqual(placeCount, 1)
+        XCTAssertEqual(listCount, 1)
+        XCTAssertEqual(place?.listPlaces?.count, 1)
+        XCTAssertEqual(list?.listPlaces?.count, 1)
+        XCTAssertEqual(place?.name, placeName)
+        XCTAssertEqual(list?.name, listName)
+    }
+    
+    func testCreateMultipleListPlaces() {
+        // Given
+        var listPlace1: ListPlace!
+        var listPlace2: ListPlace!
         
         // When
-        let list = try! moc.executeFetchRequest(f1).first as? List
-        let place = try! moc.executeFetchRequest(f2).first as? Place
-        let placeList = place!.lists!.first!
-
-        // Then
-        XCTAssertEqual(place!.lists?.count, 1)
-        XCTAssertEqual(placeList.name, list!.name)
-    }
-    
-    func testAddPlaceToExistingList() {
-        
-        // Given
         moc.performChangesAndWait {
-            List.insertIntoContext(self.moc, name: self.listName, ownerEmail: self.email)
+            listPlace1 = ListPlace.insertIntoContext(self.moc, address: self.address, city: self.city, downloadImageUrl: nil, listName: self.listName, location: self.location, phone: nil, placeId: self.placeId, placeName: self.placeName, price: nil, notes: nil, rating: nil, state: nil) as ListPlace
+            listPlace2 = ListPlace.insertIntoContext(self.moc, address: self.address, city: self.city, downloadImageUrl: nil, listName: "secondList", location: self.location, phone: nil, placeId: self.placeId, placeName: self.placeName, price: nil, notes: nil, rating: nil, state: nil) as ListPlace
         }
         
-        moc.performChangesAndWait {
-            Place.insertIntoContext(self.moc, location: nil, name: self.placeName, neighborhood: nil, price: nil, rating: nil, remoteId: "123", streetName: nil, state: nil, listNames: [self.listName])
-        }
+        let placeRequest = NSFetchRequest(entityName: Place.entityName)
+        var error : NSError?
+        let placeCount = moc.countForFetchRequest(placeRequest, error: &error)
+        let listRequest = NSFetchRequest(entityName: List.entityName)
+        let listCount = moc.countForFetchRequest(listRequest, error: &error)
         
-        let f1 = NSFetchRequest(entityName: List.entityName)
-        let f2 = NSFetchRequest(entityName: Place.entityName)
-
+        let place1 = listPlace1.place
+        let place2 = listPlace2.place
+        let list1 = listPlace1.list
+        let list2 = listPlace2.list
         
-        let lists = try! moc.executeFetchRequest(f1)
-        let list = lists.first as! List
-        let place = try! moc.executeFetchRequest(f2).first as? Place
-        let placeList = place!.lists!.first!
-        
-        for list in lists {
-            print((list as! List).name)
-        }
         // Then
-        XCTAssertEqual(lists.count, 1)
-        XCTAssertEqual(place!.lists?.count, 1)
-        XCTAssertEqual(placeList.name, list.name)
+        XCTAssertNotNil(listPlace1)
+        XCTAssertNotNil(listPlace2)
 
-    }
-    
-    func testAddToLists() {
+        XCTAssertEqual(listPlace1.place?.name, placeName)
+        XCTAssertEqual(listPlace2.place?.name, placeName)
         
-        // Given
-        moc.performChangesAndWait {
-            Place.addToLists(self.moc, remoteId: "123", name: self.placeName, listNames: [self.listName])
-        }
-        
-        // When
-        let f1 = NSFetchRequest(entityName: List.entityName)
-        let f2 = NSFetchRequest(entityName: Place.entityName)
-        
-        let lists = try! moc.executeFetchRequest(f1)
-        let list = lists.first as! List
-        let place = try! moc.executeFetchRequest(f2).first as? Place
-        let placeList = place!.lists!.first!
+        XCTAssertNotEqual(listPlace1.listName, listPlace2.listName)
+        XCTAssertEqual(listPlace1.list?.name, listName)
+        XCTAssertEqual(listPlace2.list?.name, "secondList")
 
-        // Then
-        XCTAssertEqual(lists.count, 1)
-        XCTAssertEqual(place!.lists?.count, 1)
-        XCTAssertEqual(placeList.name, list.name)
+        XCTAssertNil(error)
+        XCTAssertEqual(placeCount, 1)
+        XCTAssertEqual(listCount, 2)
+        XCTAssertEqual(place1!.listPlaces?.count, 2)
+        XCTAssertEqual(place2!.listPlaces?.count, 2)
+        
+        XCTAssertEqual(list1?.name, listName)
+        XCTAssertEqual(list2?.name, "secondList")
+        XCTAssertEqual(list1?.listPlaces?.count, 1)
+        XCTAssertEqual(list2?.listPlaces?.count, 1)
+        XCTAssertTrue(list1?.listPlaces?.first!.name == list2?.listPlaces?.first!.name)
+
+        XCTAssertTrue(place1!.name == place2!.name)
 
     }
-    
 }
