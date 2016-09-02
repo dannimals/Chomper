@@ -2,7 +2,7 @@ import Common
 import CoreData
 import CoreLocation
 
-public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
+public final class ListPlace: ManagedObject {
     
     // MARK: - Properties
     
@@ -18,23 +18,6 @@ public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
     @NSManaged public var userRated: NSNumber?
     @NSManaged public var userPriced: NSNumber?
     
-    // MARK: - PlaceDetailsObjectProtocol properties
-    
-    public var address: String?
-    public var city: String?
-    public var location = CLLocation(latitude: 0, longitude: 0)
-    public var name = ""
-    public var phone: String?
-    public var imageUrl: String?
-    public var priceValue: Double?
-    public var ratingValue: Double?
-    public var state: String?
-    public var type = "\(ListPlace.self)"
-    public var userPrice: NSNumber?
-    public var userRate: NSNumber?
-    public var userNotes: String?
-    public var venueId = ""
-    
 
     // MARK: - Relationships
     
@@ -47,29 +30,16 @@ public final class ListPlace: ManagedObject, PlaceDetailsObjectProtocol {
     public static func insertIntoContext(moc: NSManagedObjectContext, address: String?, city: String?,  downloadImageUrl: String?, listName: String, location: CLLocation, phone: String?, placeId: String, placeName: String, price: NSNumber?, notes: String?, rating: NSNumber?, state: String?, userRated: Bool? = false, userPriced: Bool? = false) -> ListPlace {
         let listPlace: ListPlace = moc.insertObject()
         
-        listPlace.address = address
-        listPlace.city = city
         listPlace.downloadImageUrl = downloadImageUrl
-        listPlace.imageUrl = downloadImageUrl
-        listPlace.location = location
         listPlace.listImageId = downloadImageUrl
         listPlace.listName = listName
         listPlace.notes = notes
-        listPlace.phone = phone
-        listPlace.placeName = placeName
         listPlace.placeId = placeId
         listPlace.placeName = placeName
         listPlace.price = price
-        listPlace.priceValue = Double(price ?? 0)
         listPlace.rating = rating
-        listPlace.ratingValue = Double(rating ?? 0)
-        listPlace.state = state
         listPlace.userRated = NSNumber(bool: userRated!)
         listPlace.userPriced = NSNumber(bool: userPriced!)
-        listPlace.userRate = NSNumber(bool: userRated!)
-        listPlace.userPrice = NSNumber(bool: userPriced!)
-        listPlace.userNotes = notes
-        listPlace.venueId = placeId
         
         if let place = Place.findOrCreatePlace(placeId, name: placeName, inContext: moc) {
             place.streetName = place.streetName ?? address
@@ -103,6 +73,110 @@ extension ListPlace: ManagedObjectType {
     
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         return [NSSortDescriptor(key: "listName", ascending: false)]
+    }
+}
+
+extension ListPlace: PlaceDetailsObjectProtocol {
+    
+    public var address: String? {
+        get {
+            return place?.streetName
+        }
+        set {
+            self.address = newValue
+        }
+    }
+    public var city: String? {
+        get {
+            return place?.city
+        }
+        set {
+            self.city = newValue
+        }
+    }
+    public var imageUrl: String? {
+        get {
+            return downloadImageUrl
+        }
+        set {
+            self.downloadImageUrl = newValue
+        }
+    }
+    public var location: CLLocation  {
+        get {
+            return CLLocation(latitude: CLLocationDegrees(place?.latitude ?? 0), longitude: CLLocationDegrees(place?.longitude ?? 0))
+        }
+    }
+    public var name: String {
+        get {
+            return place?.name ?? ""
+        }
+    }
+    public var phone: String? {
+        get {
+            return place?.phone
+        }
+        set {
+            self.phone = newValue
+        }
+    }
+    public var priceValue: Double? {
+        get {
+            return Double(price ?? 0)
+        }
+        set {
+            self.priceValue = newValue
+        }
+    }
+    public var ratingValue: Double? {
+        get {
+            return Double(rating ?? 0)
+        }
+        set {
+            self.ratingValue = newValue
+        }
+    }
+    public var state: String? {
+        get {
+            return place?.state
+        }
+        set {
+            self.state = newValue
+        }
+    }
+    public var type: String {
+        get {
+            return "\(ListPlace.self)"
+        }
+    }
+    public var userPrice: NSNumber? {
+        get {
+            return userPriced
+        }
+        set {
+            self.userPrice = newValue
+        }
+    }
+    public var userRate: NSNumber? {
+        get {
+            return userRated
+        }
+        set {
+            self.userRate = newValue
+        }
+    }
+    public var userNotes: String? {
+        get {
+            return notes
+        }
+        set {
+            self.notes = newValue
+        }
+    }
+    public var venueId: String {
+        get {
+            return placeId
+        }
     }
 }
 

@@ -33,7 +33,7 @@ public final class Place: ManagedObject {
     
     //
     // Every time a new place is created, the ownerUserEmail in AppData will be automatically associated with it
-    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String?, notes: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, price: NSNumber?, rating: NSNumber?, imageUrl: String?, userRated:Bool?, userPriced: Bool?, listPlaces: [String]) -> Place {
+    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listPlaces: [String]) -> Place {
         
         let place: Place = moc.insertObject()
         place.city = city
@@ -43,8 +43,8 @@ public final class Place: ManagedObject {
         }
         
         place.category = category
-        place.name = name
         place.neighborhood = neighborhood
+        place.name = name
         place.ownerId = ownerId // Transient property
         place.remoteId = remoteId
         place.streetName = streetName
@@ -54,12 +54,6 @@ public final class Place: ManagedObject {
         
         for listPlace in listPlaces {
             let listPlace = ListPlace.findOrCreateListPlace(remoteId, listName: listPlace, inContext: moc)
-            listPlace.userRated = userRated
-            listPlace.rating = rating
-            listPlace.userPriced = userPriced
-            listPlace.price = price
-            listPlace.downloadImageUrl = imageUrl
-            listPlace.notes = notes
             place.listPlaces?.insert(listPlace)
         }
         
