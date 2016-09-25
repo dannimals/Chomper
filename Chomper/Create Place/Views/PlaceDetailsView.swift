@@ -98,6 +98,7 @@ class PlaceDetailsView: UIView {
         addressLabel.numberOfLines = 2
 
         phoneLabel.font = UIFont.chomperFontForTextStyle("p small")
+        phoneLabel.textColor = .orangeColor()
         phoneLabel.userInteractionEnabled = true
         let phoneGR = UITapGestureRecognizer(target: self, action: #selector(phoneLabelTapped))
         phoneLabel.addGestureRecognizer(phoneGR)
