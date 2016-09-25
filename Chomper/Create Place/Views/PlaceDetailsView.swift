@@ -13,7 +13,7 @@ class PlaceDetailsView: UIView {
 
     // MARK: - Properties
     
-    @IBOutlet var imageView: UIImageView!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
     @IBOutlet private(set)var addressLabel: UILabel!
     @IBOutlet private(set)var phoneLabel: UILabel!
     @IBOutlet private(set)var priceLabel: UILabel!

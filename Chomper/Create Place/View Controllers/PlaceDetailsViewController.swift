@@ -47,7 +47,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         //
         // Set up view controller
         
@@ -68,7 +68,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         // Download, if needed, and set the place image
         
         if let image = imageCache[placeModel.venueId] as? UIImage {
-            detailsView.imageView.image = image
+//            detailsView.imageView.image = image
         } else {
             getPlaceDetails(placeModel.venueId)
         }
@@ -101,11 +101,11 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
                 self?.imageCache[id] = image
 
                 dispatch_async(dispatch_get_main_queue()) {
-                    self?.detailsView.imageView.alpha = 0
-                    self?.detailsView.imageView.image = image
+//                    self?.detailsView.imageView.alpha = 0
+//                    self?.detailsView.imageView.image = image
 
                     UIView.animateWithDuration(0.4) {
-                        self?.detailsView.imageView.alpha = 1
+//                        self?.detailsView.imageView.alpha = 1
                     }
                 }
             }

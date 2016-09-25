@@ -11,6 +11,7 @@ import CoreLocation
 import SwiftyJSON
 
 enum MapperType {
+    case GetPhotos
     case GetPlaceDetails
     case GetPlaces
     case GetRecommended
@@ -18,6 +19,7 @@ enum MapperType {
 
 final class ChomperMapper {
 
+    var photos: [Photo]? = nil
     var places: [SearchResult]? = nil
     private var mapperType: MapperType
     
@@ -28,17 +30,22 @@ final class ChomperMapper {
     
     func mapResponse(json: JSON, mapperType: MapperType) {
         switch mapperType {
+            case .GetPhotos:
+                guard let response = json["response"].dictionary, count = response["photos"]?["count"].intValue where count > 0 else { photos = nil; return }
+                if let results = response["photos"]?["items"].array {
+                    parseJsonPhotos(results)
+                }
             case .GetPlaces:
-                if let response = json["response"].dictionary, let results = response["venues"]?.array {
-                    parseJson(results)
+                if let response = json["response"].dictionary, results = response["venues"]?.array {
+                    parseJsonPlaces(results)
                 }
             case .GetPlaceDetails:
-                if let response = json["response"].dictionary, let results = response["venue"] {
-                    parseJson([results])
+                if let response = json["response"].dictionary, results = response["venue"] {
+                    parseJsonPlaces([results])
             }
             case .GetRecommended:
-                if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
-                    parseJson(results)
+                if let response = json["response"]["groups"].array, results = response.first?["items"].array {
+                    parseJsonPlaces(results)
                 }
             
         }
@@ -46,7 +53,23 @@ final class ChomperMapper {
     }
     
     
-    private func parseJson(results: [JSON]) {
+    // MARK: - Helpers
+    
+    private func parseJsonPhotos(results: [JSON]) {
+        photos = [Photo]()
+        
+        for result in results {
+            let id = result["id"].string ?? "",
+            height = result["height"].int ?? 0,
+            width = result["width"].int ?? 0,
+            prefix = result["prefix"].string ?? "",
+            suffix = result["suffix"].string ?? "",
+            url = "\(prefix)\(width)x\(height)\(suffix)"
+            photos?.append(Photo(id: id, width: width, height: height, url: url))
+        }
+    }
+    
+    private func parseJsonPlaces(results: [JSON]) {
         places = [SearchResult]()
         var venue: JSON!
  
@@ -56,6 +79,8 @@ final class ChomperMapper {
                 venue = result
             case .GetRecommended:
                 venue = result["venue"]
+            case .GetPhotos:
+                break
             }
             let address = venue["location"]["address"].string
             let city = venue["location"]["city"].string
@@ -89,7 +114,6 @@ final class ChomperMapper {
             let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, notes: nil, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)
         }
-        
     }
     
 }

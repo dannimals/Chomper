@@ -35,6 +35,7 @@
 		9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A471D3EA130001E3B39 /* SearchResult.swift */; };
 		9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */; };
 		9E4F0A4C1D411F58001E3B39 /* ListsTableSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */; };
+		9E5110251D987CBB00A42EED /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E5110241D987CBB00A42EED /* Photo.swift */; };
 		9E6736601D2C24B900C00995 /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */; };
 		9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */; };
 		9E6736641D2D782600C00995 /* ChomperStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6736631D2D782600C00995 /* ChomperStack.swift */; };
@@ -266,6 +267,7 @@
 		9E4F0A471D3EA130001E3B39 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		9E4F0A491D401019001E3B39 /* TableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewDelegate.swift; sourceTree = "<group>"; };
 		9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsTableSectionHeaderView.swift; sourceTree = "<group>"; };
+		9E5110241D987CBB00A42EED /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		9E67365F1D2C24B900C00995 /* LocationSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		9E6736611D2C46F600C00995 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		9E6736631D2D782600C00995 /* ChomperStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperStack.swift; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 				9E4F0A441D3EA02F001E3B39 /* Misc */,
 				9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */,
 				9E4F0A471D3EA130001E3B39 /* SearchResult.swift */,
+				9E5110241D987CBB00A42EED /* Photo.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E5110251D987CBB00A42EED /* Photo.swift in Sources */,
 				9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */,
 				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
 				9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */,

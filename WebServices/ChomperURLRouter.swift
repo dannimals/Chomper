@@ -32,37 +32,31 @@ public enum ChomperURLRouter: URLRequestConvertible {
     
     case ExplorePlacesNearArea(String, String?)
     case ExplorePlacesNearLocation(CLLocation, String?)
+    case GetDetailsForPlace(String)
+    case GetPhotosForPlace(String)
     case GetPlacesNearArea(String, String?)
     case GetPlacesNearLocation(CLLocation, String?)
-    case GetDetailsForPlace(String)
     
-    var method: Method {
+    private var method: Method {
         switch self {
-        case .ExplorePlacesNearArea:
-            return .GET
-        case .ExplorePlacesNearLocation:
-            return .GET
-        case .GetPlacesNearArea:
-            return .GET
-        case .GetPlacesNearLocation:
-            return .GET
-        case .GetDetailsForPlace:
-            return .GET
+            default: return .GET
         }
     }
     
-    var path: String {
+    private var path: String {
         switch self {
         case .ExplorePlacesNearArea:
             return "/venues/explore/"
         case .ExplorePlacesNearLocation:
             return "/venues/explore/"
+        case let .GetDetailsForPlace(id):
+            return "/venues/\(id)"
+        case let .GetPhotosForPlace(id):
+            return "/venues/\(id)/photos"
         case .GetPlacesNearArea:
             return "/venues/search/"
         case .GetPlacesNearLocation:
             return "/venues/search/"
-        case .GetDetailsForPlace(let id):
-            return "/venues/\(id)"
         }
     }
     
@@ -105,6 +99,20 @@ public enum ChomperURLRouter: URLRequestConvertible {
             
             return mutableRequest
             
+        case .GetDetailsForPlace:
+            components?.queryItems = parameters
+            guard let url = components?.URL else { fatalError("Invalid GetDetailsForPlace URL") }
+            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            
+            return mutableRequest
+        
+        case .GetPhotosForPlace:
+            components?.queryItems = parameters
+            guard let url = components?.URL else { fatalError("Invalid GetDetailsForPlace URL") }
+            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            
+            return mutableRequest
+            
         case let .GetPlacesNearArea(area, searchTerm):
             parameters.append(NSURLQueryItem(name: "near", value: area))
             
@@ -129,16 +137,8 @@ public enum ChomperURLRouter: URLRequestConvertible {
             let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
             
             return mutableRequest
-        
-        case .GetDetailsForPlace:
-            components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetDetailsForPlace URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
-            
-            return mutableRequest
         }
     }
-    
 }
 
 
