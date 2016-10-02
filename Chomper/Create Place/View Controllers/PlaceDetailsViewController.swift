@@ -16,6 +16,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     private var placeModel: PlaceDetailsObjectProtocol!
     private var detailsView: PlaceDetailsView!
+    private var photos: [Photo]?
     private let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
     private var scrollView: UIScrollView!
     
@@ -47,7 +48,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //
         // Set up view controller
         
@@ -64,6 +65,11 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
           NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
+        detailsView.imageCollectionView.registerClass(ImageCollectionCell.self, forCellWithReuseIdentifier:String(ImageCollectionCell))
+        detailsView.imageCollectionView.delegate = self
+        detailsView.imageCollectionView.dataSource = self
+
+        getPlaceImages()
         //
         // Download, if needed, and set the place image
         
@@ -82,6 +88,21 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     // MARK: - Handlers
     
+    func getPlaceImages() {
+        webService.getPhotosForPlace(placeModel.venueId) { [weak self] (photos, response, error) in
+            if error == nil {
+                if let photos = photos where photos.count != 0 {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self?.photos = photos
+                        self?.detailsView.imageCollectionView.reloadData()
+                    }
+                }
+            } else {
+                // TODO: handle error
+            }
+        }
+    }
+    
     func getPlaceDetails(id: String) {
         webService.getDetailsForPlace(id) { [weak self] (result, response, error) in
             if error == nil {
@@ -94,22 +115,35 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         }
     }
     
-    func downloadImageForUrl(url: NSURL) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-            if error == nil, let data = data, let id = self?.placeModel.venueId {
-                let image = UIImage(data: data)
-                self?.imageCache[id] = image
-
+    func downloadImageWithUrl(url: NSURL) -> UIImage? {
+        var image: UIImage? = nil
+        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+            if error == nil, let data = data {
                 dispatch_async(dispatch_get_main_queue()) {
-//                    self?.detailsView.imageView.alpha = 0
-//                    self?.detailsView.imageView.image = image
-
-                    UIView.animateWithDuration(0.4) {
-//                        self?.detailsView.imageView.alpha = 1
-                    }
+                    image = UIImage(data: data)
                 }
             }
         }.resume()
+        
+        return image
+    }
+    
+    func downloadImageForUrl(url: NSURL) {
+//        NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
+//            if error == nil, let data = data, let id = self?.placeModel.venueId {
+//                let image = UIImage(data: data)
+//                self?.imageCache[id] = image
+//
+//                dispatch_async(dispatch_get_main_queue()) {
+////                    self?.detailsView.imageView.alpha = 0
+////                    self?.detailsView.imageView.image = image
+//
+//                    UIView.animateWithDuration(0.4) {
+////                        self?.detailsView.imageView.alpha = 1
+//                    }
+//                }
+//            }
+//        }.resume()
     }
     
     func setPlaceDetails() {
@@ -185,6 +219,40 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         detailsView.notesView.resignFirstResponder()
+    }
+}
+
+extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos?.count ?? 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        guard let imageCell = collectionView.dequeueReusableCellWithReuseIdentifier(String(ImageCollectionCell), forIndexPath: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
+        guard let photo = photos?[indexPath.row], url = NSURL(string: photo.url)  else { return imageCell }
+        imageCell.photoUrl = photo.url
+        
+        if let image = imageCache[photo.url] as? UIImage {
+            imageCell.imageView.image = image
+        } else {
+            NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
+                if error == nil, let data = data, let image = UIImage(data: data) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if NSURL(string: imageCell.photoUrl ?? "") == url {
+                            imageCell.imageView.image = image
+                            self?.imageCache[photo.url] = image
+                        }
+                    }
+                }
+            }.resume()
+            
+        }
+        return imageCell
     }
 }
 

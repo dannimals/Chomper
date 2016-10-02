@@ -58,7 +58,7 @@ final class ChomperMapper {
     private func parseJsonPhotos(results: [JSON]) {
         photos = [Photo]()
         
-        for result in results {
+        for result in results where result["visibility"].string == "public" {
             let id = result["id"].string ?? "",
             height = result["height"].int ?? 0,
             width = result["width"].int ?? 0,

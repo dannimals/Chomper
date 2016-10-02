@@ -7,10 +7,10 @@
 //
 
 public struct Photo {
-    var id = ""
-    var width = 0
-    var height = 0
-    var url = ""
+    public var id = ""
+    public var width = 0
+    public var height = 0
+    public var url = ""
     
     public init(id: String, width: Int, height: Int, url: String) {
         self.id = id

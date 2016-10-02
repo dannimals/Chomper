@@ -91,11 +91,24 @@ class PlaceDetailsView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        detailsContainerView.setShadow()
-        
         addressLabel.font = UIFont.chomperFontForTextStyle("p small")
         addressLabel.textColor = UIColor.darkGrayColor()
         addressLabel.numberOfLines = 2
+        
+        detailsContainerView.setShadow()
+        
+        imageCollectionView.backgroundColor = UIColor.whiteColor()
+        imageCollectionView.registerClass(ImageCollectionCell.self, forCellWithReuseIdentifier:String(ImageCollectionCell))
+        
+        listsLabel.font = UIFont.chomperFontForTextStyle("p small")
+        listsLabel.textColor = UIColor.darkTextColor()
+        
+        let mapGR = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
+        mapView.addGestureRecognizer(mapGR)
+        
+        notesView.font = UIFont.chomperFontForTextStyle("h4")
+        notesView.textContainerInset = UIEdgeInsetsMake(10, 8, 0, 8)
+        notesView.textColor = UIColor.darkGrayColor()
 
         phoneLabel.font = UIFont.chomperFontForTextStyle("p small")
         phoneLabel.textColor = .orangeColor()
@@ -106,16 +119,6 @@ class PlaceDetailsView: UIView {
         priceLabel.font = UIFont.chomperFontForTextStyle("p small")
         priceLabel.textColor = UIColor.lightGrayColor()
 
-        listsLabel.font = UIFont.chomperFontForTextStyle("p small")
-        listsLabel.textColor = UIColor.darkTextColor()
-
-        let mapGR = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
-        mapView.addGestureRecognizer(mapGR)
-        
-        notesView.font = UIFont.chomperFontForTextStyle("h4")
-        notesView.textContainerInset = UIEdgeInsetsMake(10, 8, 0, 8)
-        notesView.textColor = UIColor.darkGrayColor()
-        
         ratingLabel.font = UIFont.chomperFontForTextStyle("p small")
         ratingLabel.textColor = UIColor.lightGrayColor()
         

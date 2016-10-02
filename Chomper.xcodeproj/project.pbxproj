@@ -108,6 +108,8 @@
 		9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548C1D36C5FB0070779E /* ListsViewController.swift */; };
 		9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */; };
 		9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */; };
+		9EFAB8AF1DA1BD560055A8E0 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAB8AE1DA1BD560055A8E0 /* ImageCollectionCell.swift */; };
+		9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAB8B01DA1BD910055A8E0 /* ImageCollectionViewLayout.swift */; };
 		D6082ED5A12E3B80FC5C2AE2 /* Pods_ChomperTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254582385B690B80281BB094 /* Pods_ChomperTests.framework */; };
 		F2CA7216F1775B1C7D857C1A /* Pods_ModelsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BF00A750A39A74AD5727AD /* Pods_ModelsTests.framework */; };
 		F66B95C1455CBFD78D0BDE03 /* Pods_Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F725F4349F335A78B085D768 /* Pods_Models.framework */; };
@@ -346,6 +348,8 @@
 		9EE7548C1D36C5FB0070779E /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
 		9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewLayout.swift; sourceTree = "<group>"; };
+		9EFAB8AE1DA1BD560055A8E0 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
+		9EFAB8B01DA1BD910055A8E0 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
 		A90EB2D62FB363656118D18A /* Pods-Models.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Models.release.xcconfig"; path = "Pods/Target Support Files/Pods-Models/Pods-Models.release.xcconfig"; sourceTree = "<group>"; };
 		BE8B07A4C59DF558F28EB8A6 /* Pods-Chomper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chomper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chomper/Pods-Chomper.debug.xcconfig"; sourceTree = "<group>"; };
 		C07EFEC56CE90128F23AC95A /* Pods_WebServicesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebServicesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -521,6 +525,8 @@
 				9E690ABC1D47B523009574DF /* ActionTableCell.swift */,
 				9E690AC01D4933CD009574DF /* AddToListCell.swift */,
 				9E096D701D26ED50002A59E1 /* CreatePlaceSearchView.swift */,
+				9EFAB8AE1DA1BD560055A8E0 /* ImageCollectionCell.swift */,
+				9EFAB8B01DA1BD910055A8E0 /* ImageCollectionViewLayout.swift */,
 				9EA30C771D64E21600CDCE64 /* PlaceDetailsView.swift */,
 				9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */,
 				9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */,
@@ -1640,6 +1646,7 @@
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
 				9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
+				9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */,
 				9E690ABD1D47B523009574DF /* ActionTableCell.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,
@@ -1651,6 +1658,7 @@
 				9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */,
 				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,
 				9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */,
+				9EFAB8AF1DA1BD560055A8E0 /* ImageCollectionCell.swift in Sources */,
 				9EE754901D36C5FB0070779E /* ListsTileViewModel.swift in Sources */,
 				9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */,
 				9EA30C781D64E21600CDCE64 /* PlaceDetailsView.swift in Sources */,
