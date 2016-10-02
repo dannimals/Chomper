@@ -11,7 +11,7 @@ import Common
 class ImageCollectionViewLayout: UICollectionViewLayout {
     
     private var contentSize = CGSizeZero
-    private var horizontalPadding: CGFloat = 3.0
+    private var horizontalPadding: CGFloat = 1.0
     private var horizontalInset: CGFloat =  0.0
     private var verticalInset: CGFloat =  0.0
     private var itemWidth: CGFloat = 0.0
@@ -44,7 +44,7 @@ class ImageCollectionViewLayout: UICollectionViewLayout {
             xOffset = xOffset + itemSize.width + horizontalPadding
         }
         
-        contentSize = CGSizeMake(xOffset + itemWidth + horizontalInset, collectionView!.bounds.height)
+        contentSize = CGSizeMake(xOffset - horizontalPadding, collectionView!.bounds.height)
     }
     
     override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
