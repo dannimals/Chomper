@@ -108,8 +108,17 @@ final class ChomperMapper {
                 let size = "\(photoDict["width"] ?? "")x\(photoDict["height"] ?? "")"
                 let suffix = photoDict["suffix"] ?? ""
                 imageUrl = "\(prefix)\(size)\(suffix)"
+            } else {
+                if let venuePhotos = venue["photos"]["groups"].array, item = venuePhotos.first?["items"].array?.first {
+                    if let prefix = item["prefix"].string, width = item["width"].int, height = item["height"].int, suffix = item["suffix"].string {
+                        let size = "\(width)x\(height)"
+                        imageUrl = "\(prefix)\(size)\(suffix)"
+                    }
+                
+                }
             }
-            
+
+          
             
             let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, notes: nil, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,14 +14,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="422" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Malt House" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swS-8A-xvo" userLabel="Name">
-                        <rect key="frame" x="15" y="10" width="387" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="195 Broadway" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiA-qR-Rel" userLabel="Address">
-                        <rect key="frame" x="15" y="33" width="387" height="21"/>
+                        <rect key="frame" x="95" y="33" width="307" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -40,7 +34,7 @@
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="76k-SE-33H" userLabel="Rating/Price">
-                        <rect key="frame" x="15" y="69" width="157" height="21"/>
+                        <rect key="frame" x="95" y="69" width="157" height="21"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eHC-Xz-bqT" userLabel="Price">
                                 <rect key="frame" x="0.0" y="0.0" width="39" height="21"/>
@@ -57,25 +51,40 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visited" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Wv-pm-oDd" userLabel="Visited">
                                 <rect key="frame" x="104" y="0.0" width="53" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                     </stackView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="65" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="sAb-7I-yeU">
+                        <rect key="frame" x="15" y="10" width="65" height="65"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="65" id="K11-Qn-Z90"/>
+                            <constraint firstAttribute="height" constant="65" id="R7T-1F-Bif"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Malt House" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="swS-8A-xvo" userLabel="Name">
+                        <rect key="frame" x="95" y="10" width="307" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="trailing" secondItem="swS-8A-xvo" secondAttribute="trailing" id="7I6-DB-7HA"/>
+                    <constraint firstItem="sAb-7I-yeU" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" constant="15" id="8IA-bR-SxE"/>
                     <constraint firstAttribute="bottom" secondItem="ioR-BQ-bVk" secondAttribute="bottom" id="8cw-mR-wcI"/>
                     <constraint firstAttribute="trailing" secondItem="ioR-BQ-bVk" secondAttribute="trailing" constant="15" id="Dz4-Hs-xNz"/>
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="leading" secondItem="swS-8A-xvo" secondAttribute="leading" id="Fcs-5j-NFG"/>
-                    <constraint firstItem="swS-8A-xvo" firstAttribute="left" secondItem="KvY-zs-ZiH" secondAttribute="left" constant="15" id="OsQ-ha-cxr"/>
+                    <constraint firstItem="swS-8A-xvo" firstAttribute="leading" secondItem="sAb-7I-yeU" secondAttribute="trailing" constant="15" id="Q3s-NK-ZqC"/>
+                    <constraint firstItem="76k-SE-33H" firstAttribute="leading" secondItem="swS-8A-xvo" secondAttribute="leading" id="QBL-ck-19k"/>
                     <constraint firstItem="swS-8A-xvo" firstAttribute="top" secondItem="KvY-zs-ZiH" secondAttribute="top" constant="10" id="SI8-EF-m4v"/>
                     <constraint firstAttribute="trailing" secondItem="swS-8A-xvo" secondAttribute="trailing" constant="20" id="VEO-lh-qg0"/>
                     <constraint firstAttribute="bottom" secondItem="XXC-XJ-l0l" secondAttribute="bottom" constant="10" id="bxl-VV-GL0"/>
                     <constraint firstAttribute="right" secondItem="XXC-XJ-l0l" secondAttribute="right" constant="15" id="c5s-K4-hqg"/>
                     <constraint firstItem="aiA-qR-Rel" firstAttribute="top" secondItem="swS-8A-xvo" secondAttribute="bottom" constant="2" id="dFw-Rq-c6V"/>
+                    <constraint firstItem="sAb-7I-yeU" firstAttribute="top" secondItem="swS-8A-xvo" secondAttribute="top" id="nGl-rd-hhr"/>
                     <constraint firstAttribute="bottom" secondItem="76k-SE-33H" secondAttribute="bottom" constant="10" id="oeY-Km-3tW"/>
-                    <constraint firstItem="76k-SE-33H" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" constant="15" id="ojh-aE-NGX"/>
                     <constraint firstItem="ioR-BQ-bVk" firstAttribute="leading" secondItem="KvY-zs-ZiH" secondAttribute="leading" constant="15" id="tSg-Cd-gmX"/>
                 </constraints>
             </tableViewCellContentView>
@@ -83,6 +92,7 @@
                 <outlet property="addressLabel" destination="aiA-qR-Rel" id="F0N-ro-Ywj"/>
                 <outlet property="distanceLabel" destination="XXC-XJ-l0l" id="7C6-v6-eN8"/>
                 <outlet property="nameLabel" destination="swS-8A-xvo" id="DN3-us-0fp"/>
+                <outlet property="placeImageView" destination="sAb-7I-yeU" id="bHZ-1S-bXC"/>
                 <outlet property="priceLabel" destination="eHC-Xz-bqT" id="an0-WG-IR9"/>
                 <outlet property="ratingLabel" destination="taf-3h-VcW" id="mbX-7i-F6K"/>
                 <outlet property="separator" destination="ioR-BQ-bVk" id="MP9-Ne-BUS"/>

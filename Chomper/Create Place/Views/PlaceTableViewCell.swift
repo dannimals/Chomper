@@ -18,6 +18,9 @@ class PlaceTableViewCell: UITableViewCell {
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var visitedLabel: UILabel!
+    @IBOutlet weak var placeImageView: UIImageView!
+    
+    var imageUrl: String? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +36,12 @@ class PlaceTableViewCell: UITableViewCell {
         
         priceLabel.font = UIFont.chomperFontForTextStyle("smallest")
         priceLabel.textColor = UIColor.orangeColor()
+        
+        placeImageView.contentMode = .ScaleAspectFill
+        placeImageView.clipsToBounds = true
+        placeImageView.layer.cornerRadius = 5
+        placeImageView.layer.borderWidth = 1
+        placeImageView.layer.borderColor = UIColor.orangeColor().CGColor
         
         ratingLabel.font = UIFont.chomperFontForTextStyle("smallest")
         ratingLabel.textColor = UIColor.orangeColor()
@@ -55,10 +64,13 @@ class PlaceTableViewCell: UITableViewCell {
         ratingLabel.text = nil
         visitedLabel.text = nil
         distanceLabel.text = nil
+        placeImageView.image = nil
+        imageUrl = nil
     }
 
 
     func configureCell(withObject object: PlaceDetailsObjectProtocol) {
+        imageUrl = object.imageUrl
         nameLabel.text = object.name
         addressLabel.text = object.address ?? "Address unknown"
         ratingLabel.text = object.ratingValue != nil ? "\(floor(object.ratingValue!/2)) stars" : nil

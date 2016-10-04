@@ -11,7 +11,7 @@ import Common
 class ImageCollectionViewLayout: UICollectionViewLayout {
     
     private var contentSize = CGSizeZero
-    private var horizontalPadding: CGFloat = 1.0
+    private var horizontalPadding: CGFloat = 0.0
     private var horizontalInset: CGFloat =  0.0
     private var verticalInset: CGFloat =  0.0
     private var itemWidth: CGFloat = 0.0

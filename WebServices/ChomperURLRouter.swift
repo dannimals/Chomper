@@ -89,6 +89,7 @@ public enum ChomperURLRouter: URLRequestConvertible {
             
         case let .ExplorePlacesNearLocation(location, searchTerm):
             parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
+            parameters.append(NSURLQueryItem(name: "venuePhotos", value: "\(1)"))
             
             if let searchTerm = searchTerm {
                 parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
