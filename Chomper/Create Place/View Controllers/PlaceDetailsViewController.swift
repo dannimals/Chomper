@@ -14,21 +14,15 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     // MARK: - Properties
     
-    private var placeModel: PlaceDetailsObjectProtocol!
+    private var viewModel: PlaceDetailsViewModel!
     private var detailsView: PlaceDetailsView!
-    private var photos: [Photo]?
     private let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
     private var scrollView: UIScrollView!
     
-    // TODO: Rethink the logic of having to pass in an actual place rather than a placeId
-    // and then calling webservice for details
-    required init(place: PlaceDetailsObjectProtocol) {
+    required init(viewModel: PlaceDetailsViewModel) {
+        self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
-        if let place = place as? ListPlace {
-            self.placeModel = ListPlace.findOrCreateListPlace(place.placeId, listName: place.listName, inContext: self.mainContext)
-        } else {
-            self.placeModel = place
-        }
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,9 +46,9 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         //
         // Set up view controller
         
-        title = placeModel.name
+        title = viewModel.name
         view.backgroundColor = UIColor.whiteColor()
-        if placeModel.type == "\(SearchResult.self)"  {
+        if viewModel.type == "\(SearchResult.self)"  {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
         } else {
@@ -69,15 +63,12 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
         detailsView.imageCollectionView.delegate = self
         detailsView.imageCollectionView.dataSource = self
 
-        getPlaceImages()
-        //
-        // Download, if needed, and set the place image
-        
-        if let image = imageCache[placeModel.venueId] as? UIImage {
-//            detailsView.imageView.image = image
-        } else {
-            getPlaceDetails(placeModel.venueId)
+        viewModel.getPlaceImages {
+            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+                self?.detailsView.imageCollectionView.reloadData()
+            }
         }
+        
         
         //
         // Set details
@@ -88,100 +79,44 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     
     // MARK: - Handlers
     
-    func getPlaceImages() {
-        webService.getPhotosForPlace(placeModel.venueId) { [weak self] (photos, response, error) in
-            if error == nil {
-                if let photos = photos where photos.count != 0 {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self?.photos = photos
-                        self?.detailsView.imageCollectionView.reloadData()
-                    }
-                }
-            } else {
-                // TODO: handle error
-            }
-        }
-    }
-    
-    func getPlaceDetails(id: String) {
-        webService.getDetailsForPlace(id) { [weak self] (result, response, error) in
-            if error == nil {
-                if let url = NSURL(string: result?.imageUrl ?? "") {
-                    self?.downloadImageForUrl(url)
-                }
-            } else {
-                // TODO: Handle error
-            }
-        }
-    }
-    
-    func downloadImageWithUrl(url: NSURL) -> UIImage? {
-        var image: UIImage? = nil
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
-            if error == nil, let data = data {
-                dispatch_async(dispatch_get_main_queue()) {
-                    image = UIImage(data: data)
-                }
-            }
-        }.resume()
-        
-        return image
-    }
-    
-    func downloadImageForUrl(url: NSURL) {
-//        NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-//            if error == nil, let data = data, let id = self?.placeModel.venueId {
-//                let image = UIImage(data: data)
-//                self?.imageCache[id] = image
-//
-//                dispatch_async(dispatch_get_main_queue()) {
-////                    self?.detailsView.imageView.alpha = 0
-////                    self?.detailsView.imageView.image = image
-//
-//                    UIView.animateWithDuration(0.4) {
-////                        self?.detailsView.imageView.alpha = 1
-//                    }
-//                }
-//            }
-//        }.resume()
-    }
-    
     func setPlaceDetails() {
+        // TODO: Move this shit elsewhere
+        
         detailsView.mapView.delegate = self
         detailsView.mapViewAction = { [unowned self] in
-            let mapVC = MapDetailsViewController(placeLocation: self.placeModel.location)
+            let mapVC = MapDetailsViewController(placeLocation: self.viewModel.location)
             self.navigationController?.pushViewController(mapVC, animated: true)
         }
         
-        detailsView.phoneAction = { [unowned self] in
-            let formattedPhone = self.placeModel.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
-            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
-                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
-                    UIApplication.sharedApplication().openURL(phoneUrl)
-                }
-            }
-        }
-        
-        detailsView.notesView.delegate = self
-        
-        let attrText = NSMutableAttributedString()
-        if let address = placeModel.address {
-            attrText.appendAttributedString(NSAttributedString(string: address))
-            if let city = placeModel.city, state = placeModel.state {
-                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
-            }
-        } else {
-            if let city = placeModel.city, state = placeModel.state  {
-                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
-            }
-        }
-
-        detailsView.formattedAddress = attrText
-        detailsView.location = placeModel.location
-        detailsView.price = placeModel.priceValue
-        detailsView.phone = placeModel.phone
-        detailsView.notesView.text = placeModel.userNotes ?? placeHolderText
-        detailsView.rating = placeModel.ratingValue
+//        detailsView.phoneAction = { [unowned self] in
+//            let formattedPhone = self.viewModel.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+//            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
+//                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
+//                    UIApplication.sharedApplication().openURL(phoneUrl)
+//                }
+//            }
+//        }
+//        
+//        detailsView.notesView.delegate = self
+//        
+//        let attrText = NSMutableAttributedString()
+//        if let address = placeModel.address {
+//            attrText.appendAttributedString(NSAttributedString(string: address))
+//            if let city = placeModel.city, state = placeModel.state {
+//                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
+//            }
+//        } else {
+//            if let city = placeModel.city, state = placeModel.state  {
+//                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
+//            }
+//        }
+//
+//        detailsView.formattedAddress = attrText
+        detailsView.location = viewModel.location
+//        detailsView.price = placeModel.priceValue
+//        detailsView.phone = placeModel.phone
+//        detailsView.notesView.text = placeModel.userNotes ?? placeHolderText
+//        detailsView.rating = placeModel.ratingValue
     }
     
     func keyboardWillAppear(notif: NSNotification) {
@@ -201,11 +136,11 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     }
     
     func add(sender: UIBarButtonItem) {
-        placeModel.userNotes = detailsView.notesView.text
-        let vc = ActionListViewController(place: placeModel)
-        vc.modalTransitionStyle = .CoverVertical
-        vc.modalPresentationStyle = .OverCurrentContext
-        presentViewController(vc, animated: true, completion: nil)
+//        placeModel.userNotes = detailsView.notesView.text
+//        let vc = ActionListViewController(place: placeModel)
+//        vc.modalTransitionStyle = .CoverVertical
+//        vc.modalPresentationStyle = .OverCurrentContext
+//        presentViewController(vc, animated: true, completion: nil)
     }
     
     func edit(sender: UIBarButtonItem) {
@@ -225,32 +160,29 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
 extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+        return viewModel.numberOfSections()
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos?.count ?? 1
+        return viewModel.numberOfItemsInSection(section)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         guard let imageCell = collectionView.dequeueReusableCellWithReuseIdentifier(String(ImageCollectionCell), forIndexPath: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
-        guard let photo = photos?[indexPath.row], url = NSURL(string: photo.url)  else { return imageCell }
+        guard let photo = viewModel.photos?[indexPath.row], url = NSURL(string: photo.url)  else { return imageCell }
         imageCell.photoUrl = photo.url
         
         if let image = imageCache[photo.url] as? UIImage {
             imageCell.imageView.image = image
         } else {
-            NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-                if error == nil, let data = data, let image = UIImage(data: data) {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        if NSURL(string: imageCell.photoUrl ?? "") == url {
-                            imageCell.imageView.image = image
-                            self?.imageCache[photo.url] = image
-                        }
+            viewModel.getImageWithUrl(url) { [weak self] (image) in
+                dispatch_async(dispatch_get_main_queue()) {
+                    if NSURL(string: imageCell.photoUrl ?? "") == url {
+                        imageCell.imageView.image = image
+                        self?.imageCache[photo.url] = image
                     }
                 }
-            }.resume()
-            
+            }
         }
         return imageCell
     }
