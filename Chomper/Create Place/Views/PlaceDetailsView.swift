@@ -26,7 +26,8 @@ class PlaceDetailsView: UIView {
     
     var mapViewAction: (() -> ())?
     var phoneAction: (() -> ())?
-    
+    let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
+
     var formattedAddress: NSAttributedString? {
         didSet {
             if formattedAddress != nil {
@@ -131,6 +132,36 @@ class PlaceDetailsView: UIView {
     }
     
     // MARK: - Helpers
+    
+    func configureWithViewModel(viewModel: PlaceDetailsViewModel) {
+        phoneAction = {
+            let formattedPhone = viewModel.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
+            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
+                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
+                    UIApplication.sharedApplication().openURL(phoneUrl)
+                }
+            }
+        }
+        
+        let attrText = NSMutableAttributedString()
+        if let address = viewModel.address {
+            attrText.appendAttributedString(NSAttributedString(string: address))
+            if let city = viewModel.city, state = viewModel.state {
+                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
+            }
+        } else {
+            if let city = viewModel.city, state = viewModel.state  {
+                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
+            }
+        }
+        
+        formattedAddress = attrText
+        location = viewModel.location
+        price = viewModel.priceValue
+        phone = viewModel.phone
+        notesView.text = viewModel.userNotes ?? placeHolderText
+        rating = viewModel.ratingValue
+    }
     
     func mapViewTapped() {
         mapViewAction?()

@@ -10,13 +10,12 @@ import Common
 import Models
 import MapKit
 
-class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
+class PlaceDetailsViewController: BaseViewController {
     
     // MARK: - Properties
     
     private var viewModel: PlaceDetailsViewModel!
     private var detailsView: PlaceDetailsView!
-    private let placeHolderText = NSLocalizedString("Add a note", comment: "add a note")
     private var scrollView: UIScrollView!
     
     required init(viewModel: PlaceDetailsViewModel) {
@@ -69,55 +68,19 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
             }
         }
         
-        
         //
         // Set details
-        
-        setPlaceDetails()
-    }
-    
-    
-    // MARK: - Handlers
-    
-    func setPlaceDetails() {
-        // TODO: Move this shit elsewhere
-        
         detailsView.mapView.delegate = self
         detailsView.mapViewAction = { [unowned self] in
             let mapVC = MapDetailsViewController(placeLocation: self.viewModel.location)
             self.navigationController?.pushViewController(mapVC, animated: true)
         }
-        
-//        detailsView.phoneAction = { [unowned self] in
-//            let formattedPhone = self.viewModel.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
-//            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
-//                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
-//                    UIApplication.sharedApplication().openURL(phoneUrl)
-//                }
-//            }
-//        }
-//        
-//        detailsView.notesView.delegate = self
-//        
-//        let attrText = NSMutableAttributedString()
-//        if let address = placeModel.address {
-//            attrText.appendAttributedString(NSAttributedString(string: address))
-//            if let city = placeModel.city, state = placeModel.state {
-//                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
-//            }
-//        } else {
-//            if let city = placeModel.city, state = placeModel.state  {
-//                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
-//            }
-//        }
-//
-//        detailsView.formattedAddress = attrText
-        detailsView.location = viewModel.location
-//        detailsView.price = placeModel.priceValue
-//        detailsView.phone = placeModel.phone
-//        detailsView.notesView.text = placeModel.userNotes ?? placeHolderText
-//        detailsView.rating = placeModel.ratingValue
+        detailsView.notesView.delegate = self
+        detailsView.configureWithViewModel(viewModel)
     }
+    
+    
+    // MARK: - Handlers
     
     func keyboardWillAppear(notif: NSNotification) {
         if let userInfo = notif.userInfo, keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
@@ -131,7 +94,7 @@ class PlaceDetailsViewController: BaseViewController, MKMapViewDelegate {
     func keyboardWillDisappear(notif: NSNotification) {
         detailsView.notesView.resignFirstResponder()
         if detailsView.notesView.text.isEmpty {
-            detailsView.notesView.text = placeHolderText
+            detailsView.notesView.text = detailsView.placeHolderText
         }
     }
     
@@ -177,10 +140,7 @@ extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionView
         } else {
             viewModel.getImageWithUrl(url) { [weak self] (image) in
                 dispatch_async(dispatch_get_main_queue()) {
-                    if NSURL(string: imageCell.photoUrl ?? "") == url {
-                        imageCell.imageView.image = image
-                        self?.imageCache[photo.url] = image
-                    }
+                    imageCell.configureCellWithImage(image, withImageUrl: url, imageCache: self?.imageCache)
                 }
             }
         }
@@ -188,10 +148,12 @@ extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionView
     }
 }
 
+extension PlaceDetailsViewController: MKMapViewDelegate {}
+
 extension PlaceDetailsViewController: UITextViewDelegate {
     func textViewDidBeginEditing(textView: UITextView) {
         UIView.animateWithDuration(0.4) {
-            if textView.text == self.placeHolderText {
+            if textView.text == self.detailsView.placeHolderText {
                 textView.text = ""
             }
         }
@@ -200,13 +162,13 @@ extension PlaceDetailsViewController: UITextViewDelegate {
     func textViewDidChange(textView: UITextView) {
         if textView.text.isEmpty {
             UIView.animateWithDuration(0.4) {
-                textView.text = self.placeHolderText
+                textView.text = self.detailsView.placeHolderText
             }
         }
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        if textView.text == placeHolderText {
+        if textView.text == detailsView.placeHolderText {
             UIView.animateWithDuration(0.4) {
                 textView.text.removeAll()
             }

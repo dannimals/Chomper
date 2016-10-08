@@ -9,6 +9,9 @@
 import Common
 
 class ImageCollectionCell: UICollectionViewCell {
+    
+    // MARK: - Properties
+    
     var imageView = UIImageView()
     var photoUrl: String?
     
@@ -20,6 +23,14 @@ class ImageCollectionCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        photoUrl = nil
+    }
+    
+    // MARK: - Helpers
     
     func setup() {
         imageView.contentMode = .ScaleAspectFill
@@ -33,9 +44,10 @@ class ImageCollectionCell: UICollectionViewCell {
             ])
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        imageView.image = nil
-        photoUrl = nil
+    func configureCellWithImage(image: UIImage, withImageUrl url: NSURL, imageCache: ChomperImageCacheProtocol?) {
+        if let photoUrl = photoUrl where NSURL(string: photoUrl) == url {
+            imageView.image = image
+            imageCache?[photoUrl] = image
+        }
     }
 }
