@@ -9,24 +9,17 @@
 import Common
 import Models
 
-enum ActionValues {
-    case QuickSave
-    case AddToList
-    
-    static let allValues = [QuickSave, AddToList]
-}
-
 class ActionListViewController: BaseViewController {
     private var tableView: UITableView!
-    private var place: PlaceDetailsObjectProtocol!
+    private var viewModel: ActionListViewModel!
     
-    required init(place: PlaceDetailsObjectProtocol) {
+    required init(viewModel: ActionListViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.place = place
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -80,7 +73,6 @@ class ActionListViewController: BaseViewController {
             cancelButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
             cancelButton.heightAnchor.constraintEqualToConstant(55.0)
         ])
-
     }
     
     // MARK: - Handlers
@@ -93,7 +85,7 @@ class ActionListViewController: BaseViewController {
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ActionValues.allValues.count + 1
+        return viewModel.numberOfRowsInSection(section)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -106,33 +98,29 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row != 0 {
+            var action = viewModel.getActionForIndexPath(indexPath)
+            switch action {
+            case .QuickSave(_):
+                action = .QuickSave(action: viewModel.saveAction)
+                dismissViewControllerAnimated(true, completion: nil)
+            case .AddToList(_):
+                action = .AddToList(action: presentAddToListViewController())
+            }
+            viewModel.performAction(forAction: action)
+        }
+       
+    }
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             guard let cell = cell as? PlaceTableViewCell else { fatalError("wrong type: action cell") }
-            cell.configureCell(withObject: place, imageCache: imageCache)
+            cell.configureCell(withObject: viewModel.place, imageCache: imageCache)
         } else {
             guard let cell = cell as? ActionTableCell else { fatalError("wrong type: action cell") }
-            let actionValue = ActionValues.allValues[indexPath.row - 1]
-            switch actionValue {
-            case .QuickSave:
-                cell.setTitleForAction(NSLocalizedString("Save", comment: "save")) { [unowned self] in
-                    self.mainContext.performChanges {
-                        ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue, notes: self.place.userNotes, rating: self.place.ratingValue, state: self.place.state)
-                    }
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                }
-            case .AddToList:
-                let nav = presentingViewController
-                cell.setTitleForAction(NSLocalizedString("Add to List", comment: "add to list")) { [unowned self] in
-                    let nc = BaseNavigationController(rootViewController: AddToListViewController(place: self.place))
-                    nc.modalTransitionStyle = .CoverVertical
-                    nc.modalPresentationStyle = .OverCurrentContext
-                    self.dismissViewControllerAnimated(true) {
-                        nav?.presentViewController(nc, animated: true, completion: nil)
-                    }
-                }
-            }
-            
+            let action = viewModel.getActionForIndexPath(indexPath)
+            cell.setTitleForAction(viewModel.getTitleForAction(action))
         }
     }
     
@@ -147,6 +135,18 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func buttonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func presentAddToListViewController() -> (() -> Void) {
+        let nav = presentingViewController
+        let nc = BaseNavigationController(rootViewController: AddToListViewController(place: viewModel.place))
+        nc.modalTransitionStyle = .CoverVertical
+        nc.modalPresentationStyle = .OverCurrentContext
+        return {
+                self.dismissViewControllerAnimated(true) {
+                    nav?.presentViewController(nc, animated: true, completion: nil)
+                }
+        }
     }
     
 }

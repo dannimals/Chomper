@@ -14,10 +14,10 @@ class PlaceDetailsViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private var viewModel: PlaceDetailsViewModel!
     private var detailsView: PlaceDetailsView!
     private var scrollView: UIScrollView!
-    
+    private var viewModel: PlaceDetailsViewModel!
+
     required init(viewModel: PlaceDetailsViewModel) {
         self.viewModel = viewModel
         
@@ -100,7 +100,8 @@ class PlaceDetailsViewController: BaseViewController {
     
     func add(sender: UIBarButtonItem) {
         viewModel.userNotes = detailsView.notesView.text
-        let vc = ActionListViewController(place: viewModel.place)
+        let actionViewModel = ActionListViewModel(place: viewModel.place)
+        let vc = ActionListViewController(viewModel: actionViewModel)
         vc.modalTransitionStyle = .CoverVertical
         vc.modalPresentationStyle = .OverCurrentContext
         presentViewController(vc, animated: true, completion: nil)
