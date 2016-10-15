@@ -109,7 +109,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             guard let cell = cell as? PlaceTableViewCell else { fatalError("wrong type: action cell") }
-            cell.configureCell(withObject: place)
+            cell.configureCell(withObject: place, imageCache: imageCache)
         } else {
             guard let cell = cell as? ActionTableCell else { fatalError("wrong type: action cell") }
             let actionValue = ActionValues.allValues[indexPath.row - 1]

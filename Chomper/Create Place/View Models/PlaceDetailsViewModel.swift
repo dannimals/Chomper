@@ -25,7 +25,8 @@ class PlaceDetailsViewModel: NSObject {
     var state: String?
     var type: String!
     var userNotes: String?
-    private var place: PlaceDetailsObjectProtocol!
+    // TODO: place should be private
+    var place: PlaceDetailsObjectProtocol!
     private var webService: ChomperWebServiceProtocol!
     
     

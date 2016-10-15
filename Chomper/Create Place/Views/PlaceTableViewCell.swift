@@ -69,7 +69,7 @@ class PlaceTableViewCell: UITableViewCell {
     }
 
 
-    func configureCell(withObject object: PlaceDetailsObjectProtocol) {
+    func configureCell(withObject object: PlaceDetailsObjectProtocol, imageCache: ChomperImageCacheProtocol) {
         imageUrl = object.imageUrl
         nameLabel.text = object.name
         addressLabel.text = object.address ?? "Address unknown"
@@ -79,7 +79,11 @@ class PlaceTableViewCell: UITableViewCell {
         } else {
             priceLabel.text = convertPrice(object.priceValue!)
         }
-        // display distance
+        
+        if let image = imageCache[object.venueId] as? UIImage {
+            placeImageView?.image = image
+        }
+        //TODO: display distance
     }
     
     func configurePlaceCell(name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: NSNumber = NSNumber(int: 0)) {

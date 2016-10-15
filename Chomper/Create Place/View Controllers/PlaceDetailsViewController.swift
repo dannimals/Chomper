@@ -99,11 +99,11 @@ class PlaceDetailsViewController: BaseViewController {
     }
     
     func add(sender: UIBarButtonItem) {
-//        placeModel.userNotes = detailsView.notesView.text
-//        let vc = ActionListViewController(place: placeModel)
-//        vc.modalTransitionStyle = .CoverVertical
-//        vc.modalPresentationStyle = .OverCurrentContext
-//        presentViewController(vc, animated: true, completion: nil)
+        viewModel.userNotes = detailsView.notesView.text
+        let vc = ActionListViewController(place: viewModel.place)
+        vc.modalTransitionStyle = .CoverVertical
+        vc.modalPresentationStyle = .OverCurrentContext
+        presentViewController(vc, animated: true, completion: nil)
     }
     
     func edit(sender: UIBarButtonItem) {

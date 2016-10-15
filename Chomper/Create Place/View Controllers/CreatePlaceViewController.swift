@@ -258,7 +258,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell, let object = viewModel?.results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
-        cell.configureCell(withObject: object)
+        cell.configureCell(withObject: object, imageCache: imageCache)
         if let image = imageCache[object.venueId ?? ""] as? UIImage {
             cell.placeImageView.image = image
         } else {
