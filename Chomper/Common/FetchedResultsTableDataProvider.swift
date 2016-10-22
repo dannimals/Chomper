@@ -89,6 +89,4 @@ class FetchedResultsTableDataProvider<Delegate: TableViewDelegate>: NSObject, Ta
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         delegate.dataProviderDidUpdate(updates)
     }
-    
-    
 }
