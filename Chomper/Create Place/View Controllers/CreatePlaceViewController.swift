@@ -48,7 +48,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         tableVC.refreshControl?.addTarget(self, action: #selector(handleRefresh), forControlEvents: .ValueChanged)
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .None
-        registerNibs()
+        tableVC.tableView.registerNib(PlaceTableViewCell)
         
         
         //
@@ -204,10 +204,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     
     // MARK: - Helpers
     
-    func registerNibs() {
-        tableVC.tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
-    }
-    
     func showLoadingView(show: Bool = false) {
         if show {
             loadingView.hidden = false
@@ -257,7 +253,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell, let object = viewModel?.results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell, let object = viewModel?.results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
         cell.configureCell(withObject: object, imageCache: imageCache)
         if let image = imageCache[object.venueId ?? ""] as? UIImage {
             cell.placeImageView.image = image

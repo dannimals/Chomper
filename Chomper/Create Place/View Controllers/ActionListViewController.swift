@@ -47,8 +47,9 @@ class ActionListViewController: BaseViewController {
         tableView.separatorStyle = .None
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.registerCell(ActionTableCell)
+        tableView.registerNib(PlaceTableViewCell)
         view.addSubview(tableView)
-        registerNibs()
         
         //
         // Create bottom cancel button
@@ -74,13 +75,6 @@ class ActionListViewController: BaseViewController {
             cancelButton.heightAnchor.constraintEqualToConstant(55.0)
         ])
     }
-    
-    // MARK: - Handlers
-    
-    func registerNibs() {
-        tableView.registerClass(ActionTableCell.self, forCellReuseIdentifier: "ActionCell")
-        tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
-    }
 }
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -90,10 +84,10 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell else { fatalError("Cannot dequeue place cell") }
+            guard let cell = tableView.dequeueReusableCellWithIdentifier(PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else { fatalError("Cannot dequeue place cell") }
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCellWithIdentifier("ActionCell") as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
+            guard let cell = tableView.dequeueReusableCellWithIdentifier(ActionTableCell.reuseIdentifier) as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
             return cell
         }
     }

@@ -99,7 +99,7 @@ class PlaceDetailsView: UIView {
         detailsContainerView.setShadow()
         
         imageCollectionView.backgroundColor = UIColor.whiteColor()
-        imageCollectionView.registerClass(ImageCollectionCell.self, forCellWithReuseIdentifier:String(ImageCollectionCell))
+        imageCollectionView.registerCell(ImageCollectionCell)
         
         listsLabel.font = UIFont.chomperFontForTextStyle("p small")
         listsLabel.textColor = UIColor.darkTextColor()

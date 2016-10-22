@@ -32,7 +32,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         collectionView!.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.whiteColor()
-        collectionView!.registerClass(ListsCollectionViewCell.self, forCellWithReuseIdentifier: "PlaceListCell")
+        collectionView!.registerCell(ListsCollectionViewCell)
 
     }
     
@@ -47,7 +47,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PlaceListCell", forIndexPath: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
+        guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ListsCollectionViewCell.reuseIdentifier, forIndexPath: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
         if dataSource.objectAtIndexPath(indexPath) == nil {
             cell.addAction = { [weak self] in
                 let vc = CreateListViewController()

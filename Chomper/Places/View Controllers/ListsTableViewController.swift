@@ -31,12 +31,12 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableView.separatorStyle = .None
-        tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
-        tableView.registerClass(ListsTableSectionHeaderView.self, forHeaderFooterViewReuseIdentifier: "HeaderView")
+        tableView.registerNib(PlaceTableViewCell)
+        tableView.registerHeaderFooter(ListsTableSectionHeaderView)
     }
     
     func cellIdentifierForObject(object: Object) -> String {
-        return "PlaceCell"
+        return PlaceTableViewCell.reuseIdentifier
     }
     
     func setupDataSource() {
@@ -82,13 +82,11 @@ extension ListsTableViewController {
     }
     
     override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as? ListsTableSectionHeaderView else { fatalError("cannot dequeue headerView in ListsTableVC") }
+        guard let header = tableView.dequeueReusableHeaderFooterViewWithIdentifier(ListsTableSectionHeaderView.reuseIdentifier) as? ListsTableSectionHeaderView else { fatalError("cannot dequeue headerView in ListsTableVC") }
         return header
     }
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50.0
     }
-
-    
 }

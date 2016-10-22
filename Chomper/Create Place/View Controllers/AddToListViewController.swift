@@ -39,7 +39,7 @@ class AddToListViewController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        registerNibs()
+        tableView.registerCell(AddToListCell)
         
         let views: [String: AnyObject] = [
             "topLayoutGuide": topLayoutGuide,
@@ -78,11 +78,6 @@ class AddToListViewController: BaseViewController {
     func dismissVC() {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    func registerNibs() {
-        tableView.registerClass(AddToListCell.self, forCellReuseIdentifier: "AddToListCell")
-    }
-    
 }
 
 extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -92,7 +87,7 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("AddToListCell") as? AddToListCell else { fatalError("Could not dequeue AddToListCell") }
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(AddToListCell.reuseIdentifier) as? AddToListCell else { fatalError("Could not dequeue AddToListCell") }
         return cell
     }
     

@@ -56,7 +56,7 @@ class ListDetailsViewController: BaseViewController {
         tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerNib(UINib(nibName: "PlaceTableViewCell", bundle: nil), forCellReuseIdentifier: "PlaceCell")
+        tableView.registerNib(PlaceTableViewCell)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         tableView.tableFooterView = UIView()
@@ -171,7 +171,7 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCellWithIdentifier("PlaceCell") as? PlaceTableViewCell else { fatalError("cell not dequeued") }
+        guard let cell = tableView.dequeueReusableCellWithIdentifier(PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else { fatalError("cell not dequeued") }
         return cell
     }
     
