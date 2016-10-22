@@ -106,6 +106,11 @@ class ListDetailsViewController: BaseViewController {
                         destructiveStyle: true, confirmBold: true, style: .Alert) { bool in
                             if bool {
                                 self.mainContext.performChanges {
+                                    if let listPlaces = self.list?.listPlaces {
+                                        for listPlace in listPlaces {
+                                            self.mainContext.deleteObject(listPlace)
+                                        }
+                                    }
                                     self.mainContext.deleteObject(self.list)
                                 }
                                 self.dismissVC()

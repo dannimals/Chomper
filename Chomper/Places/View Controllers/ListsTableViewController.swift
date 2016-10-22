@@ -47,7 +47,6 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         dataProvider = FetchedResultsTableDataProvider(tableViewDelegate: self, frc: frc)
         dataSource = TableViewDataSource(dataProvider: dataProvider, tableDelegate: self)
     }
-
 }
 
 extension ListsTableViewController {
