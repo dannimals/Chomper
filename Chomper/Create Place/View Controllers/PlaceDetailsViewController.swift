@@ -70,6 +70,7 @@ class PlaceDetailsViewController: BaseViewController {
         
         //
         // Set details
+        
         detailsView.mapView.delegate = self
         detailsView.mapViewAction = { [unowned self] in
             let mapVC = MapDetailsViewController(placeLocation: self.viewModel.location)
