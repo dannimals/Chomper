@@ -46,8 +46,8 @@ public final class ListPlace: ManagedObject {
             place.city = place.city ?? city
             place.phone = place.phone ?? phone
             place.state = place.state ?? state
-            place.latitude = place.latitude ?? location.coordinate.latitude
-            place.longitude = place.longitude ?? location.coordinate.longitude
+            place.latitude = location.coordinate.latitude
+            place.longitude = location.coordinate.longitude
             
             listPlace.place = place
         }

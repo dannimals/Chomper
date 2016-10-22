@@ -189,10 +189,11 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        let object = viewModel[indexPath.row]
-//        let vc = PlaceDetailsViewController(place: object)
-//        let nc = BaseNavigationController(rootViewController: vc)
-//        presentViewController(nc, animated: true, completion: nil)
+        let place = viewModel[indexPath.row]
+        let vm = PlaceDetailsViewModel(place: place, webService: webService)
+        let vc = PlaceDetailsViewController(viewModel: vm)
+        let nc = BaseNavigationController(rootViewController: vc)
+        presentViewController(nc, animated: true, completion: nil)
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
