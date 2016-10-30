@@ -11,6 +11,7 @@ import Common
 class ListsCollectionViewCell: UICollectionViewCell {
     private(set) var addButton: UIButton!
     private(set) var titleLabel: UILabel!
+    private(set) var listImageView: UIImageView!
     private var countLabel: UILabel!
     private var separatorColor = UIColor.lightGrayColor()
     var trailingSeparator: UIView!
@@ -61,45 +62,32 @@ class ListsCollectionViewCell: UICollectionViewCell {
         bottomSeparator.backgroundColor = separatorColor
         
         //
+        // Lists Image View
+        
+        listImageView = UIImageView()
+        contentView.addSubview(listImageView)
+        
+        //
         // Title text view
         
         titleLabel = UILabel()
         contentView.addSubview(titleLabel)
         titleLabel.setContentCompressionResistancePriority(249, forAxis: .Vertical)
-        titleLabel.numberOfLines = 0
-        titleLabel.text = nil
+        titleLabel.numberOfLines = 2
+        titleLabel.preferredMaxLayoutWidth = contentView.frame.width - 20
         titleLabel.textColor = UIColor.lightGrayColor()
         titleLabel.font = UIFont.chomperFontForTextStyle("p")
-        let titleLeading = titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
-        titleLeading.priority = UILayoutPriorityRequired
-        let titleTrailing = titleLabel.trailingAnchor.constraintLessThanOrEqualToAnchor(contentView.trailingAnchor, constant: -10.0)
-        titleTrailing.priority = UILayoutPriorityRequired
         
         //
         // Count label
         
         countLabel = UILabel()
+        countLabel.numberOfLines = 1
         countLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countLabel)
-        countLabel.text = nil
         countLabel.font = UIFont.chomperFontForTextStyle("smallest")
         countLabel.textColor = UIColor.orangeColor()
-        let countLeading = countLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 10.0)
-        countLeading.priority = UILayoutPriorityRequired
 
-
-        let views: [String: AnyObject] = [
-            "titleLabel": titleLabel,
-            "countLabel": countLabel,
-            "bottomSeparator": bottomSeparator
-        ]
-        
-        contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-10-[titleLabel][countLabel]->=10@750-[bottomSeparator]|",
-            options: [],
-            metrics: nil,
-            views: views))
-            
         
         //
         // "+" button
@@ -119,35 +107,55 @@ class ListsCollectionViewCell: UICollectionViewCell {
         addButton.hidden = true
         
         NSLayoutConstraint.useAndActivateConstraints([
+            listImageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
+            listImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
+            listImageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
+            listImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
             trailingSeparator.widthAnchor.constraintEqualToConstant(0.75),
             trailingSeparator.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
             trailingSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
             trailingSeparator.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
+            titleLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor),
+            titleLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor),
+            countLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor),
+            countLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 5),
             bottomSeparator.heightAnchor.constraintEqualToConstant(0.75),
             bottomSeparator.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
             bottomSeparator.trailingAnchor.constraintEqualToAnchor(trailingSeparator.leadingAnchor),
-            titleLeading,
-            titleTrailing,
-            countLeading,
+            bottomSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
             addCenterX,
             addCenterY
         ])
-
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        isAdd = false
+        titleLabel.text = nil
+        countLabel.text = nil
+        trailingSeparator.hidden = false
+        bottomSeparator.hidden = false
+        listImageView.hidden = false
     }
     
     
     // MARK: - Helpers
     
-    func configureCell(title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false) {
+    func configureCell(title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false, image: UIImage?) {
         isAdd = false
         titleLabel.text = NSLocalizedString(title, comment: "title")
         countLabel.text = count == 0 ? nil : NSLocalizedString(String(count), comment: "count")
         trailingSeparator.hidden = hideTrailingSeparator!
         bottomSeparator.hidden = hideBottomSeparator!
+        if let image = image {
+            listImageView.image = image
+        }
     }
     
     func configureAddCell(hideTrailingSeparator: Bool = false) {
         isAdd = true
+        listImageView.hidden = true
         trailingSeparator.hidden = hideTrailingSeparator
     }
     

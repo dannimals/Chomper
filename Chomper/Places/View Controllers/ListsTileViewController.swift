@@ -64,7 +64,11 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     override func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         guard let cell = cell as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
         if let object = dataSource.objectAtIndexPath(indexPath) {
-            cell.configureCell(object.name, count: object.listPlaces?.count ?? 0,hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath))
+            var image: UIImage? = UIImage() // TODO: make a placeholder image
+            if let listImageId = object.listPlaces?.first?.listImageId, imageObject = Image.findOrFetchInContext(mainContext, matchingPredicate: NSPredicate(format: "id == %@", listImageId)) {
+                image = UIImage(data: imageObject.imageData)
+            }
+            cell.configureCell(object.name, count: object.listPlaces?.count ?? 0, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath), image: image)
         } else {
             //
             // Object is nil means cell is a "+"
