@@ -39,7 +39,7 @@ class AddToListViewController: BaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         view.addSubview(tableView)
-        tableView.registerCell(AddToListCell)
+        tableView.registerCell(AddToListCell.self)
         
         let views: [String: AnyObject] = [
             "topLayoutGuide": topLayoutGuide,

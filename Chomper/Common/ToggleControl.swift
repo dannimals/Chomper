@@ -70,10 +70,10 @@ class ToggleControl: UIControl {
 
         for (index, label) in labels.enumerated() {
             frame = label.frame
-            frame = CGRect(x: CGFloat(index) * buttonWidth, y: self.frame.minY, width: buttonWidth , height: bounds.height)
+            frame = CGRect(x: CGFloat(index) * buttonWidth, y: 0, width: buttonWidth , height: bounds.height)
             label.frame = frame
         }
-        frame = CGRect(x: CGFloat(selectedIndex) * buttonWidth, y: self.frame.maxY - 2.5, width: buttonWidth, height: 2.5)
+        frame = CGRect(x: CGFloat(selectedIndex) * buttonWidth, y: bounds.height - 2.5, width: buttonWidth, height: 2.5)
         underlineView.frame = frame
         startCenter = underlineView.center.x
     }

@@ -32,7 +32,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         collectionView!.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.white
-        collectionView!.registerCell(ListsCollectionViewCell)
+        collectionView!.registerCell(ListsCollectionViewCell.self)
 
     }
     

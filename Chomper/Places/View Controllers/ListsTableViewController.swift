@@ -31,8 +31,8 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         tableView.tableFooterView = UIView()
         tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableView.separatorStyle = .none
-        tableView.registerNib(PlaceTableViewCell)
-        tableView.registerHeaderFooter(ListsTableSectionHeaderView)
+        tableView.registerNib(PlaceTableViewCell.self)
+        tableView.registerHeaderFooter(ListsTableSectionHeaderView.self)
     }
     
     func cellIdentifierForObject(_ object: Object) -> String {
@@ -44,7 +44,7 @@ class ListsTableViewController: UITableViewController, BaseViewControllerProtoco
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "listName", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: "listName", cacheName: nil)
 
-        dataProvider = FetchedResultsTableDataProvider(tableViewDelegate: self, frc: frc as! NSFetchedResultsController<ListPlace> as! NSFetchedResultsController<NSFetchRequestResult>)
+        dataProvider = FetchedResultsTableDataProvider(tableViewDelegate: self, frc: frc as! NSFetchedResultsController<NSFetchRequestResult>)
         dataSource = TableViewDataSource(dataProvider: dataProvider, tableDelegate: self)
     }
 }
@@ -56,7 +56,7 @@ extension ListsTableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? PlaceTableViewCell else { fatalError("Cannot dequeue PlaceCell in ListsTableVC") }
         if let object = dataProvider.objectAtIndexPath(indexPath) {
-            cell.configurePlaceCell(object.name ?? "", address: object.address, rating: object.ratingValue as NSNumber?, price: object.priceValue as NSNumber?, location: object.location)
+            cell.configurePlaceCell(object.name , address: object.address, rating: object.ratingValue as NSNumber?, price: object.priceValue as NSNumber?, location: object.location)
         }
     }
     
