@@ -11,27 +11,27 @@ import Common
 protocol CollectionViewDelegate: class {
     associatedtype Object
     var collectionView: UICollectionView? { get }
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>])
+    func dataProviderDidUpdate(_ updates: [DataProviderUpdate<Object>])
     
 }
 
 extension CollectionViewDelegate {
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]) {
+    func dataProviderDidUpdate(_ updates: [DataProviderUpdate<Object>]) {
         for update in updates {
             switch update {
-            case .Insert(let indexPath):
-                collectionView?.insertItemsAtIndexPaths([indexPath])
-            case .Update(let indexPath, _):
-                collectionView?.reloadItemsAtIndexPaths([indexPath])
-            case .Move(let indexPath, let newIndexPath):
+            case .insert(let indexPath):
+                collectionView?.insertItems(at: [indexPath])
+            case .update(let indexPath, _):
+                collectionView?.reloadItems(at: [indexPath])
+            case .move(let indexPath, let newIndexPath):
                 guard indexPath != newIndexPath else { return }
-                collectionView?.deleteItemsAtIndexPaths([indexPath])
-                collectionView?.insertItemsAtIndexPaths([newIndexPath])
-            case .Delete(let indexPath):
-                collectionView?.deleteItemsAtIndexPaths([indexPath])
-            case .InsertSection(let section):
+                collectionView?.deleteItems(at: [indexPath])
+                collectionView?.insertItems(at: [newIndexPath])
+            case .delete(let indexPath):
+                collectionView?.deleteItems(at: [indexPath])
+            case .insertSection(let section):
                 collectionView?.insertSections(section)
-            case .DeleteSection(let section):
+            case .deleteSection(let section):
                 collectionView?.deleteSections(section)
 
               // TODO: handle empty view
@@ -41,8 +41,8 @@ extension CollectionViewDelegate {
         //
         // Need to force refresh UI on visible cells 
         
-        if let visibleCells = collectionView?.indexPathsForVisibleItems() {
-            collectionView?.reloadItemsAtIndexPaths(visibleCells)
+        if let visibleCells = collectionView?.indexPathsForVisibleItems {
+            collectionView?.reloadItems(at: visibleCells)
         }
     }
 }

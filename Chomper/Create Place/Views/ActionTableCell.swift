@@ -9,8 +9,8 @@
 import Common
 
 class ActionTableCell: UITableViewCell {
-    private var label: UILabel!
-    private var separator: UIView!
+    fileprivate var label: UILabel!
+    fileprivate var separator: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -27,32 +27,32 @@ class ActionTableCell: UITableViewCell {
         label.text = nil
     }
     
-    private func setup() {
-        contentView.backgroundColor = UIColor.whiteColor()
+    fileprivate func setup() {
+        contentView.backgroundColor = UIColor.white
         
         label = UILabel()
         contentView.addSubview(label)
-        label.textAlignment = .Left
+        label.textAlignment = .left
         label.font = UIFont.chomperFontForTextStyle("h4")
-        label.textColor = UIColor.orangeColor()
+        label.textColor = UIColor.orange
         
         separator = UIView()
-        separator.backgroundColor = UIColor.lightGrayColor()
+        separator.backgroundColor = UIColor.lightGray
         contentView.addSubview(separator)
         
         NSLayoutConstraint.useAndActivateConstraints([
-            label.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 15),
-            label.trailingAnchor.constraintEqualToAnchor(trailingAnchor),
-            label.topAnchor.constraintEqualToAnchor(topAnchor),
-            label.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
-            separator.leadingAnchor.constraintEqualToAnchor(leadingAnchor, constant: 15.0),
-            separator.trailingAnchor.constraintEqualToAnchor(trailingAnchor, constant: -15.0),
-            separator.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
-            separator.heightAnchor.constraintEqualToConstant(0.75)
+            label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15),
+            label.trailingAnchor.constraint(equalTo: trailingAnchor),
+            label.topAnchor.constraint(equalTo: topAnchor),
+            label.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+            separator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
+            separator.bottomAnchor.constraint(equalTo: bottomAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 0.75)
         ])
     }
     
-    func setTitleForAction(title: String) {
+    func setTitleForAction(_ title: String) {
         label.text = title
     }
 

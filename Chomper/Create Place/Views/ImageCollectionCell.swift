@@ -33,21 +33,21 @@ class ImageCollectionCell: UICollectionViewCell {
     // MARK: - Helpers
     
     func setup() {
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         NSLayoutConstraint.useAndActivateConstraints([
-            imageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
-            imageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
-            imageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
-            imageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor)
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
             ])
     }
     
-    func configureCellWithImage(image: UIImage, withImageUrl url: NSURL, imageCache: ChomperImageCacheProtocol?) {
-        if let photoUrl = photoUrl where NSURL(string: photoUrl) == url {
+    func configureCellWithImage(_ image: UIImage, withImageUrl url: URL, imageCache: ChomperImageCacheProtocol?) {
+        if let photoUrl = photoUrl, URL(string: photoUrl) == url {
             imageView.image = image
-            imageCache?[photoUrl] = image
+            (imageCache as! NSCache).setObject(image, forKey: photoUrl as AnyObject)
         }
     }
 }

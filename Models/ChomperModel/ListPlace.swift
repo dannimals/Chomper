@@ -27,7 +27,7 @@ public final class ListPlace: ManagedObject {
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, address: String?, city: String?,  downloadImageUrl: String?, listName: String, location: CLLocation, phone: String?, placeId: String, placeName: String, price: NSNumber?, notes: String?, rating: NSNumber?, state: String?, userRated: Bool? = false, userPriced: Bool? = false) -> ListPlace {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, address: String?, city: String?,  downloadImageUrl: String?, listName: String, location: CLLocation, phone: String?, placeId: String, placeName: String, price: NSNumber?, notes: String?, rating: NSNumber?, state: String?, userRated: Bool? = false, userPriced: Bool? = false) -> ListPlace {
         let listPlace: ListPlace = moc.insertObject()
         
         listPlace.downloadImageUrl = downloadImageUrl
@@ -38,16 +38,16 @@ public final class ListPlace: ManagedObject {
         listPlace.placeName = placeName
         listPlace.price = price
         listPlace.rating = rating
-        listPlace.userRated = NSNumber(bool: userRated!)
-        listPlace.userPriced = NSNumber(bool: userPriced!)
+        listPlace.userRated = NSNumber(value: userRated! as Bool)
+        listPlace.userPriced = NSNumber(value: userPriced! as Bool)
         
         if let place = Place.findOrCreatePlace(placeId, name: placeName, inContext: moc) {
             place.streetName = place.streetName ?? address
             place.city = place.city ?? city
             place.phone = place.phone ?? phone
             place.state = place.state ?? state
-            place.latitude = location.coordinate.latitude
-            place.longitude = location.coordinate.longitude
+            place.latitude = location.coordinate.latitude as NSNumber?
+            place.longitude = location.coordinate.longitude as NSNumber?
             
             listPlace.place = place
         }
@@ -59,7 +59,7 @@ public final class ListPlace: ManagedObject {
         return listPlace
     }
     
-    public static func findOrCreateListPlace(placeId: String, listName: String, inContext moc: NSManagedObjectContext) -> ListPlace {
+    public static func findOrCreateListPlace(_ placeId: String, listName: String, inContext moc: NSManagedObjectContext) -> ListPlace {
         let predicate = NSPredicate(format: "placeId == %@ && listName == %@", placeId, listName)
         let listPlace = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.listName = listName; $0.placeId = placeId }
         return listPlace

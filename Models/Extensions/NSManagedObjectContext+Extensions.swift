@@ -23,14 +23,14 @@ extension NSManagedObjectContext {
     // Must be used with mainContext as receiver 
     
     public func createBackgroundContext() -> NSManagedObjectContext {
-        let context = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.persistentStoreCoordinator = persistentStoreCoordinator
         return context
     }
     
     
-    public func insertObject<A: ManagedObject where A: ManagedObjectType>() -> A {
-        guard let obj = NSEntityDescription.insertNewObjectForEntityForName(A.entityName, inManagedObjectContext: self) as? A else { fatalError("Wrong object type") }
+    public func insertObject<A: ManagedObject>() -> A where A: ManagedObjectType {
+        guard let obj = NSEntityDescription.insertNewObject(forEntityName: A.entityName, into: self) as? A else { fatalError("Wrong object type") }
         return obj
     }
     
@@ -45,10 +45,10 @@ extension NSManagedObjectContext {
     }
 
     
-    public func performChanges(block: () -> ()) {
-        performBlock {
+    public func performChanges(_ block: @escaping () -> ()) {
+        perform {
             block()
-            self.saveOrRollback()
+            let _ = self.saveOrRollback()
         }
     }
     
@@ -56,9 +56,9 @@ extension NSManagedObjectContext {
     // Returns an NSNotification NSManagedObjectContextDidSaveNotification observer on the source managed object context's save()
     // Handles ObjectsDidChangeNotification as callback
     
-    public func addObjectsDidChangeNotificationObserver(handler: ObjectsDidChangeNotification -> ()) -> NSObjectProtocol {
-        let nc = NSNotificationCenter.defaultCenter()
-        return nc.addObserverForName(NSManagedObjectContextDidSaveNotification, object: self, queue: nil) { note in
+    public func addObjectsDidChangeNotificationObserver(_ handler: @escaping (ObjectsDidChangeNotification) -> ()) -> NSObjectProtocol {
+        let nc = NotificationCenter.default
+        return nc.addObserver(forName: NSNotification.Name.NSManagedObjectContextDidSave, object: self, queue: nil) { note in
             let wrappedNote = ObjectsDidChangeNotification(note: note)
             handler(wrappedNote)
         }
@@ -68,10 +68,10 @@ extension NSManagedObjectContext {
     // Adds an NSNotification NSManagedObjectContextDidSaveNotification observer on the source managed object context's save()
     // And saves the changes from merge on target context
 
-    public func addNSManagedObjectContextDidSaveNotificationObserver(targetContext: NSManagedObjectContext) {
-        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: self, queue: nil) { note in
+    public func addNSManagedObjectContextDidSaveNotificationObserver(_ targetContext: NSManagedObjectContext) {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextDidSave, object: self, queue: nil) { note in
             targetContext.performChanges {
-                targetContext.mergeChangesFromContextDidSaveNotification(note)
+                targetContext.mergeChanges(fromContextDidSave: note)
             }
         }
     }

@@ -10,26 +10,26 @@ import Common
 import CoreLocation
 import SwiftyJSON
 
-public typealias GetPhotosCompletionHandler = ([Photo]?, NSURLResponse?, NSError?) -> Void
-public typealias GetPlacesCompletionHandler = ([SearchResult]?, NSURLResponse?, NSError?) -> Void
-public typealias GetPlaceCompletionHandler = (SearchResult?, NSURLResponse?, NSError?) -> Void
+public typealias GetPhotosCompletionHandler = ([Photo]?, URLResponse?, Error?) -> Void
+public typealias GetPlacesCompletionHandler = ([SearchResult]?, URLResponse?, Error?) -> Void
+public typealias GetPlaceCompletionHandler = (SearchResult?, URLResponse?, Error?) -> Void
 
 public protocol ChomperWebServiceProtocol {
-    func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
-    func getRecommendedPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
-    func getDetailsForPlace(id: String, completionHandler: GetPlaceCompletionHandler) -> NSURLSessionDataTask
-    func getPhotosForPlace(id: String, completionHandler: GetPhotosCompletionHandler) -> NSURLSessionDataTask
-    func getPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
-    func getPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask
+    func getRecommendedPlacesNearLocation(_ location: CLLocation, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask
+    func getRecommendedPlacesNearArea(_ area: String, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask
+    func getDetailsForPlace(_ id: String, completionHandler: @escaping GetPlaceCompletionHandler) -> URLSessionDataTask
+    func getPhotosForPlace(_ id: String, completionHandler: @escaping GetPhotosCompletionHandler) -> URLSessionDataTask
+    func getPlacesNearArea(_ area: String, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask
+    func getPlacesNearLocation(_ location: CLLocation, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask
 }
 
 public class ChomperWebService: ChomperWebServiceProtocol {
 
     // MARK: - Class properties
     
-    static var session: NSURLSession = {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let _session = NSURLSession(configuration: config)
+    static var session: URLSession = {
+        let config = URLSessionConfiguration.default
+        let _session = URLSession(configuration: config)
         
         return _session
     }()
@@ -44,61 +44,61 @@ public class ChomperWebService: ChomperWebServiceProtocol {
     
     // MARK: - Place Details
     
-    public func getDetailsForPlace(id: String, completionHandler: GetPlaceCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.GetDetailsForPlace(id).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+    public func getDetailsForPlace(_ id: String, completionHandler: @escaping GetPlaceCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.getDetailsForPlace(id).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data, mapperType: .GetPlaceDetails).places
+                let results = ChomperMapper(response: data, mapperType: .getPlaceDetails).places
                 completionHandler(results?.first, response, nil)
 
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }
     
-    public func getPhotosForPlace(id: String, completionHandler: GetPhotosCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.GetPhotosForPlace(id).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+    public func getPhotosForPlace(_ id: String, completionHandler: @escaping GetPhotosCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.getPhotosForPlace(id).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let photos = ChomperMapper(response: data, mapperType: .GetPhotos).photos
+                let photos = ChomperMapper(response: data, mapperType: .getPhotos).photos
                 completionHandler(photos, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }
     
     // MARK: - Places from explore (user recommendation)
-    
-    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.ExplorePlacesNearLocation(location, searchTerm).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+
+    public func getRecommendedPlacesNearLocation(_ location: CLLocation, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.explorePlacesNearLocation(location, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data, mapperType: .GetRecommended).places
+                let results = ChomperMapper(response: data, mapperType: .getRecommended).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }
     
-    public func getRecommendedPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.ExplorePlacesNearArea(area, searchTerm).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+    public func getRecommendedPlacesNearArea(_ area: String, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.explorePlacesNearArea(area, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data, mapperType: .GetRecommended).places
+                let results = ChomperMapper(response: data, mapperType: .getRecommended).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }
@@ -106,31 +106,31 @@ public class ChomperWebService: ChomperWebServiceProtocol {
     
     // MARK: - Places from search
 
-    public func getPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.GetPlacesNearLocation(location, searchTerm).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+    public func getPlacesNearLocation(_ location: CLLocation, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.getPlacesNearLocation(location, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data, mapperType: .GetPlaces).places
+                let results = ChomperMapper(response: data, mapperType: .getPlaces).places
                 completionHandler(results, response, nil)
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }
     
-    public func getPlacesNearArea(area: String, searchTerm: String?, completionHandler: GetPlacesCompletionHandler) -> NSURLSessionDataTask {
-        let request = ChomperURLRouter.GetPlacesNearArea(area, searchTerm).URLRequest
-        let task = ChomperWebService.session.dataTaskWithRequest(request) { (data, response, error) in
+    public func getPlacesNearArea(_ area: String, searchTerm: String?, completionHandler: @escaping GetPlacesCompletionHandler) -> URLSessionDataTask {
+        let request = ChomperURLRouter.getPlacesNearArea(area, searchTerm).URLRequest
+        let task = ChomperWebService.session.dataTask(with: request, completionHandler: { (data, response, error) in
             if error == nil, let data = data {
-                let results = ChomperMapper(response: data, mapperType: .GetPlaces).places
+                let results = ChomperMapper(response: data, mapperType: .getPlaces).places
                 completionHandler(results, response, nil)
 
             } else {
                 completionHandler(nil, nil, error)
             }
-        }
+        }) 
         task.resume()
         return task
     }

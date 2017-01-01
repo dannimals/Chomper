@@ -34,82 +34,82 @@ class CreatePlaceSearchView: UIView {
     
     func initialize() {
         view = UIView()
-        view.backgroundColor = UIColor.orangeColor()
+        view.backgroundColor = UIColor.orange
         addSubview(view)
         
         containerView = UIStackView()
-        containerView.axis = .Vertical
-        containerView.alignment = .Fill
-        containerView.distribution = .Fill
+        containerView.axis = .vertical
+        containerView.alignment = .fill
+        containerView.distribution = .fill
         containerView.layoutMargins = UIEdgeInsetsMake(8, 15, 8, 15)
-        containerView.layoutMarginsRelativeArrangement = true
+        containerView.isLayoutMarginsRelativeArrangement = true
         containerView.spacing = 8.0
         view.addSubview(containerView)
         
         buttonContainerView = UIView()
         containerView.addArrangedSubview(buttonContainerView)
-        let constraint = buttonContainerView.heightAnchor.constraintEqualToConstant(30.0)
+        let constraint = buttonContainerView.heightAnchor.constraint(equalToConstant: 30.0)
         constraint.priority = UILayoutPriorityDefaultHigh
         
         cancelButton = UIButton()
-        cancelButton.addTarget(self, action: #selector(cancelAction(_:)), forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelAction(_:)), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p-small")
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), for: UIControlState())
+        cancelButton.setTitleColor(UIColor.lightGray, for: .highlighted)
         buttonContainerView.addSubview(cancelButton)
         
         searchButton = UIButton()
-        searchButton.addTarget(self, action: #selector(searchAction(_:)), forControlEvents: .TouchUpInside)
+        searchButton.addTarget(self, action: #selector(searchAction(_:)), for: .touchUpInside)
         searchButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
-        searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), forState: .Normal)
-        searchButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+        searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), for: UIControlState())
+        searchButton.setTitleColor(UIColor.lightGray, for: .highlighted)
         buttonContainerView.addSubview(searchButton)
 
         
         textSearch = UITextField()
-        textSearch.tintColor = UIColor.orangeColor()
-        textSearch.clearButtonMode = .WhileEditing
-        textSearch.returnKeyType = .Search
+        textSearch.tintColor = UIColor.orange
+        textSearch.clearButtonMode = .whileEditing
+        textSearch.returnKeyType = .search
         textSearch.font = UIFont.chomperFontForTextStyle("p")
-        textSearch.textColor = UIColor.darkGrayColor()
+        textSearch.textColor = UIColor.darkGray
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
-        textSearch.backgroundColor = UIColor.whiteColor()
+        textSearch.backgroundColor = UIColor.white
         textSearch.layer.cornerRadius = 5.0
         containerView.addArrangedSubview(textSearch)
-        let paddingView = UIView(frame: CGRectMake(0, 0, 15.0, 30.0))
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15.0, height: 30.0))
         textSearch.leftView = paddingView
-        textSearch.leftViewMode = .Always
+        textSearch.leftViewMode = .always
         
         locationSearch = UISearchBar()
         locationSearch.layer.cornerRadius = 5.0
         locationSearch.clipsToBounds = true
         locationSearch.layer.borderWidth = 1.0
-        locationSearch.layer.borderColor = UIColor.whiteColor().CGColor
+        locationSearch.layer.borderColor = UIColor.white.cgColor
         locationSearch.placeholder = NSLocalizedString("Current location", comment: "Current location")
-        locationSearch.backgroundImage = UIImage.fromColor(UIColor.whiteColor())
+        locationSearch.backgroundImage = UIImage.fromColor(UIColor.white)
         locationSearch.translatesAutoresizingMaskIntoConstraints = false
         containerView.addArrangedSubview(locationSearch)
-        let heightConstraint = locationSearch.heightAnchor.constraintEqualToConstant(30.0)
+        let heightConstraint = locationSearch.heightAnchor.constraint(equalToConstant: 30.0)
         heightConstraint.priority = UILayoutPriorityDefaultHigh
         
-        buttonContainerView.hidden = true
-        locationSearch.hidden = true
+        buttonContainerView.isHidden = true
+        locationSearch.isHidden = true
         
         NSLayoutConstraint.useAndActivateConstraints([
-            view.topAnchor.constraintEqualToAnchor(topAnchor),
-            view.leftAnchor.constraintEqualToAnchor(leftAnchor),
-            view.bottomAnchor.constraintEqualToAnchor(bottomAnchor),
-            view.rightAnchor.constraintEqualToAnchor(rightAnchor),
+            view.topAnchor.constraint(equalTo: topAnchor),
+            view.leftAnchor.constraint(equalTo: leftAnchor),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor),
+            view.rightAnchor.constraint(equalTo: rightAnchor),
             constraint,
-            containerView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: 20),
-            containerView.leftAnchor.constraintEqualToAnchor(view.leftAnchor),
-            containerView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            containerView.rightAnchor.constraintEqualToAnchor(view.rightAnchor),
-            cancelButton.leftAnchor.constraintEqualToAnchor(buttonContainerView.leftAnchor),
-            cancelButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor),
-            searchButton.rightAnchor.constraintEqualToAnchor(buttonContainerView.rightAnchor),
-            searchButton.topAnchor.constraintEqualToAnchor(buttonContainerView.topAnchor),
-            textSearch.heightAnchor.constraintEqualToConstant(30.0),
+            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            containerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            containerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            cancelButton.leftAnchor.constraint(equalTo: buttonContainerView.leftAnchor),
+            cancelButton.topAnchor.constraint(equalTo: buttonContainerView.topAnchor),
+            searchButton.rightAnchor.constraint(equalTo: buttonContainerView.rightAnchor),
+            searchButton.topAnchor.constraint(equalTo: buttonContainerView.topAnchor),
+            textSearch.heightAnchor.constraint(equalToConstant: 30.0),
             heightConstraint
         ])
     }
@@ -117,10 +117,10 @@ class CreatePlaceSearchView: UIView {
     // MARK: - Helpers
     
     func enableSearch() {
-        UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: { [weak self] in
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .curveEaseIn, animations: { [weak self] in
             self?.layer.shadowOpacity = 0
-            self?.buttonContainerView.hidden = false
-            self?.locationSearch.hidden = false
+            self?.buttonContainerView.isHidden = false
+            self?.locationSearch.isHidden = false
             self?.textSearch.becomeFirstResponder()
             }, completion: { [weak self] finished in
                 self?.setShadow()
@@ -128,10 +128,10 @@ class CreatePlaceSearchView: UIView {
     }
     
     func cancelSearch() {
-        setShadow(UIColor.lightGrayColor().CGColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0, y: 65.0, width: bounds.width, height: 3.5))
-        UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .CurveEaseIn, animations: { [weak self] in
-            self?.buttonContainerView.hidden = true
-            self?.locationSearch.hidden = true
+        setShadow(UIColor.lightGray.cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0, y: 65.0, width: bounds.width, height: 3.5))
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .curveEaseIn, animations: { [weak self] in
+            self?.buttonContainerView.isHidden = true
+            self?.locationSearch.isHidden = true
             self?.textSearch.resignFirstResponder()
             }, completion: { [weak self] finished in
                 self?.locationSearch.text = nil
@@ -142,12 +142,12 @@ class CreatePlaceSearchView: UIView {
     }
     
     @IBAction
-    func cancelAction(sender: UIButton) {
+    func cancelAction(_ sender: UIButton) {
         cancelAction?()
     }
     
     @IBAction
-    func searchAction(sender: UIButton) {
+    func searchAction(_ sender: UIButton) {
         searchAction?()
     }
     

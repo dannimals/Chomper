@@ -13,13 +13,13 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     typealias Object = Delegate.Object
     
     weak var delegate: Delegate!
-    private var fetchedResultsController: NSFetchedResultsController!
-    private var updates = [DataProviderUpdate<Object>]()
+    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    fileprivate var updates = [DataProviderUpdate<Object>]()
     var sections: [NSFetchedResultsSectionInfo]? {
         return fetchedResultsController.sections
     }
     
-    required init(delegate: Delegate, fetchedResultsController: NSFetchedResultsController) {
+    required init(delegate: Delegate, fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>) {
         self.delegate = delegate
         self.fetchedResultsController = fetchedResultsController
         super.init()
@@ -28,14 +28,14 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
         // Is there a better place to performFetch()??
     }
     
-    func objectAtIndexPath(indexPath: NSIndexPath) -> Object? {
+    func objectAtIndexPath(_ indexPath: IndexPath) -> Object? {
         if fetchedResultsController.checkBoundsForIndexPath(indexPath) {
-            return fetchedResultsController.objectAtIndexPath(indexPath) as? Object
+            return fetchedResultsController.object(at: indexPath) as? Object
         }
         return nil
     }
     
-    func numberOfItemsInSection(section: Int) -> Int {
+    func numberOfItemsInSection(_ section: Int) -> Int {
         //
         // Add an extra "+" cell in collectionView
         
@@ -49,41 +49,41 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     
     // MARK: - NSFetchedResultsControllerDelegate methods
     
-    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         updates.removeAll()
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         switch type {
-        case .Insert:
+        case .insert:
             guard let indexPath = newIndexPath else { fatalError("Insert: IndexPath should be not nil") }
-            updates.append(.Insert(indexPath))
-        case .Update:
-            guard let indexPath = indexPath, object = objectAtIndexPath(indexPath) else { return }
-            updates.append(.Update(indexPath, object))
-        case .Move:
-            guard let indexPath = indexPath, newIndexPath = newIndexPath else { fatalError("Move: IndexPath/newIndexPath should be not nil") }
+            updates.append(.insert(indexPath))
+        case .update:
+            guard let indexPath = indexPath, let object = objectAtIndexPath(indexPath) else { return }
+            updates.append(.update(indexPath, object))
+        case .move:
+            guard let indexPath = indexPath, let newIndexPath = newIndexPath else { fatalError("Move: IndexPath/newIndexPath should be not nil") }
             if indexPath != newIndexPath {
-                updates.append(.Move(indexPath, newIndexPath))
+                updates.append(.move(indexPath, newIndexPath))
             }
-        case .Delete:
+        case .delete:
             guard let indexPath = indexPath else { fatalError("Delete: IndexPath should be not nil") }
-            updates.append(.Delete(indexPath))
+            updates.append(.delete(indexPath))
         }
     }
     
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch (type) {
-        case .Insert:
-            updates.append(.InsertSection(NSIndexSet(index: sectionIndex)))
-        case .Delete:
-            updates.append(.DeleteSection(NSIndexSet(index: sectionIndex)))
+        case .insert:
+            updates.append(.insertSection(IndexSet(integer: sectionIndex)))
+        case .delete:
+            updates.append(.deleteSection(IndexSet(integer: sectionIndex)))
         default:
             break
         }
     }
     
-    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.delegate.dataProviderDidUpdate(self.updates)
     }
     

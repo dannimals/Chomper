@@ -14,7 +14,7 @@ import Common
 
 class BaseViewController: UIViewController, BaseViewControllerProtocol {
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 }

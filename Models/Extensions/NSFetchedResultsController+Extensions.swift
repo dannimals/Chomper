@@ -9,7 +9,7 @@
 
 extension NSFetchedResultsController {
     
-    public func checkBoundsForIndexPath(indexPath: NSIndexPath) -> Bool {
+    public func checkBoundsForIndexPath(_ indexPath: IndexPath) -> Bool {
         if let sections = sections {
             let section = indexPath.section
             

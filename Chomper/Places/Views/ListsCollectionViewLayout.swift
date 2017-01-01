@@ -10,35 +10,35 @@ import Common
 
 class ListsCollectionViewLayout: UICollectionViewLayout {
     
-    private var contentSize = CGSizeZero
-    private var horizontalPadding: CGFloat = 15.0
-    private var verticalPadding: CGFloat = 10.0
-    private var horizontalInset: CGFloat =  0.0
-    private var verticalInset: CGFloat =  0.0
-    private var itemWidth: CGFloat = 0.0
-    private var layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
+    fileprivate var contentSize = CGSize.zero
+    fileprivate var horizontalPadding: CGFloat = 15.0
+    fileprivate var verticalPadding: CGFloat = 10.0
+    fileprivate var horizontalInset: CGFloat =  0.0
+    fileprivate var verticalInset: CGFloat =  0.0
+    fileprivate var itemWidth: CGFloat = 0.0
+    fileprivate var layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
     
     var numberOfColumns = 2
     
-    override func collectionViewContentSize() -> CGSize {
+    override var collectionViewContentSize : CGSize {
         return contentSize
     }
     
-    override func prepareLayout() {
-        super.prepareLayout()
+    override func prepare() {
+        super.prepare()
         
         layoutAttributes.removeAll()
-        let numberOfSections = collectionView!.numberOfSections()
+        let numberOfSections = collectionView!.numberOfSections
         var yOffset = verticalInset + verticalPadding
         var xOffset = horizontalInset + horizontalPadding
         let totalGutterWidth = horizontalInset * (CGFloat(numberOfColumns + 1)) + 2 * horizontalPadding
         itemWidth = (collectionView!.bounds.width - totalGutterWidth) / CGFloat(numberOfColumns)
         
         for section in 0..<numberOfSections {
-            let numberOfItems = collectionView!.numberOfItemsInSection(section)
+            let numberOfItems = collectionView!.numberOfItems(inSection: section)
             for item in 0..<numberOfItems {
-                let indexPath = NSIndexPath(forItem: item, inSection: section)
-                let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+                let indexPath = IndexPath(item: item, section: section)
+                let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 let itemSize = CGSize(width: itemWidth, height: itemWidth)
                 var increaseRow = false
                 
@@ -51,37 +51,37 @@ class ListsCollectionViewLayout: UICollectionViewLayout {
                     xOffset = horizontalInset + horizontalPadding
                 }
                 
-                attributes.frame = CGRectIntegral(CGRectMake(xOffset, yOffset, itemSize.width, itemSize.height))
+                attributes.frame = CGRect(x: xOffset, y: yOffset, width: itemSize.width, height: itemSize.height).integral
                 layoutAttributes[layoutKeyforIndexPath(indexPath)] = attributes
                 
                 xOffset = xOffset + itemSize.width + horizontalInset
             }
         }
         
-        contentSize = CGSizeMake(collectionView!.frame.size.width, yOffset + itemWidth)
+        contentSize = CGSize(width: collectionView!.frame.size.width, height: yOffset + itemWidth)
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes? {
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return layoutAttributes[layoutKeyforIndexPath(indexPath)]
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         let predicate = NSPredicate {  [unowned self] (evaluatedObject, bindings) -> Bool in
             let layoutAttribute = self.layoutAttributes[evaluatedObject as! String]
-            return CGRectIntersectsRect(rect, layoutAttribute!.frame)
+            return rect.intersects(layoutAttribute!.frame)
         }
         
         let dict = layoutAttributes as NSDictionary
         let keys = dict.allKeys as NSArray
-        let matchingKeys = keys.filteredArrayUsingPredicate(predicate)
+        let matchingKeys = keys.filtered(using: predicate)
         
-        return dict.objectsForKeys(matchingKeys, notFoundMarker: NSNull()) as? [UICollectionViewLayoutAttributes]
+        return dict.objects(forKeys: matchingKeys, notFoundMarker: NSNull()) as? [UICollectionViewLayoutAttributes]
     }
     
     // MARK: - Helpers
     
-    private func layoutKeyforIndexPath(indexPath: NSIndexPath) -> String {
+    fileprivate func layoutKeyforIndexPath(_ indexPath: IndexPath) -> String {
         return "\(indexPath.section)_\(indexPath.row)"
     }
 }

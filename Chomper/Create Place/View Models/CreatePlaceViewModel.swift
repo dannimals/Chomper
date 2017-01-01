@@ -9,7 +9,7 @@
 import Common
 
 struct CreatePlaceViewModel {
-    private(set) var results: [SearchResult]!
+    fileprivate(set) var results: [SearchResult]!
 
     init(results: [SearchResult]) {
         self.results = results

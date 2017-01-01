@@ -12,18 +12,18 @@ class LocationSearchViewController: UIViewController, BaseViewControllerProtocol
     
     // MARK: - Properties
     
-    private var resultsViewController: GMSAutocompleteResultsViewController?
-    private var searchBar: UISearchBar!
-    private var searchController: UISearchController!
+    fileprivate var resultsViewController: GMSAutocompleteResultsViewController?
+    fileprivate var searchBar: UISearchBar!
+    fileprivate var searchController: UISearchController!
     
-    var searchAction: ((locationName: String, coordinate: CLLocation) -> Void)?
+    var searchAction: ((_ locationName: String, _ coordinate: CLLocation) -> Void)?
     var searchTerm: String?
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         
         resultsViewController = GMSAutocompleteResultsViewController()
         resultsViewController?.delegate = self
@@ -42,49 +42,48 @@ class LocationSearchViewController: UIViewController, BaseViewControllerProtocol
 
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        searchController.active = true
+        searchController.isActive = true
     }
     
     // MARK: - Helpers
     
     func dismissVC() {
         searchBar.resignFirstResponder()
-        searchController!.dismissViewControllerAnimated(true, completion: nil)
-        dismissViewControllerAnimated(true, completion: nil)
+        searchController!.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
 }
 
 extension LocationSearchViewController: GMSAutocompleteResultsViewControllerDelegate {
-    func resultsController(resultsController: GMSAutocompleteResultsViewController, didAutocompleteWithPlace place: GMSPlace) {
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
         searchController?.searchBar.text = place.name
-        searchAction?(locationName: searchController?.searchBar.text ?? "", coordinate: CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
+        searchAction?(searchController?.searchBar.text ?? "", CLLocation(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude))
         dismissVC()
 
         print("Place name: ", place.name)
-        print("Place address: ", place.formattedAddress)
+        print("Place address: ", place.formattedAddress ?? "")
         print("Place attributions: ", place.coordinate)
     }
     
-    func resultsController(resultsController: GMSAutocompleteResultsViewController,didFailAutocompleteWithError error: NSError){
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,didFailAutocompleteWithError error: Error){
         // TODO: handle the error.
-        print("Error: ", error.description)
     }
     
     // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    func didRequestAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
-    func didUpdateAutocompletePredictionsForResultsController(resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    func didUpdateAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }
 
 extension LocationSearchViewController: UISearchControllerDelegate {
-    func didPresentSearchController(searchController: UISearchController) {
+    func didPresentSearchController(_ searchController: UISearchController) {
         searchBar.becomeFirstResponder()
         searchBar.text = searchTerm
     }
@@ -92,7 +91,7 @@ extension LocationSearchViewController: UISearchControllerDelegate {
 }
 
 extension LocationSearchViewController: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dismissVC()
     }
     

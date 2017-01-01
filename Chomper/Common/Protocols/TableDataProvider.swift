@@ -14,10 +14,10 @@ import Models
 
 protocol TableDataProvider: class {
     associatedtype Object
-    func objectAtIndexPath(indexPath: NSIndexPath) -> Object?
-    func numberOfItemsInSection(section: Int) -> Int
+    func objectAtIndexPath(_ indexPath: IndexPath) -> Object?
+    func numberOfItemsInSection(_ section: Int) -> Int
     func numberOfSections() -> Int
-    func nameOfSection(section: Int) -> String?
+    func nameOfSection(_ section: Int) -> String?
     var sections: [NSFetchedResultsSectionInfo]? { get }
 }
 
@@ -33,7 +33,7 @@ extension TableDataProvider {
         return 1
     }
     
-    func nameOfSection(section: Int) -> String? {
+    func nameOfSection(_ section: Int) -> String? {
         return nil
     }
 }

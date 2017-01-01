@@ -41,14 +41,14 @@ class MapDetailsViewController: BaseViewController {
             "topLayoutGuide": topLayoutGuide
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|[mapView]|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[mapView]|",
             options: [],
             metrics: nil,
             views: views)
         )
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[topLayoutGuide][mapView]|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[topLayoutGuide][mapView]|",
             options: [],
             metrics: nil,
             views: views)

@@ -5,10 +5,10 @@ public final class Image: ManagedObject {
     
     // MARK: - Properties
     
-    @NSManaged public var createdAt: NSDate
-    @NSManaged public private(set) var id: String
-    @NSManaged public var imageData: NSData
-    @NSManaged public var thumbData: NSData?
+    @NSManaged public var createdAt: Date
+    @NSManaged public fileprivate(set) var id: String
+    @NSManaged public var imageData: Data
+    @NSManaged public var thumbData: Data?
 
 
     // MARK: - Relationships
@@ -18,16 +18,16 @@ public final class Image: ManagedObject {
 
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, createdAt: NSDate = NSDate(), imageData: NSData, thumbData: NSData?) -> Image {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, createdAt: Date = Date(), imageData: Data, thumbData: Data?) -> Image {
         let image: Image = moc.insertObject()
-        image.id = NSUUID().UUIDString
+        image.id = UUID().uuidString
         image.createdAt = createdAt
         image.imageData = imageData
         image.thumbData = thumbData
         return image
     }
     
-    static func findOrCreateImage(id: String, imageData: NSData, inContext moc: NSManagedObjectContext) -> Image {
+    static func findOrCreateImage(_ id: String, imageData: Data, inContext moc: NSManagedObjectContext) -> Image {
         let predicate = NSPredicate(format: "id == %@", id)
         let image = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.imageData = imageData; $0.id = id }
         return image

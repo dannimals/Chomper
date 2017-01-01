@@ -1,21 +1,18 @@
 PODS:
   - FLEX (2.3.0)
   - GoogleMaps (1.13.2)
-  - ObjectMapper (1.3.0)
-  - SwiftyJSON (2.3.2)
+  - SwiftyJSON (3.1.3)
 
 DEPENDENCIES:
   - FLEX (~> 2.3.0)
   - GoogleMaps (~> 1.13.2)
-  - ObjectMapper (~> 1.3)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   FLEX: ba80ea13d2c784e85e616137fd4eff164781e364
   GoogleMaps: b20a103ff307f58392e603cf142e59d7e30374c1
-  ObjectMapper: 4eb08a726e9791a93b2632049951b56a7c17e471
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: dd4f595dfd8b02adf6d5d1fa0d448ba15d2ef8cb
+PODFILE CHECKSUM: 0c77552a3ea9bc6f5290b48aa295e2ff845d3e6b
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

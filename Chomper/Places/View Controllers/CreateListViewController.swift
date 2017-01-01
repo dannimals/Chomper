@@ -10,14 +10,14 @@ import Common
 import Models
 
 class CreateListViewController: BaseViewController, UITextFieldDelegate {
-    private var backgroundContext: NSManagedObjectContext!
-    private var cancelButton: UIButton!
-    private var containerView: UIView!
-    private var containerBottomLayout: NSLayoutConstraint!
-    private var errorLabel: UILabel!
-    private var saveButton: UIButton!
-    private var textField: UITextField!
-    private var titleTopLayout: NSLayoutConstraint!
+    fileprivate var backgroundContext: NSManagedObjectContext!
+    fileprivate var cancelButton: UIButton!
+    fileprivate var containerView: UIView!
+    fileprivate var containerBottomLayout: NSLayoutConstraint!
+    fileprivate var errorLabel: UILabel!
+    fileprivate var saveButton: UIButton!
+    fileprivate var textField: UITextField!
+    fileprivate var titleTopLayout: NSLayoutConstraint!
     
     var saveAction: (() -> ())?
     
@@ -33,12 +33,12 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         //
         // Set up view
         
-        view.backgroundColor = UIColor.whiteColor()
-        let effect = UIBlurEffect(style: .ExtraLight)
+        view.backgroundColor = UIColor.white
+        let effect = UIBlurEffect(style: .extraLight)
         let blurView = UIVisualEffectView(effect: effect)
         blurView.frame = view.frame
         view.frame = view.frame
-        view.insertSubview(blurView, atIndex: 0)
+        view.insertSubview(blurView, at: 0)
         
         //
         // Set up buttons
@@ -46,51 +46,51 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
-        containerView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor).active = true
-        containerView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor).active = true
-        containerBottomLayout = NSLayoutConstraint(item: containerView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0)
+        containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        containerBottomLayout = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         view.addConstraint(containerBottomLayout)
         
         cancelButton = UIButton()
-        cancelButton.titleLabel?.textAlignment = .Center
-        cancelButton.addTarget(self, action: #selector(cancelTapped(_:)), forControlEvents: .TouchUpInside)
+        cancelButton.titleLabel?.textAlignment = .center
+        cancelButton.addTarget(self, action: #selector(cancelTapped(_:)), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(cancelButton)
-        cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
-        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        cancelButton.setTitleColor(UIColor.gray, for: .highlighted)
+        cancelButton.setTitleColor(UIColor.lightGray, for: UIControlState())
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), forState: .Normal)
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), for: UIControlState())
         
         saveButton = UIButton()
-        saveButton.titleLabel?.textAlignment = .Center
-        saveButton.addTarget(self, action: #selector(saveTapped(_:)), forControlEvents: .TouchUpInside)
+        saveButton.titleLabel?.textAlignment = .center
+        saveButton.addTarget(self, action: #selector(saveTapped(_:)), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(saveButton)
-        saveButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-        saveButton.setTitleColor(UIColor.orangeColor(), forState: .Normal)
+        saveButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        saveButton.setTitleColor(UIColor.orange, for: UIControlState())
         saveButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
-        saveButton.setTitle(NSLocalizedString("Save", comment: "save"), forState: .Normal)
+        saveButton.setTitle(NSLocalizedString("Save", comment: "save"), for: UIControlState())
         
         let buttons: [String: AnyObject] = [
             "saveButton": saveButton,
             "cancelButton": cancelButton
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[saveButton]|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[saveButton]|",
             options: [],
             metrics: nil,
             views: buttons)
         )
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[cancelButton]|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "V:|[cancelButton]|",
             options: [],
             metrics: nil,
             views: buttons)
         )
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|[cancelButton][saveButton(==cancelButton)]|",
+        view.addConstraints(NSLayoutConstraint.constraints(
+            withVisualFormat: "H:|[cancelButton][saveButton(==cancelButton)]|",
             options: [],
             metrics: nil,
             views: buttons)
@@ -102,44 +102,44 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         textField = UITextField()
         textField.delegate = self
         view.addSubview(textField)
-        textField.autocorrectionType = .No
-        textField.returnKeyType = .Done
-        textField.textColor = UIColor.lightGrayColor()
-        textField.tintColor = UIColor.orangeColor()
+        textField.autocorrectionType = .no
+        textField.returnKeyType = .done
+        textField.textColor = UIColor.lightGray
+        textField.tintColor = UIColor.orange
         textField.font = UIFont.chomperFontForTextStyle("h2")
         textField.placeholder = NSLocalizedString("Create a new list", comment: "list name")
-        titleTopLayout = NSLayoutConstraint(item: textField, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: 0)
+        titleTopLayout = NSLayoutConstraint(item: textField, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
         view.addConstraint(titleTopLayout)
       
         let lineView = UIView()
         view.addSubview(lineView)
-        lineView.heightAnchor.constraintEqualToConstant(0.75).active = true
-        lineView.backgroundColor = UIColor.lightGrayColor()
+        lineView.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
+        lineView.backgroundColor = UIColor.lightGray
         
         errorLabel = UILabel()
         view.addSubview(errorLabel)
         errorLabel.font = UIFont.chomperFontForTextStyle("p small")
-        errorLabel.textColor = UIColor.orangeColor()
+        errorLabel.textColor = UIColor.orange
        
         NSLayoutConstraint.useAndActivateConstraints([
-            errorLabel.leadingAnchor.constraintEqualToAnchor(lineView.leadingAnchor),
-            errorLabel.trailingAnchor.constraintEqualToAnchor(lineView.trailingAnchor),
-            errorLabel.topAnchor.constraintEqualToAnchor(lineView.bottomAnchor, constant: 2.5),
-            lineView.topAnchor.constraintEqualToAnchor(textField.bottomAnchor, constant: 5.0),
-            lineView.leadingAnchor.constraintEqualToAnchor(textField.leadingAnchor, constant: -2.5),
-            lineView.trailingAnchor.constraintEqualToAnchor(textField.trailingAnchor, constant: 2.5),
-            textField.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor, constant: 50.0),
-            textField.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor, constant: -50.0)
+            errorLabel.leadingAnchor.constraint(equalTo: lineView.leadingAnchor),
+            errorLabel.trailingAnchor.constraint(equalTo: lineView.trailingAnchor),
+            errorLabel.topAnchor.constraint(equalTo: lineView.bottomAnchor, constant: 2.5),
+            lineView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 5.0),
+            lineView.leadingAnchor.constraint(equalTo: textField.leadingAnchor, constant: -2.5),
+            lineView.trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: 2.5),
+            textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50.0),
+            textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50.0)
         ])
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textField.becomeFirstResponder()
     }
@@ -147,8 +147,8 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
     
     // MARK: - Handlers
     
-    func keyboardWillAppear(notif: NSNotification) {
-        if let userInfo = notif.userInfo, keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
+    func keyboardWillAppear(_ notif: Notification) {
+        if let userInfo = notif.userInfo, let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardFrame.size.height
             titleTopLayout.constant = (view.bounds.height - keyboardHeight - containerView.bounds.height - textField.bounds.height) / 2
             containerBottomLayout.constant = -keyboardHeight
@@ -161,32 +161,32 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         }
         saveAction?()
         textField.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     // TODO: error handling
-    func textIsValid(textField: UITextField) -> Bool {
+    func textIsValid(_ textField: UITextField) -> Bool {
         //
         // Check there is text and is not a duplicate
         
-        let trimmedText = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) ?? ""
+        let trimmedText = textField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
         return !(textField.text?.isEmpty ?? false) && (trimmedText.characters.count > 0)
         
     }
     
-    func handleError(text: String? = nil) {
+    func handleError(_ text: String? = nil) {
         // TODO:
         errorLabel.text = NSLocalizedString("Please enter a valid name", comment: "valid name")
     }
     
     @IBAction
-    func cancelTapped(sender: UIButton) {
+    func cancelTapped(_ sender: UIButton) {
         textField.resignFirstResponder()
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction
-    func saveTapped(sender: UIButton) {
+    func saveTapped(_ sender: UIButton) {
         guard textIsValid(textField) else {
             handleError()
             return
@@ -196,7 +196,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
     
     // MARK: - UITextField delegate methods
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard textIsValid(textField) else {
             handleError()
             return false
@@ -205,7 +205,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         return true
     }
 
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         errorLabel.text = ""
         return true
     }

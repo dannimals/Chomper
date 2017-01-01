@@ -12,31 +12,31 @@ import Models
 protocol TableViewDelegate: class {
     associatedtype Object
     var tableView: UITableView! { get }
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>])
-    func cellIdentifierForObject(object: Object) -> String
-    func configureCell(cell: UITableViewCell, forObject: Object, atIndexPath: NSIndexPath)
+    func dataProviderDidUpdate(_ updates: [DataProviderUpdate<Object>])
+    func cellIdentifierForObject(_ object: Object) -> String
+    func configureCell(_ cell: UITableViewCell, forObject: Object, atIndexPath: IndexPath)
 }
 
 extension TableViewDelegate {
-    func dataProviderDidUpdate(updates: [DataProviderUpdate<Object>]) {
+    func dataProviderDidUpdate(_ updates: [DataProviderUpdate<Object>]) {
         tableView.beginUpdates()
         for update in updates {
             switch update {
-            case .Insert(let indexPath):
-                tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            case .Delete(let indexPath):
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            case .Update(let indexPath, _):
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-            case .Move(let indexPath, let newIndexPath):
+            case .insert(let indexPath):
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            case .delete(let indexPath):
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            case .update(let indexPath, _):
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            case .move(let indexPath, let newIndexPath):
                 guard indexPath != newIndexPath else { return }
-                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Automatic)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
             
-            case .InsertSection(let section):
-                tableView.insertSections(section, withRowAnimation: .Automatic)
-            case .DeleteSection(let section):
-                tableView.deleteSections(section, withRowAnimation: .Automatic)
+            case .insertSection(let section):
+                tableView.insertSections(section, with: .automatic)
+            case .deleteSection(let section):
+                tableView.deleteSections(section, with: .automatic)
             }
         }
         tableView.endUpdates()
@@ -44,6 +44,6 @@ extension TableViewDelegate {
     
     // MARK: - Override points
     
-    func configureCell(cell: UITableViewCell, forObject: Object, atIndexPath: NSIndexPath) {}
+    func configureCell(_ cell: UITableViewCell, forObject: Object, atIndexPath: IndexPath) {}
 
 }

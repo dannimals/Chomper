@@ -14,9 +14,9 @@ class PlaceDetailsViewController: BaseViewController {
     
     // MARK: - Properties
     
-    private var detailsView: PlaceDetailsView!
-    private var scrollView: UIScrollView!
-    private var viewModel: PlaceDetailsViewModel!
+    fileprivate var detailsView: PlaceDetailsView!
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var viewModel: PlaceDetailsViewModel!
 
     required init(viewModel: PlaceDetailsViewModel) {
         self.viewModel = viewModel
@@ -30,12 +30,12 @@ class PlaceDetailsViewController: BaseViewController {
     
     override func loadView() {
         scrollView = UIScrollView()
-        scrollView.keyboardDismissMode = .OnDrag
+        scrollView.keyboardDismissMode = .onDrag
         detailsView = UIView.loadNibWithName(PlaceDetailsView.self)
         scrollView.addSubview(detailsView)
         detailsView.sizeToFit()
         
-        scrollView.contentSize = CGSize(width: detailsView.bounds.width, height: UIScreen.mainScreen().bounds.height)
+        scrollView.contentSize = CGSize(width: detailsView.bounds.width, height: UIScreen.main.bounds.height)
         view = scrollView
     }
     
@@ -46,24 +46,24 @@ class PlaceDetailsViewController: BaseViewController {
         // Set up view controller
         
         title = viewModel.name
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
         if viewModel.type == "\(SearchResult.self)"  {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(add(_:)))
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], forState: .Normal)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], for: UIControlState())
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action:  #selector(edit(_:)))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action:  #selector(edit(_:)))
         }
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .Plain, target: self, action: #selector(dismissVC(_:)))
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Close", comment: "Close"), style: .plain, target: self, action: #selector(dismissVC(_:)))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        detailsView.imageCollectionView.registerClass(ImageCollectionCell.self, forCellWithReuseIdentifier:String(ImageCollectionCell))
+        detailsView.imageCollectionView.register(ImageCollectionCell.self, forCellWithReuseIdentifier:String(describing: ImageCollectionCell.self))
         detailsView.imageCollectionView.delegate = self
         detailsView.imageCollectionView.dataSource = self
 
         viewModel.getPlaceImages {
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 self?.detailsView.imageCollectionView.reloadData()
             }
         }
@@ -83,40 +83,40 @@ class PlaceDetailsViewController: BaseViewController {
     
     // MARK: - Handlers
     
-    func keyboardWillAppear(notif: NSNotification) {
-        if let userInfo = notif.userInfo, keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue() {
-            UIView.animateWithDuration(0.4) {
+    func keyboardWillAppear(_ notif: Notification) {
+        if let userInfo = notif.userInfo, let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 0.4, animations: {
 //                self.detailsView.detailsViewBottomConstraint.constant = keyboardFrame.size.height
                 self.scrollView.contentOffset = CGPoint(x: 0, y: self.detailsView.frame.maxY - keyboardFrame.minY + self.detailsView.notesView.bounds.height )
-            }
+            }) 
         }
     }
     
-    func keyboardWillDisappear(notif: NSNotification) {
+    func keyboardWillDisappear(_ notif: Notification) {
         detailsView.notesView.resignFirstResponder()
         if detailsView.notesView.text.isEmpty {
             detailsView.notesView.text = detailsView.placeHolderText
         }
     }
     
-    func add(sender: UIBarButtonItem) {
+    func add(_ sender: UIBarButtonItem) {
         viewModel.userNotes = detailsView.notesView.text
         let actionViewModel = ActionListViewModel(place: viewModel.place)
         let vc = ActionListViewController(viewModel: actionViewModel)
-        vc.modalTransitionStyle = .CoverVertical
-        vc.modalPresentationStyle = .OverCurrentContext
-        presentViewController(vc, animated: true, completion: nil)
+        vc.modalTransitionStyle = .coverVertical
+        vc.modalPresentationStyle = .overCurrentContext
+        present(vc, animated: true, completion: nil)
     }
     
-    func edit(sender: UIBarButtonItem) {
+    func edit(_ sender: UIBarButtonItem) {
         // TODO
     }
     
-    func dismissVC(sender: UIBarButtonItem) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func dismissVC(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         detailsView.notesView.resignFirstResponder()
     }
@@ -124,24 +124,24 @@ class PlaceDetailsViewController: BaseViewController {
 
 extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel.numberOfSections()
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numberOfItemsInSection(section)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        guard let imageCell = collectionView.dequeueReusableCellWithReuseIdentifier(String(ImageCollectionCell), forIndexPath: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
-        guard let photo = viewModel.photos?[indexPath.row], url = NSURL(string: photo.url)  else { return imageCell }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let imageCell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ImageCollectionCell.self), for: indexPath) as? ImageCollectionCell else { return UICollectionViewCell() }
+        guard let photo = viewModel.photos?[indexPath.row], let url = URL(string: photo.url)  else { return imageCell }
         imageCell.photoUrl = photo.url
         
-        if let image = imageCache[photo.url] as? UIImage {
+        if let image = (imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: photo.url as AnyObject) as? UIImage {
             imageCell.imageView.image = image
         } else {
             viewModel.getImageWithUrl(url) { [weak self] (image) in
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     imageCell.configureCellWithImage(image, withImageUrl: url, imageCache: self?.imageCache)
                 }
             }
@@ -153,27 +153,27 @@ extension PlaceDetailsViewController: UICollectionViewDelegate, UICollectionView
 extension PlaceDetailsViewController: MKMapViewDelegate {}
 
 extension PlaceDetailsViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(textView: UITextView) {
-        UIView.animateWithDuration(0.4) {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        UIView.animate(withDuration: 0.4, animations: {
             if textView.text == self.detailsView.placeHolderText {
                 textView.text = ""
             }
-        }
+        }) 
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {
-            UIView.animateWithDuration(0.4) {
+            UIView.animate(withDuration: 0.4, animations: {
                 textView.text = self.detailsView.placeHolderText
-            }
+            }) 
         }
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if textView.text == detailsView.placeHolderText {
-            UIView.animateWithDuration(0.4) {
+            UIView.animate(withDuration: 0.4, animations: {
                 textView.text.removeAll()
-            }
+            }) 
         }
         return true
     }

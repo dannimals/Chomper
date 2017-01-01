@@ -9,7 +9,7 @@
 import CoreLocation
 
 public protocol URLRequestConvertible {
-    var URLRequest: NSURLRequest { get }
+    var URLRequest: Foundation.URLRequest { get }
 }
 
 //
@@ -20,124 +20,124 @@ public enum ChomperURLRouter: URLRequestConvertible {
     //
     // MARK: - Properties
     
-    private static let dateFormatter = NSDateFormatter()
-    private static let dateFormat = "YYYYMMDD"
-    private static let baseURLString = "https://api.foursquare.com/v2"
-    private static let clientId = "MDNOUO12E1RRL20OOJZJHWGM5ZBLLKUHERL31DEHODYHYUK5"
-    private static let clientSecret = "DIG45IF1K2FWUBGQLAZGYYJGLUCOZMTQRCPE0WQY5TMNH32B"
+    fileprivate static let dateFormatter = DateFormatter()
+    fileprivate static let dateFormat = "YYYYMMDD"
+    fileprivate static let baseURLString = "https://api.foursquare.com/v2"
+    fileprivate static let clientId = "MDNOUO12E1RRL20OOJZJHWGM5ZBLLKUHERL31DEHODYHYUK5"
+    fileprivate static let clientSecret = "DIG45IF1K2FWUBGQLAZGYYJGLUCOZMTQRCPE0WQY5TMNH32B"
 
     public enum Method: String {
         case GET, POST, PUT, DELETE
     }
     
-    case ExplorePlacesNearArea(String, String?)
-    case ExplorePlacesNearLocation(CLLocation, String?)
-    case GetDetailsForPlace(String)
-    case GetPhotosForPlace(String)
-    case GetPlacesNearArea(String, String?)
-    case GetPlacesNearLocation(CLLocation, String?)
+    case explorePlacesNearArea(String, String?)
+    case explorePlacesNearLocation(CLLocation, String?)
+    case getDetailsForPlace(String)
+    case getPhotosForPlace(String)
+    case getPlacesNearArea(String, String?)
+    case getPlacesNearLocation(CLLocation, String?)
     
-    private var method: Method {
+    fileprivate var method: Method {
         switch self {
             default: return .GET
         }
     }
     
-    private var path: String {
+    fileprivate var path: String {
         switch self {
-        case .ExplorePlacesNearArea:
+        case .explorePlacesNearArea:
             return "/venues/explore/"
-        case .ExplorePlacesNearLocation:
+        case .explorePlacesNearLocation:
             return "/venues/explore/"
-        case let .GetDetailsForPlace(id):
+        case let .getDetailsForPlace(id):
             return "/venues/\(id)"
-        case let .GetPhotosForPlace(id):
+        case let .getPhotosForPlace(id):
             return "/venues/\(id)/photos"
-        case .GetPlacesNearArea:
+        case .getPlacesNearArea:
             return "/venues/search/"
-        case .GetPlacesNearLocation:
+        case .getPlacesNearLocation:
             return "/venues/search/"
         }
     }
     
     // MARK: URLRequestConvertible methods
     
-    public var URLRequest: NSURLRequest {
+    public var URLRequest: Foundation.URLRequest {
         ChomperURLRouter.dateFormatter.dateFormat = ChomperURLRouter.dateFormat
-        let URL = NSURL(string: ChomperURLRouter.baseURLString)!
-        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-        mutableURLRequest.HTTPMethod = method.rawValue
+        let URL = Foundation.URL(string: ChomperURLRouter.baseURLString)!
+        let mutableURLRequest = NSMutableURLRequest(url: URL.appendingPathComponent(path))
+        mutableURLRequest.httpMethod = method.rawValue
         
-        let components = NSURLComponents(string: ChomperURLRouter.baseURLString)
-        var parameters = [NSURLQueryItem]()
-        parameters.append(NSURLQueryItem(name: "v", value: ChomperURLRouter.dateFormatter.stringFromDate(NSDate())))
-        parameters.append(NSURLQueryItem(name: "client_id", value: ChomperURLRouter.clientId))
-        parameters.append(NSURLQueryItem(name: "client_secret", value: ChomperURLRouter.clientSecret))
+        var components = URLComponents(string: ChomperURLRouter.baseURLString)
+        var parameters = [URLQueryItem]()
+        parameters.append(URLQueryItem(name: "v", value: ChomperURLRouter.dateFormatter.string(from: Date())))
+        parameters.append(URLQueryItem(name: "client_id", value: ChomperURLRouter.clientId))
+        parameters.append(URLQueryItem(name: "client_secret", value: ChomperURLRouter.clientSecret))
 
         switch self {
-        case let .ExplorePlacesNearArea(area, searchTerm):
-            parameters.append(NSURLQueryItem(name: "near", value: area))
+        case let .explorePlacesNearArea(area, searchTerm):
+            parameters.append(URLQueryItem(name: "near", value: area))
             
             if let searchTerm = searchTerm {
-                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+                parameters.append(URLQueryItem(name: "query", value: searchTerm))
             }
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearArea URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetPlacesNearArea URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
             
-        case let .ExplorePlacesNearLocation(location, searchTerm):
-            parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
-            parameters.append(NSURLQueryItem(name: "venuePhotos", value: "\(1)"))
+        case let .explorePlacesNearLocation(location, searchTerm):
+            parameters.append(URLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
+            parameters.append(URLQueryItem(name: "venuePhotos", value: "\(1)"))
             
             if let searchTerm = searchTerm {
-                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+                parameters.append(URLQueryItem(name: "query", value: searchTerm))
             }
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearLocation URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetPlacesNearLocation URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
             
-        case .GetDetailsForPlace:
+        case .getDetailsForPlace:
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetDetailsForPlace URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetDetailsForPlace URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
         
-        case .GetPhotosForPlace:
+        case .getPhotosForPlace:
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetDetailsForPlace URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetDetailsForPlace URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
             
-        case let .GetPlacesNearArea(area, searchTerm):
-            parameters.append(NSURLQueryItem(name: "near", value: area))
+        case let .getPlacesNearArea(area, searchTerm):
+            parameters.append(URLQueryItem(name: "near", value: area))
             
             if let searchTerm = searchTerm {
-                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+                parameters.append(URLQueryItem(name: "query", value: searchTerm))
             }
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearArea URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetPlacesNearArea URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
         
-        case let .GetPlacesNearLocation(location, searchTerm):
+        case let .getPlacesNearLocation(location, searchTerm):
           
-            parameters.append(NSURLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
+            parameters.append(URLQueryItem(name: "ll", value: "\(location.coordinate.latitude),\(location.coordinate.longitude)"))
             
             if let searchTerm = searchTerm {
-                parameters.append(NSURLQueryItem(name: "query", value: searchTerm))
+                parameters.append(URLQueryItem(name: "query", value: searchTerm))
             }
             components?.queryItems = parameters
-            guard let url = components?.URL else { fatalError("Invalid GetPlacesNearLocation URL") }
-            let mutableRequest = NSMutableURLRequest(URL: url.URLByAppendingPathComponent(path))
+            guard let url = components?.url else { fatalError("Invalid GetPlacesNearLocation URL") }
+            let mutableRequest = NSMutableURLRequest(url: url.appendingPathComponent(path))
             
-            return mutableRequest
+            return mutableRequest as URLRequest
         }
     }
 }

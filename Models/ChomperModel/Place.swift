@@ -33,13 +33,13 @@ public final class Place: ManagedObject {
     
     //
     // Every time a new place is created, the ownerUserEmail in AppData will be automatically associated with it
-    public static func insertIntoContext(moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(bool: false), zipcode: String? = nil, listPlaces: [String]) -> Place {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, category: String? = nil, city: String? = nil, location: CLLocation?, name: String, neighborhood: String? = nil, ownerId: String? = AppData.sharedInstance.ownerUserEmail, remoteId: String, streetName: String?, state: String?, visited: NSNumber? = NSNumber(value: false as Bool), zipcode: String? = nil, listPlaces: [String]) -> Place {
         
         let place: Place = moc.insertObject()
         place.city = city
         if let coord = location?.coordinate {
-            place.latitude = coord.latitude
-            place.longitude = coord.longitude
+            place.latitude = coord.latitude as NSNumber?
+            place.longitude = coord.longitude as NSNumber?
         }
         
         place.category = category
@@ -62,7 +62,7 @@ public final class Place: ManagedObject {
         return place
     }
     
-    public static func addToLists(moc: NSManagedObjectContext, placeId: String, name: String, listPlaces: [String]) -> Place? {
+    public static func addToLists(_ moc: NSManagedObjectContext, placeId: String, name: String, listPlaces: [String]) -> Place? {
         let place = Place.findOrCreatePlace(placeId, name: name, inContext: moc)
         
         for listPlace in listPlaces {
@@ -72,7 +72,7 @@ public final class Place: ManagedObject {
         return place
     }
     
-    public static func findOrCreatePlace(remoteId: String, name: String, inContext moc: NSManagedObjectContext) -> Place? {
+    public static func findOrCreatePlace(_ remoteId: String, name: String, inContext moc: NSManagedObjectContext) -> Place? {
         guard !remoteId.isEmpty else { return nil }
 
         let predicate = NSPredicate(format: "remoteId == %@", remoteId)

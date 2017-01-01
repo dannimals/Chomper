@@ -8,7 +8,7 @@
 
 import Common
 
-class TableViewDataSource<Data: TableDataProvider, Delegate: TableViewDelegate, Cell: UITableViewCell where Data.Object == Delegate.Object>: NSObject, UITableViewDataSource {
+class TableViewDataSource<Data: TableDataProvider, Delegate: TableViewDelegate, Cell: UITableViewCell>: NSObject, UITableViewDataSource where Data.Object == Delegate.Object {
     
     // MARK: - Properties
     
@@ -26,17 +26,17 @@ class TableViewDataSource<Data: TableDataProvider, Delegate: TableViewDelegate, 
     
     // MARK: UITableViewDataSource methods
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return dataProvider.numberOfSections()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataProvider.numberOfItemsInSection(section)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let object = dataProvider.objectAtIndexPath(indexPath) else { fatalError("Expected object at indexPath") }
-        if let cell = tableView.dequeueReusableCellWithIdentifier(delegate.cellIdentifierForObject(object)) {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: delegate.cellIdentifierForObject(object)) {
             delegate.configureCell(cell, forObject: object, atIndexPath: indexPath)
             return cell
         }

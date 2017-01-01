@@ -27,7 +27,7 @@ class PlaceDetailsViewModel: NSObject {
     var userNotes: String?
     // TODO: place should be private
     var place: PlaceDetailsObjectProtocol!
-    private var webService: ChomperWebServiceProtocol!
+    fileprivate var webService: ChomperWebServiceProtocol!
     
     
     required init(place: PlaceDetailsObjectProtocol, webService: ChomperWebServiceProtocol) {
@@ -50,19 +50,19 @@ class PlaceDetailsViewModel: NSObject {
     
     // MARK: - Helpers
     
-    func getImageWithUrl(url: NSURL, completionHandler: ((image: UIImage) -> ())?) {
-        NSURLSession.sharedSession().dataTaskWithURL(url) { (data, response, error) in
+    func getImageWithUrl(_ url: URL, completionHandler: ((_ image: UIImage) -> ())?) {
+        URLSession.shared.dataTask(with: url, completionHandler: { (data, response, error) in
             if error == nil, let data = data, let image = UIImage(data: data) {
-               completionHandler?(image: image)
+               completionHandler?(image)
             }
-        }.resume()
+        }) .resume()
     }
     
-    func getPlaceImages(completionHandler: (() -> ())?) {
+    func getPlaceImages(_ completionHandler: (() -> ())?) {
         webService.getPhotosForPlace(place.venueId) { [weak self] (photos, response, error) in
             if error == nil {
-                if let photos = photos where photos.count != 0 {
-                    dispatch_async(dispatch_get_main_queue()) {
+                if let photos = photos, photos.count != 0 {
+                    DispatchQueue.main.async {
                         self?.photos = photos
                     }
                     completionHandler?()
@@ -77,7 +77,7 @@ class PlaceDetailsViewModel: NSObject {
         return 1
     }
     
-    func numberOfItemsInSection(section: Int) -> Int {
+    func numberOfItemsInSection(_ section: Int) -> Int {
         guard section == 0 else { return 0 }
         return photos?.count ?? 0
     }

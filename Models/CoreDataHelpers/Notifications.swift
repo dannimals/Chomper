@@ -17,14 +17,14 @@ public struct ObjectsDidChangeNotification {
     
     // MARK: Used to observe changes on an entity object from an NSNotification
     
-    private let notification: NSNotification
+    fileprivate let notification: Notification
     public var managedObjectContext: NSManagedObjectContext {
         guard let c = notification.object as? NSManagedObjectContext else { fatalError("Invalid notification object") }
         return c
     }
     
-    init(note: NSNotification) {
-        assert(note.name == NSManagedObjectContextObjectsDidChangeNotification)
+    init(note: Notification) {
+        assert(note.name == NSNotification.Name.NSManagedObjectContextObjectsDidChange)
         notification = note
     }
     
@@ -52,7 +52,7 @@ public struct ObjectsDidChangeNotification {
         return notification.userInfo?[NSInvalidatedAllObjectsKey] != nil
     }
     
-    private func objectsForKey(key: String) -> Set<ManagedObject> {
+    fileprivate func objectsForKey(_ key: String) -> Set<ManagedObject> {
         return (notification.userInfo?[key] as? Set<ManagedObject>) ?? Set()
     }
 }

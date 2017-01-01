@@ -13,13 +13,13 @@ protocol NibLoadableView: class {}
 
 extension ReusableView where Self: UIView {
     static var reuseIdentifier: String {
-        return String(self)
+        return String(describing: self)
     }
 }
 
 extension NibLoadableView where Self: UIView {
     static var nibName: String {
-        return String(self)
+        return String(describing: self)
     }
 }
 
@@ -28,27 +28,27 @@ extension UITableViewCell: ReusableView, NibLoadableView {}
 extension UITableViewHeaderFooterView: ReusableView, NibLoadableView {}
 
 extension UITableView {
-    func registerNib<T: UITableViewCell where T: NibLoadableView>(_: T.Type) {
+    func registerNib<T: UITableViewCell>(_: T.Type) where T: NibLoadableView {
         let Nib = UINib(nibName: T.nibName, bundle: nil)
-        registerNib(Nib, forCellReuseIdentifier: T.nibName)
+        register(Nib, forCellReuseIdentifier: T.nibName)
     }
     
-    func registerCell<T: UITableViewCell where T: ReusableView>(_: T.Type) {
-        registerClass(T.self, forCellReuseIdentifier: T.reuseIdentifier)
+    func registerCell<T: UITableViewCell>(_: T.Type) where T: ReusableView {
+        register(T.self, forCellReuseIdentifier: T.reuseIdentifier)
     }
     
-    func registerHeaderFooter<T: UITableViewHeaderFooterView where T: ReusableView>(_: T.Type) {
-        registerClass(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
+    func registerHeaderFooter<T: UITableViewHeaderFooterView>(_: T.Type) where T: ReusableView {
+        register(T.self, forHeaderFooterViewReuseIdentifier: T.reuseIdentifier)
     }
 }
 
 extension UICollectionView {
-    func registerNib<T: UICollectionViewCell where T: NibLoadableView>(_: T.Type) {
+    func registerNib<T: UICollectionViewCell>(_: T.Type) where T: NibLoadableView {
         let Nib = UINib(nibName: T.nibName, bundle: nil)
-        registerNib(Nib, forCellWithReuseIdentifier: T.nibName)
+        register(Nib, forCellWithReuseIdentifier: T.nibName)
     }
     
-    func registerCell<T: UICollectionViewCell where T: ReusableView>(_: T.Type) {
-        registerClass(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
+    func registerCell<T: UICollectionViewCell>(_: T.Type) where T: ReusableView {
+        register(T.self, forCellWithReuseIdentifier: T.reuseIdentifier)
     }
 }

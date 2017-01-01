@@ -14,15 +14,15 @@ class PlaceDetailsView: UIView {
     // MARK: - Properties
     
     @IBOutlet weak var imageCollectionView: UICollectionView!
-    @IBOutlet private(set)var addressLabel: UILabel!
-    @IBOutlet private(set)var phoneLabel: UILabel!
-    @IBOutlet private(set)var priceLabel: UILabel!
-    @IBOutlet private(set)var listsLabel: UILabel!
-    @IBOutlet private(set)var ratingLabel: UILabel!
+    @IBOutlet fileprivate(set)var addressLabel: UILabel!
+    @IBOutlet fileprivate(set)var phoneLabel: UILabel!
+    @IBOutlet fileprivate(set)var priceLabel: UILabel!
+    @IBOutlet fileprivate(set)var listsLabel: UILabel!
+    @IBOutlet fileprivate(set)var ratingLabel: UILabel!
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var notesView: UITextView!
     @IBOutlet var detailsViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet private(set)var detailsContainerView: UIView!
+    @IBOutlet fileprivate(set)var detailsContainerView: UIView!
     
     var mapViewAction: (() -> ())?
     var phoneAction: (() -> ())?
@@ -32,7 +32,7 @@ class PlaceDetailsView: UIView {
         didSet {
             if formattedAddress != nil {
                 addressLabel.attributedText = formattedAddress
-                addressLabel.hidden = false
+                addressLabel.isHidden = false
             }
         }
     }
@@ -49,7 +49,7 @@ class PlaceDetailsView: UIView {
         didSet {
             if phone != nil {
                 phoneLabel.text = phone!
-                phoneLabel.hidden = false
+                phoneLabel.isHidden = false
             }
         }
     }
@@ -69,7 +69,7 @@ class PlaceDetailsView: UIView {
                 default:
                     priceLabel.text = nil
                 }
-                priceLabel.hidden = false
+                priceLabel.isHidden = false
             }
         }
     }
@@ -78,14 +78,14 @@ class PlaceDetailsView: UIView {
         didSet {
             if rating != nil && rating != 0 {
                 ratingLabel.text = "\(floor(rating!/2)) stars"
-                ratingLabel.hidden = false
+                ratingLabel.isHidden = false
             }
         }
     }
     
 
-    override func sizeThatFits(size: CGSize) -> CGSize {
-        return CGSizeMake(UIScreen.mainScreen().bounds.width, notesView.frame.maxY)
+    override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: notesView.frame.maxY)
     }
     
     
@@ -93,65 +93,65 @@ class PlaceDetailsView: UIView {
         super.awakeFromNib()
         
         addressLabel.font = UIFont.chomperFontForTextStyle("p small")
-        addressLabel.textColor = UIColor.darkGrayColor()
+        addressLabel.textColor = UIColor.darkGray
         addressLabel.numberOfLines = 2
         
         detailsContainerView.setShadow()
         
-        imageCollectionView.backgroundColor = UIColor.whiteColor()
+        imageCollectionView.backgroundColor = UIColor.white
         imageCollectionView.registerCell(ImageCollectionCell)
         
         listsLabel.font = UIFont.chomperFontForTextStyle("p small")
-        listsLabel.textColor = UIColor.darkTextColor()
+        listsLabel.textColor = UIColor.darkText
         
         let mapGR = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
         mapView.addGestureRecognizer(mapGR)
         
         notesView.font = UIFont.chomperFontForTextStyle("h4")
         notesView.textContainerInset = UIEdgeInsetsMake(10, 8, 0, 8)
-        notesView.textColor = UIColor.darkGrayColor()
+        notesView.textColor = UIColor.darkGray
 
         phoneLabel.font = UIFont.chomperFontForTextStyle("p small")
-        phoneLabel.textColor = .orangeColor()
-        phoneLabel.userInteractionEnabled = true
+        phoneLabel.textColor = .orange
+        phoneLabel.isUserInteractionEnabled = true
         let phoneGR = UITapGestureRecognizer(target: self, action: #selector(phoneLabelTapped))
         phoneLabel.addGestureRecognizer(phoneGR)
         
         priceLabel.font = UIFont.chomperFontForTextStyle("p small")
-        priceLabel.textColor = UIColor.lightGrayColor()
+        priceLabel.textColor = UIColor.lightGray
 
         ratingLabel.font = UIFont.chomperFontForTextStyle("p small")
-        ratingLabel.textColor = UIColor.lightGrayColor()
+        ratingLabel.textColor = UIColor.lightGray
         
-        addressLabel.hidden = true
-        phoneLabel.hidden = true
-        priceLabel.hidden = true
-        listsLabel.hidden = true
-        ratingLabel.hidden = true
+        addressLabel.isHidden = true
+        phoneLabel.isHidden = true
+        priceLabel.isHidden = true
+        listsLabel.isHidden = true
+        ratingLabel.isHidden = true
         
     }
     
     // MARK: - Helpers
     
-    func configureWithViewModel(viewModel: PlaceDetailsViewModel) {
+    func configureWithViewModel(_ viewModel: PlaceDetailsViewModel) {
         phoneAction = {
-            let formattedPhone = viewModel.phone?.stringByReplacingOccurrencesOfString("[^0-9]", withString: "", options: NSStringCompareOptions.RegularExpressionSearch, range: nil)
-            if let formattedPhone = formattedPhone, phoneUrl = NSURL(string: "tel://\(formattedPhone)") {
-                if UIApplication.sharedApplication().canOpenURL(phoneUrl) {
-                    UIApplication.sharedApplication().openURL(phoneUrl)
+            let formattedPhone = viewModel.phone?.replacingOccurrences(of: "[^0-9]", with: "", options: NSString.CompareOptions.regularExpression, range: nil)
+            if let formattedPhone = formattedPhone, let phoneUrl = URL(string: "tel://\(formattedPhone)") {
+                if UIApplication.shared.canOpenURL(phoneUrl) {
+                    UIApplication.shared.openURL(phoneUrl)
                 }
             }
         }
         
         let attrText = NSMutableAttributedString()
         if let address = viewModel.address {
-            attrText.appendAttributedString(NSAttributedString(string: address))
-            if let city = viewModel.city, state = viewModel.state {
-                attrText.appendAttributedString(NSAttributedString(string: "\n\(city), \(state)"))
+            attrText.append(NSAttributedString(string: address))
+            if let city = viewModel.city, let state = viewModel.state {
+                attrText.append(NSAttributedString(string: "\n\(city), \(state)"))
             }
         } else {
-            if let city = viewModel.city, state = viewModel.state  {
-                attrText.appendAttributedString(NSAttributedString(string: "\(city), \(state)"))
+            if let city = viewModel.city, let state = viewModel.state  {
+                attrText.append(NSAttributedString(string: "\(city), \(state)"))
             }
         }
         
@@ -171,7 +171,7 @@ class PlaceDetailsView: UIView {
         phoneAction?()
     }
     
-    private func setMapViewToCoord(coord: CLLocationCoordinate2D) {
+    fileprivate func setMapViewToCoord(_ coord: CLLocationCoordinate2D) {
         let dropPin = MKPointAnnotation()
         dropPin.coordinate = coord
         mapView.addAnnotation(dropPin)

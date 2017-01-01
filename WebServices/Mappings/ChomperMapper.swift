@@ -11,40 +11,40 @@ import CoreLocation
 import SwiftyJSON
 
 enum MapperType {
-    case GetPhotos
-    case GetPlaceDetails
-    case GetPlaces
-    case GetRecommended
+    case getPhotos
+    case getPlaceDetails
+    case getPlaces
+    case getRecommended
 }
 
 final class ChomperMapper {
 
     var photos: [Photo]? = nil
     var places: [SearchResult]? = nil
-    private var mapperType: MapperType
+    fileprivate var mapperType: MapperType
     
-    required init(response: NSData, mapperType: MapperType) {
+    required init(response: Data, mapperType: MapperType) {
         self.mapperType = mapperType
         mapResponse(JSON(data: response), mapperType: mapperType)
     }
     
-    func mapResponse(json: JSON, mapperType: MapperType) {
+    func mapResponse(_ json: JSON, mapperType: MapperType) {
         switch mapperType {
-            case .GetPhotos:
-                guard let response = json["response"].dictionary, count = response["photos"]?["count"].intValue where count > 0 else { photos = nil; return }
+            case .getPhotos:
+                guard let response = json["response"].dictionary, let count = response["photos"]?["count"].intValue, count > 0 else { photos = nil; return }
                 if let results = response["photos"]?["items"].array {
                     parseJsonPhotos(results)
                 }
-            case .GetPlaces:
-                if let response = json["response"].dictionary, results = response["venues"]?.array {
+            case .getPlaces:
+                if let response = json["response"].dictionary, let results = response["venues"]?.array {
                     parseJsonPlaces(results)
                 }
-            case .GetPlaceDetails:
-                if let response = json["response"].dictionary, results = response["venue"] {
+            case .getPlaceDetails:
+                if let response = json["response"].dictionary, let results = response["venue"] {
                     parseJsonPlaces([results])
             }
-            case .GetRecommended:
-                if let response = json["response"]["groups"].array, results = response.first?["items"].array {
+            case .getRecommended:
+                if let response = json["response"]["groups"].array, let results = response.first?["items"].array {
                     parseJsonPlaces(results)
                 }
             
@@ -55,7 +55,7 @@ final class ChomperMapper {
     
     // MARK: - Helpers
     
-    private func parseJsonPhotos(results: [JSON]) {
+    fileprivate func parseJsonPhotos(_ results: [JSON]) {
         photos = [Photo]()
         
         for result in results where result["visibility"].string == "public" {
@@ -69,17 +69,17 @@ final class ChomperMapper {
         }
     }
     
-    private func parseJsonPlaces(results: [JSON]) {
+    fileprivate func parseJsonPlaces(_ results: [JSON]) {
         places = [SearchResult]()
         var venue: JSON!
  
         for result in results {
             switch mapperType {
-            case .GetPlaces, .GetPlaceDetails:
+            case .getPlaces, .getPlaceDetails:
                 venue = result
-            case .GetRecommended:
+            case .getRecommended:
                 venue = result["venue"]
-            case .GetPhotos:
+            case .getPhotos:
                 break
             }
             let address = venue["location"]["address"].string
@@ -109,8 +109,8 @@ final class ChomperMapper {
                 let suffix = photoDict["suffix"] ?? ""
                 imageUrl = "\(prefix)\(size)\(suffix)"
             } else {
-                if let venuePhotos = venue["photos"]["groups"].array, item = venuePhotos.first?["items"].array?.first {
-                    if let prefix = item["prefix"].string, width = item["width"].int, height = item["height"].int, suffix = item["suffix"].string {
+                if let venuePhotos = venue["photos"]["groups"].array, let item = venuePhotos.first?["items"].array?.first {
+                    if let prefix = item["prefix"].string, let width = item["width"].int, let height = item["height"].int, let suffix = item["suffix"].string {
                         let size = "\(width)x\(height)"
                         imageUrl = "\(prefix)\(size)\(suffix)"
                     }

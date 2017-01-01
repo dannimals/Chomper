@@ -8,12 +8,12 @@
 
 extension NSLayoutConstraint {
     
-    public class func useAndActivateConstraints(constraints: [NSLayoutConstraint]) {
+    public class func useAndActivateConstraints(_ constraints: [NSLayoutConstraint]) {
         for constraint in constraints {
             if let view = constraint.firstItem as? UIView {
                 view.translatesAutoresizingMaskIntoConstraints = false
             }
         }
-        activateConstraints(constraints)
+        activate(constraints)
     }
 }

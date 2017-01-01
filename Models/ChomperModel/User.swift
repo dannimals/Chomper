@@ -22,7 +22,7 @@ public final class User: ManagedObject {
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, email: String, firstName: String? = nil, lastName: String? = nil) -> User {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, email: String, firstName: String? = nil, lastName: String? = nil) -> User {
         let user: User = moc.insertObject()
         user.email = email
         user.firstName = firstName
@@ -30,7 +30,7 @@ public final class User: ManagedObject {
         return user
     }
     
-    static func findOrCreateUser(email: String, inContext moc: NSManagedObjectContext) -> User? {
+    static func findOrCreateUser(_ email: String, inContext moc: NSManagedObjectContext) -> User? {
         guard !email.isEmpty else { return nil }
         let predicate = NSPredicate(format: "email == %@", email)
         let user = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.email = email }

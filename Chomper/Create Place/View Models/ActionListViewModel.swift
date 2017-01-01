@@ -13,10 +13,10 @@ class ActionListViewModel: BaseViewModel {
     typealias ActionBlock = (() -> Void)?
 
     enum Action {
-        case QuickSave(action: ActionBlock)
-        case AddToList(action: ActionBlock)
+        case quickSave(action: ActionBlock)
+        case addToList(action: ActionBlock)
         
-        static let allValues = [QuickSave, AddToList]
+        static let allValues = [quickSave, addToList]
     }
     
     // MARK: - Properties
@@ -24,47 +24,47 @@ class ActionListViewModel: BaseViewModel {
     var place: PlaceDetailsObjectProtocol!
     var saveAction: ActionBlock!
     
-    private var actions: [Action]!
+    fileprivate var actions: [Action]!
     
     required init(place: PlaceDetailsObjectProtocol) {
         self.place = place
         self.actions = [
-            Action.QuickSave(action: nil),
-            Action.AddToList(action: nil)
+            Action.quickSave(action: nil),
+            Action.addToList(action: nil)
         ]
  
         super.init()
  
         self.saveAction = { self.mainContext.performChanges { [unowned self] in
-            ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue, notes: self.place.userNotes, rating: self.place.ratingValue, state: self.place.state)
+            ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
             }
         }
     }
     
     // MARK: - Helpers
     
-    func getActionForIndexPath(indexPath: NSIndexPath) -> Action {
+    func getActionForIndexPath(_ indexPath: IndexPath) -> Action {
         return actions[indexPath.row - 1]
     }
     
-    func numberOfRowsInSection(section: Int) -> Int {
+    func numberOfRowsInSection(_ section: Int) -> Int {
         return actions.count + 1
     }
     
     func performAction(forAction action: Action) {
         switch action {
-            case .QuickSave(let action):
+            case .quickSave(let action):
                 action?()
-            case .AddToList(let action):
+            case .addToList(let action):
                 action?()
         }
     }
     
-    func getTitleForAction(action: Action) -> String {
+    func getTitleForAction(_ action: Action) -> String {
         switch action {
-            case .QuickSave:
+            case .quickSave:
                 return NSLocalizedString("Save", comment: "save")
-            case .AddToList:
+            case .addToList:
                 return NSLocalizedString("Add to List", comment: "add to list")
         }
     }

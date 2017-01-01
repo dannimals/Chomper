@@ -15,31 +15,31 @@ import SwiftyJSON
 // for each Foursquare API endpoint integration
 
 enum MapperType {
-    case GetPlaceDetails
-    case GetPlaces
-    case GetRecommended
+    case getPlaceDetails
+    case getPlaces
+    case getRecommended
 }
 
 class WebServicesTestHelper {
     var mapperType: MapperType
-    var data: NSData!
+    var data: Data!
     
-    required init(mapperType: MapperType, data: NSData) {
+    required init(mapperType: MapperType, data: Data) {
         self.mapperType = mapperType
         self.data = data
         testMapper(mapperType)
     }
     
-    func testMapper(mapperType: MapperType) {
-        let jsonString = NSString(data: self.data!, encoding: NSUTF8StringEncoding)!
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+    func testMapper(_ mapperType: MapperType) {
+        let jsonString = NSString(data: self.data!, encoding: String.Encoding.utf8.rawValue)!
+        let jsonData = jsonString.data(using: String.Encoding.utf8.rawValue, allowLossyConversion: false)!
         let json = JSON(data: jsonData)
         let venue: JSON
 
         switch mapperType {
-            case .GetPlaces:
+            case .getPlaces:
                 // Given
-                let mapper = ChomperMapper(response: self.data!, mapperType: .GetPlaces)
+                let mapper = ChomperMapper(response: self.data!, mapperType: .getPlaces)
                 
                 // When
                 let response = json["response"].dictionary!
@@ -50,9 +50,9 @@ class WebServicesTestHelper {
                 XCTAssertEqual(mapper.places?.count, results.count)
                 XCTAssertNotNil(results)
             
-            case .GetPlaceDetails:
+            case .getPlaceDetails:
                 // Given
-                let mapper = ChomperMapper(response: self.data!, mapperType: .GetPlaceDetails)
+                let mapper = ChomperMapper(response: self.data!, mapperType: .getPlaceDetails)
                 
                 // When
                 let response = json["response"].dictionary!
@@ -61,9 +61,9 @@ class WebServicesTestHelper {
                 // Then
                 XCTAssertEqual(mapper.places?.count, 1)
             
-            case .GetRecommended:
+            case .getRecommended:
                 // Given
-                let mapper = ChomperMapper(response: self.data!, mapperType: .GetRecommended)
+                let mapper = ChomperMapper(response: self.data!, mapperType: .getRecommended)
                 
                 // When
                 let response = json["response"]["groups"].array!

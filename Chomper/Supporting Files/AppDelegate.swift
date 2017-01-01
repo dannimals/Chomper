@@ -18,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    func applicationDidFinishLaunching(_ application: UIApplication) {
+        window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
         //
@@ -32,11 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Set up Core Data stack
 
         let moc = NSManagedObjectContext.mainContext()
-        let fetchRequest = NSFetchRequest(entityName: List.entityName)
-        var fetchError : NSError?
-        if moc.countForFetchRequest(fetchRequest, error: &fetchError) == 0 {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: List.entityName)
+        
+        if (try! moc.count(for: fetchRequest) == 0){
             moc.performChanges {
-                User.insertIntoContext(moc, email: AppData.sharedInstance.ownerUserEmail)
+                let _ = User.insertIntoContext(moc, email: AppData.sharedInstance.ownerUserEmail)
                 let saved = List.insertIntoContext(moc, name: defaultSavedList, ownerEmail: AppData.sharedInstance.ownerUserEmail)
                 saved.sequenceNum = 1
             }
@@ -74,48 +74,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //
         // Set up navigation bar and other shared UI appearances
         
-        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).titleTextAttributes = [
+        UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).backgroundColor = UIColor.orange
+        UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).tintColor = UIColor.orange
+        UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).isOpaque = false
+        
+        let attrs = [
             NSFontAttributeName: UIFont.chomperFontForTextStyle("h3"),
-            NSForegroundColorAttributeName: UIColor.whiteColor()
+            NSForegroundColorAttributeName: UIColor.white
         ]
+        UINavigationBar.appearance().titleTextAttributes = attrs
         
-        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).backgroundColor = UIColor.orangeColor()
-        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).barTintColor = UIColor.orangeColor()
-        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).tintColor = UIColor.whiteColor()
-        UINavigationBar.appearanceWhenContainedInInstancesOfClasses([BaseNavigationController.self]).translucent = false
-        
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.chomperFontForTextStyle("p-small")
+       // UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).font = UIFont.chomperFontForTextStyle("p-small")
         
         let attributes = [
             NSFontAttributeName: UIFont.chomperFontForTextStyle("p-small"),
-            NSForegroundColorAttributeName: UIColor.lightGrayColor()
+            NSForegroundColorAttributeName: UIColor.lightGray
         ]
-        UITabBarItem.appearance().setTitleTextAttributes(attributes, forState: .Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.orangeColor()], forState: .Selected)
-        
-
-        return true
+        UITabBarItem.appearance().setTitleTextAttributes(attributes, for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.orange], for: .selected)
     }
     
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
     
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
@@ -141,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
 
         let discoverVC = UIViewController()
-        discoverVC.view.backgroundColor = UIColor.whiteColor()
+        discoverVC.view.backgroundColor = UIColor.white
         discoverVC.title = NSLocalizedString("Discover", comment: "Discover Tab Title")
         discoverVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Discover", comment: "Discover Tab Title"),
@@ -163,22 +160,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func getLocation() {
         let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
         let authStatus = CLLocationManager.authorizationStatus()
-        if authStatus == .NotDetermined {
+        if authStatus == .notDetermined {
             CM.locationManager.requestWhenInUseAuthorization()
             return
-        } else if authStatus == .Denied || authStatus == .Restricted {
+        } else if authStatus == .denied || authStatus == .restricted {
             // TODO: Handle this
-            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .Alert)
+            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .alert)
 
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { (action) in
                 //
             })
             
             alert.addAction(cancelAction)
             
-            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .Default, handler: { (action) in
+            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .default, handler: { (action) in
                 if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-                    UIApplication.sharedApplication().openURL(url)
+                    UIApplication.shared.openURL(url as URL)
                 }
             })
             

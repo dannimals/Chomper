@@ -9,15 +9,15 @@
 import CoreData
 import Foundation
 
-extension SequenceType where Generator.Element: AnyObject {
-    public func containsObjectIdenticalTo(object: AnyObject) -> Bool {
+extension Sequence where Iterator.Element: AnyObject {
+    public func containsObjectIdenticalTo(_ object: AnyObject) -> Bool {
         return contains { $0 === object }
     }
 }
 
-extension NSURL {
-    static var documentsDirectory: NSURL {
-        return try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+extension URL {
+    static var documentsDirectory: URL {
+        return try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     }
     
 }

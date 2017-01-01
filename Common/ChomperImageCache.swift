@@ -7,12 +7,12 @@
 //
 
 public protocol ChomperImageCacheProtocol: class {
-    subscript(key: AnyObject) -> AnyObject? { get set } 
+    //subscript(key: AnyObject) -> AnyObject? { get set }
 }
 
-public class ChomperImageCache: NSCache, ChomperImageCacheProtocol {
+open class ChomperImageCache: NSCache<AnyObject, AnyObject>, ChomperImageCacheProtocol {
     
-    public static func createImageCache() -> ChomperImageCache {
+    open static func createImageCache() -> ChomperImageCache {
         let cache = ChomperImageCache()
         cache.name = "ChomperImageCache"
         cache.countLimit = 20

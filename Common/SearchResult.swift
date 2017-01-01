@@ -11,12 +11,12 @@ import CoreLocation
 public struct SearchResult: PlaceDetailsObjectProtocol {
     public var address: String? {
         didSet {
-            address = address?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            address = address?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
     public var city: String? {
         didSet {
-            city = city?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            city = city?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
     public var formattedAddress: [String]?
@@ -29,17 +29,17 @@ public struct SearchResult: PlaceDetailsObjectProtocol {
     public var ratingValue: Double?
     public var state: String? {
         didSet {
-            state = state?.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            state = state?.trimmingCharacters( in: CharacterSet.whitespacesAndNewlines)
         }
     }
     public var type = "\(SearchResult.self)"
     public var userNotes: String?
-    public var userPrice: NSNumber? = NSNumber(bool: false)
-    public var userRate: NSNumber? = NSNumber(bool: false)
+    public var userPrice: NSNumber? = NSNumber(value: false as Bool)
+    public var userRate: NSNumber? = NSNumber(value: false as Bool)
     public var venueId: String
     public var zipcode: String? = nil {
         didSet {
-            zipcode = zipcode?.stringByTrimmingCharactersInSet( NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            zipcode = zipcode?.trimmingCharacters( in: CharacterSet.whitespacesAndNewlines)
         }
     }
     

@@ -21,7 +21,7 @@ extension UIFont {
                     -smallest
     */
     
-    public static func chomperFontForTextStyle(style: String, weight: CGFloat? = nil, size: CGFloat? = nil, maxDynamicTypeRatio: CGFloat = 1.5, minDynamicTypeRatio: CGFloat = 0.5) -> UIFont {
+    public static func chomperFontForTextStyle(_ style: String, weight: CGFloat? = nil, size: CGFloat? = nil, maxDynamicTypeRatio: CGFloat = 1.5, minDynamicTypeRatio: CGFloat = 0.5) -> UIFont {
         var pointSize: CGFloat
         var fontWeight: CGFloat? = nil
         
@@ -60,7 +60,7 @@ extension UIFont {
         // determine the factor to increase/decrease font by.
         // Min factor 0.5, max 1.5
         
-        var pointSizeRatio = UIFont.preferredFontForTextStyle(UIFontTextStyleBody).pointSize / 17.0
+        var pointSizeRatio = UIFont.preferredFont(forTextStyle: UIFontTextStyle.body).pointSize / 17.0
         pointSizeRatio = pointSizeRatio > maxDynamicTypeRatio ? maxDynamicTypeRatio : pointSizeRatio < minDynamicTypeRatio ? minDynamicTypeRatio : pointSizeRatio
         pointSize = pointSize * pointSizeRatio
 
@@ -76,6 +76,6 @@ extension UIFont {
             pointSize = size!
         }
         
-        return UIFont.systemFontOfSize(pointSize, weight: fontWeight!)
+        return UIFont.systemFont(ofSize: pointSize, weight: fontWeight!)
     }
 }

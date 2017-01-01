@@ -16,16 +16,16 @@ class ToggleControl: UIControl {
     
     // MARK: - Properties 
     
-    private var labelTitles: [String]!
-    private var labels: [UILabel]!
-    private var underlineView: UIView!
-    private var buttonWidth: CGFloat {
+    fileprivate var labelTitles: [String]!
+    fileprivate var labels: [UILabel]!
+    fileprivate var underlineView: UIView!
+    fileprivate var buttonWidth: CGFloat {
         if labels.count == 0 {
             return 0.0
         }
         return bounds.width / CGFloat(labels.count)
     }
-    private var startCenter: CGFloat = -1
+    fileprivate var startCenter: CGFloat = -1
     
     @IBInspectable var selectedIndex: Int = 0 {
         didSet {
@@ -33,13 +33,13 @@ class ToggleControl: UIControl {
         }
     }
     
-    @IBInspectable var selectedColor: UIColor = UIColor.orangeColor() {
+    @IBInspectable var selectedColor: UIColor = UIColor.orange {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable var unselectedColor: UIColor = UIColor.lightGrayColor() {
+    @IBInspectable var unselectedColor: UIColor = UIColor.lightGray {
         didSet {
             setSelectedColors()
         }
@@ -55,7 +55,7 @@ class ToggleControl: UIControl {
     
     required init(titles: [String]) {
         labelTitles = titles
-        super.init(frame: CGRectZero)
+        super.init(frame: CGRect.zero)
         setup()
     }
     
@@ -68,35 +68,35 @@ class ToggleControl: UIControl {
         super.layoutSubviews()
         var frame: CGRect
 
-        for (index, label) in labels.enumerate() {
+        for (index, label) in labels.enumerated() {
             frame = label.frame
-            frame = CGRectMake(CGFloat(index) * buttonWidth, self.frame.minY, buttonWidth , bounds.height)
+            frame = CGRect(x: CGFloat(index) * buttonWidth, y: self.frame.minY, width: buttonWidth , height: bounds.height)
             label.frame = frame
         }
-        frame = CGRectMake(CGFloat(selectedIndex) * buttonWidth, self.frame.maxY - 2.5, buttonWidth, 2.5)
+        frame = CGRect(x: CGFloat(selectedIndex) * buttonWidth, y: self.frame.maxY - 2.5, width: buttonWidth, height: 2.5)
         underlineView.frame = frame
         startCenter = underlineView.center.x
     }
     
-    override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
-        let location = touch.locationInView(self)
+    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
+        let location = touch.location(in: self)
         var calcIndex: Int?
-        for (index, item) in labels.enumerate() {
+        for (index, item) in labels.enumerated() {
             if item.frame.contains(location) {
                 calcIndex = index
             }
         }
         if let calcIndex = calcIndex {
             selectedIndex = calcIndex
-            sendActionsForControlEvents(.TouchUpInside)
+            sendActions(for: .touchUpInside)
         }
         return false
     }
     
     // MARK: - Handlers 
     
-    private func setup() {
-        addTarget(self, action: #selector(labelTapped), forControlEvents: .TouchUpInside)
+    fileprivate func setup() {
+        addTarget(self, action: #selector(labelTapped), for: .touchUpInside)
         labels = [UILabel]()
         underlineView = UIView()
         underlineView.translatesAutoresizingMaskIntoConstraints = false
@@ -105,7 +105,7 @@ class ToggleControl: UIControl {
         for title in labelTitles {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
-            label.textAlignment = .Center
+            label.textAlignment = .center
             label.text = title
             addSubview(label)
             labels.append(label)
@@ -114,52 +114,52 @@ class ToggleControl: UIControl {
         setFonts()
         setSelectedIndex(selectedIndex, animated: false)
         
-        backgroundColor = UIColor.whiteColor()
+        backgroundColor = UIColor.white
     }
     
-    final func setSelectedIndex(index: Int, animated: Bool = false, completionHandler: ((completed: Bool) -> Void)? = nil) {
+    final func setSelectedIndex(_ index: Int, animated: Bool = false, completionHandler: ((_ completed: Bool) -> Void)? = nil) {
         guard index < labels.count else { fatalError("index out of bounds") }
-        for (i, label) in labels.enumerate() {
+        for (i, label) in labels.enumerated() {
             label.textColor = i == index ? selectedColor : unselectedColor
         }
         
         if animated {
-            UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
-                var frame = self.underlineView.frame ?? CGRectZero
-                frame.origin.x = self.labels[index].frame.minX ?? 0.0
+            UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+                var frame = self.underlineView.frame 
+                frame.origin.x = self.labels[index].frame.minX 
                 self.underlineView.frame = frame }, completion: { (bool) in
-                    completionHandler?(completed: bool)
+                    completionHandler?(bool)
             })
         }
         
     }
     
-    final func scrollOffSetX(offsetX: CGFloat) {
+    final func scrollOffSetX(_ offsetX: CGFloat) {
         let center = startCenter + offsetX / CGFloat(labels.count)
-        UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
+        UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: { [unowned self] in
             self.underlineView.center = CGPoint(x: center, y: self.underlineView.center.y)
         }, completion: nil)
     }
     
-    private func setSelectedColors() {
-        for (index, label) in labels.enumerate() {
+    fileprivate func setSelectedColors() {
+        for (index, label) in labels.enumerated() {
             label.textColor = index == selectedIndex ? selectedColor : unselectedColor
         }
         underlineView.backgroundColor = selectedColor
     }
     
-    private func setFonts() {
+    fileprivate func setFonts() {
         for label in labels {
             label.font = font
         }
     }
     
     final func labelTapped() {
-        labelTappedWithIndex(selectedIndex ?? 0)
+        labelTappedWithIndex(selectedIndex )
     }
     
     // MARK: - Override points
     
-    func labelTappedWithIndex(index: Int) {}
+    func labelTappedWithIndex(_ index: Int) {}
     
 }

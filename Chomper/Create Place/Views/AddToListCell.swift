@@ -9,8 +9,8 @@
 import Common
 
 class AddToListCell: UITableViewCell {
-    private var titleLabel: UILabel!
-    private var separator: UIView!
+    fileprivate var titleLabel: UILabel!
+    fileprivate var separator: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,26 +33,26 @@ class AddToListCell: UITableViewCell {
     func setup() {
         titleLabel = UILabel()
         titleLabel.numberOfLines = 1
-        titleLabel.textColor = UIColor.orangeColor()
+        titleLabel.textColor = UIColor.orange
         titleLabel.font = UIFont.chomperFontForTextStyle("h4")
         contentView.addSubview(titleLabel)
         
         separator = UIView()
-        separator.backgroundColor = UIColor.lightGrayColor()
+        separator.backgroundColor = UIColor.lightGray
         contentView.addSubview(separator)
         
         NSLayoutConstraint.useAndActivateConstraints([
-            titleLabel.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 15.0),
-            titleLabel.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: -15.0),
-            titleLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor),
-            separator.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor, constant: 15.0),
-            separator.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor, constant: -15.0),
-            separator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
-            separator.heightAnchor.constraintEqualToConstant(0.75)
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15.0),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            separator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0),
+            separator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15.0),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            separator.heightAnchor.constraint(equalToConstant: 0.75)
             ])
     }
     
-    func configureCell(title: String) {
+    func configureCell(_ title: String) {
         titleLabel.text = NSLocalizedString(title, comment: "title")
     }
     

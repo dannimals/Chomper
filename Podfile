@@ -5,7 +5,6 @@ use_frameworks!
 
 def production_pods
     pod 'GoogleMaps', '~> 1.13.2'
-    pod 'ObjectMapper', '~> 1.3'
     pod 'SwiftyJSON'
     pod 'FLEX', '~> 2.3.0', :configurations => ['Debug']
 end
@@ -45,7 +44,6 @@ target 'ModelSync' do
 end
 
 target 'WebServices' do
-  pod 'ObjectMapper', '~> 1.3'
   pod 'SwiftyJSON'
 
   target 'WebServicesTests' do

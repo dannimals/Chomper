@@ -15,13 +15,13 @@ public protocol ChomperLocationManagerProtocol {
     var locationManager: CLLocationManager { get }
 }
 
-public class ChomperLocationManager: NSObject, CLLocationManagerDelegate, ChomperLocationManagerProtocol {
+open class ChomperLocationManager: NSObject, CLLocationManagerDelegate, ChomperLocationManagerProtocol {
     
-    public var locationManager = CLLocationManager()
+    open var locationManager = CLLocationManager()
     
     // MARK: - Class methods
     
-    public static func createChomperLocationManager() -> ChomperLocationManager {
+    open static func createChomperLocationManager() -> ChomperLocationManager {
         let manager = ChomperLocationManager()
         manager.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         manager.locationManager.delegate = manager
@@ -31,17 +31,17 @@ public class ChomperLocationManager: NSObject, CLLocationManagerDelegate, Chompe
     
     // MARK: - CLLocationManagerDelegate methods
     
-    public func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    open func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("didFailWithError: \(error)")
     }
     
     
-    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    open func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 //        print("didUpdateLocations \(locations.first)")
     }
     
-    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways || status == .AuthorizedWhenInUse {
+    open func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        if status == .authorizedAlways || status == .authorizedWhenInUse {
             manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             manager.startUpdatingLocation()
         }

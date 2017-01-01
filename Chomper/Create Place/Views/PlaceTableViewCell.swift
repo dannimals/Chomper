@@ -25,32 +25,32 @@ class PlaceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        separator.backgroundColor = UIColor.lightGrayColor()
-        separator.heightAnchor.constraintEqualToConstant(0.75).active = true
+        separator.backgroundColor = UIColor.lightGray
+        separator.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
 
         nameLabel.font = UIFont.chomperFontForTextStyle("p")
-        nameLabel.textColor = UIColor.darkGrayColor()
+        nameLabel.textColor = UIColor.darkGray
         
         addressLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        addressLabel.textColor = UIColor.grayColor()
+        addressLabel.textColor = UIColor.gray
         
         priceLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        priceLabel.textColor = UIColor.orangeColor()
+        priceLabel.textColor = UIColor.orange
         
-        placeImageView.contentMode = .ScaleAspectFill
+        placeImageView.contentMode = .scaleAspectFill
         placeImageView.clipsToBounds = true
         placeImageView.layer.cornerRadius = 5
         placeImageView.layer.borderWidth = 1
-        placeImageView.layer.borderColor = UIColor.orangeColor().CGColor
+        placeImageView.layer.borderColor = UIColor.orange.cgColor
         
         ratingLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        ratingLabel.textColor = UIColor.orangeColor()
+        ratingLabel.textColor = UIColor.orange
         
         visitedLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        visitedLabel.textColor = UIColor.orangeColor()
+        visitedLabel.textColor = UIColor.orange
         
         distanceLabel.font = UIFont.chomperFontForTextStyle("p small")
-        distanceLabel.textColor = UIColor.orangeColor()
+        distanceLabel.textColor = UIColor.orange
         
         prepareForReuse()
     }
@@ -75,24 +75,25 @@ class PlaceTableViewCell: UITableViewCell {
         addressLabel.text = object.address ?? "Address unknown"
         ratingLabel.text = object.ratingValue != nil ? "\(floor(object.ratingValue!/2)) stars" : nil
         if object.priceValue == nil {
-            priceLabel.hidden = true
+            priceLabel.isHidden = true
         } else {
             priceLabel.text = convertPrice(object.priceValue!)
         }
         
-        if let image = imageCache[object.venueId] as? UIImage {
+        
+        if let image = (imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: object.venueId as AnyObject) as? UIImage {
             placeImageView?.image = image
         }
         //TODO: display distance
     }
     
-    func configurePlaceCell(name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: NSNumber = NSNumber(int: 0)) {
+    func configurePlaceCell(_ name: String, address: String?, rating: NSNumber?, price: NSNumber?, location: CLLocation?, visited: NSNumber = NSNumber(value: 0 as Int32)) {
         
         nameLabel.text = name
         addressLabel.text = address ?? "Address unknown"
         ratingLabel.text = rating != nil ? "\(floor(rating!.doubleValue/2)) stars" : nil
         if price == nil {
-            priceLabel.hidden = true
+            priceLabel.isHidden = true
         } else {
             priceLabel.text = convertPrice(Double(price!))
         }
@@ -105,7 +106,7 @@ class PlaceTableViewCell: UITableViewCell {
 
     }
     
-    private func convertPrice(price: Double?) -> String? {
+    fileprivate func convertPrice(_ price: Double?) -> String? {
         if price == nil {
             return nil
         }

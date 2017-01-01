@@ -7,15 +7,15 @@
 //
 
 extension NSCache {
-    public subscript(key: AnyObject) -> AnyObject? {
+   public subscript(key: AnyObject) -> AnyObject? {
         get {
-            return objectForKey(key)
+            return (self as! NSCache<AnyObject, AnyObject>).object(forKey: key)
         }
         set {
-            if let value: AnyObject = newValue {
-                setObject(value, forKey: key)
+            if let value = newValue {
+                (self as! NSCache<AnyObject, AnyObject>).setObject(value, forKey: key)
             } else {
-                removeObjectForKey(key)
+                (self as! NSCache<AnyObject, AnyObject>).removeObject(forKey: key)
             }
         }
     }

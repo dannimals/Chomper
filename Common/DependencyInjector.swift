@@ -8,17 +8,17 @@
 
 import Foundation
 
-public class DependencyInjector {
+open class DependencyInjector {
     // MARK: - Instance variables
     
-    private var _singletons = [String: AnyObject]()
+    fileprivate var _singletons = [String: AnyObject]()
     
     // MARK: - Static properties
     
     /**
      The shared `DependencyInjector` instance.
      */
-    public static let sharedInstance: DependencyInjector = {
+    open static let sharedInstance: DependencyInjector = {
         return DependencyInjector()
     }()
     
@@ -34,7 +34,7 @@ public class DependencyInjector {
      - parameter singleton: The singleton to store a reference to.
      - parameter proto: The protocol to associate the singleton with.
      */
-    public func setSingleton(singleton: AnyObject, proto: String) {
+    open func setSingleton(_ singleton: AnyObject, proto: String) {
         _singletons[proto] = singleton
     }
     
@@ -49,7 +49,7 @@ public class DependencyInjector {
      
      - returns: The singleton object, or nil if one does not exist for the specified protocol.
      */
-    public func singletonForProtocol(proto: String) -> AnyObject {
+    open func singletonForProtocol(_ proto: String) -> AnyObject {
         return _singletons[proto]!
     }
     

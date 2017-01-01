@@ -19,20 +19,20 @@ extension NSManagedObjectContext {
         return chomperTestContext { $0.addSQLiteTestStore() }
     }
     
-    static func chomperTestContext(addStore: NSPersistentStoreCoordinator -> ()) -> NSManagedObjectContext {
+    static func chomperTestContext(_ addStore: (NSPersistentStoreCoordinator) -> ()) -> NSManagedObjectContext {
         // TODO: refactor later after versioning
-        let model = NSManagedObjectModel.mergedModelFromBundles([NSBundle(forClass: Place.self)])!
+        let model = NSManagedObjectModel.mergedModelFromBundles([Bundle(forClass: Place.self)])!
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         addStore(coordinator)
-        let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = coordinator
         return context
     }
     
     //
     // Synchronous performChanges on context
-    func performChangesAndWait(block: () -> Void) {
-        performBlockAndWait{
+    func performChangesAndWait(_ block: @escaping () -> Void) {
+        performAndWait{
             block()
             try! self.save()
         }
@@ -42,15 +42,15 @@ extension NSManagedObjectContext {
 extension NSPersistentStoreCoordinator {
     
     func addInMemoryTestStore() {
-        try! addPersistentStoreWithType(NSInMemoryStoreType, configuration: nil, URL: nil, options: nil)
+        try! addPersistentStore(ofType: NSInMemoryStoreType, configurationName: nil, at: nil, options: nil)
     }
     
     func addSQLiteTestStore() {
-        let storeURL = NSURL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).URLByAppendingPathComponent("Chomper.modelTest")
-        if NSFileManager.defaultManager().fileExistsAtPath(storeURL.path!) {
-            try! destroyPersistentStoreAtURL(storeURL, withType: NSSQLiteStoreType, options: nil)
+        let storeURL = URL(fileURLWithPath: NSTemporaryDirectory(), isDirectory: true).appendingPathComponent("Chomper.modelTest")
+        if FileManager.default.fileExists(atPath: storeURL.path) {
+            try! destroyPersistentStore(at: storeURL, ofType: NSSQLiteStoreType, options: nil)
         }
-        try! addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: storeURL, options: nil)
+        try! addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
     }
 }
 

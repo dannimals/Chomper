@@ -11,17 +11,17 @@ import WebServices
 
 class ListsViewController: BaseViewController {
     
-    private var viewModeControl: UISegmentedControl!
-    private var tileViewController: ListsTileViewController!
-    private var listViewController: ListsTableViewController!
-    private var scrollView: UIScrollView!
-    private var toggle: ListsToggleControl!
+    fileprivate var viewModeControl: UISegmentedControl!
+    fileprivate var tileViewController: ListsTileViewController!
+    fileprivate var listViewController: ListsTableViewController!
+    fileprivate var scrollView: UIScrollView!
+    fileprivate var toggle: ListsToggleControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.whiteColor()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(createNewList))
+        view.backgroundColor = UIColor.white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewList))
         
         //
         // Set up toggle and parent scrollView
@@ -41,19 +41,19 @@ class ListsViewController: BaseViewController {
             "scrollView": scrollView
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[toggle]|",
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[toggle]|",
             options: [],
             metrics: nil,
             views: views)
         )
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollView]|",
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|",
             options: [],
             metrics: nil,
             views: views)
         )
     
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide][toggle(50)]-(4)-[scrollView]|",
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[topLayoutGuide][toggle(50)]-(4)-[scrollView]|",
             options: [],
             metrics: nil,
             views: views)
@@ -66,8 +66,8 @@ class ListsViewController: BaseViewController {
         super.viewDidLayoutSubviews()
         var scrollBounds = scrollView.bounds
         scrollBounds.origin.x = scrollBounds.width
-        scrollView.contentSize = CGSizeMake(2 * scrollBounds.width, scrollBounds.height)
-        tileViewController.view.frame = CGRect(origin: CGPointZero, size: scrollView.bounds.size)
+        scrollView.contentSize = CGSize(width: 2 * scrollBounds.width, height: scrollBounds.height)
+        tileViewController.view.frame = CGRect(origin: CGPoint.zero, size: scrollView.bounds.size)
         listViewController.view.frame = scrollBounds
         
         toggle.setShadow()
@@ -84,12 +84,12 @@ class ListsViewController: BaseViewController {
         view.addSubview(toggle)
     }
     
-    func toggleViews(index: Int) {
+    func toggleViews(_ index: Int) {
         let contentOffsetY = self.scrollView.contentOffset.y
         if index == 0 {
-            self.scrollView.contentOffset = CGPointMake(0, contentOffsetY)
+            self.scrollView.contentOffset = CGPoint(x: 0, y: contentOffsetY)
         } else {
-            self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.width, contentOffsetY)
+            self.scrollView.contentOffset = CGPoint(x: self.scrollView.bounds.width, y: contentOffsetY)
         }
     }
     
@@ -98,41 +98,41 @@ class ListsViewController: BaseViewController {
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
-        scrollView.pagingEnabled = true
+        scrollView.isPagingEnabled = true
         scrollView.scrollsToTop = false
-        scrollView.directionalLockEnabled = true
+        scrollView.isDirectionalLockEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
     }
     
     func createNewList() {
         let vc = CreateListViewController()
-        vc.modalTransitionStyle = .CrossDissolve
-        vc.modalPresentationStyle = .OverCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overCurrentContext
         vc.modalPresentationCapturesStatusBarAppearance = true
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
-    private func createTileViewController() {
+    fileprivate func createTileViewController() {
         let layout = ListsCollectionViewLayout()
         tileViewController = ListsTileViewController(collectionViewLayout: layout)
         addChildViewController(tileViewController)
-        tileViewController.didMoveToParentViewController(self)
+        tileViewController.didMove(toParentViewController: self)
         scrollView.addSubview(tileViewController.view)
         
         tileViewController.collectionView?.scrollsToTop = false
     }
     
-    private func createListViewController() {
+    fileprivate func createListViewController() {
         listViewController = ListsTableViewController()
         addChildViewController(listViewController)
-        listViewController.didMoveToParentViewController(self)
+        listViewController.didMove(toParentViewController: self)
         scrollView.addSubview(listViewController.view)
     }
 }
 
 extension ListsViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         toggle.scrollOffSetX(scrollView.contentOffset.x)
         if scrollView.contentOffset.x < view.bounds.width {
             toggle.setSelectedIndex(0)

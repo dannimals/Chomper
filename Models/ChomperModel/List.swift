@@ -21,7 +21,7 @@ public final class List: ManagedObject {
     
     // MARK: - Helpers
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, name: String, ownerEmail: String) -> List {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, name: String, ownerEmail: String) -> List {
         guard let owner = User.findOrCreateUser(ownerEmail, inContext: moc) else { fatalError("Cannot create user") }
         let list: List = moc.insertObject()
         list.name = name
@@ -29,7 +29,7 @@ public final class List: ManagedObject {
         return list
     }
     
-    static func findOrCreateList(name: String, ownerId: String, inContext moc: NSManagedObjectContext) -> List? {
+    static func findOrCreateList(_ name: String, ownerId: String, inContext moc: NSManagedObjectContext) -> List? {
         guard !name.isEmpty else { return nil }
         let predicate = NSPredicate(format: "name == %@ && owner.email == %@", name, ownerId)
         let list = findOrCreateInContext(moc, matchingPredicate: predicate) { $0.name = name; $0.owner = User.findOrCreateUser(ownerId, inContext: moc)!}

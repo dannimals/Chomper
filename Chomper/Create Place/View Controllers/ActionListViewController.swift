@@ -10,8 +10,8 @@ import Common
 import Models
 
 class ActionListViewController: BaseViewController {
-    private var tableView: UITableView!
-    private var viewModel: ActionListViewModel!
+    fileprivate var tableView: UITableView!
+    fileprivate var viewModel: ActionListViewModel!
     
     required init(viewModel: ActionListViewModel) {
         self.viewModel = viewModel
@@ -29,22 +29,22 @@ class ActionListViewController: BaseViewController {
         //
         // Create blur background view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
-            view.backgroundColor = UIColor.clearColor()
+            view.backgroundColor = UIColor.clear
             
-            let blurEffect = UIBlurEffect(style: .ExtraLight)
+            let blurEffect = UIBlurEffect(style: .extraLight)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = view.bounds
-            blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(blurEffectView)
         } else {
-            view.backgroundColor = UIColor.lightGrayColor()
+            view.backgroundColor = UIColor.lightGray
         }
         
         //
         // Create tableView
         
         tableView = UITableView()
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerCell(ActionTableCell)
@@ -55,59 +55,59 @@ class ActionListViewController: BaseViewController {
         // Create bottom cancel button
         
         let cancelButton = UIButton()
-        cancelButton.tintColor = UIColor.whiteColor()
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
-        cancelButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
+        cancelButton.tintColor = UIColor.white
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), for: UIControlState())
+        cancelButton.setTitleColor(UIColor.darkGray, for: UIControlState())
+        cancelButton.setTitleColor(UIColor.lightGray, for: .highlighted)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
-        cancelButton.addTarget(self, action: #selector(buttonTapped), forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(cancelButton)
-        cancelButton.setShadow(UIColor.lightGrayColor().CGColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
+        cancelButton.setShadow(UIColor.lightGray.cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
         
         NSLayoutConstraint.useAndActivateConstraints([
-            tableView.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
-            tableView.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
-            tableView.topAnchor.constraintEqualToAnchor(view.topAnchor, constant: view.bounds.height * 0.5),
-            tableView.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            cancelButton.leadingAnchor.constraintEqualToAnchor(view.leadingAnchor),
-            cancelButton.trailingAnchor.constraintEqualToAnchor(view.trailingAnchor),
-            cancelButton.bottomAnchor.constraintEqualToAnchor(view.bottomAnchor),
-            cancelButton.heightAnchor.constraintEqualToConstant(55.0)
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.bounds.height * 0.5),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            cancelButton.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            cancelButton.heightAnchor.constraint(equalToConstant: 55.0)
         ])
     }
 }
 
 extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRowsInSection(section)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCellWithIdentifier(PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else { fatalError("Cannot dequeue place cell") }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else { fatalError("Cannot dequeue place cell") }
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCellWithIdentifier(ActionTableCell.reuseIdentifier) as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ActionTableCell.reuseIdentifier) as? ActionTableCell else { fatalError("Cannot dequeue action cell") }
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row != 0 {
             var action = viewModel.getActionForIndexPath(indexPath)
             switch action {
-            case .QuickSave(_):
-                action = .QuickSave(action: viewModel.saveAction)
-                dismissViewControllerAnimated(true, completion: nil)
-            case .AddToList(_):
-                action = .AddToList(action: presentAddToListViewController())
+            case .quickSave(_):
+                action = .quickSave(action: viewModel.saveAction)
+                dismiss(animated: true, completion: nil)
+            case .addToList(_):
+                action = .addToList(action: presentAddToListViewController())
             }
             viewModel.performAction(forAction: action)
         }
        
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             guard let cell = cell as? PlaceTableViewCell else { fatalError("wrong type: action cell") }
             cell.configureCell(withObject: viewModel.place, imageCache: imageCache)
@@ -118,7 +118,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
             return 82.0
         }
@@ -128,17 +128,17 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     // MARK: - Handlers
     
     func buttonTapped() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func presentAddToListViewController() -> (() -> Void) {
         let nav = presentingViewController
         let nc = BaseNavigationController(rootViewController: AddToListViewController(place: viewModel.place))
-        nc.modalTransitionStyle = .CoverVertical
-        nc.modalPresentationStyle = .OverCurrentContext
+        nc.modalTransitionStyle = .coverVertical
+        nc.modalPresentationStyle = .overCurrentContext
         return {
-                self.dismissViewControllerAnimated(true) {
-                    nav?.presentViewController(nc, animated: true, completion: nil)
+                self.dismiss(animated: true) {
+                    nav?.present(nc, animated: true, completion: nil)
                 }
         }
     }

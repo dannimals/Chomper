@@ -6,13 +6,13 @@
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
-public class AppData {
+open class AppData {
     
-    private var defaults: NSUserDefaults
+    fileprivate var defaults: UserDefaults
     
-    public var ownerUserEmail: String {
+    open var ownerUserEmail: String {
         get {
-            return defaults.objectForKey(ownerEmail) as! String
+            return defaults.object(forKey: ownerEmail) as! String
         }
         set {
             defaults.setValue(newValue, forKey: ownerEmail)
@@ -22,13 +22,13 @@ public class AppData {
 
     // MARK: - Initializers
     
-    public static let sharedInstance: AppData = {
+    open static let sharedInstance: AppData = {
         // TODO: configure with suiteName in the future
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         return AppData(defaults: defaults)
     }()
     
-    private init(defaults: NSUserDefaults) {
+    fileprivate init(defaults: UserDefaults) {
         self.defaults = defaults
     }
 }

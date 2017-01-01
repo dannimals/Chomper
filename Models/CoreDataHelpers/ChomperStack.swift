@@ -8,21 +8,21 @@
 
 import CoreData
 
-private let StoreURL = NSURL.documentsDirectory.URLByAppendingPathComponent("Chomper.chomper")
+private let StoreURL = URL.documentsDirectory.appendingPathComponent("Chomper.chomper")
 
 //
 // Global var for returning the main NSManagedObjectContext
 
 var createChomperMainContext: NSManagedObjectContext = {
-    let bundles = [NSBundle(forClass: Place.self)]
-    guard let model = NSManagedObjectModel.mergedModelFromBundles(bundles) else { fatalError("Model not found!") }
+    let bundles = [Bundle(for: Place.self)]
+    guard let model = NSManagedObjectModel.mergedModel(from: bundles) else { fatalError("Model not found!") }
     var psc = NSPersistentStoreCoordinator(managedObjectModel: model)
     do {
-        try psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
+        try psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: StoreURL, options: nil)
     } catch let error as NSError {
         psc = handlePSCError(psc, model: model, error: error)!
     }
-    let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+    let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     context.persistentStoreCoordinator = psc
     return context
 }()
@@ -30,13 +30,13 @@ var createChomperMainContext: NSManagedObjectContext = {
 //
 // Blow out Core Data in simulator if there are version conflicts
 
-func handlePSCError(psc: NSPersistentStoreCoordinator, model: NSManagedObjectModel, error: NSError) -> NSPersistentStoreCoordinator? {
+func handlePSCError(_ psc: NSPersistentStoreCoordinator, model: NSManagedObjectModel, error: NSError) -> NSPersistentStoreCoordinator? {
     if error.domain == NSCocoaErrorDomain {
         #if DEBUG
-            if NSFileManager.defaultManager().fileExistsAtPath(StoreURL.path!) {
-                try! psc.destroyPersistentStoreAtURL(StoreURL, withType: NSSQLiteStoreType, options: nil)
+            if FileManager.default.fileExists(atPath: StoreURL.path) {
+                try! psc.destroyPersistentStore(at: StoreURL, ofType: NSSQLiteStoreType, options: nil)
             }
-            try! psc.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: StoreURL, options: nil)
+            try! psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: StoreURL, options: nil)
             return psc
         #endif
     }

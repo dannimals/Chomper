@@ -10,13 +10,13 @@ import Common
 import Models
 
 enum DataProviderUpdate<Object> {
-    case Insert(NSIndexPath)
-    case Update(NSIndexPath, Object)
-    case Move(NSIndexPath, NSIndexPath)
-    case Delete(NSIndexPath)
+    case insert(IndexPath)
+    case update(IndexPath, Object)
+    case move(IndexPath, IndexPath)
+    case delete(IndexPath)
     
-    case InsertSection(NSIndexSet)
-    case DeleteSection(NSIndexSet)
+    case insertSection(IndexSet)
+    case deleteSection(IndexSet)
 }
 
 //
@@ -24,8 +24,8 @@ enum DataProviderUpdate<Object> {
 
 protocol CollectionDataProvider: class {
     associatedtype Object
-    func objectAtIndexPath(indexPath: NSIndexPath) -> Object?
-    func numberOfItemsInSection(section: Int) -> Int
+    func objectAtIndexPath(_ indexPath: IndexPath) -> Object?
+    func numberOfItemsInSection(_ section: Int) -> Int
     func numberOfSections() -> Int
     var sections: [NSFetchedResultsSectionInfo]? { get }
 }

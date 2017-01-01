@@ -9,24 +9,24 @@
 import Common
 
 class ListsCollectionViewCell: UICollectionViewCell {
-    private(set) var addButton: UIButton!
-    private(set) var titleLabel: UILabel!
-    private(set) var listImageView: UIImageView!
-    private var countLabel: UILabel!
-    private var separatorColor = UIColor.lightGrayColor()
+    fileprivate(set) var addButton: UIButton!
+    fileprivate(set) var titleLabel: UILabel!
+    fileprivate(set) var listImageView: UIImageView!
+    fileprivate var countLabel: UILabel!
+    fileprivate var separatorColor = UIColor.lightGray
     var trailingSeparator: UIView!
     var bottomSeparator: UIView!
-    private var isAdd: Bool = false {
+    fileprivate var isAdd: Bool = false {
         didSet {
             if isAdd {
-                addButton.hidden = false
-                titleLabel.hidden = true
-                countLabel.hidden = true
-                bottomSeparator.hidden = true
+                addButton.isHidden = false
+                titleLabel.isHidden = true
+                countLabel.isHidden = true
+                bottomSeparator.isHidden = true
             } else {
-                addButton.hidden = true
-                titleLabel.hidden = false
-                countLabel.hidden = false
+                addButton.isHidden = true
+                titleLabel.isHidden = false
+                countLabel.isHidden = false
 
             }
         }
@@ -48,7 +48,7 @@ class ListsCollectionViewCell: UICollectionViewCell {
     }
     
     
-    private func initialize() {
+    fileprivate func initialize() {
         
         //
         // Separators
@@ -72,10 +72,10 @@ class ListsCollectionViewCell: UICollectionViewCell {
         
         titleLabel = UILabel()
         contentView.addSubview(titleLabel)
-        titleLabel.setContentCompressionResistancePriority(249, forAxis: .Vertical)
+        titleLabel.setContentCompressionResistancePriority(249, for: .vertical)
         titleLabel.numberOfLines = 2
         titleLabel.preferredMaxLayoutWidth = contentView.frame.width - 20
-        titleLabel.textColor = UIColor.lightGrayColor()
+        titleLabel.textColor = UIColor.lightGray
         titleLabel.font = UIFont.chomperFontForTextStyle("p")
         
         //
@@ -86,43 +86,43 @@ class ListsCollectionViewCell: UICollectionViewCell {
         countLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countLabel)
         countLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        countLabel.textColor = UIColor.orangeColor()
+        countLabel.textColor = UIColor.orange
 
         
         //
         // "+" button
         
         addButton = UIButton()
-        addButton.addTarget(self, action: #selector(handleAddPressed), forControlEvents: .TouchUpInside)
+        addButton.addTarget(self, action: #selector(handleAddPressed), for: .touchUpInside)
         contentView.addSubview(addButton)
-        addButton.setTitle("+", forState: .Normal)
+        addButton.setTitle("+", for: UIControlState())
         addButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h1", weight: UIFontWeightThin, size: 75.0, maxDynamicTypeRatio: 1.5, minDynamicTypeRatio: 1.5)
-        addButton.setTitleColor(UIColor.orangeColor(), forState: .Normal)
-        addButton.setTitleColor(UIColor.lightGrayColor(), forState: .Highlighted)
-        let addCenterX = addButton.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor)
+        addButton.setTitleColor(UIColor.orange, for: UIControlState())
+        addButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        let addCenterX = addButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
         addCenterX.priority = UILayoutPriorityRequired
-        let addCenterY = addButton.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor)
+        let addCenterY = addButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         addCenterY.priority = UILayoutPriorityRequired
         
-        addButton.hidden = true
+        addButton.isHidden = true
         
         NSLayoutConstraint.useAndActivateConstraints([
-            listImageView.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
-            listImageView.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
-            listImageView.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
-            listImageView.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
-            trailingSeparator.widthAnchor.constraintEqualToConstant(0.75),
-            trailingSeparator.topAnchor.constraintEqualToAnchor(contentView.topAnchor),
-            trailingSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
-            trailingSeparator.trailingAnchor.constraintEqualToAnchor(contentView.trailingAnchor),
-            titleLabel.centerYAnchor.constraintEqualToAnchor(contentView.centerYAnchor),
-            titleLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor),
-            countLabel.centerXAnchor.constraintEqualToAnchor(contentView.centerXAnchor),
-            countLabel.topAnchor.constraintEqualToAnchor(titleLabel.bottomAnchor, constant: 5),
-            bottomSeparator.heightAnchor.constraintEqualToConstant(0.75),
-            bottomSeparator.leadingAnchor.constraintEqualToAnchor(contentView.leadingAnchor),
-            bottomSeparator.trailingAnchor.constraintEqualToAnchor(trailingSeparator.leadingAnchor),
-            bottomSeparator.bottomAnchor.constraintEqualToAnchor(contentView.bottomAnchor),
+            listImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            listImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            listImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            listImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            trailingSeparator.widthAnchor.constraint(equalToConstant: 0.75),
+            trailingSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
+            trailingSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            trailingSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            countLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
+            bottomSeparator.heightAnchor.constraint(equalToConstant: 0.75),
+            bottomSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomSeparator.trailingAnchor.constraint(equalTo: trailingSeparator.leadingAnchor),
+            bottomSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             addCenterX,
             addCenterY
         ])
@@ -134,29 +134,29 @@ class ListsCollectionViewCell: UICollectionViewCell {
         isAdd = false
         titleLabel.text = nil
         countLabel.text = nil
-        trailingSeparator.hidden = false
-        bottomSeparator.hidden = false
-        listImageView.hidden = false
+        trailingSeparator.isHidden = false
+        bottomSeparator.isHidden = false
+        listImageView.isHidden = false
     }
     
     
     // MARK: - Helpers
     
-    func configureCell(title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false, image: UIImage?) {
+    func configureCell(_ title: String, count: Int = 0, hideTrailingSeparator: Bool? = false, hideBottomSeparator: Bool? = false, image: UIImage?) {
         isAdd = false
         titleLabel.text = NSLocalizedString(title, comment: "title")
         countLabel.text = count == 0 ? nil : NSLocalizedString(String(count), comment: "count")
-        trailingSeparator.hidden = hideTrailingSeparator!
-        bottomSeparator.hidden = hideBottomSeparator!
+        trailingSeparator.isHidden = hideTrailingSeparator!
+        bottomSeparator.isHidden = hideBottomSeparator!
         if let image = image {
             listImageView.image = image
         }
     }
     
-    func configureAddCell(hideTrailingSeparator: Bool = false) {
+    func configureAddCell(_ hideTrailingSeparator: Bool = false) {
         isAdd = true
-        listImageView.hidden = true
-        trailingSeparator.hidden = hideTrailingSeparator
+        listImageView.isHidden = true
+        trailingSeparator.isHidden = hideTrailingSeparator
     }
     
     @IBAction

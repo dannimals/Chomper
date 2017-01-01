@@ -9,9 +9,9 @@
 import Common
 
 class ListsToggleControl: ToggleControl {
-    var labelTappedAction: ((index: Int) -> Void)?
+    var labelTappedAction: ((_ index: Int) -> Void)?
     
-    override func labelTappedWithIndex(index: Int) {
-        labelTappedAction?(index: index)
+    override func labelTappedWithIndex(_ index: Int) {
+        labelTappedAction?(index)
     }
 }
