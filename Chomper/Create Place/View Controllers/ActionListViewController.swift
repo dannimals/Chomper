@@ -47,8 +47,8 @@ class ActionListViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerCell(ActionTableCell)
-        tableView.registerNib(PlaceTableViewCell)
+        tableView.registerCell(ActionTableCell.self)
+        tableView.registerNib(PlaceTableViewCell.self)
         view.addSubview(tableView)
         
         //

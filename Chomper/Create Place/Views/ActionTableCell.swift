@@ -55,5 +55,4 @@ class ActionTableCell: UITableViewCell {
     func setTitleForAction(_ title: String) {
         label.text = title
     }
-
 }

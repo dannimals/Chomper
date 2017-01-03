@@ -74,9 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //
         // Set up navigation bar and other shared UI appearances
         
-        UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).backgroundColor = UIColor.orange
         UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).tintColor = UIColor.white
-        UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).isOpaque = false
         
         let attrs = [
             NSFontAttributeName: UIFont.chomperFontForTextStyle("h3"),
