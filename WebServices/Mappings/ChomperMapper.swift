@@ -21,7 +21,7 @@ final class ChomperMapper {
 
     var photos: [Photo]? = nil
     var places: [SearchResult]? = nil
-    fileprivate var mapperType: MapperType
+    private var mapperType: MapperType
     
     required init(response: Data, mapperType: MapperType) {
         self.mapperType = mapperType
@@ -55,7 +55,7 @@ final class ChomperMapper {
     
     // MARK: - Helpers
     
-    fileprivate func parseJsonPhotos(_ results: [JSON]) {
+    private func parseJsonPhotos(_ results: [JSON]) {
         photos = [Photo]()
         
         for result in results where result["visibility"].string == "public" {
@@ -69,7 +69,7 @@ final class ChomperMapper {
         }
     }
     
-    fileprivate func parseJsonPlaces(_ results: [JSON]) {
+    private func parseJsonPlaces(_ results: [JSON]) {
         places = [SearchResult]()
         var venue: JSON!
  
@@ -118,11 +118,8 @@ final class ChomperMapper {
                 }
             }
 
-          
-            
             let place = SearchResult(address: address, city: city, formattedAddress: formattedAddress, location: location, name: name, phone: phone, imageId: imageId, imageUrl: imageUrl, notes: nil, price: price, rating: rating, state: state, venueId: id, zipcode: zipcode)
             places?.append(place)
         }
     }
-    
 }

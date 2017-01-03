@@ -72,7 +72,6 @@ class AddToListViewController: BaseViewController {
         
     }
 
-    
     // MARK: - Handlers
     
     func dismissVC() {
@@ -102,14 +101,20 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         let list = lists[indexPath.row]
         self.mainContext.performChanges {
-            ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: list.name, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
+            var image: Image? = nil
+
+            let listPlace = ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: list.name, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
+            
+            if let cached = (self.imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: self.place.imageUrl as AnyObject) as? UIImage, let imageData = UIImagePNGRepresentation(cached) {
+                image = Image.insertIntoContext(self.mainContext, createdAt: NSDate() as Date, imageData: imageData, thumbData: nil)
+            }
+            
+            listPlace.listImageId = image?.id
         }
 
         dismiss(animated: true, completion: nil)
     }
 }
-
-
-

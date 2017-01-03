@@ -59,10 +59,10 @@ class CreateListWithPlacesTest: XCTestCase {
             listPlace = ListPlace.insertIntoContext(self.moc, address: self.address, city: self.city, downloadImageUrl: nil, listName: self.listName, location: self.location, phone: nil, placeId: self.placeId, placeName: self.placeName, price: nil, notes: nil, rating: nil, state: nil) as ListPlace
         }
         
-        let placeRequest = NSFetchRequest(entityName: Place.entityName)
+        let placeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Place.entityName)
         var error : NSError?
         let placeCount = moc.countForFetchRequest(placeRequest, error: &error)
-        let listRequest = NSFetchRequest(entityName: List.entityName)
+        let listRequest = NSFetchRequest<NSFetchRequestResult>(entityName: List.entityName)
         let listCount = moc.countForFetchRequest(listRequest, error: &error)
         
         let place = listPlace.place
@@ -92,10 +92,10 @@ class CreateListWithPlacesTest: XCTestCase {
             listPlace2 = ListPlace.insertIntoContext(self.moc, address: self.address, city: self.city, downloadImageUrl: nil, listName: "secondList", location: self.location, phone: nil, placeId: self.placeId, placeName: self.placeName, price: nil, notes: nil, rating: nil, state: nil) as ListPlace
         }
         
-        let placeRequest = NSFetchRequest(entityName: Place.entityName)
+        let placeRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Place.entityName)
         var error : NSError?
         let placeCount = moc.countForFetchRequest(placeRequest, error: &error)
-        let listRequest = NSFetchRequest(entityName: List.entityName)
+        let listRequest = NSFetchRequest<NSFetchRequestResult>(entityName: List.entityName)
         let listCount = moc.countForFetchRequest(listRequest, error: &error)
         
         let place1 = listPlace1.place

@@ -20,11 +20,11 @@ public enum ChomperURLRouter: URLRequestConvertible {
     //
     // MARK: - Properties
     
-    fileprivate static let dateFormatter = DateFormatter()
-    fileprivate static let dateFormat = "YYYYMMDD"
-    fileprivate static let baseURLString = "https://api.foursquare.com/v2"
-    fileprivate static let clientId = "MDNOUO12E1RRL20OOJZJHWGM5ZBLLKUHERL31DEHODYHYUK5"
-    fileprivate static let clientSecret = "DIG45IF1K2FWUBGQLAZGYYJGLUCOZMTQRCPE0WQY5TMNH32B"
+    private static let dateFormatter = DateFormatter()
+    private static let dateFormat = "YYYYMMDD"
+    private static let baseURLString = "https://api.foursquare.com/v2"
+    private static let clientId = "MDNOUO12E1RRL20OOJZJHWGM5ZBLLKUHERL31DEHODYHYUK5"
+    private static let clientSecret = "DIG45IF1K2FWUBGQLAZGYYJGLUCOZMTQRCPE0WQY5TMNH32B"
 
     public enum Method: String {
         case GET, POST, PUT, DELETE
@@ -37,13 +37,13 @@ public enum ChomperURLRouter: URLRequestConvertible {
     case getPlacesNearArea(String, String?)
     case getPlacesNearLocation(CLLocation, String?)
     
-    fileprivate var method: Method {
+    private var method: Method {
         switch self {
             default: return .GET
         }
     }
     
-    fileprivate var path: String {
+    private var path: String {
         switch self {
         case .explorePlacesNearArea:
             return "/venues/explore/"
@@ -141,5 +141,3 @@ public enum ChomperURLRouter: URLRequestConvertible {
         }
     }
 }
-
-

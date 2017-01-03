@@ -36,7 +36,7 @@ class ActionListViewModel: BaseViewModel {
         super.init()
  
         self.saveAction = { self.mainContext.performChanges { [unowned self] in
-            ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
+            let _ = ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
             }
         }
     }
@@ -68,5 +68,4 @@ class ActionListViewModel: BaseViewModel {
                 return NSLocalizedString("Add to List", comment: "add to list")
         }
     }
-    
 }

@@ -58,8 +58,6 @@ class ListsViewController: BaseViewController {
             metrics: nil,
             views: views)
         )
-
-        
     }
     
     override func viewDidLayoutSubviews() {

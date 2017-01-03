@@ -627,7 +627,7 @@
 			children = (
 				9EE2155E1D19B27C004C7C53 /* Assets.xcassets */,
 				9EE2160B1D19B980004C7C53 /* Common */,
-				9EE2160E1D19B98E004C7C53 /* Create Place */,
+				9EE2160E1D19B98E004C7C53 /* Search */,
 				9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */,
 				9EE754851D36C5FB0070779E /* Places */,
 				9EE216051D19B972004C7C53 /* Supporting Files */,
@@ -756,13 +756,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		9EE2160E1D19B98E004C7C53 /* Create Place */ = {
+		9EE2160E1D19B98E004C7C53 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				9E096D641D2573D2002A59E1 /* View Controllers */,
 				9E096D661D2573D2002A59E1 /* View Models */,
 				9E1D27951D21C2BF00728012 /* Views */,
 			);
+			name = Search;
 			path = "Create Place";
 			sourceTree = "<group>";
 		};

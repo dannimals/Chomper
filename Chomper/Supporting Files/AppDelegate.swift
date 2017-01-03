@@ -134,19 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-
-        let discoverVC = UIViewController()
-        discoverVC.view.backgroundColor = UIColor.white
-        discoverVC.title = NSLocalizedString("Discover", comment: "Discover Tab Title")
-        discoverVC.tabBarItem = UITabBarItem(
-            title: NSLocalizedString("Discover", comment: "Discover Tab Title"),
-            image: nil,
-            selectedImage: nil
-        )
-        let nc3 = BaseNavigationController(rootViewController: discoverVC)
         
         let tabBarVC = UITabBarController()
-        let controllers = [nc, createPlaceVC, nc3]
+        let controllers = [nc, createPlaceVC]
         tabBarVC.viewControllers = controllers
         tabBarVC.selectedViewController = nc
         window?.rootViewController = tabBarVC

@@ -172,7 +172,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         guard let location = searchLocationCoord ?? locationManager.location else { return }
         getRecommendedPlacesNearLocation(location: location, searchTerm: searchView.textSearch.text, showLoading: false)
     }
-
     
     // MARK: - Helpers
     
@@ -241,7 +240,14 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     func quickSave(indexPath: NSIndexPath) {
         guard let place = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
         self.mainContext.performChanges {
-            let _ = ListPlace.insertIntoContext(self.mainContext, address: place.address, city: place.city, downloadImageUrl: place.imageUrl, listName: defaultSavedList, location: place.location, phone: place.phone, placeId: place.venueId, placeName: place.name, price: place.priceValue as NSNumber?, notes: place.userNotes, rating: place.ratingValue as NSNumber?, state: place.state)
+            var image: Image? = nil
+            let listPlace = ListPlace.insertIntoContext(self.mainContext, address: place.address, city: place.city, downloadImageUrl: place.imageUrl, listName: defaultSavedList, location: place.location, phone: place.phone, placeId: place.venueId, placeName: place.name, price: place.priceValue as NSNumber?, notes: place.userNotes, rating: place.ratingValue as NSNumber?, state: place.state)
+    
+            if let cached = (self.imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: place.imageUrl as AnyObject) as? UIImage, let imageData = UIImagePNGRepresentation(cached) {
+                image = Image.insertIntoContext(self.mainContext, createdAt: NSDate() as Date, imageData: imageData, thumbData: nil)
+            }
+            
+            listPlace.listImageId = image?.id
         }
         tableVC.tableView.setEditing(false, animated: true)
     }
@@ -309,7 +315,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    
 }
 
 extension CreatePlaceViewController: UITextFieldDelegate {
@@ -339,8 +344,4 @@ extension CreatePlaceViewController: UISearchBarDelegate {
         let nc = UINavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
-  
 }
-
-
-

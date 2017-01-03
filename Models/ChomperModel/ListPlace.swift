@@ -55,7 +55,7 @@ public final class ListPlace: ManagedObject {
         if let list = List.findOrCreateList(listName, ownerId: AppData.sharedInstance.ownerUserEmail, inContext: moc) {
             listPlace.list = list
         }
-        
+     
         return listPlace
     }
     

@@ -157,7 +157,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
     
     func createNewList() {
         backgroundContext.performChanges { [unowned self] in
-            List.insertIntoContext(self.backgroundContext, name: (self.textField.text)!, ownerEmail: AppData.sharedInstance.ownerUserEmail)
+            let _ = List.insertIntoContext(self.backgroundContext, name: (self.textField.text)!, ownerEmail: AppData.sharedInstance.ownerUserEmail)
         }
         saveAction?()
         textField.resignFirstResponder()
