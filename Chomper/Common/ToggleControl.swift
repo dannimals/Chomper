@@ -16,7 +16,7 @@ class ToggleControl: UIControl {
     
     // MARK: - Properties 
     
-    fileprivate var labelTitles: [String]!
+    fileprivate var labelTitles: [NSAttributedString]!
     fileprivate var labels: [UILabel]!
     fileprivate var underlineView: UIView!
     fileprivate var buttonWidth: CGFloat {
@@ -25,6 +25,7 @@ class ToggleControl: UIControl {
         }
         return bounds.width / CGFloat(labels.count)
     }
+    private var showUnderlineView: Bool!
     fileprivate var startCenter: CGFloat = -1
     
     @IBInspectable var selectedIndex: Int = 0 {
@@ -53,7 +54,8 @@ class ToggleControl: UIControl {
 
     // MARK: - Initializers
     
-    required init(titles: [String]) {
+    required init(titles: [NSAttributedString], showUnderlineView show: Bool = true) {
+        showUnderlineView = show
         labelTitles = titles
         super.init(frame: CGRect.zero)
         setup()
@@ -75,6 +77,7 @@ class ToggleControl: UIControl {
         }
         frame = CGRect(x: CGFloat(selectedIndex) * buttonWidth, y: bounds.height - 2.5, width: buttonWidth, height: 2.5)
         underlineView.frame = frame
+        underlineView.isHidden = !showUnderlineView
         startCenter = underlineView.center.x
     }
     
@@ -106,7 +109,7 @@ class ToggleControl: UIControl {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.textAlignment = .center
-            label.text = title
+            label.attributedText = title
             addSubview(label)
             labels.append(label)
         }

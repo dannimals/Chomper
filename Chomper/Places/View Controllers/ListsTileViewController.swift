@@ -24,7 +24,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "sequenceNum", ascending: false), NSSortDescriptor(key: "name", ascending: true)]
         let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: mainContext, sectionNameKeyPath: nil, cacheName: nil)
         dataSource = ListsTileViewModel(delegate: self, fetchedResultsController: frc as! NSFetchedResultsController<NSFetchRequestResult>)
-   
         
         //
         // Set up collection view
@@ -33,7 +32,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.white
         collectionView!.registerCell(ListsCollectionViewCell.self)
-
     }
     
     // MARK: - UICollectionViewDataSource methods
@@ -48,14 +46,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListsCollectionViewCell.reuseIdentifier, for: indexPath) as? ListsCollectionViewCell else { fatalError("PlaceListCell not found") }
-        if dataSource.objectAtIndexPath(indexPath) == nil {
-            cell.addAction = { [weak self] in
-                let vc = CreateListViewController()
-                vc.modalTransitionStyle = .crossDissolve
-                vc.modalPresentationCapturesStatusBarAppearance = true
-                self?.present(vc, animated: true, completion: nil)
-            }
-        }
         return cell
     }
     
@@ -68,11 +58,7 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             if let listImageId = object.listPlaces?.first?.listImageId, let imageObject = Image.findOrFetchInContext(mainContext, matchingPredicate: NSPredicate(format: "id == %@", listImageId)) {
                 image = UIImage(data: imageObject.imageData)
             }
-            cell.configureCell(object.name, count: object.listPlaces?.count ?? 0, hideTrailingSeparator: isEndRow(indexPath), hideBottomSeparator: isBottomRow(indexPath), image: image)
-        } else {
-            //
-            // Object is nil means cell is a "+"
-            cell.configureAddCell(isEndRow(indexPath))
+            cell.configureCell(object.name, count: object.listPlaces?.count ?? 0, image: image)
         }
     }
     
@@ -84,25 +70,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
             nc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationCapturesStatusBarAppearance = true
             present(nc, animated: true, completion: nil)
-           
         }
     }
-    
-    // MARK: - Handlers
-    
-    func isEndRow(_ indexPath: IndexPath) -> Bool {
-         return indexPath.row % 2 != 0
-    }
-    
-    func isBottomRow(_ indexPath: IndexPath) -> Bool {
-        let numRows = dataSource.numberOfItemsInSection(indexPath.section)
-        if  numRows % 2 == 0 {
-            return indexPath.row == numRows - 1 || indexPath.row == numRows - 2
-        }
-        return false
-    }
-
-    
 }
-
-

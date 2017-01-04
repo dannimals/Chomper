@@ -9,19 +9,20 @@
 import Common
 import WebServices
 
-class ListsViewController: BaseViewController {
+class ListsViewController: UIViewController {
     
-    fileprivate var viewModeControl: UISegmentedControl!
-    fileprivate var tileViewController: ListsTileViewController!
-    fileprivate var listViewController: ListsTableViewController!
-    fileprivate var scrollView: UIScrollView!
     fileprivate var toggle: ListsToggleControl!
-    
+
+    private var listViewController: ListsTableViewController!
+    private var scrollView: UIScrollView!
+    private var tileViewController: ListsTileViewController!
+    private var viewModeControl: UISegmentedControl!
+    private var actionToggle: ActionToggleControl!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createNewList))
         
         //
         // Set up toggle and parent scrollView
@@ -34,6 +35,7 @@ class ListsViewController: BaseViewController {
         
         createListViewController()
         createTileViewController()
+        createActionControl()
         
         let views: [String: AnyObject] = [
             "topLayoutGuide": topLayoutGuide,
@@ -73,8 +75,31 @@ class ListsViewController: BaseViewController {
     
     // MARK: - Helpers
     
+    func createActionControl() {
+        actionToggle = ActionToggleControl(titles: [NSAttributedString(string: "+"), NSAttributedString(string: "Map")], showUnderlineView: false)
+        actionToggle.labelTappedAction = { [weak self] index in
+            self?.handleActionForIndex(index: index)
+        }
+        view.addSubview(actionToggle)
+        NSLayoutConstraint.useAndActivateConstraints([
+            actionToggle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            actionToggle.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(tabBarController!.tabBar.bounds.height + 20)),
+            actionToggle.widthAnchor.constraint(equalToConstant: 100),
+            actionToggle.heightAnchor.constraint(equalToConstant: 40)
+        ])
+    }
+    
+    func handleActionForIndex(index: Int) {
+        if index == 0 {
+            let vc = CreateListViewController()
+            vc.modalTransitionStyle = .crossDissolve
+            vc.modalPresentationCapturesStatusBarAppearance = true
+            present(vc, animated: true, completion: nil)
+        }
+    }
+    
     func createToggle() {
-        toggle = ListsToggleControl(titles: [NSLocalizedString("Tile", comment: "tile"), NSLocalizedString("List", comment: "list")])
+        toggle = ListsToggleControl(titles: [NSAttributedString(string: NSLocalizedString("Tile", comment: "Tile")), NSAttributedString(string: NSLocalizedString("List", comment: "List"))])
         toggle.labelTappedAction = { [unowned self] (index) in
             self.toggleViews(index)
         }
@@ -103,15 +128,7 @@ class ListsViewController: BaseViewController {
         scrollView.showsVerticalScrollIndicator = false
     }
     
-    func createNewList() {
-        let vc = CreateListViewController()
-        vc.modalTransitionStyle = .crossDissolve
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalPresentationCapturesStatusBarAppearance = true
-        present(vc, animated: true, completion: nil)
-    }
-    
-    fileprivate func createTileViewController() {
+    private func createTileViewController() {
         let layout = ListsCollectionViewLayout()
         tileViewController = ListsTileViewController(collectionViewLayout: layout)
         addChildViewController(tileViewController)
@@ -121,7 +138,7 @@ class ListsViewController: BaseViewController {
         tileViewController.collectionView?.scrollsToTop = false
     }
     
-    fileprivate func createListViewController() {
+    private func createListViewController() {
         listViewController = ListsTableViewController()
         addChildViewController(listViewController)
         listViewController.didMove(toParentViewController: self)
@@ -137,5 +154,29 @@ extension ListsViewController: UIScrollViewDelegate {
         } else {
             toggle.setSelectedIndex(1)
         }
+    }
+}
+
+class ActionToggleControl: ToggleControl {
+    var labelTappedAction: ((_ index: Int) -> Void)?
+    
+    override func labelTappedWithIndex(_ index: Int) {
+        labelTappedAction?(index)
+    }
+    
+    required init(titles: [NSAttributedString], showUnderlineView show: Bool) {
+        super.init(titles: titles, showUnderlineView: show)
+        
+        font = UIFont.chomperFontForTextStyle("p small")
+        unselectedColor = UIColor.white
+        selectedColor = UIColor.white
+        layer.cornerRadius = 20
+        backgroundColor = UIColor.orange.withAlphaComponent(0.8)
+        layer.borderColor = UIColor.orange.cgColor
+        layer.borderWidth = 1
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

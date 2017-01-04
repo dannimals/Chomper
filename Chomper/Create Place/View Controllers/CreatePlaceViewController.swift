@@ -18,15 +18,17 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     // MARK: - Properties
     
     let locationManager = CLLocationManager()
+    
     var viewModel: CreatePlaceViewModel?
     var searchView: CreatePlaceSearchView!
+    
+    internal var searchLocationCoord: CLLocation?
+
     private var loadingView: UIView!
     private var loadingLabel: UILabel!
-    internal var searchLocationCoord: CLLocation?
     private var searchTerm: String?
-
     private var tableVC: UITableViewController!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,7 +51,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .none
         tableVC.tableView.registerNib(PlaceTableViewCell.self)
-        
         
         //
         // Set up search view
@@ -91,7 +92,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
             options: [],
             metrics: nil,
             views: views)
-            
         )
         
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -99,7 +99,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
             options: [],
             metrics: nil,
             views: views)
-            
         )
         
         view.addConstraints(NSLayoutConstraint.constraints(
@@ -114,9 +113,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
             options: [],
             metrics: nil,
             views: views)
-            
         )
-
         
         // 
         // Call webService for recommended places near current location
@@ -138,7 +135,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Handlers
@@ -277,9 +274,9 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
                         }
                     }
                 }.resume()
-
             }
         }
+        
         return cell
     }
     

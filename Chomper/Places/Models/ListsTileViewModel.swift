@@ -40,7 +40,7 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
         // Add an extra "+" cell in collectionView
         
         guard let sec = sections?[section] else { return 1 }
-        return sec.numberOfObjects + 1
+        return sec.numberOfObjects
     }
     
     func numberOfSections() -> Int {
@@ -86,6 +86,4 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         self.delegate.dataProviderDidUpdate(self.updates)
     }
-    
 }
-

@@ -137,8 +137,6 @@ class CreatePlaceSearchView: UIView {
                 self?.locationSearch.text = nil
                 self?.textSearch.text = nil
         })
-        
-      
     }
     
     @IBAction
@@ -150,5 +148,4 @@ class CreatePlaceSearchView: UIView {
     func searchAction(_ sender: UIButton) {
         searchAction?()
     }
-    
 }

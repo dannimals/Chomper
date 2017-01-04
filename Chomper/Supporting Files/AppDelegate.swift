@@ -125,7 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        let nc = BaseNavigationController(rootViewController: myPlacesVC)
         
         let createPlaceVC = CreatePlaceViewController(nibName: nil, bundle: nil)
         createPlaceVC.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
@@ -136,9 +135,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         
         let tabBarVC = UITabBarController()
-        let controllers = [nc, createPlaceVC]
+        let controllers = [myPlacesVC, createPlaceVC]
         tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = nc
+        tabBarVC.selectedViewController = myPlacesVC
         window?.rootViewController = tabBarVC
         
     }
