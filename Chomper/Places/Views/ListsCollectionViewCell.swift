@@ -12,19 +12,18 @@ class ListsCollectionViewCell: UICollectionViewCell {
     fileprivate(set) var addButton: UIButton!
     fileprivate(set) var titleLabel: UILabel!
     fileprivate(set) var listImageView: UIImageView!
-    fileprivate var vibrancyEffectView: UIVisualEffectView!
     fileprivate var blurredEffectView: UIVisualEffectView!
     fileprivate var countLabel: UILabel!
-    fileprivate var separatorColor = UIColor.lightGray
-    var trailingSeparator: UIView!
-    var bottomSeparator: UIView!
+//    fileprivate var separatorColor = UIColor.lightGray
+//    var trailingSeparator: UIView!
+//    var bottomSeparator: UIView!
     fileprivate var isAdd: Bool = false {
         didSet {
             if isAdd {
                 addButton.isHidden = false
                 titleLabel.isHidden = true
                 countLabel.isHidden = true
-                bottomSeparator.isHidden = true
+//                bottomSeparator.isHidden = true
             } else {
                 addButton.isHidden = true
                 titleLabel.isHidden = false
@@ -48,57 +47,48 @@ class ListsCollectionViewCell: UICollectionViewCell {
         initialize()
     }
     
-    
     fileprivate func initialize() {
         
-        //
-        // Separators
-        
-        trailingSeparator = UIView()
-        contentView.addSubview(trailingSeparator)
-        trailingSeparator.backgroundColor = separatorColor
-        
-        bottomSeparator = UIView()
-        contentView.addSubview(bottomSeparator)
-        bottomSeparator.backgroundColor = separatorColor
+//        //
+//        // Separators
+//        
+//        trailingSeparator = UIView()
+//        contentView.addSubview(trailingSeparator)
+//        trailingSeparator.backgroundColor = separatorColor
+//        
+//        bottomSeparator = UIView()
+//        contentView.addSubview(bottomSeparator)
+//        bottomSeparator.backgroundColor = separatorColor
         
         //
         // Lists Image View
         
         listImageView = UIImageView()
         contentView.addSubview(listImageView)
-
-        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffect = UIBlurEffect(style: .dark)
         blurredEffectView = UIVisualEffectView(effect: blurEffect)
-        blurredEffectView.alpha = 0.4
+        blurredEffectView.alpha = 0.5
         contentView.addSubview(blurredEffectView)
-        
-        let vibrancyEffect = UIVibrancyEffect(blurEffect: blurEffect)
-        vibrancyEffectView = UIVisualEffectView(effect: vibrancyEffect)
-        contentView.addSubview(vibrancyEffectView)
         
         //
         // Title text view
         
         titleLabel = UILabel()
         contentView.addSubview(titleLabel)
-        vibrancyEffectView.contentView.addSubview(titleLabel)
         titleLabel.setContentCompressionResistancePriority(249, for: .vertical)
         titleLabel.numberOfLines = 2
         titleLabel.preferredMaxLayoutWidth = contentView.frame.width - 20
-        titleLabel.textColor = UIColor.lightGray
-        titleLabel.font = UIFont.chomperFontForTextStyle("p")
+        titleLabel.textColor = UIColor.white
+        titleLabel.font = UIFont.chomperFontForTextStyle("h4")
         
         //
         // Count label
         
         countLabel = UILabel()
         countLabel.numberOfLines = 1
-        countLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(countLabel)
-        vibrancyEffectView.contentView.addSubview(countLabel)
         countLabel.font = UIFont.chomperFontForTextStyle("p small")
-        countLabel.textColor = UIColor.orange
+        countLabel.textColor = UIColor.white
 
         //
         // "+" button
@@ -122,31 +112,25 @@ class ListsCollectionViewCell: UICollectionViewCell {
             blurredEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             blurredEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
             blurredEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            vibrancyEffectView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            vibrancyEffectView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            vibrancyEffectView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            vibrancyEffectView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             listImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             listImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             listImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             listImageView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            trailingSeparator.widthAnchor.constraint(equalToConstant: 0.75),
-            trailingSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
-            trailingSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            trailingSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+//            trailingSeparator.widthAnchor.constraint(equalToConstant: 0.75),
+//            trailingSeparator.topAnchor.constraint(equalTo: contentView.topAnchor),
+//            trailingSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+//            trailingSeparator.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             countLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
-            bottomSeparator.heightAnchor.constraint(equalToConstant: 0.75),
-            bottomSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            bottomSeparator.trailingAnchor.constraint(equalTo: trailingSeparator.leadingAnchor),
-            bottomSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+//            bottomSeparator.heightAnchor.constraint(equalToConstant: 0.75),
+//            bottomSeparator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+//            bottomSeparator.trailingAnchor.constraint(equalTo: trailingSeparator.leadingAnchor),
+//            bottomSeparator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             addCenterX,
             addCenterY
         ])
-        
-        blurredEffectView.contentView.addSubview(vibrancyEffectView)
     }
     
     override func prepareForReuse() {
@@ -154,12 +138,13 @@ class ListsCollectionViewCell: UICollectionViewCell {
         
         isAdd = false
         titleLabel.text = nil
+        titleLabel.textColor = UIColor.white
         countLabel.text = nil
-        trailingSeparator.isHidden = false
-        bottomSeparator.isHidden = false
+        countLabel.textColor = UIColor.white
+//        trailingSeparator.isHidden = false
+//        bottomSeparator.isHidden = false
         listImageView.isHidden = false
-        vibrancyEffectView.isHidden = false
-        blurredEffectView.alpha = 0.4
+        blurredEffectView.alpha = 0.5
     }
     
     
@@ -169,8 +154,13 @@ class ListsCollectionViewCell: UICollectionViewCell {
         isAdd = false
         titleLabel.text = NSLocalizedString(title, comment: "title")
         countLabel.text = count == 0 ? nil : NSLocalizedString(String(count), comment: "count")
-        trailingSeparator.isHidden = hideTrailingSeparator!
-        bottomSeparator.isHidden = hideBottomSeparator!
+//        trailingSeparator.isHidden = hideTrailingSeparator!
+//        bottomSeparator.isHidden = hideBottomSeparator!
+        if title == defaultSavedList {
+            countLabel.textColor = UIColor.lightGray
+            titleLabel.textColor = UIColor.lightGray
+            blurredEffectView.alpha = 0
+        }
         if let image = image {
             listImageView.image = image
         }
@@ -179,9 +169,8 @@ class ListsCollectionViewCell: UICollectionViewCell {
     func configureAddCell(_ hideTrailingSeparator: Bool = false) {
         isAdd = true
         listImageView.isHidden = true
-        vibrancyEffectView.isHidden = true
         blurredEffectView.alpha = 0
-        trailingSeparator.isHidden = hideTrailingSeparator
+//        trailingSeparator.isHidden = hideTrailingSeparator
     }
     
     @IBAction

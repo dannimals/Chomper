@@ -11,10 +11,10 @@ import Common
 class ListsCollectionViewLayout: UICollectionViewLayout {
     
     fileprivate var contentSize = CGSize.zero
-    fileprivate var horizontalPadding: CGFloat = 15.0
-    fileprivate var verticalPadding: CGFloat = 10.0
-    fileprivate var horizontalInset: CGFloat =  0.0
-    fileprivate var verticalInset: CGFloat =  0.0
+    fileprivate var horizontalPadding: CGFloat = 0.0
+    fileprivate var verticalPadding: CGFloat = 0.0
+    fileprivate var horizontalInset: CGFloat =  2.0
+    fileprivate var verticalInset: CGFloat =  2.0
     fileprivate var itemWidth: CGFloat = 0.0
     fileprivate var layoutAttributes = Dictionary<String, UICollectionViewLayoutAttributes>()
     

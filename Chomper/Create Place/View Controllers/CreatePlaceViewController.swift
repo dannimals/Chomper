@@ -130,7 +130,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         if searchView.layer.shadowPath == nil {
             searchView.setShadow()
         }
-
     }
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
@@ -305,7 +304,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let save = UITableViewRowAction(style: .normal, title: "Save") { [unowned self] (_, indexPath) in
+        let save = UITableViewRowAction(style: .normal, title: "Favorite") { [unowned self] (_, indexPath) in
             self.quickSave(indexPath: indexPath as NSIndexPath)
         }
         save.backgroundColor = UIColor.orange

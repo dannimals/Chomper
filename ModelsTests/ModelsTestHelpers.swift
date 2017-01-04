@@ -21,7 +21,7 @@ extension NSManagedObjectContext {
     
     static func chomperTestContext(_ addStore: (NSPersistentStoreCoordinator) -> ()) -> NSManagedObjectContext {
         // TODO: refactor later after versioning
-        let model = NSManagedObjectModel.mergedModelFromBundles([Bundle(forClass: Place.self)])!
+        let model = NSManagedObjectModel.mergedModel(from: [Bundle(for: Place.self)])!
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
         addStore(coordinator)
         let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)

@@ -63,7 +63,7 @@ class ActionListViewModel: BaseViewModel {
     func getTitleForAction(_ action: Action) -> String {
         switch action {
             case .quickSave:
-                return NSLocalizedString("Save", comment: "save")
+                return NSLocalizedString("Favorites", comment: "Add to Favorites")
             case .addToList:
                 return NSLocalizedString("Add to List", comment: "add to list")
         }

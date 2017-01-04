@@ -37,8 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (try! moc.count(for: fetchRequest) == 0){
             moc.performChanges {
                 let _ = User.insertIntoContext(moc, email: AppData.sharedInstance.ownerUserEmail)
-                let saved = List.insertIntoContext(moc, name: defaultSavedList, ownerEmail: AppData.sharedInstance.ownerUserEmail)
-                saved.sequenceNum = 1
+                let favorites = List.insertIntoContext(moc, name: defaultSavedList, ownerEmail: AppData.sharedInstance.ownerUserEmail)
+                favorites.sequenceNum = 1
             }
         }
 
