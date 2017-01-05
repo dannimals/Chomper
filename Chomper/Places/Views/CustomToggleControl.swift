@@ -29,9 +29,12 @@ class CustomToggleControl: UIControl {
         super.layoutSubviews()
         
         let width = bounds.width / CGFloat(labels.count)
+        let shadowRect = CGRect(x: 3, y: bounds.height - 3, width: bounds.width - 5, height: 8.0)
+        let shadowColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1).cgColor
         var frame: CGRect
         
         layer.cornerRadius = bounds.height / 2
+        setShadow(shadowColor, opacity: 0.9, height: 8.0, shadowRect: shadowRect)
 
         for (index, label) in labels.enumerated() {
             frame = label.frame
@@ -48,7 +51,7 @@ class CustomToggleControl: UIControl {
             if index != labels.count - 1 {
                 let separator = UIView()
                 addSubview(separator)
-                separator.backgroundColor = UIColor.white
+                separator.backgroundColor = UIColor(red: 168/255, green: 168/255, blue: 168/255, alpha: 1)
                 frame = CGRect(x: label.frame.maxX, y: 0, width: 1, height: bounds.height)
                 separator.frame = frame
             }
@@ -56,12 +59,9 @@ class CustomToggleControl: UIControl {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var calcIndex: Int?
-        
         if let location = touches.first?.location(in: self) {
-            for (index, item) in labels.enumerated() {
+            for (_, item) in labels.enumerated() {
                 if item.frame.contains(location) {
-                    calcIndex = index
                     item.layer.backgroundColor = UIColor.orange.cgColor
                 }
             }

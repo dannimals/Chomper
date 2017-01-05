@@ -10,9 +10,7 @@ import Common
 import WebServices
 
 class ListsViewController: UIViewController {
-    
     fileprivate var toggle: ListsToggleControl!
-
     private var listViewController: ListsTableViewController!
     private var scrollView: UIScrollView!
     private var tileViewController: ListsTileViewController!
@@ -76,7 +74,9 @@ class ListsViewController: UIViewController {
     // MARK: - Helpers
     
     func createActionControl() {
-        actionToggle = CustomToggleControl(titles: [NSAttributedString(string: "+"), NSAttributedString(string: "Map")])
+        let add = NSAttributedString(string: "+", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")])
+        let map = NSAttributedString(string: "Map", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("p")])
+        actionToggle = CustomToggleControl(titles: [add, map])
         view.addSubview(actionToggle)
         actionToggle.selectedIndex = { [weak self] index in
             self?.handleActionForIndex(index: index)
@@ -86,7 +86,7 @@ class ListsViewController: UIViewController {
             actionToggle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             actionToggle.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(tabBarController!.tabBar.bounds.height + 20)),
             actionToggle.widthAnchor.constraint(equalToConstant: 120),
-            actionToggle.heightAnchor.constraint(equalToConstant: 30)
+            actionToggle.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     
@@ -100,7 +100,12 @@ class ListsViewController: UIViewController {
     }
     
     func createToggle() {
-        toggle = ListsToggleControl(titles: [NSAttributedString(string: NSLocalizedString("Tile", comment: "Tile")), NSAttributedString(string: NSLocalizedString("List", comment: "List"))])
+        let tile = NSMutableAttributedString(string: "Tile")
+//        let tileIcon = NSTextAttachment()
+//        tileIcon.image = UIImage(named: "TileIcon")
+//        let tileIconString = NSAttributedString(attachment: tileIcon)
+//        tile.append(tileIconString)
+        toggle = ListsToggleControl(titles: [tile, NSAttributedString(string: NSLocalizedString("List", comment: "List"))])
         toggle.labelTappedAction = { [unowned self] (index) in
             self.toggleViews(index)
         }
