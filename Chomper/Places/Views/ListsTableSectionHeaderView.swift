@@ -30,19 +30,19 @@ class ListsTableSectionHeaderView: UITableViewHeaderFooterView {
     // MARK: - Helpers
     
     fileprivate func initialize() {
-        contentView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        contentView.backgroundColor = UIColor.softWhite().withAlphaComponent(0.8)
 
         titleLabel = UILabel()
         contentView.addSubview(titleLabel)
         titleLabel.font = UIFont.chomperFontForTextStyle("h4")
         titleLabel.text = nil
-        titleLabel.textColor = UIColor.lightGray
+        titleLabel.textColor = UIColor.darkGrey()
         
         countLabel = UILabel()
         contentView.addSubview(countLabel)
         countLabel.font = UIFont.chomperFontForTextStyle("h4")
         countLabel.text = nil
-        countLabel.textColor = UIColor.lightGray
+        countLabel.textColor = UIColor.darkGrey()
         
         NSLayoutConstraint.useAndActivateConstraints([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15.0),

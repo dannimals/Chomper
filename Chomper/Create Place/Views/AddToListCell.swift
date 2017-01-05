@@ -33,12 +33,12 @@ class AddToListCell: UITableViewCell {
     func setup() {
         titleLabel = UILabel()
         titleLabel.numberOfLines = 1
-        titleLabel.textColor = UIColor.orange
+        titleLabel.textColor = UIColor.darkOrange()
         titleLabel.font = UIFont.chomperFontForTextStyle("h4")
         contentView.addSubview(titleLabel)
         
         separator = UIView()
-        separator.backgroundColor = UIColor.lightGray
+        separator.backgroundColor = UIColor.softGrey()
         contentView.addSubview(separator)
         
         NSLayoutConstraint.useAndActivateConstraints([
@@ -55,7 +55,4 @@ class AddToListCell: UITableViewCell {
     func configureCell(_ title: String) {
         titleLabel.text = NSLocalizedString(title, comment: "title")
     }
-    
 }
-
-

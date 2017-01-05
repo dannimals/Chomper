@@ -25,32 +25,32 @@ class PlaceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        separator.backgroundColor = UIColor.lightGray
+        separator.backgroundColor = UIColor.softGrey()
         separator.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
 
         nameLabel.font = UIFont.chomperFontForTextStyle("p")
-        nameLabel.textColor = UIColor.darkGray
+        nameLabel.textColor = UIColor.textColor()
         
         addressLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        addressLabel.textColor = UIColor.gray
+        addressLabel.textColor = UIColor.darkGrey()
         
         priceLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        priceLabel.textColor = UIColor.orange
+        priceLabel.textColor = UIColor.darkOrange()
         
         placeImageView.contentMode = .scaleAspectFill
         placeImageView.clipsToBounds = true
         placeImageView.layer.cornerRadius = 5
         placeImageView.layer.borderWidth = 1
-        placeImageView.layer.borderColor = UIColor.orange.cgColor
+        placeImageView.layer.borderColor = UIColor.darkOrange().cgColor
         
         ratingLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        ratingLabel.textColor = UIColor.orange
+        ratingLabel.textColor = UIColor.darkOrange()
         
         visitedLabel.font = UIFont.chomperFontForTextStyle("smallest")
-        visitedLabel.textColor = UIColor.orange
+        visitedLabel.textColor = UIColor.darkOrange()
         
         distanceLabel.font = UIFont.chomperFontForTextStyle("p small")
-        distanceLabel.textColor = UIColor.orange
+        distanceLabel.textColor = UIColor.darkOrange()
         
         prepareForReuse()
     }

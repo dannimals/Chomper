@@ -30,20 +30,20 @@ class ActionListViewController: BaseViewController {
         // Create blur background view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             view.backgroundColor = UIColor.clear
-            
             let blurEffect = UIBlurEffect(style: .extraLight)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = view.bounds
             blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(blurEffectView)
         } else {
-            view.backgroundColor = UIColor.lightGray
+            view.backgroundColor = UIColor.softWhite()
         }
         
         //
         // Create tableView
         
         tableView = UITableView()
+        tableView.backgroundColor = UIColor.softWhite()
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -55,14 +55,15 @@ class ActionListViewController: BaseViewController {
         // Create bottom cancel button
         
         let cancelButton = UIButton()
-        cancelButton.tintColor = UIColor.white
+        cancelButton.tintColor = UIColor.softWhite()
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), for: UIControlState())
-        cancelButton.setTitleColor(UIColor.darkGray, for: UIControlState())
-        cancelButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        cancelButton.setTitleColor(UIColor.textColor(), for: UIControlState())
+        cancelButton.setBackgroundImage(UIImage.fromColor(UIColor.softGrey()), for: .highlighted)
+        cancelButton.setTitleColor(UIColor.darkGrey(), for: .highlighted)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         cancelButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(cancelButton)
-        cancelButton.setShadow(UIColor.lightGray.cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
+        cancelButton.setShadow(UIColor.softGrey().cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0.0, y: 0.0, width: view.bounds.width, height: 1.5))
         
         NSLayoutConstraint.useAndActivateConstraints([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -104,7 +105,6 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
             }
             viewModel.performAction(forAction: action)
         }
-       
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

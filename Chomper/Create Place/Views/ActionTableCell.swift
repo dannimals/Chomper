@@ -9,8 +9,8 @@
 import Common
 
 class ActionTableCell: UITableViewCell {
-    fileprivate var label: UILabel!
-    fileprivate var separator: UIView!
+    private var label: UILabel!
+    private var separator: UIView!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,16 +28,16 @@ class ActionTableCell: UITableViewCell {
     }
     
     fileprivate func setup() {
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor = UIColor.softWhite()
         
         label = UILabel()
         contentView.addSubview(label)
         label.textAlignment = .left
         label.font = UIFont.chomperFontForTextStyle("h4")
-        label.textColor = UIColor.orange
+        label.textColor = UIColor.darkOrange()
         
         separator = UIView()
-        separator.backgroundColor = UIColor.lightGray
+        separator.backgroundColor = UIColor.softGrey()
         contentView.addSubview(separator)
         
         NSLayoutConstraint.useAndActivateConstraints([

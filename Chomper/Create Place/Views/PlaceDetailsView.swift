@@ -93,42 +93,41 @@ class PlaceDetailsView: UIView {
         super.awakeFromNib()
         
         addressLabel.font = UIFont.chomperFontForTextStyle("p small")
-        addressLabel.textColor = UIColor.darkGray
+        addressLabel.textColor = UIColor.textColor()
         addressLabel.numberOfLines = 2
         
         detailsContainerView.setShadow()
         
-        imageCollectionView.backgroundColor = UIColor.white
+        imageCollectionView.backgroundColor = UIColor.softWhite()
         imageCollectionView.registerCell(ImageCollectionCell.self)
         
         listsLabel.font = UIFont.chomperFontForTextStyle("p small")
-        listsLabel.textColor = UIColor.darkText
+        listsLabel.textColor = UIColor.darkGrey()
         
         let mapGR = UITapGestureRecognizer(target: self, action: #selector(mapViewTapped))
         mapView.addGestureRecognizer(mapGR)
         
         notesView.font = UIFont.chomperFontForTextStyle("h4")
         notesView.textContainerInset = UIEdgeInsetsMake(10, 8, 0, 8)
-        notesView.textColor = UIColor.darkGray
+        notesView.textColor = UIColor.textColor()
 
         phoneLabel.font = UIFont.chomperFontForTextStyle("p small")
-        phoneLabel.textColor = .orange
+        phoneLabel.textColor = UIColor.darkOrange()
         phoneLabel.isUserInteractionEnabled = true
         let phoneGR = UITapGestureRecognizer(target: self, action: #selector(phoneLabelTapped))
         phoneLabel.addGestureRecognizer(phoneGR)
         
         priceLabel.font = UIFont.chomperFontForTextStyle("p small")
-        priceLabel.textColor = UIColor.lightGray
+        priceLabel.textColor = UIColor.darkGrey()
 
         ratingLabel.font = UIFont.chomperFontForTextStyle("p small")
-        ratingLabel.textColor = UIColor.lightGray
+        ratingLabel.textColor = UIColor.darkGrey()
         
         addressLabel.isHidden = true
         phoneLabel.isHidden = true
         priceLabel.isHidden = true
         listsLabel.isHidden = true
         ratingLabel.isHidden = true
-        
     }
     
     // MARK: - Helpers
@@ -182,5 +181,4 @@ class PlaceDetailsView: UIView {
         let region = MKCoordinateRegion(center: coord, span: span)
         mapView.setRegion(region, animated: true)
     }
-
 }

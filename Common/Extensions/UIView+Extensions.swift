@@ -9,7 +9,7 @@
 
 extension UIView {
     
-    public func setShadow(_ color: CGColor = UIColor.lightGray.cgColor, opacity: Float = 0.75, height: CGFloat = 3.5, shadowRect: CGRect? = nil) {
+    public func setShadow(_ color: CGColor = UIColor.softGrey().cgColor, opacity: Float = 0.75, height: CGFloat = 3.5, shadowRect: CGRect? = nil) {
         let viewBounds = layer.bounds
         let shadowFrame = CGRect(x: viewBounds.origin.x, y: viewBounds.maxY, width: viewBounds.width, height: height)
         

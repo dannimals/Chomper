@@ -218,13 +218,13 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         loadingView = UIView()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loadingView)
-        loadingView.backgroundColor = UIColor.white
+        loadingView.backgroundColor = UIColor.softWhite()
         loadingView.isHidden = true
         
         loadingLabel = UILabel()
         loadingView.addSubview(loadingLabel)
         loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
-        loadingLabel.textColor = UIColor.orange
+        loadingLabel.textColor = UIColor.darkOrange()
         loadingLabel.font = UIFont.chomperFontForTextStyle("h4")
        
         NSLayoutConstraint.useAndActivateConstraints([
@@ -304,7 +304,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         let save = UITableViewRowAction(style: .normal, title: "Favorite") { [unowned self] (_, indexPath) in
             self.quickSave(indexPath: indexPath as NSIndexPath)
         }
-        save.backgroundColor = UIColor.orange
+        save.backgroundColor = UIColor.softOrange()
         return [save]
     }
     

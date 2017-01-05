@@ -34,13 +34,13 @@ class ToggleControl: UIControl {
         }
     }
     
-    @IBInspectable var selectedColor: UIColor = UIColor.orange {
+    @IBInspectable var selectedColor: UIColor = UIColor.darkOrange() {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable var unselectedColor: UIColor = UIColor.lightGray {
+    @IBInspectable var unselectedColor: UIColor = UIColor.darkGrey() {
         didSet {
             setSelectedColors()
         }

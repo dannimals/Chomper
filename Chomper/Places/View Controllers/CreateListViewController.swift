@@ -33,7 +33,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         //
         // Set up view
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.softWhite()
         let effect = UIBlurEffect(style: .extraLight)
         let blurView = UIVisualEffectView(effect: effect)
         blurView.frame = view.frame
@@ -56,8 +56,8 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         cancelButton.addTarget(self, action: #selector(cancelTapped(_:)), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(cancelButton)
-        cancelButton.setTitleColor(UIColor.gray, for: .highlighted)
-        cancelButton.setTitleColor(UIColor.lightGray, for: UIControlState())
+        cancelButton.setTitleColor(UIColor.textColor(), for: .highlighted)
+        cancelButton.setTitleColor(UIColor.darkGrey(), for: UIControlState())
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), for: UIControlState())
         
@@ -66,8 +66,8 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         saveButton.addTarget(self, action: #selector(saveTapped(_:)), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(saveButton)
-        saveButton.setTitleColor(UIColor.lightGray, for: .highlighted)
-        saveButton.setTitleColor(UIColor.orange, for: UIControlState())
+        saveButton.setTitleColor(UIColor.darkGrey(), for: .highlighted)
+        saveButton.setTitleColor(UIColor.darkOrange(), for: UIControlState())
         saveButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         saveButton.setTitle(NSLocalizedString("Save", comment: "save"), for: UIControlState())
         
@@ -104,8 +104,8 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         view.addSubview(textField)
         textField.autocorrectionType = .no
         textField.returnKeyType = .done
-        textField.textColor = UIColor.lightGray
-        textField.tintColor = UIColor.orange
+        textField.textColor = UIColor.textColor()
+        textField.tintColor = UIColor.darkOrange()
         textField.font = UIFont.chomperFontForTextStyle("h2")
         textField.placeholder = NSLocalizedString("Create a new list", comment: "list name")
         titleTopLayout = NSLayoutConstraint(item: textField, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0)
@@ -114,12 +114,12 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         let lineView = UIView()
         view.addSubview(lineView)
         lineView.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
-        lineView.backgroundColor = UIColor.lightGray
+        lineView.backgroundColor = UIColor.darkGrey()
         
         errorLabel = UILabel()
         view.addSubview(errorLabel)
         errorLabel.font = UIFont.chomperFontForTextStyle("p small")
-        errorLabel.textColor = UIColor.orange
+        errorLabel.textColor = UIColor.darkOrange()
        
         NSLayoutConstraint.useAndActivateConstraints([
             errorLabel.leadingAnchor.constraint(equalTo: lineView.leadingAnchor),

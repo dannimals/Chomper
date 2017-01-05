@@ -34,7 +34,7 @@ class CreatePlaceSearchView: UIView {
     
     func initialize() {
         view = UIView()
-        view.backgroundColor = UIColor.orange
+        view.backgroundColor = UIColor.darkOrange()
         addSubview(view)
         
         containerView = UIStackView()
@@ -55,23 +55,23 @@ class CreatePlaceSearchView: UIView {
         cancelButton.addTarget(self, action: #selector(cancelAction(_:)), for: .touchUpInside)
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("p-small")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancel"), for: UIControlState())
-        cancelButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        cancelButton.setTitleColor(UIColor.softGrey(), for: .highlighted)
         buttonContainerView.addSubview(cancelButton)
         
         searchButton = UIButton()
         searchButton.addTarget(self, action: #selector(searchAction(_:)), for: .touchUpInside)
         searchButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         searchButton.setTitle(NSLocalizedString("Search", comment: "Search"), for: UIControlState())
-        searchButton.setTitleColor(UIColor.lightGray, for: .highlighted)
+        searchButton.setTitleColor(UIColor.softGrey(), for: .highlighted)
         buttonContainerView.addSubview(searchButton)
 
         
         textSearch = UITextField()
-        textSearch.tintColor = UIColor.orange
+        textSearch.tintColor = UIColor.darkOrange()
         textSearch.clearButtonMode = .whileEditing
         textSearch.returnKeyType = .search
         textSearch.font = UIFont.chomperFontForTextStyle("p")
-        textSearch.textColor = UIColor.darkGray
+        textSearch.textColor = UIColor.textColor()
         textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
         textSearch.backgroundColor = UIColor.white
         textSearch.layer.cornerRadius = 5.0
@@ -128,7 +128,7 @@ class CreatePlaceSearchView: UIView {
     }
     
     func cancelSearch() {
-        setShadow(UIColor.lightGray.cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0, y: 65.0, width: bounds.width, height: 3.5))
+        setShadow(UIColor.softGrey().cgColor, opacity: 0.75, height: 3.5, shadowRect: CGRect(x: 0, y: 65.0, width: bounds.width, height: 3.5))
         UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .curveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.isHidden = true
             self?.locationSearch.isHidden = true

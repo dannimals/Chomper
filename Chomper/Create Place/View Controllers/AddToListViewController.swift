@@ -69,7 +69,6 @@ class AddToListViewController: BaseViewController {
         } catch {
             fatalError("Could not load lists: \(error)")
         }
-        
     }
 
     // MARK: - Handlers
@@ -114,7 +113,6 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
             
             listPlace.listImageId = image?.id
         }
-
         dismiss(animated: true, completion: nil)
     }
 }

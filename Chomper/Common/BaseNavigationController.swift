@@ -20,6 +20,6 @@ class BaseNavigationController: UINavigationController {
         super.viewDidLoad()
         
         navigationBar.isTranslucent = false
-        navigationBar.setBackgroundImage(UIImage.fromColor(UIColor.orange), for: .default)
+        navigationBar.setBackgroundImage(UIImage.fromColor(UIColor.darkOrange()), for: .default)
     }
 }

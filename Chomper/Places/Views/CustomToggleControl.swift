@@ -10,7 +10,6 @@ import Common
 
 class CustomToggleControl: UIControl {
    
-    let defaultColor = UIColor(red: 1, green: 140/255, blue: 0, alpha: 1)
     var selectedIndex: ((_ index: Int) -> Void)?
     private var labelTitles: [NSAttributedString]!
     private var labels =  [UILabel]()
@@ -51,7 +50,7 @@ class CustomToggleControl: UIControl {
             if index != labels.count - 1 {
                 let separator = UIView()
                 addSubview(separator)
-                separator.backgroundColor = UIColor(red: 168/255, green: 168/255, blue: 168/255, alpha: 1)
+                separator.backgroundColor = UIColor.softGrey()
                 frame = CGRect(x: label.frame.maxX, y: 0, width: 1, height: bounds.height)
                 separator.frame = frame
             }
@@ -62,7 +61,7 @@ class CustomToggleControl: UIControl {
         if let location = touches.first?.location(in: self) {
             for (_, item) in labels.enumerated() {
                 if item.frame.contains(location) {
-                    item.layer.backgroundColor = UIColor.orange.cgColor
+                    item.layer.backgroundColor = UIColor.darkOrange().cgColor
                 }
             }
         }
@@ -75,7 +74,7 @@ class CustomToggleControl: UIControl {
             for (index, item) in labels.enumerated() {
                 if item.frame.contains(location) {
                     calcIndex = index
-                    item.layer.backgroundColor = defaultColor.cgColor
+                    item.layer.backgroundColor = UIColor.softOrange().cgColor
                 }
             }
             if let calcIndex = calcIndex {
@@ -92,7 +91,7 @@ class CustomToggleControl: UIControl {
     }
     
     private func setup() {
-        backgroundColor = defaultColor
+        backgroundColor = UIColor.softOrange()
         
         for title in labelTitles {
             let label = UILabel()

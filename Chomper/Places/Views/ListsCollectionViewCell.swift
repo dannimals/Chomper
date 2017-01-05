@@ -29,6 +29,7 @@ class ListsCollectionViewCell: UICollectionViewCell {
     }
     
     private func initialize() {
+        backgroundColor = UIColor.softWhite()
         
         //
         // Lists Image View
