@@ -17,7 +17,7 @@ class ListsViewController: UIViewController {
     private var scrollView: UIScrollView!
     private var tileViewController: ListsTileViewController!
     private var viewModeControl: UISegmentedControl!
-    private var actionToggle: ActionToggleControl!
+    private var actionToggle: CustomToggleControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,16 +76,17 @@ class ListsViewController: UIViewController {
     // MARK: - Helpers
     
     func createActionControl() {
-        actionToggle = ActionToggleControl(titles: [NSAttributedString(string: "+"), NSAttributedString(string: "Map")], showUnderlineView: false)
-        actionToggle.labelTappedAction = { [weak self] index in
+        actionToggle = CustomToggleControl(titles: [NSAttributedString(string: "+"), NSAttributedString(string: "Map")])
+        view.addSubview(actionToggle)
+        actionToggle.selectedIndex = { [weak self] index in
             self?.handleActionForIndex(index: index)
         }
-        view.addSubview(actionToggle)
+
         NSLayoutConstraint.useAndActivateConstraints([
             actionToggle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             actionToggle.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(tabBarController!.tabBar.bounds.height + 20)),
-            actionToggle.widthAnchor.constraint(equalToConstant: 100),
-            actionToggle.heightAnchor.constraint(equalToConstant: 40)
+            actionToggle.widthAnchor.constraint(equalToConstant: 120),
+            actionToggle.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -154,29 +155,5 @@ extension ListsViewController: UIScrollViewDelegate {
         } else {
             toggle.setSelectedIndex(1)
         }
-    }
-}
-
-class ActionToggleControl: ToggleControl {
-    var labelTappedAction: ((_ index: Int) -> Void)?
-    
-    override func labelTappedWithIndex(_ index: Int) {
-        labelTappedAction?(index)
-    }
-    
-    required init(titles: [NSAttributedString], showUnderlineView show: Bool) {
-        super.init(titles: titles, showUnderlineView: show)
-        
-        font = UIFont.chomperFontForTextStyle("p small")
-        unselectedColor = UIColor.white
-        selectedColor = UIColor.white
-        layer.cornerRadius = 20
-        backgroundColor = UIColor.orange.withAlphaComponent(0.8)
-        layer.borderColor = UIColor.orange.cgColor
-        layer.borderWidth = 1
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

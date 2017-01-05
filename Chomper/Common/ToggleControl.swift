@@ -164,5 +164,4 @@ class ToggleControl: UIControl {
     // MARK: - Override points
     
     func labelTappedWithIndex(_ index: Int) {}
-    
 }

@@ -63,11 +63,13 @@
 		9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* ChomperMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
+		9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */; };
 		9ECD0B731E19B379007BC592 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2157C1D19B347004C7C53 /* Common.framework */; };
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
 		9EDB67261D4FD6EC001E74A6 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67251D4FD6EC001E74A6 /* Image.swift */; };
 		9EDB67281D4FE4CC001E74A6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67271D4FE4CC001E74A6 /* AppData.swift */; };
 		9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */; };
+		9EDE8CFE1E1EE93B005B9651 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
 		9EE215621D19B27C004C7C53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */; };
 		9EE2156D1D19B27C004C7C53 /* ChomperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2156C1D19B27C004C7C53 /* ChomperTests.swift */; };
@@ -300,10 +302,12 @@
 		9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlace.swift; sourceTree = "<group>"; };
 		9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsObjectProtocol.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperMapper.swift; sourceTree = "<group>"; };
+		9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToggleControl.swift; sourceTree = "<group>"; };
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		9EDB67271D4FE4CC001E74A6 /* AppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelsTestHelpers.swift; sourceTree = "<group>"; };
+		9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EE215611D19B27C004C7C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -795,6 +799,7 @@
 		9EE216271D19BAA7004C7C53 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */,
 				9EA30C731D64D6EB00CDCE64 /* NSCache+Extensions.swift */,
 				9E690AB81D45548A009574DF /* NSLayoutConstraint+Extensions.swift */,
 				9E6736701D2EDCA400C00995 /* UIFont+Extensions.swift */,
@@ -842,6 +847,7 @@
 				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
 				9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */,
 				9E690AB61D4530D0009574DF /* ListsToggleControl.swift */,
+				9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1693,6 +1699,7 @@
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E1B4BDA1D5F98AA009855FF /* FetchedResultsTableDataProvider.swift in Sources */,
 				9E2A1F3A1DBC2500001F17F0 /* ReusableView.swift in Sources */,
+				9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */,
 				9EFAB8B71DB2B8360055A8E0 /* BaseViewModel.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
 				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
@@ -1725,6 +1732,7 @@
 				9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */,
 				9E6736711D2EDCA400C00995 /* UIFont+Extensions.swift in Sources */,
 				9EA30C741D64D6EB00CDCE64 /* NSCache+Extensions.swift in Sources */,
+				9EDE8CFE1E1EE93B005B9651 /* CALayer+Extensions.swift in Sources */,
 				9E6736621D2C46F600C00995 /* UIImage+Extensions.swift in Sources */,
 				9EDB67281D4FE4CC001E74A6 /* AppData.swift in Sources */,
 			);
