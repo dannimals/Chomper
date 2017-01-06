@@ -68,7 +68,5 @@ class MapDetailsViewController: BaseViewController {
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
         let region = MKCoordinateRegion(center: pin.coordinate, span: span)
         mapView.setRegion(region, animated: true)
-        
     }
-    
 }

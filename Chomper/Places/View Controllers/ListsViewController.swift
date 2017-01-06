@@ -16,6 +16,8 @@ class ListsViewController: UIViewController {
     private var tileViewController: ListsTileViewController!
     private var viewModeControl: UISegmentedControl!
     private var actionToggle: CustomToggleControl!
+    private var mapView: PlacesMapView!
+    private var containerStackview: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +27,14 @@ class ListsViewController: UIViewController {
         //
         // Set up toggle and parent scrollView
         
+        containerStackview = UIStackView()
+        containerStackview.axis = .vertical
+        containerStackview.spacing = 5
+        containerStackview.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(containerStackview)
+
         createToggle()
+        createMapView()
         createScrollView()
         
         //
@@ -35,13 +44,14 @@ class ListsViewController: UIViewController {
         createTileViewController()
         createActionControl()
         
+        containerStackview.sizeToFit()
         let views: [String: AnyObject] = [
             "topLayoutGuide": topLayoutGuide,
-            "toggle": toggle,
+            "containerStackview": containerStackview,
             "scrollView": scrollView
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[toggle]|",
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[containerStackview]|",
             options: [],
             metrics: nil,
             views: views)
@@ -53,7 +63,7 @@ class ListsViewController: UIViewController {
             views: views)
         )
     
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[topLayoutGuide][toggle(50)]-(4)-[scrollView]|",
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[topLayoutGuide][containerStackview]-(4)-[scrollView]|",
             options: [],
             metrics: nil,
             views: views)
@@ -73,7 +83,16 @@ class ListsViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func createActionControl() {
+    private func createMapView() {
+        mapView = PlacesMapView()
+        mapView.isHidden = true
+        containerStackview.addArrangedSubview(mapView)
+        NSLayoutConstraint.useAndActivateConstraints([
+            mapView.heightAnchor.constraint(equalToConstant: view.bounds.height / 3)
+        ])
+    }
+    
+    private func createActionControl() {
         let add = NSAttributedString(string: "+", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")])
         let map = NSAttributedString(string: "Map", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("p")])
         actionToggle = CustomToggleControl(titles: [add, map])
@@ -90,12 +109,24 @@ class ListsViewController: UIViewController {
         ])
     }
     
-    func handleActionForIndex(index: Int) {
+    private func handleActionForIndex(index: Int) {
         if index == 0 {
             let vc = CreateListViewController()
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationCapturesStatusBarAppearance = true
             present(vc, animated: true, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                let isHidden = self.mapView.isHidden
+                let title: NSAttributedString
+                if isHidden {
+                    title = NSAttributedString(string: "Hide", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("p")])
+                } else {
+                    title = NSAttributedString(string: "Map", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("p")])
+                }
+                self.mapView.isHidden = !isHidden
+                self.actionToggle.setTitleForIndex(title: title, forIndex: 1)
+            }
         }
     }
     
@@ -109,8 +140,10 @@ class ListsViewController: UIViewController {
         toggle.labelTappedAction = { [unowned self] (index) in
             self.toggleViews(index)
         }
-        toggle.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(toggle)
+        containerStackview.addArrangedSubview(toggle)
+        NSLayoutConstraint.useAndActivateConstraints([
+            toggle.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     func toggleViews(_ index: Int) {

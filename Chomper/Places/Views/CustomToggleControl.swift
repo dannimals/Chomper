@@ -67,6 +67,16 @@ class CustomToggleControl: UIControl {
         }
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let location = touches.first?.location(in: self) {
+            for (_, item) in labels.enumerated() {
+                if !item.frame.contains(location) {
+                    item.layer.backgroundColor = UIColor.darkOrange().cgColor
+                }
+            }
+        }
+    }
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         var calcIndex: Int?
 
@@ -85,6 +95,11 @@ class CustomToggleControl: UIControl {
     }
     
     // MARK: - Helpers
+    
+    func setTitleForIndex(title: NSAttributedString, forIndex index: Int) {
+        let label = labels[index]
+        label.attributedText = title
+    }
     
     private func actionForSelectedIndex(index: Int) {
         selectedIndex?(index)

@@ -71,6 +71,7 @@
 		9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */; };
 		9EDE8CFE1E1EE93B005B9651 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */; };
 		9EDE8D001E1F02AF005B9651 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8CFF1E1F02AF005B9651 /* UIColor+Extensions.swift */; };
+		9EDE8D021E2029BA005B9651 /* PlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
 		9EE215621D19B27C004C7C53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */; };
 		9EE2156D1D19B27C004C7C53 /* ChomperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2156C1D19B27C004C7C53 /* ChomperTests.swift */; };
@@ -310,6 +311,7 @@
 		9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelsTestHelpers.swift; sourceTree = "<group>"; };
 		9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		9EDE8CFF1E1F02AF005B9651 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesMapView.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EE215611D19B27C004C7C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -846,11 +848,12 @@
 		9EE7548D1D36C5FB0070779E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */,
 				9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */,
 				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
 				9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */,
 				9E690AB61D4530D0009574DF /* ListsToggleControl.swift */,
-				9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */,
+				9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1701,6 +1704,7 @@
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E1B4BDA1D5F98AA009855FF /* FetchedResultsTableDataProvider.swift in Sources */,
+				9EDE8D021E2029BA005B9651 /* PlacesMapView.swift in Sources */,
 				9E2A1F3A1DBC2500001F17F0 /* ReusableView.swift in Sources */,
 				9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */,
 				9EFAB8B71DB2B8360055A8E0 /* BaseViewModel.swift in Sources */,
