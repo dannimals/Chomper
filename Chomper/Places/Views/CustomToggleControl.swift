@@ -61,7 +61,7 @@ class CustomToggleControl: UIControl {
         if let location = touches.first?.location(in: self) {
             for (_, item) in labels.enumerated() {
                 if item.frame.contains(location) {
-                    item.layer.backgroundColor = UIColor.darkOrange().cgColor
+                    item.layer.backgroundColor = UIColor.softOrange().cgColor
                 }
             }
         }
@@ -74,7 +74,7 @@ class CustomToggleControl: UIControl {
             for (index, item) in labels.enumerated() {
                 if item.frame.contains(location) {
                     calcIndex = index
-                    item.layer.backgroundColor = UIColor.softOrange().cgColor
+                    item.layer.backgroundColor = UIColor.darkOrange().cgColor
                 }
             }
             if let calcIndex = calcIndex {
@@ -91,7 +91,7 @@ class CustomToggleControl: UIControl {
     }
     
     private func setup() {
-        backgroundColor = UIColor.softOrange()
+        backgroundColor = UIColor.darkOrange()
         
         for title in labelTitles {
             let label = UILabel()
