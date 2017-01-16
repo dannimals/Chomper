@@ -31,6 +31,8 @@
 		9E4736E11D39747B00463665 /* NSFetchedResultsController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */; };
 		9E4736E31D39835A00463665 /* ListDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E21D39835A00463665 /* ListDetailsViewController.swift */; };
 		9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4736E41D3C0F8A00463665 /* BaseViewController.swift */; };
+		9E4882FF1E2D435F0014BB10 /* MapPlacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4882FE1E2D435F0014BB10 /* MapPlacesViewController.swift */; };
+		9E4883011E2D43820014BB10 /* MapPlacesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4883001E2D43820014BB10 /* MapPlacesViewModel.swift */; };
 		9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */; };
 		9E4F0A461D3EA041001E3B39 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A451D3EA041001E3B39 /* Constants.swift */; };
 		9E4F0A481D3EA130001E3B39 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E4F0A471D3EA130001E3B39 /* SearchResult.swift */; };
@@ -71,7 +73,6 @@
 		9EDB67301D53BB86001E74A6 /* ModelsTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */; };
 		9EDE8CFE1E1EE93B005B9651 /* CALayer+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */; };
 		9EDE8D001E1F02AF005B9651 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8CFF1E1F02AF005B9651 /* UIColor+Extensions.swift */; };
-		9EDE8D021E2029BA005B9651 /* PlacesMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */; };
 		9EE2155F1D19B27C004C7C53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EE2155E1D19B27C004C7C53 /* Assets.xcassets */; };
 		9EE215621D19B27C004C7C53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */; };
 		9EE2156D1D19B27C004C7C53 /* ChomperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE2156C1D19B27C004C7C53 /* ChomperTests.swift */; };
@@ -273,6 +274,8 @@
 		9E4736E01D39747B00463665 /* NSFetchedResultsController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFetchedResultsController+Extensions.swift"; sourceTree = "<group>"; };
 		9E4736E21D39835A00463665 /* ListDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailsViewController.swift; sourceTree = "<group>"; };
 		9E4736E41D3C0F8A00463665 /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		9E4882FE1E2D435F0014BB10 /* MapPlacesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPlacesViewController.swift; sourceTree = "<group>"; };
+		9E4883001E2D43820014BB10 /* MapPlacesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPlacesViewModel.swift; sourceTree = "<group>"; };
 		9E4F0A401D3C2C6B001E3B39 /* CollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegate.swift; sourceTree = "<group>"; };
 		9E4F0A451D3EA041001E3B39 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9E4F0A471D3EA130001E3B39 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
@@ -311,7 +314,6 @@
 		9EDB672F1D53BB86001E74A6 /* ModelsTestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelsTestHelpers.swift; sourceTree = "<group>"; };
 		9EDE8CFD1E1EE93B005B9651 /* CALayer+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+Extensions.swift"; sourceTree = "<group>"; };
 		9EDE8CFF1E1F02AF005B9651 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesMapView.swift; sourceTree = "<group>"; };
 		9EE215521D19B27C004C7C53 /* Chomper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chomper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE2155E1D19B27C004C7C53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EE215611D19B27C004C7C53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -818,18 +820,20 @@
 		9EE754851D36C5FB0070779E /* Places */ = {
 			isa = PBXGroup;
 			children = (
-				9EE754861D36C5FB0070779E /* Models */,
+				9EE754861D36C5FB0070779E /* View Models */,
 				9EE754891D36C5FB0070779E /* View Controllers */,
 				9EE7548D1D36C5FB0070779E /* Views */,
 			);
 			path = Places;
 			sourceTree = "<group>";
 		};
-		9EE754861D36C5FB0070779E /* Models */ = {
+		9EE754861D36C5FB0070779E /* View Models */ = {
 			isa = PBXGroup;
 			children = (
 				9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */,
+				9E4883001E2D43820014BB10 /* MapPlacesViewModel.swift */,
 			);
+			name = "View Models";
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -841,6 +845,7 @@
 				9E4736DE1D3954D500463665 /* ListsTableViewController.swift */,
 				9EE7548B1D36C5FB0070779E /* ListsTileViewController.swift */,
 				9EE7548C1D36C5FB0070779E /* ListsViewController.swift */,
+				9E4882FE1E2D435F0014BB10 /* MapPlacesViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -853,7 +858,6 @@
 				9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */,
 				9E4F0A4B1D411F58001E3B39 /* ListsTableSectionHeaderView.swift */,
 				9E690AB61D4530D0009574DF /* ListsToggleControl.swift */,
-				9EDE8D011E2029BA005B9651 /* PlacesMapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1692,6 +1696,7 @@
 				9E6736A41D3024F400C00995 /* TableDataProvider.swift in Sources */,
 				9E690ABF1D492399009574DF /* AddToListViewController.swift in Sources */,
 				9E4F0A411D3C2C6B001E3B39 /* CollectionViewDelegate.swift in Sources */,
+				9E4882FF1E2D435F0014BB10 /* MapPlacesViewController.swift in Sources */,
 				9E6736A21D3024F400C00995 /* BaseViewControllerProtocol.swift in Sources */,
 				9EE754921D36C5FB0070779E /* CreateListViewController.swift in Sources */,
 				9EFAB8AF1DA1BD560055A8E0 /* ImageCollectionCell.swift in Sources */,
@@ -1704,11 +1709,11 @@
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
 				9E67366F1D2ED33300C00995 /* BaseNavigationController.swift in Sources */,
 				9E1B4BDA1D5F98AA009855FF /* FetchedResultsTableDataProvider.swift in Sources */,
-				9EDE8D021E2029BA005B9651 /* PlacesMapView.swift in Sources */,
 				9E2A1F3A1DBC2500001F17F0 /* ReusableView.swift in Sources */,
 				9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */,
 				9EFAB8B71DB2B8360055A8E0 /* BaseViewModel.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
+				9E4883011E2D43820014BB10 /* MapPlacesViewModel.swift in Sources */,
 				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
 				9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */,
 				9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */,

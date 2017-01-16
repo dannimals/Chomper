@@ -9,14 +9,15 @@
 import Common
 import WebServices
 
-class ListsViewController: UIViewController {
+class ListsViewController: BaseViewController {
     fileprivate var toggle: ListsToggleControl!
     private var listViewController: ListsTableViewController!
+    private var mapViewController: MapPlacesViewController!
     private var scrollView: UIScrollView!
     private var tileViewController: ListsTileViewController!
     private var viewModeControl: UISegmentedControl!
     private var actionToggle: CustomToggleControl!
-    private var mapView: PlacesMapView!
+    private var mapView: UIView!
     private var containerStackview: UIStackView!
 
     override func viewDidLoad() {
@@ -34,12 +35,12 @@ class ListsViewController: UIViewController {
         view.addSubview(containerStackview)
 
         createToggle()
-        createMapView()
         createScrollView()
         
         //
         // Set up child view controllers
         
+        createMapViewController()
         createListViewController()
         createTileViewController()
         createActionControl()
@@ -79,19 +80,11 @@ class ListsViewController: UIViewController {
         listViewController.view.frame = scrollBounds
         
         toggle.setShadow()
+        
     }
     
     // MARK: - Helpers
-    
-    private func createMapView() {
-        mapView = PlacesMapView()
-        mapView.isHidden = true
-        containerStackview.addArrangedSubview(mapView)
-        NSLayoutConstraint.useAndActivateConstraints([
-            mapView.heightAnchor.constraint(equalToConstant: view.bounds.height / 3)
-        ])
-    }
-    
+
     private func createActionControl() {
         let add = NSAttributedString(string: "+", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")])
         let map = NSAttributedString(string: "Map", attributes: [NSFontAttributeName: UIFont.chomperFontForTextStyle("p")])
@@ -105,7 +98,7 @@ class ListsViewController: UIViewController {
             actionToggle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             actionToggle.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -(tabBarController!.tabBar.bounds.height + 20)),
             actionToggle.widthAnchor.constraint(equalToConstant: 120),
-            actionToggle.heightAnchor.constraint(equalToConstant: 35)
+            actionToggle.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -130,7 +123,7 @@ class ListsViewController: UIViewController {
         }
     }
     
-    func createToggle() {
+    private func createToggle() {
         let tile = NSMutableAttributedString(string: "Tile")
 //        let tileIcon = NSTextAttachment()
 //        tileIcon.image = UIImage(named: "TileIcon")
@@ -146,7 +139,7 @@ class ListsViewController: UIViewController {
         ])
     }
     
-    func toggleViews(_ index: Int) {
+    private func toggleViews(_ index: Int) {
         let contentOffsetY = self.scrollView.contentOffset.y
         if index == 0 {
             self.scrollView.contentOffset = CGPoint(x: 0, y: contentOffsetY)
@@ -155,7 +148,7 @@ class ListsViewController: UIViewController {
         }
     }
     
-    func createScrollView() {
+    private func createScrollView() {
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -165,6 +158,21 @@ class ListsViewController: UIViewController {
         scrollView.isDirectionalLockEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
+    }
+    
+    private func createMapViewController() {
+        let mapVM = MapPlacesViewModel()
+        mapViewController = MapPlacesViewController(viewModel: mapVM)
+        mapView = mapViewController.mapView
+        addChildViewController(mapViewController)
+        mapViewController.didMove(toParentViewController: self)
+        view.addSubview(mapView)
+
+        mapView.isHidden = true
+        containerStackview.addArrangedSubview(mapView)
+        NSLayoutConstraint.useAndActivateConstraints([
+            mapView.heightAnchor.constraint(equalToConstant: view.bounds.height / 3)
+        ])
     }
     
     private func createTileViewController() {

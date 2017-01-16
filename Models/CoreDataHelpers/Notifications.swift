@@ -23,7 +23,7 @@ public struct ObjectsDidChangeNotification {
         return c
     }
     
-    init(note: Notification) {
+    public init(note: Notification) {
         assert(note.name == NSNotification.Name.NSManagedObjectContextObjectsDidChange)
         notification = note
     }
@@ -50,6 +50,15 @@ public struct ObjectsDidChangeNotification {
     
     public var invalidatedAllObjects: Bool {
         return notification.userInfo?[NSInvalidatedAllObjectsKey] != nil
+    }
+    
+    public var allObjects: Set<ManagedObject> {
+        var allObjects = Set<ManagedObject>()
+        allObjects = allObjects.union(insertedObjects)
+        allObjects = allObjects.union(deletedObjects)
+        allObjects = allObjects.union(updatedObjects)
+
+        return allObjects
     }
     
     fileprivate func objectsForKey(_ key: String) -> Set<ManagedObject> {

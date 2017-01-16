@@ -13,8 +13,8 @@ class ListsTileViewModel<Delegate: CollectionViewDelegate>: NSObject, Collection
     typealias Object = Delegate.Object
     
     weak var delegate: Delegate!
-    fileprivate var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
-    fileprivate var updates = [DataProviderUpdate<Object>]()
+    private var fetchedResultsController: NSFetchedResultsController<NSFetchRequestResult>!
+    private var updates = [DataProviderUpdate<Object>]()
     var sections: [NSFetchedResultsSectionInfo]? {
         return fetchedResultsController.sections
     }

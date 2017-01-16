@@ -79,13 +79,11 @@ class ListDetailsViewController: BaseViewController {
             metrics: nil,
             views: views)
         )
-  
     }
 
     // MARK - Helpers
     
     func handleEdit() {
-        
         //
         // Check to make sure list is deletable ie. not the default saved list
         if list.name != defaultSavedList {
@@ -125,7 +123,6 @@ class ListDetailsViewController: BaseViewController {
         } else {
             beginEditing()
         }
-
     }
     
     
@@ -234,9 +231,3 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         return 82.0
     }
 }
-
-
-
-
-
-
