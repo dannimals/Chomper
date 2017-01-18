@@ -81,5 +81,4 @@ class PlaceDetailsViewModel: NSObject {
         guard section == 0 else { return 0 }
         return photos?.count ?? 0
     }
-    
 }

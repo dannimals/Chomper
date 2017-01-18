@@ -636,9 +636,9 @@
 			isa = PBXGroup;
 			children = (
 				9EE2155E1D19B27C004C7C53 /* Assets.xcassets */,
+				9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */,
 				9EE2160B1D19B980004C7C53 /* Common */,
 				9EE2160E1D19B98E004C7C53 /* Search */,
-				9EE215601D19B27C004C7C53 /* LaunchScreen.storyboard */,
 				9EE754851D36C5FB0070779E /* Places */,
 				9EE216051D19B972004C7C53 /* Supporting Files */,
 			);
@@ -781,8 +781,8 @@
 			isa = PBXGroup;
 			children = (
 				9EDB67251D4FD6EC001E74A6 /* Image.swift */,
-				9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */,
 				9EE216171D19BA78004C7C53 /* List.swift */,
+				9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */,
 				9EE216231D19BA99004C7C53 /* Model.xcdatamodeld */,
 				9EE216161D19BA78004C7C53 /* Place.swift */,
 				9EDB67231D4FD6D9001E74A6 /* User.swift */,

@@ -15,13 +15,15 @@ protocol MapPlacesDelegate {
 class MapPlacesViewModel: BaseViewModel {
     var places: [Place]?
     var delegate: MapPlacesDelegate?
+    let backgroundContext: NSManagedObjectContext
     
     override init() {
+        backgroundContext = NSManagedObjectContext.mainContext().createBackgroundContext()
 
         super.init()
-        self.places = try! mainContext.fetch(NSFetchRequest(entityName: Place.entityName))
+        self.places = try! backgroundContext.fetch(NSFetchRequest(entityName: Place.entityName))
         NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: nil, queue: nil, using: mainContextUpdatedWithNotification)
-
+        mainContext.addNSManagedObjectContextDidSaveNotificationObserver(backgroundContext)
     }
     
     func mainContextUpdatedWithNotification(notification: Notification) {
@@ -34,10 +36,18 @@ class MapPlacesViewModel: BaseViewModel {
             }
         }
         if shouldUpdate {
-            delegate?.didUpdateWithPlaces(places: fetchPlaces())
+            // TODO: should not do this as it is costly
+            fetchPlaces()
         }
     }
-    func fetchPlaces() -> [Place] {
-        return try! mainContext.fetch(NSFetchRequest(entityName: Place.entityName))
+    func fetchPlaces() {
+        // TODO: need to instantiate these objects on the main context
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Place.entityName)
+        let asyncRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { [weak self] (result) in
+            if let places = result.finalResult as? [Place] {
+                self?.delegate?.didUpdateWithPlaces(places: places)
+            }
+        }
+        try! backgroundContext.execute(asyncRequest)
     }
 }
