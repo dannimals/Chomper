@@ -170,7 +170,7 @@ class PlaceDetailsView: UIView {
         phoneAction?()
     }
     
-    fileprivate func setMapViewToCoord(_ coord: CLLocationCoordinate2D) {
+    private func setMapViewToCoord(_ coord: CLLocationCoordinate2D) {
         let dropPin = MKPointAnnotation()
         dropPin.coordinate = coord
         mapView.addAnnotation(dropPin)

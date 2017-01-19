@@ -177,9 +177,4 @@ extension PlaceDetailsViewController: UITextViewDelegate {
         }
         return true
     }
-
 }
-
-
-
-

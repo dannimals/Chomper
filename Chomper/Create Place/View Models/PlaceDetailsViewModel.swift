@@ -59,7 +59,7 @@ class PlaceDetailsViewModel: NSObject {
     }
     
     func getPlaceImages(_ completionHandler: (() -> ())?) {
-        webService.getPhotosForPlace(place.venueId) { [weak self] (photos, response, error) in
+        let _ = webService.getPhotosForPlace(place.venueId) { [weak self] (photos, response, error) in
             if error == nil {
                 if let photos = photos, photos.count != 0 {
                     DispatchQueue.main.async {

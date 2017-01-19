@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16B2555" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Image" representedClassName="Models.Image" syncable="YES">
-        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="id" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="imageData" attributeType="Binary" allowsExternalBinaryDataStorage="YES" indexed="YES" syncable="YES"/>
         <attribute name="thumbData" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
@@ -10,7 +10,7 @@
     </entity>
     <entity name="List" representedClassName=".List" syncable="YES">
         <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="sequenceNum" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="sequenceNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="favoritedUsers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="favoriteLists" inverseEntity="User" syncable="YES"/>
         <relationship name="listPlaces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListPlace" inverseName="list" inverseEntity="ListPlace" syncable="YES"/>
         <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="lists" inverseEntity="User" syncable="YES"/>
@@ -23,10 +23,10 @@
         <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="placeImageId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="placeName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="userPriced" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="userRated" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rating" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="userPriced" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="userRated" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="listPlace" inverseEntity="Image" syncable="YES"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="listPlaces" inverseEntity="List" syncable="YES"/>
         <relationship name="place" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Place" inverseName="listPlaces" inverseEntity="Place" syncable="YES"/>
@@ -34,8 +34,8 @@
     <entity name="Place" representedClassName=".Place" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="latitude" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="neighborhood" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="ownerId" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
@@ -43,7 +43,7 @@
         <attribute name="remoteId" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="streetName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="visited" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="visited" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="zipcode" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="listPlaces" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ListPlace" inverseName="place" inverseEntity="ListPlace" syncable="YES"/>
         <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="places" inverseEntity="User" syncable="YES"/>
@@ -61,8 +61,8 @@
     <elements>
         <element name="Image" positionX="-54" positionY="99" width="128" height="135"/>
         <element name="List" positionX="-54" positionY="-9" width="128" height="120"/>
+        <element name="ListPlace" positionX="-45" positionY="135" width="128" height="255"/>
         <element name="Place" positionX="-63" positionY="-18" width="128" height="270"/>
         <element name="User" positionX="-45" positionY="108" width="128" height="165"/>
-        <element name="ListPlace" positionX="-45" positionY="135" width="128" height="255"/>
     </elements>
 </model>

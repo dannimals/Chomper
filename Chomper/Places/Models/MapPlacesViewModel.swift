@@ -23,23 +23,35 @@ class MapPlacesViewModel: BaseViewModel {
         super.init()
         self.places = try! backgroundContext.fetch(NSFetchRequest(entityName: Place.entityName))
         NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: nil, queue: nil, using: mainContextUpdatedWithNotification)
-        mainContext.addNSManagedObjectContextDidSaveNotificationObserver(backgroundContext)
     }
     
+//    func mainContextUpdatedWithNotification(notification: Notification) {
+//        var shouldUpdate = false
+//        let note = ObjectsDidChangeNotification(note: notification)
+//        for object in note.allObjects {
+//            if object.isKind(of: Place.self) {
+//                shouldUpdate = true
+//                break
+//            }
+//        }
+//        if shouldUpdate {
+//            // TODO: should not do this as it is costly
+//            fetchPlaces()
+//        }
+//    }
+//    
     func mainContextUpdatedWithNotification(notification: Notification) {
-        var shouldUpdate = false
-        let note = ObjectsDidChangeNotification(note: notification)
-        for object in note.allObjects {
-            if object.isKind(of: Place.self) {
-                shouldUpdate = true
-                break
+        var places = [Place]()
+        if notification.object as? NSManagedObjectContext == mainContext {
+            for object in mainContext.registeredObjects {
+                if object.isKind(of: Place.self) {
+                    places.append(object as! Place)
+                }
             }
-        }
-        if shouldUpdate {
-            // TODO: should not do this as it is costly
-            fetchPlaces()
+            delegate?.didUpdateWithPlaces(places: places)
         }
     }
+    
     func fetchPlaces() {
         // TODO: need to instantiate these objects on the main context
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Place.entityName)

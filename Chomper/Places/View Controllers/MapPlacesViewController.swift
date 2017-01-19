@@ -40,6 +40,8 @@ class MapPlacesViewController: BaseViewController {
     }
     
     fileprivate func makeAnnotations(forPlaces places: [Place]) {
+        mapView.removeAnnotations(mapView.annotations)
+        
         for place in places {
             if let lat = place.latitude as? CLLocationDegrees, let long = place.longitude as? CLLocationDegrees {
                 let coordinate = CLLocationCoordinate2DMake(lat, long)
