@@ -1,7 +1,4 @@
 //
-//  ListDetailsViewController.swift
-//  Chomper
-//
 //  Created by Danning Ge on 7/15/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
@@ -10,11 +7,8 @@ import Common
 import CoreLocation
 import Models
 
-//
-// TODO: Refactor this class to be reused by ListsTableVC
-
 class ListDetailsViewController: BaseViewController {
-    fileprivate var list: List! /*{
+    /*{
         didSet {
             observer = ManagedObjectObserver(object: list) { [unowned self] type in
                 guard type == .Delete else { return }
@@ -25,13 +19,13 @@ class ListDetailsViewController: BaseViewController {
             }
         }
     }*/
-    fileprivate var observer: ManagedObjectObserver?
-    fileprivate var tableView: UITableView!
-    fileprivate var viewModel: [ListPlace]!
+//    fileprivate var observer: ManagedObjectObserver?
+    fileprivate var tableView =  UITableView()
+    fileprivate var viewModel: ListDetailsViewModel
     
-    required init(listId: NSManagedObjectID) {
+    required init(viewModel: ListDetailsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        list = mainContext.object(with: listId) as? List
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -40,8 +34,6 @@ class ListDetailsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        viewModel = list.listPlaces?.sorted { $0.placeName < $1.placeName } ?? []
                 
         // 
         // Configure view
@@ -53,7 +45,6 @@ class ListDetailsViewController: BaseViewController {
         //
         // Configure table view
         
-        tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerNib(PlaceTableViewCell.self)
@@ -129,19 +120,17 @@ class ListDetailsViewController: BaseViewController {
     // MARK: - Handlers
     
     func deleteItemAtIndexPath(_ indexPath: IndexPath) {
-        let place = viewModel[indexPath.row]
-        viewModel.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-        mainContext.performChanges {
-            self.mainContext.delete(place)
+        if let error = viewModel.deleteItemAtIndexPath(indexPath: indexPath) {
+            alertWithButton("Ok", title: nil, message: error.description, style: .alert, dismissBlock: nil)
+        } else {
+            tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     
     func markItemAtIndexPath(_ indexPath: IndexPath) {
-        let listPlace = viewModel[indexPath.row]
-        let visited = listPlace.place?.visited == NSNumber(value: 0) ? NSNumber(value: 1) : NSNumber(value: 0)
-        mainContext.performChanges {
-            listPlace.place?.visited = visited
+        if let error = viewModel.markVisitedAtIndexPath(indexPath: indexPath) {
+            alertWithButton("Ok", title: nil, message: error.description, style: .alert, dismissBlock: nil)
+        } else {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
@@ -213,8 +202,7 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
         }
         delete.backgroundColor = UIColor.red
         
-        let listPlace = viewModel[indexPath.row]
-        let visitedTitle = listPlace.place?.visited?.boolValue ?? false ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Visited", comment: "visited")
+        let visitedTitle = viewModel.isMarkedVisited(indexPath: indexPath) ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Visited", comment: "visited")
         let visited = UITableViewRowAction(style: .normal, title: visitedTitle) { [unowned self] (_, indexPath) in
             self.markItemAtIndexPath(indexPath)
         }

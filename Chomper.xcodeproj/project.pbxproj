@@ -67,6 +67,7 @@
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
 		9EC154F41E36D5EF00C2A4EF /* CreateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */; };
 		9EC154F61E36DF6B00C2A4EF /* GenericChomperError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC154F51E36DF6B00C2A4EF /* GenericChomperError.swift */; };
+		9EC154F81E36EBC300C2A4EF /* ListDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC154F71E36EBC300C2A4EF /* ListDetailsViewModel.swift */; };
 		9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */; };
 		9ECD0B731E19B379007BC592 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2157C1D19B347004C7C53 /* Common.framework */; };
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
@@ -311,6 +312,7 @@
 		9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperMapper.swift; sourceTree = "<group>"; };
 		9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateListViewModel.swift; sourceTree = "<group>"; };
 		9EC154F51E36DF6B00C2A4EF /* GenericChomperError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericChomperError.swift; sourceTree = "<group>"; };
+		9EC154F71E36EBC300C2A4EF /* ListDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListDetailsViewModel.swift; sourceTree = "<group>"; };
 		9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToggleControl.swift; sourceTree = "<group>"; };
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -836,6 +838,7 @@
 			isa = PBXGroup;
 			children = (
 				9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */,
+				9EC154F71E36EBC300C2A4EF /* ListDetailsViewModel.swift */,
 				9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */,
 				9E4883001E2D43820014BB10 /* MapPlacesViewModel.swift */,
 			);
@@ -1692,6 +1695,7 @@
 				9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
 				9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */,
+				9EC154F81E36EBC300C2A4EF /* ListDetailsViewModel.swift in Sources */,
 				9E690ABD1D47B523009574DF /* ActionTableCell.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,
 				9E6736A31D3024F400C00995 /* CollectionDataProvider.swift in Sources */,

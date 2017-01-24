@@ -3,7 +3,7 @@
 //  Copyright © 2017 Danning Ge. All rights reserved.
 //
 
-enum GenericChomperError {
+enum GenericChomperError: Equatable {
     case invalid(errorMessage: String)
     
     var description: String {
