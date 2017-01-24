@@ -1,7 +1,4 @@
 //
-//  CreatePlaceViewController.swift
-//  Chomper
-//
 //  Created by Danning Ge on 7/13/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
@@ -54,7 +51,7 @@ class CreateListViewController: BaseViewController {
         view.addConstraint(containerBottomLayout)
         
         cancelButton.titleLabel?.textAlignment = .center
-        cancelButton.addTarget(self, action: #selector(cancelTapped(_:)), for: .touchUpInside)
+        cancelButton.addTarget(self, action: #selector(cancelButtonTapped(_:)), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(cancelButton)
         cancelButton.setTitleColor(UIColor.textColor(), for: .highlighted)
@@ -63,7 +60,7 @@ class CreateListViewController: BaseViewController {
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), for: UIControlState())
         
         saveButton.titleLabel?.textAlignment = .center
-        saveButton.addTarget(self, action: #selector(saveTapped(_:)), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped(_:)), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(saveButton)
         saveButton.setTitleColor(UIColor.darkGrey(), for: .highlighted)
@@ -130,7 +127,6 @@ class CreateListViewController: BaseViewController {
             textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50.0)
         ])
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        
     }
     
     override var prefersStatusBarHidden : Bool {
@@ -149,13 +145,6 @@ class CreateListViewController: BaseViewController {
             let keyboardHeight = keyboardFrame.size.height
             titleTopLayout.constant = (view.bounds.height - keyboardHeight - containerView.bounds.height - textField.bounds.height) / 2
             containerBottomLayout.constant = -keyboardHeight
-        }
-    }
-    
-    func createNewList(listName: String) {
-        if viewModel.saveList(listName: listName) == CreateListCheck.valid {
-            textField.resignFirstResponder()
-            dismiss(animated: true, completion: nil)
         }
     }
     
@@ -179,12 +168,12 @@ class CreateListViewController: BaseViewController {
         return saveListStatus
     }
     
-    func cancelTapped(_ sender: UIButton) {
+    func cancelButtonTapped(_ sender: UIButton) {
         textField.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
     
-    func saveTapped(_ sender: UIButton) {
+    func saveButtonTapped(_ sender: UIButton) {
         let _ = saveList()
     }
 }
