@@ -104,7 +104,8 @@ class ListsViewController: BaseViewController {
     
     private func handleActionForIndex(index: Int) {
         if index == 0 {
-            let vc = CreateListViewController()
+            let vm = CreateListViewModel(mainContext: mainContext)
+            let vc = CreateListViewController(viewModel: vm)
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationCapturesStatusBarAppearance = true
             present(vc, animated: true, completion: nil)

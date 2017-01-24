@@ -65,6 +65,8 @@
 		9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */; };
 		9EAF87C41D1C38C200C9FF59 /* ChomperMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */; };
 		9EAF87C81D1C54A500C9FF59 /* Models.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2159F1D19B355004C7C53 /* Models.framework */; };
+		9EC154F41E36D5EF00C2A4EF /* CreateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */; };
+		9EC154F61E36DF6B00C2A4EF /* GenericChomperError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC154F51E36DF6B00C2A4EF /* GenericChomperError.swift */; };
 		9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */; };
 		9ECD0B731E19B379007BC592 /* Common.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EE2157C1D19B347004C7C53 /* Common.framework */; };
 		9EDB67241D4FD6D9001E74A6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDB67231D4FD6D9001E74A6 /* User.swift */; };
@@ -307,6 +309,8 @@
 		9EA30C7D1D6E171E00CDCE64 /* ListPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPlace.swift; sourceTree = "<group>"; };
 		9EA30C811D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsObjectProtocol.swift; sourceTree = "<group>"; };
 		9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperMapper.swift; sourceTree = "<group>"; };
+		9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateListViewModel.swift; sourceTree = "<group>"; };
+		9EC154F51E36DF6B00C2A4EF /* GenericChomperError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenericChomperError.swift; sourceTree = "<group>"; };
 		9EC2E55A1E1ED33600453B1E /* CustomToggleControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomToggleControl.swift; sourceTree = "<group>"; };
 		9EDB67231D4FD6D9001E74A6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9EDB67251D4FD6EC001E74A6 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
@@ -760,8 +764,9 @@
 				9E4736E41D3C0F8A00463665 /* BaseViewController.swift */,
 				9EFAB8B61DB2B8360055A8E0 /* BaseViewModel.swift */,
 				9E1B4BD91D5F98AA009855FF /* FetchedResultsTableDataProvider.swift */,
-				9E67369E1D3024F400C00995 /* Protocols */,
+				9EC154F51E36DF6B00C2A4EF /* GenericChomperError.swift */,
 				9E690AB41D4530AC009574DF /* ToggleControl.swift */,
+				9E67369E1D3024F400C00995 /* Protocols */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -830,6 +835,7 @@
 		9EE754861D36C5FB0070779E /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				9EC154F31E36D5EF00C2A4EF /* CreateListViewModel.swift */,
 				9EE754871D36C5FB0070779E /* ListsTileViewModel.swift */,
 				9E4883001E2D43820014BB10 /* MapPlacesViewModel.swift */,
 			);
@@ -1712,9 +1718,11 @@
 				9E2A1F3A1DBC2500001F17F0 /* ReusableView.swift in Sources */,
 				9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */,
 				9EFAB8B71DB2B8360055A8E0 /* BaseViewModel.swift in Sources */,
+				9EC154F61E36DF6B00C2A4EF /* GenericChomperError.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
 				9E4883011E2D43820014BB10 /* MapPlacesViewModel.swift in Sources */,
 				9EE754931D36C5FB0070779E /* ListsTileViewController.swift in Sources */,
+				9EC154F41E36D5EF00C2A4EF /* CreateListViewModel.swift in Sources */,
 				9E4F0A4A1D401019001E3B39 /* TableViewDelegate.swift in Sources */,
 				9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */,
 			);

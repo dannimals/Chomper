@@ -15,3 +15,6 @@ class BaseViewModel {
     var locationManager: ChomperLocationManagerProtocol { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)") as! ChomperLocationManagerProtocol }
     var mainContext: NSManagedObjectContext { return NSManagedObjectContext.mainContext() }
 }
+
+protocol BaseViewModelProtocol: class {}
+

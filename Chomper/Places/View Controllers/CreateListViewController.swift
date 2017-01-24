@@ -9,26 +9,29 @@
 import Common
 import Models
 
-class CreateListViewController: BaseViewController, UITextFieldDelegate {
-    fileprivate var backgroundContext: NSManagedObjectContext!
-    fileprivate var cancelButton: UIButton!
-    fileprivate var containerView: UIView!
-    fileprivate var containerBottomLayout: NSLayoutConstraint!
-    fileprivate var errorLabel: UILabel!
-    fileprivate var saveButton: UIButton!
-    fileprivate var textField: UITextField!
-    fileprivate var titleTopLayout: NSLayoutConstraint!
+class CreateListViewController: BaseViewController {
+    fileprivate var errorLabel = UILabel()
+
+    private var backgroundContext: NSManagedObjectContext!
+    private var cancelButton = UIButton()
+    private var containerView = UIView()
+    private var containerBottomLayout: NSLayoutConstraint!
+    private var saveButton = UIButton()
+    private var textField = UITextField()
+    private var titleTopLayout: NSLayoutConstraint!
+    private var viewModel: CreateListViewModel
     
-    var saveAction: (() -> ())?
+    required init(viewModel: CreateListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //
-        // Set up background context and observers
-        
-        backgroundContext = mainContext.createBackgroundContext()
-        backgroundContext.addNSManagedObjectContextDidSaveNotificationObserver(mainContext)
         
         //
         // Set up view
@@ -43,7 +46,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         //
         // Set up buttons
         
-        containerView = UIView()
         containerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(containerView)
         containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -51,7 +53,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         containerBottomLayout = NSLayoutConstraint(item: containerView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0)
         view.addConstraint(containerBottomLayout)
         
-        cancelButton = UIButton()
         cancelButton.titleLabel?.textAlignment = .center
         cancelButton.addTarget(self, action: #selector(cancelTapped(_:)), for: .touchUpInside)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +62,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         cancelButton.titleLabel?.font = UIFont.chomperFontForTextStyle("h4")
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: "cancelButton"), for: UIControlState())
         
-        saveButton = UIButton()
         saveButton.titleLabel?.textAlignment = .center
         saveButton.addTarget(self, action: #selector(saveTapped(_:)), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
@@ -99,7 +99,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         //
         // Set up center UITextField
         
-        textField = UITextField()
         textField.delegate = self
         view.addSubview(textField)
         textField.autocorrectionType = .no
@@ -113,10 +112,8 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
       
         let lineView = UIView()
         view.addSubview(lineView)
-        lineView.heightAnchor.constraint(equalToConstant: 0.75).isActive = true
         lineView.backgroundColor = UIColor.darkGrey()
         
-        errorLabel = UILabel()
         view.addSubview(errorLabel)
         errorLabel.font = UIFont.chomperFontForTextStyle("p small")
         errorLabel.textColor = UIColor.darkOrange()
@@ -128,6 +125,7 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
             lineView.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 5.0),
             lineView.leadingAnchor.constraint(equalTo: textField.leadingAnchor, constant: -2.5),
             lineView.trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: 2.5),
+            lineView.heightAnchor.constraint(equalToConstant: 0.75),
             textField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50.0),
             textField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50.0)
         ])
@@ -144,7 +142,6 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         textField.becomeFirstResponder()
     }
     
-    
     // MARK: - Handlers
     
     func keyboardWillAppear(_ notif: Notification) {
@@ -155,58 +152,51 @@ class CreateListViewController: BaseViewController, UITextFieldDelegate {
         }
     }
     
-    func createNewList() {
-        backgroundContext.performChanges { [unowned self] in
-            let _ = List.insertIntoContext(self.backgroundContext, name: (self.textField.text)!, ownerEmail: AppData.sharedInstance.ownerUserEmail)
+    func createNewList(listName: String) {
+        if viewModel.saveList(listName: listName) == CreateListCheck.valid {
+            textField.resignFirstResponder()
+            dismiss(animated: true, completion: nil)
         }
-        saveAction?()
-        textField.resignFirstResponder()
-        dismiss(animated: true, completion: nil)
     }
     
-    // TODO: error handling
-    func textIsValid(_ textField: UITextField) -> Bool {
-        //
-        // Check there is text and is not a duplicate
-        
-        let trimmedText = textField.text?.trimmingCharacters(in: CharacterSet.whitespaces) ?? ""
-        return !(textField.text?.isEmpty ?? false) && (trimmedText.characters.count > 0)
-        
+    func displayErrorMessage(text: String?) {
+        errorLabel.text = text
     }
     
-    func handleError(_ text: String? = nil) {
-        // TODO:
-        errorLabel.text = NSLocalizedString("Please enter a valid name", comment: "valid name")
+    func saveList() -> CreateListCheck {
+        guard let text = textField.text else {
+            displayErrorMessage(text: "List name cannot be empty")
+            return CreateListCheck.invalid(message: "List name cannot be empty")
+        }
+        let saveListStatus = viewModel.saveList(listName: text)
+        if  saveListStatus == .valid {
+            textField.resignFirstResponder()
+            dismiss(animated: true, completion: nil)
+        } else {
+            let error = viewModel.saveList(listName: text)
+            displayErrorMessage(text: error.description)
+        }
+        return saveListStatus
     }
     
-    @IBAction
     func cancelTapped(_ sender: UIButton) {
         textField.resignFirstResponder()
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction
     func saveTapped(_ sender: UIButton) {
-        guard textIsValid(textField) else {
-            handleError()
-            return
-        }
-        createNewList()
+        let _ = saveList()
     }
-    
-    // MARK: - UITextField delegate methods
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard textIsValid(textField) else {
-            handleError()
-            return false
-        }
-        createNewList()
-        return true
-    }
+}
 
+extension CreateListViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let status = saveList()
+        return status == .valid
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        errorLabel.text = ""
+        errorLabel.text = nil
         return true
     }
 }
