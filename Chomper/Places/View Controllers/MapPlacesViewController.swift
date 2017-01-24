@@ -18,9 +18,7 @@ class MapPlacesViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         viewModel.delegate = self
-        if let places = viewModel.places {
-            makeAnnotations(forPlaces: places)
-        }
+        viewModel.fetchPlaces()
     }
     
     required init?(coder aDecoder: NSCoder) {

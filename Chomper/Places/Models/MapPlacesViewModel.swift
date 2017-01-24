@@ -8,20 +8,18 @@
 
 import Models
 
-protocol MapPlacesDelegate {
+protocol MapPlacesDelegate: class {
     func didUpdateWithPlaces(places: [Place])
 }
 
 class MapPlacesViewModel: BaseViewModel {
-    var places: [Place]?
-    var delegate: MapPlacesDelegate?
+    weak var delegate: MapPlacesDelegate?
     let backgroundContext: NSManagedObjectContext
     
     override init() {
         backgroundContext = NSManagedObjectContext.mainContext().createBackgroundContext()
 
         super.init()
-        self.places = try! backgroundContext.fetch(NSFetchRequest(entityName: Place.entityName))
         NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: nil, queue: nil, using: mainContextUpdatedWithNotification)
     }
     
@@ -44,7 +42,8 @@ class MapPlacesViewModel: BaseViewModel {
         var places = [Place]()
         if notification.object as? NSManagedObjectContext == mainContext {
             for object in mainContext.registeredObjects {
-                if object.isKind(of: Place.self) {
+                // TODO: wtf does this isDeleted flag not work
+                if object.isKind(of: Place.self), !object.isDeleted {
                     places.append(object as! Place)
                 }
             }
