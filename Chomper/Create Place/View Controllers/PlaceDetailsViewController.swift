@@ -101,7 +101,7 @@ class PlaceDetailsViewController: BaseViewController {
     
     func add(_ sender: UIBarButtonItem) {
         viewModel.userNotes = detailsView.notesView.text
-        let actionViewModel = ActionListViewModel(place: viewModel.place)
+        let actionViewModel = ActionListViewModel(place: viewModel.place, mainContext: mainContext)
         let vc = ActionListViewController(viewModel: actionViewModel)
         vc.modalTransitionStyle = .coverVertical
         vc.modalPresentationStyle = .overCurrentContext

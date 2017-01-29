@@ -25,7 +25,6 @@ class ActionListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         //
         // Create blur background view
         if !UIAccessibilityIsReduceTransparencyEnabled() {
@@ -94,16 +93,15 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row != 0 {
-            var action = viewModel.getActionForIndexPath(indexPath)
-            switch action {
-            case .quickSave(_):
-                action = .quickSave(action: viewModel.saveAction)
-                dismiss(animated: true, completion: nil)
-            case .addToList(_):
-                action = .addToList(action: presentAddToListViewController())
-            }
-            viewModel.performAction(forAction: action)
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch viewModel.actions[indexPath.row] {
+        case .saveToFavorite(_):
+            viewModel.saveToFavoriteList()
+            dismiss(animated: true, completion: nil)
+        case .addToList(_):
+           presentAddToListViewController()
+        default: return
         }
     }
     
@@ -113,8 +111,7 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(withObject: viewModel.place, imageCache: imageCache)
         } else {
             guard let cell = cell as? ActionTableCell else { fatalError("wrong type: action cell") }
-            let action = viewModel.getActionForIndexPath(indexPath)
-            cell.setTitleForAction(viewModel.getTitleForAction(action))
+            cell.setLabelTitle(viewModel.getTitleForPath(indexPath: indexPath))
         }
     }
     
@@ -131,15 +128,13 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
         dismiss(animated: true, completion: nil)
     }
     
-    func presentAddToListViewController() -> (() -> Void) {
+    func presentAddToListViewController() {
         let nav = presentingViewController
         let nc = BaseNavigationController(rootViewController: AddToListViewController(place: viewModel.place))
         nc.modalTransitionStyle = .coverVertical
         nc.modalPresentationStyle = .overCurrentContext
-        return {
-                self.dismiss(animated: true) {
-                    nav?.present(nc, animated: true, completion: nil)
-                }
+        self.dismiss(animated: true) {
+            nav?.present(nc, animated: true, completion: nil)
         }
     }
 }

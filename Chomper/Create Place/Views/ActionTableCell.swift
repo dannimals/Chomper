@@ -52,7 +52,7 @@ class ActionTableCell: UITableViewCell {
         ])
     }
     
-    func setTitleForAction(_ title: String) {
+    func setLabelTitle(_ title: String?) {
         label.text = title
     }
 }

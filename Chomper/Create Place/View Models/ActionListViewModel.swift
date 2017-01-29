@@ -9,63 +9,39 @@
 import Common
 import Models
 
-class ActionListViewModel: BaseViewModel {
-    typealias ActionBlock = (() -> Void)?
-
-    enum Action {
-        case quickSave(action: ActionBlock)
-        case addToList(action: ActionBlock)
-        
-        static let allValues = [quickSave, addToList]
+class ActionListViewModel: BaseViewModelProtocol {
+    enum Action: String {
+        case none = ""
+        case saveToFavorite = "Favorites"
+        case addToList = "Add to List"
     }
     
     // MARK: - Properties
     
-    var place: PlaceDetailsObjectProtocol!
-    var saveAction: ActionBlock!
+    var place: PlaceDetailsObjectProtocol
+    var actions: [Action]
+    private var mainContext: NSManagedObjectContext
     
-    fileprivate var actions: [Action]!
-    
-    required init(place: PlaceDetailsObjectProtocol) {
+    required init(place: PlaceDetailsObjectProtocol, mainContext: NSManagedObjectContext) {
+        self.actions = [.none, .saveToFavorite, .addToList]
+        self.mainContext = mainContext
         self.place = place
-        self.actions = [
-            Action.quickSave(action: nil),
-            Action.addToList(action: nil)
-        ]
- 
-        super.init()
- 
-        self.saveAction = { self.mainContext.performChanges { [unowned self] in
-            let _ = ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
-            }
-        }
     }
     
     // MARK: - Helpers
-    
-    func getActionForIndexPath(_ indexPath: IndexPath) -> Action {
-        return actions[indexPath.row - 1]
-    }
+
     
     func numberOfRowsInSection(_ section: Int) -> Int {
-        return actions.count + 1
+        return actions.count
     }
     
-    func performAction(forAction action: Action) {
-        switch action {
-            case .quickSave(let action):
-                action?()
-            case .addToList(let action):
-                action?()
-        }
+    func getTitleForPath(indexPath: IndexPath) -> String? {
+        return actions[indexPath.row].rawValue
     }
     
-    func getTitleForAction(_ action: Action) -> String {
-        switch action {
-            case .quickSave:
-                return NSLocalizedString("Favorites", comment: "Add to Favorites")
-            case .addToList:
-                return NSLocalizedString("Add to List", comment: "add to list")
+    func saveToFavoriteList() {
+        mainContext.performChanges { [unowned self] in
+            let _ = ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: defaultSavedList, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
         }
     }
 }
