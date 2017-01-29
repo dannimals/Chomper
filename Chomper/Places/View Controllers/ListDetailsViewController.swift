@@ -29,7 +29,7 @@ class ListDetailsViewController: BaseViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -75,50 +75,40 @@ class ListDetailsViewController: BaseViewController {
     // MARK - Helpers
     
     func handleEdit() {
-        //
-        // Check to make sure list is deletable ie. not the default saved list
-        if list.name != defaultSavedList {
-            let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-            let editAction = UIAlertAction(title: NSLocalizedString("Edit list", comment: "edit"), style: .default) { [unowned self] action in
-                if action.isEnabled {
-                    self.tableView.setEditing(true, animated: true)
-                }
+        guard viewModel.canDeleteList else { beginEditing(); return }
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let editAction = UIAlertAction(title: NSLocalizedString("Edit list", comment: "edit"), style: .default) { [unowned self] action in
+            if action.isEnabled {
+                self.tableView.setEditing(true, animated: true)
+                // TODO: enabled editing
             }
-            alertController.addAction(editAction)
-            let deleteAction = UIAlertAction(title: NSLocalizedString("Delete List", comment: "delete"), style: .destructive) { [unowned self] (action) in
-                if action.isEnabled {
-                    self.alertWithCancelButton(
-                        NSLocalizedString("Cancel", comment: "cancel"),
-                        confirmButton: NSLocalizedString("Confirm", comment: "confirm"),
-                        title: NSLocalizedString("Are you sure?", comment: "check"),
-                        message: NSLocalizedString("Deleting list will also delete its associated places.", comment: "message"),
-                        destructiveStyle: true, confirmBold: true, style: .alert) { bool in
-                            if bool {
-                                self.mainContext.performChanges {
-                                    if let listPlaces = self.list?.listPlaces {
-                                        for listPlace in listPlaces {
-                                            self.mainContext.delete(listPlace)
-                                        }
-                                    }
-                                    self.mainContext.delete(self.list)
-                                }
-                                self.dismissVC()
-                            }
-                    }
-                }
-            }
-            alertController.addAction(deleteAction)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            self.present(alertController, animated: true, completion: nil)
-        } else {
-            beginEditing()
         }
+        alertController.addAction(editAction)
+        let deleteAction = UIAlertAction(title: NSLocalizedString("Delete List", comment: "delete"), style: .destructive) { [unowned self] (action) in
+            if action.isEnabled {
+                self.alertWithCancelButton(
+                    NSLocalizedString("Cancel", comment: "cancel"),
+                    confirmButton: NSLocalizedString("Confirm", comment: "confirm"),
+                    title: NSLocalizedString("Are you sure?", comment: "check"),
+                    message: NSLocalizedString("Deleting list will also delete its associated places.", comment: "message"),
+                    destructiveStyle: true, confirmBold: true, style: .alert) { bool in
+                        if bool {
+                            self.viewModel.deleteList()
+                            self.dismissVC()
+                        }
+                }
+            }
+        }
+        alertController.addAction(deleteAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
     }
-    
-    
+
+
     // MARK: - Handlers
-    
+
     func deleteItemAtIndexPath(_ indexPath: IndexPath) {
         if let error = viewModel.deleteItemAtIndexPath(indexPath: indexPath) {
             alertWithButton("Ok", title: nil, message: error.description, style: .alert, dismissBlock: nil)
@@ -139,7 +129,6 @@ class ListDetailsViewController: BaseViewController {
         tableView.setEditing(true, animated: true)
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelEditing))
         navigationItem.setRightBarButton(cancel, animated: true)
-
     }
     
     func cancelEditing() {
@@ -169,8 +158,7 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     // MARK: - UITableViewDataSource delegate methods
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let cell = cell as? PlaceTableViewCell else { fatalError("cell not found") }
-        let listPlace = viewModel[indexPath.row]
+        guard let cell = cell as? PlaceTableViewCell, let listPlace = viewModel.listPlaces?[indexPath.row]  else { fatalError("cell not found") }
         var location: CLLocation? = nil
         if let lat = listPlace.place?.latitude, let long = listPlace.place?.longitude {
             location = CLLocation(latitude: Double(lat), longitude: Double(long))
@@ -180,15 +168,15 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let place = viewModel[indexPath.row]
-        let vm = PlaceDetailsViewModel(place: place, webService: webService)
+        guard let listPlace = viewModel.listPlaces?[indexPath.row] else { return }
+        
+        let vm = PlaceDetailsViewModel(place: listPlace, webService: webService)
         let vc = PlaceDetailsViewController(viewModel: vm)
         let nc = BaseNavigationController(rootViewController: vc)
         present(nc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-
         if editingStyle == .delete {
             deleteItemAtIndexPath(indexPath)
         } else {
@@ -201,9 +189,8 @@ extension ListDetailsViewController: UITableViewDataSource, UITableViewDelegate 
             self.deleteItemAtIndexPath(indexPath)
         }
         delete.backgroundColor = UIColor.red
-        
-        let visitedTitle = viewModel.isMarkedVisited(indexPath: indexPath) ? NSLocalizedString("Not Visited", comment: "not visited") : NSLocalizedString("Visited", comment: "visited")
-        let visited = UITableViewRowAction(style: .normal, title: visitedTitle) { [unowned self] (_, indexPath) in
+
+        let visited = UITableViewRowAction(style: .normal, title: viewModel.getEditActionTitle(atIndexPath: indexPath)) { [unowned self] (_, indexPath) in
             self.markItemAtIndexPath(indexPath)
         }
         visited.backgroundColor = UIColor.orange

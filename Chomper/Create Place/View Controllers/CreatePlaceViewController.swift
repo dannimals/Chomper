@@ -32,7 +32,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.softWhite()
         
         //
         // Set up tableViewController

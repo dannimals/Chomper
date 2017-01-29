@@ -64,7 +64,8 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let list = dataSource.objectAtIndexPath(indexPath) {
-            let vc = ListDetailsViewController(listId: list.objectID)
+            let vm = ListDetailsViewModel(listId: list.objectID, mainContext: mainContext)
+            let vc = ListDetailsViewController(viewModel: vm)
             let nc = BaseNavigationController(rootViewController: vc)
             vc.title = list.name
             nc.modalTransitionStyle = .crossDissolve
