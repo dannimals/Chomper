@@ -11,14 +11,13 @@ import WebServices
 
 class ListsViewController: BaseViewController {
     fileprivate var toggle: ListsToggleControl!
+    private var actionToggle: CustomToggleControl!
+    private var containerStackview = UIStackView()
     private var listViewController: ListsTableViewController!
+    private var mapView: UIView!
     private var mapViewController: MapPlacesViewController!
     private var scrollView: UIScrollView!
     private var tileViewController: ListsTileViewController!
-    private var viewModeControl: UISegmentedControl!
-    private var actionToggle: CustomToggleControl!
-    private var mapView: UIView!
-    private var containerStackview: UIStackView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +27,6 @@ class ListsViewController: BaseViewController {
         //
         // Set up toggle and parent scrollView
         
-        containerStackview = UIStackView()
         containerStackview.axis = .vertical
         containerStackview.spacing = 5
         containerStackview.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +78,6 @@ class ListsViewController: BaseViewController {
         listViewController.view.frame = scrollBounds
         
         toggle.setShadow()
-        
     }
     
     // MARK: - Helpers
