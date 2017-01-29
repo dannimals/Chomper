@@ -10,14 +10,9 @@ import Common
 import MapKit
 
 class MapDetailsViewController: BaseViewController {
-    
-    // MARK: - Properties
-    
     var mapView: MKMapView!
     var placeLocation: CLLocation!
-    
-    // MARK: - Initializers
-    
+
     required init(placeLocation: CLLocation) {
         self.placeLocation = placeLocation
         super.init(nibName: nil, bundle: nil)
@@ -29,9 +24,6 @@ class MapDetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //
-        // Configure mapView
         
         mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -56,9 +48,7 @@ class MapDetailsViewController: BaseViewController {
         
         setPlaceAnnotation()
     }
-    
-    // MARK: - Handlers
-    
+
     func setPlaceAnnotation() {
         let pin = MKPointAnnotation()
         pin.coordinate = placeLocation.coordinate

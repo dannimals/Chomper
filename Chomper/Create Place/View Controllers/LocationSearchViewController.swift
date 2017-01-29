@@ -9,17 +9,12 @@
 import GoogleMaps
 
 class LocationSearchViewController: UIViewController, BaseViewControllerProtocol {
-    
-    // MARK: - Properties
-    
     fileprivate var resultsViewController: GMSAutocompleteResultsViewController?
     fileprivate var searchBar: UISearchBar!
     fileprivate var searchController: UISearchController!
-    
     var searchAction: ((_ locationName: String, _ coordinate: CLLocation) -> Void)?
     var searchTerm: String?
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -37,24 +32,19 @@ class LocationSearchViewController: UIViewController, BaseViewControllerProtocol
         searchController.searchBar.sizeToFit()
         navigationItem.titleView = searchController!.searchBar
         searchController.hidesNavigationBarDuringPresentation = false
-        
         definesPresentationContext = true
-
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchController.isActive = true
     }
-    
-    // MARK: - Helpers
-    
+
     func dismissVC() {
         searchBar.resignFirstResponder()
         searchController!.dismiss(animated: true, completion: nil)
         dismiss(animated: true, completion: nil)
     }
-    
 }
 
 extension LocationSearchViewController: GMSAutocompleteResultsViewControllerDelegate {
@@ -67,16 +57,16 @@ extension LocationSearchViewController: GMSAutocompleteResultsViewControllerDele
         print("Place address: ", place.formattedAddress ?? "")
         print("Place attributions: ", place.coordinate)
     }
-    
+
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController,didFailAutocompleteWithError error: Error){
         // TODO: handle the error.
     }
-    
+
     // Turn the network activity indicator on and off again.
     func didRequestAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
-    
+
     func didUpdateAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
@@ -94,7 +84,4 @@ extension LocationSearchViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         dismissVC()
     }
-    
-    
 }
-
