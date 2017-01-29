@@ -11,16 +11,16 @@ import Models
 
 class AddToListViewController: BaseViewController {
     fileprivate var tableView: UITableView!
-    fileprivate var lists: [List]!
-    fileprivate var place: PlaceDetailsObjectProtocol!
+    fileprivate var viewModel: AddToListViewModel
     
-    required init(place: PlaceDetailsObjectProtocol) {
+    required init(viewModel: AddToListViewModel) {
+        self.viewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
-        self.place = place
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -58,21 +58,8 @@ class AddToListViewController: BaseViewController {
             metrics: nil,
             views: views)
         )
-        
-        //
-        // Create data model
-        
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: List.entityName)
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        do {
-            lists = try mainContext.fetch(request) as! [List]
-        } catch {
-            fatalError("Could not load lists: \(error)")
-        }
     }
 
-    // MARK: - Handlers
-    
     func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
@@ -81,7 +68,7 @@ class AddToListViewController: BaseViewController {
 extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return viewModel.getNumberOfRows()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -91,7 +78,7 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let cell = cell as? AddToListCell else { fatalError("AddToListCell not found") }
-        cell.configureCell(lists[indexPath.row].name)
+        cell.configureCell(viewModel.getListName(atIndexPath: indexPath))
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -100,19 +87,7 @@ extension AddToListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let list = lists[indexPath.row]
-        self.mainContext.performChanges {
-            var image: Image? = nil
-
-            let listPlace = ListPlace.insertIntoContext(self.mainContext, address: self.place.address, city: self.place.city, downloadImageUrl: self.place.imageUrl, listName: list.name, location: self.place.location, phone: self.place.phone, placeId: self.place.venueId, placeName: self.place.name, price: self.place.priceValue as NSNumber?, notes: self.place.userNotes, rating: self.place.ratingValue as NSNumber?, state: self.place.state)
-            
-            if let cached = (self.imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: self.place.imageUrl as AnyObject) as? UIImage, let imageData = UIImagePNGRepresentation(cached) {
-                image = Image.insertIntoContext(self.mainContext, createdAt: NSDate() as Date, imageData: imageData, thumbData: nil)
-            }
-            
-            listPlace.listImageId = image?.id
-        }
+        viewModel.saveToList(atIndexPath: indexPath)
         dismiss(animated: true, completion: nil)
     }
 }

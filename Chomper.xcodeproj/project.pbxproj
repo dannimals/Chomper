@@ -55,6 +55,7 @@
 		9E690ABD1D47B523009574DF /* ActionTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABC1D47B523009574DF /* ActionTableCell.swift */; };
 		9E690ABF1D492399009574DF /* AddToListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690ABE1D492399009574DF /* AddToListViewController.swift */; };
 		9E690AC11D4933CD009574DF /* AddToListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E690AC01D4933CD009574DF /* AddToListCell.swift */; };
+		9E74E5FB1E3E6C30005F8BE0 /* AddToListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E74E5FA1E3E6C30005F8BE0 /* AddToListViewModel.swift */; };
 		9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90F6171D33F968005A380B /* UIView+Extensions.swift */; };
 		9EA30C741D64D6EB00CDCE64 /* NSCache+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA30C731D64D6EB00CDCE64 /* NSCache+Extensions.swift */; };
 		9EA30C761D64DB3300CDCE64 /* PlaceDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */; };
@@ -301,6 +302,7 @@
 		9E690ABC1D47B523009574DF /* ActionTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionTableCell.swift; sourceTree = "<group>"; };
 		9E690ABE1D492399009574DF /* AddToListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToListViewController.swift; sourceTree = "<group>"; };
 		9E690AC01D4933CD009574DF /* AddToListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToListCell.swift; sourceTree = "<group>"; };
+		9E74E5FA1E3E6C30005F8BE0 /* AddToListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddToListViewModel.swift; sourceTree = "<group>"; };
 		9E90F6171D33F968005A380B /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		9EA30C731D64D6EB00CDCE64 /* NSCache+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCache+Extensions.swift"; sourceTree = "<group>"; };
 		9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaceDetailsView.xib; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 			isa = PBXGroup;
 			children = (
 				9EFAB8B41DB2B4440055A8E0 /* ActionListViewModel.swift */,
+				9E74E5FA1E3E6C30005F8BE0 /* AddToListViewModel.swift */,
 				9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */,
 				9EFAB8B21DA8802E0055A8E0 /* PlaceDetailsViewModel.swift */,
 			);
@@ -1695,6 +1698,7 @@
 				9E4736E51D3C0F8A00463665 /* BaseViewController.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
 				9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */,
+				9E74E5FB1E3E6C30005F8BE0 /* AddToListViewModel.swift in Sources */,
 				9EC154F81E36EBC300C2A4EF /* ListDetailsViewModel.swift in Sources */,
 				9E690ABD1D47B523009574DF /* ActionTableCell.swift in Sources */,
 				9E1D27991D22D16100728012 /* PlaceTableViewCell.swift in Sources */,

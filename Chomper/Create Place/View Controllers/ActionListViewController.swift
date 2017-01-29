@@ -24,9 +24,7 @@ class ActionListViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //
-        // Create blur background view
+
         if !UIAccessibilityIsReduceTransparencyEnabled() {
             view.backgroundColor = UIColor.clear
             let blurEffect = UIBlurEffect(style: .extraLight)
@@ -38,9 +36,6 @@ class ActionListViewController: BaseViewController {
             view.backgroundColor = UIColor.softWhite()
         }
         
-        //
-        // Create tableView
-        
         tableView = UITableView()
         tableView.backgroundColor = UIColor.softWhite()
         tableView.separatorStyle = .none
@@ -49,9 +44,6 @@ class ActionListViewController: BaseViewController {
         tableView.registerCell(ActionTableCell.self)
         tableView.registerNib(PlaceTableViewCell.self)
         view.addSubview(tableView)
-        
-        //
-        // Create bottom cancel button
         
         let cancelButton = UIButton()
         cancelButton.tintColor = UIColor.softWhite()
@@ -130,7 +122,8 @@ extension ActionListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func presentAddToListViewController() {
         let nav = presentingViewController
-        let nc = BaseNavigationController(rootViewController: AddToListViewController(place: viewModel.place))
+        let vm = AddToListViewModel(place: viewModel.place, mainContext: mainContext, imageCache: imageCache)
+        let nc = BaseNavigationController(rootViewController: AddToListViewController(viewModel: vm))
         nc.modalTransitionStyle = .coverVertical
         nc.modalPresentationStyle = .overCurrentContext
         self.dismiss(animated: true) {
