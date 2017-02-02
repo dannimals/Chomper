@@ -14,7 +14,7 @@ class AddToListViewModel: BaseViewModelProtocol {
     private var lists: [List]
     private var mainContext: NSManagedObjectContext
     private var place: PlaceDetailsObjectProtocol
-    
+
     required init(place: PlaceDetailsObjectProtocol,
                   mainContext: NSManagedObjectContext,
                   imageCache: ChomperImageCacheProtocol) {

@@ -28,6 +28,7 @@ class AddToListViewController: BaseViewController {
         
         navigationItem.title = NSLocalizedString("Add to List", comment: "add to list")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissVC))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(createNewList))
         // TODO: Add a plus to right bar item and create option to create a new list
         
         //
@@ -60,6 +61,14 @@ class AddToListViewController: BaseViewController {
         )
     }
 
+    func createNewList() {
+        let vm = CreateListViewModel(mainContext: mainContext)
+        let vc = CreateListViewController(viewModel: vm)
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationCapturesStatusBarAppearance = true
+        present(vc, animated: true, completion: nil)
+    }
+    
     func dismissVC() {
         dismiss(animated: true, completion: nil)
     }
