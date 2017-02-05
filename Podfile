@@ -45,6 +45,7 @@ end
 
 target 'WebServices' do
   pod 'SwiftyJSON'
+  pod 'Moya', '8.0.2'
 
   target 'WebServicesTests' do
     inherit! :search_paths
