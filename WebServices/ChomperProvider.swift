@@ -20,11 +20,9 @@ public class ChomperProvider {
                 let data = moyaResponse.data
                 let json = JSON(data: data)
                 print(json)
-                
             case let .failure(error):
                 print("Error \(error)")
             }
-            
         }
     }
 
@@ -39,7 +37,6 @@ public class ChomperProvider {
             case let .failure(error):
                 print("Error \(error)")
             }
-            
         }
     }
 
@@ -54,9 +51,6 @@ public class ChomperProvider {
             case let .failure(error):
                 print("Error \(error)")
             }
-            
         }
     }
-    
 }
-
