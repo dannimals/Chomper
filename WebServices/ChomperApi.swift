@@ -5,6 +5,8 @@
 
 import CoreLocation
 import Moya
+import ObjectMapper
+import RxSwift
 
 public enum ChomperApi {
     case getDetailsForPlace(id: String)

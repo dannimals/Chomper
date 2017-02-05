@@ -6,6 +6,7 @@
 import Common
 import CoreLocation
 import Moya
+import Moya_ObjectMapper
 import SwiftyJSON
 
 public class ChomperProvider {
