@@ -38,16 +38,20 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         collectionView!.showsVerticalScrollIndicator = false
         collectionView!.backgroundColor = UIColor.white
         collectionView!.registerCell(ListsCollectionViewCell.self)
-        
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         //TEST TEST TEST TEST
-        
+
         let chomperProvider = ChomperProvider()
         let ll = CLLocation(latitude: 40.7, longitude: -74)
         let id = "51eabef6498e10cf3aea7942"
 
-        chomperProvider.getPhotosForPlace(id: id)
+        chomperProvider.getDetailsForPlace(id: id)
+        //        chomperProvider.getPhotosForPlace(id: id)
         //TEST TEST TEST TEST
-
     }
     
     // MARK: - UICollectionViewDataSource methods

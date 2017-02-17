@@ -1,7 +1,4 @@
 //
-//  SearchPlace.swift
-//  Chomper
-//
 //  Created by Danning Ge on 2/5/17.
 //  Copyright © 2017 Danning Ge. All rights reserved.
 //

@@ -16,10 +16,9 @@ public class ChomperProvider {
     public func getDetailsForPlace(id: String) {
         provider.request(.getDetailsForPlace(id: id)) { result in
             switch result {
-            case let .success(moyaResponse):
-                let data = moyaResponse.data
-                let json = JSON(data: data)
-                print(json)
+            case let .success(response):
+                let place = try? response.mapObject(SearchPlaceResponse.self)
+                print(place)
             case let .failure(error):
                 print("Error \(error)")
             }

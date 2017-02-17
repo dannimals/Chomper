@@ -118,6 +118,7 @@
 		9EE754941D36C5FB0070779E /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548C1D36C5FB0070779E /* ListsViewController.swift */; };
 		9EE754951D36C5FB0070779E /* ListsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */; };
 		9EE754961D36C5FB0070779E /* ListsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */; };
+		9EEDCCB91E57A5C000A30B83 /* SearchPlaceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EEDCCB81E57A5C000A30B83 /* SearchPlaceResponse.swift */; };
 		9EF26C031E47A7A600AF8AF9 /* ChomperApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF26C021E47A7A600AF8AF9 /* ChomperApi.swift */; };
 		9EF26C051E47AF6800AF8AF9 /* ChomperProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF26C041E47AF6800AF8AF9 /* ChomperProvider.swift */; };
 		9EF26C071E47BB9A00AF8AF9 /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF26C061E47BB9A00AF8AF9 /* DataExtensions.swift */; };
@@ -378,6 +379,7 @@
 		9EE7548C1D36C5FB0070779E /* ListsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
 		9EE7548E1D36C5FB0070779E /* ListsCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewCell.swift; sourceTree = "<group>"; };
 		9EE7548F1D36C5FB0070779E /* ListsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListsCollectionViewLayout.swift; sourceTree = "<group>"; };
+		9EEDCCB81E57A5C000A30B83 /* SearchPlaceResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaceResponse.swift; sourceTree = "<group>"; };
 		9EF26C021E47A7A600AF8AF9 /* ChomperApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperApi.swift; sourceTree = "<group>"; };
 		9EF26C041E47AF6800AF8AF9 /* ChomperProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperProvider.swift; sourceTree = "<group>"; };
 		9EF26C061E47BB9A00AF8AF9 /* DataExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
@@ -616,6 +618,7 @@
 			children = (
 				9EAF87C31D1C38C200C9FF59 /* ChomperMapper.swift */,
 				9EF26C0F1E47CC0000AF8AF9 /* SearchPlace.swift */,
+				9EEDCCB81E57A5C000A30B83 /* SearchPlaceResponse.swift */,
 			);
 			path = Mappings;
 			sourceTree = "<group>";
@@ -1847,6 +1850,7 @@
 				9EF26C031E47A7A600AF8AF9 /* ChomperApi.swift in Sources */,
 				9EF26C101E47CC0000AF8AF9 /* SearchPlace.swift in Sources */,
 				9EAF87C41D1C38C200C9FF59 /* ChomperMapper.swift in Sources */,
+				9EEDCCB91E57A5C000A30B83 /* SearchPlaceResponse.swift in Sources */,
 				9EF26C071E47BB9A00AF8AF9 /* DataExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
