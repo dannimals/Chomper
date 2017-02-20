@@ -5,10 +5,12 @@
 
 import ObjectMapper
 
-struct SearchPlaceResponse: ImmutableMappable {
-    let searchPlace: SearchPlace
+struct SearchPlaceResponse: Mappable {
+    var searchPlace: SearchPlace? = nil
+    
+    init?(map: Map) {}
 
-    init(map: Map) throws {
-        searchPlace = try map.value("response")
+    mutating func mapping(map: Map) {
+        searchPlace <- map["response.venue"]
     }
 }

@@ -42,11 +42,9 @@ public class ChomperProvider {
     public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?) {
         provider.request(.getRecommendedPlacesNearLocation(location: location, string: searchTerm)) { result in
             switch result {
-            case let .success(moyaResponse):
-                let data = moyaResponse.data
-                let json = JSON(data: data)
-                print(json)
-                
+            case let .success(response):
+                let places = try? response.mapArray(SearchPlaceResponse.self)
+                print(places)
             case let .failure(error):
                 print("Error \(error)")
             }
