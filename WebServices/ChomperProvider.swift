@@ -9,44 +9,49 @@ import Moya
 import Moya_ObjectMapper
 import SwiftyJSON
 
+public typealias PhotosCompletionHandler = ([SearchPhoto]?, Swift.Error?) -> Void
+public typealias PlacesCompletionHandler = ([SearchPlace]?, Swift.Error?) -> Void
+public typealias PlaceCompletionHandler = (SearchPlace?, Swift.Error?) -> Void
+
 public class ChomperProvider {
     public init() {}
     let provider = MoyaProvider<ChomperApi>()
     
-    public func getDetailsForPlace(id: String) {
+    public func getDetailsForPlace(id: String, completionHandler: @escaping PlaceCompletionHandler) {
         provider.request(.getDetailsForPlace(id: id)) { result in
             switch result {
             case let .success(response):
-                let place = try? response.mapObject(SearchPlaceResponse.self)
-                print(place)
+                let response = try? response.mapObject(SearchPlaceResponse.self)
+                completionHandler(response?.searchPlace, nil)
             case let .failure(error):
-                print("Error \(error)")
+                completionHandler(nil, error)
+                fatalErrorInDebug(message: "Get details for place failed with \(error)")
             }
         }
     }
 
-    public func getPhotosForPlace(id: String) {
+    public func getPhotosForPlace(id: String, completionHandler: @escaping PhotosCompletionHandler) {
         provider.request(.getPhotosForPlace(id: id)) { result in
             switch result {
-            case let .success(moyaResponse):
-                let data = moyaResponse.data
-                let json = JSON(data: data)
-                print(json)
-                
+            case let .success(response):
+                let response = try? response.mapObject(SearchPhotoResponse.self)
+                completionHandler(response?.photos, nil)
             case let .failure(error):
-                print("Error \(error)")
+                completionHandler(nil, error)
+                fatalErrorInDebug(message: "Get photos for place failed with \(error)")
             }
         }
     }
 
-    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?) {
+    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler) {
         provider.request(.getRecommendedPlacesNearLocation(location: location, string: searchTerm)) { result in
             switch result {
             case let .success(response):
-                let places = try? response.mapArray(SearchPlaceResponse.self)
-                print(places)
+                let response = try? response.mapObject(SearchPlacesResponse.self)
+                completionHandler(response?.searchPlaces, nil)
             case let .failure(error):
-                print("Error \(error)")
+                completionHandler(nil, error)
+                fatalErrorInDebug(message: "Get places failed with \(error)")
             }
         }
     }

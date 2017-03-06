@@ -5,12 +5,12 @@
 
 import ObjectMapper
 
-struct SearchPlaceResponse: Mappable {
+public struct SearchPlaceResponse: Mappable {
     var searchPlace: SearchPlace? = nil
     
-    init?(map: Map) {}
+    public init?(map: Map) {}
 
-    mutating func mapping(map: Map) {
+    public mutating func mapping(map: Map) {
         searchPlace <- map["response.venue"]
     }
 }

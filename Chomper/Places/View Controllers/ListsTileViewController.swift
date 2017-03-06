@@ -49,8 +49,10 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         let ll = CLLocation(latitude: 40.7, longitude: -74)
         let id = "57fd74cb498ecd4ccc2510ee"
 
-        chomperProvider.getDetailsForPlace(id: id)
-        //        chomperProvider.getPhotosForPlace(id: id)
+//        chomperProvider.getDetailsForPlace(id: id)
+          chomperProvider.getRecommendedPlacesNearLocation(location: ll, searchTerm: nil) { (places, error) in
+            print(places)
+        }
         //TEST TEST TEST TEST
     }
     

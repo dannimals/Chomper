@@ -6,7 +6,7 @@
 import CoreLocation
 import ObjectMapper
 
-struct SearchPlace: Mappable {
+public struct SearchPlace: Mappable {
     public var address: String = ""
     public var city: String = ""
     public var id: String = ""
