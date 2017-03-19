@@ -51,9 +51,6 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
 
 //        chomperProvider.getDetailsForPlace(id: id)
           chomperProvider.getRecommendedPlacesNearLocation(location: ll, searchTerm: nil) { (places, error) in
-            for place in places! {
-                print(place.imageUrl)
-            }
         }
         //TEST TEST TEST TEST
     }

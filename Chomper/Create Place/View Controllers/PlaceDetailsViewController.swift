@@ -9,6 +9,7 @@
 import Common
 import Models
 import MapKit
+import WebServices
 
 class PlaceDetailsViewController: BaseViewController {
     
@@ -47,7 +48,7 @@ class PlaceDetailsViewController: BaseViewController {
         
         title = viewModel.name
         view.backgroundColor = UIColor.white
-        if viewModel.type == "\(SearchResult.self)"  {
+        if viewModel.type == "\(SearchPlace.self)"  {
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add(_:)))
             navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont.chomperFontForTextStyle("h1")], for: UIControlState())
         } else {
