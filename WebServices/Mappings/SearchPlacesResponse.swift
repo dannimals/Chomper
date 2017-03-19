@@ -9,6 +9,6 @@ public struct SearchPlacesResponse: ImmutableMappable {
     var searchPlaces: [SearchPlace]
     
     public init(map: Map) throws {
-        searchPlaces = try map.value("response.groups.0.value")
+        searchPlaces = try map.value("response.groups.0.items")
     }
 }

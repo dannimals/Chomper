@@ -13,7 +13,13 @@ public typealias PhotosCompletionHandler = ([SearchPhoto]?, Swift.Error?) -> Voi
 public typealias PlacesCompletionHandler = ([SearchPlace]?, Swift.Error?) -> Void
 public typealias PlaceCompletionHandler = (SearchPlace?, Swift.Error?) -> Void
 
-public class ChomperProvider {
+public protocol ChomperWebServiceProvider {
+    func getDetailsForPlace(id: String, completionHandler: @escaping PlaceCompletionHandler)
+    func getPhotosForPlace(id: String, completionHandler: @escaping PhotosCompletionHandler)
+    func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler)
+}
+
+public class ChomperProvider: ChomperWebServiceProvider {
     public init() {}
     let provider = MoyaProvider<ChomperApi>()
     

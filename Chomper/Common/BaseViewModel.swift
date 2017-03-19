@@ -11,7 +11,7 @@ import Models
 import WebServices
 
 class BaseViewModel {
-    var webService: ChomperWebServiceProtocol { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperWebServiceProtocol.self)") as! ChomperWebServiceProtocol }
+    var webService: ChomperWebServiceProvider { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperWebServiceProvider.self)") as! ChomperWebServiceProvider }
     var locationManager: ChomperLocationManagerProtocol { return DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)") as! ChomperLocationManagerProtocol }
     var mainContext: NSManagedObjectContext { return NSManagedObjectContext.mainContext() }
 }

@@ -7,11 +7,12 @@
 //
 
 import Common
+import WebServices
 
 struct CreatePlaceViewModel {
-    fileprivate(set) var results: [SearchResult]!
+    fileprivate(set) var results: [SearchPlace]!
 
-    init(results: [SearchResult]) {
+    init(results: [SearchPlace]) {
         self.results = results
     }
     

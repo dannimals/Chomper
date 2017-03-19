@@ -45,8 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //
         // Set the web service singleton for use with dependency injection later
         
-        let webService = ChomperWebService.createWebService()
-        DependencyInjector.sharedInstance.setSingleton(webService, proto: "\(ChomperWebServiceProtocol.self)")
+        let webService = ChomperProvider()
+        DependencyInjector.sharedInstance.setSingleton(webService, proto: "\(ChomperWebServiceProvider.self)")
         
         //
         // Set the location manager singleton for use with dependency injection later

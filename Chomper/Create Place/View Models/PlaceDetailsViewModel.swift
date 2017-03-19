@@ -18,7 +18,7 @@ class PlaceDetailsViewModel: NSObject {
     var city: String?
     var location: CLLocation!
     var phone: String?
-    var photos: [Photo]?
+    var photos: [SearchPhoto]?
     var priceValue: Double?
     var name: String!
     var ratingValue: Double?
@@ -27,10 +27,10 @@ class PlaceDetailsViewModel: NSObject {
     var userNotes: String?
     // TODO: place should be private
     var place: PlaceDetailsObjectProtocol!
-    fileprivate var webService: ChomperWebServiceProtocol!
+    fileprivate var webService: ChomperWebServiceProvider!
     
     
-    required init(place: PlaceDetailsObjectProtocol, webService: ChomperWebServiceProtocol) {
+    required init(place: PlaceDetailsObjectProtocol, webService: ChomperWebServiceProvider) {
         self.address = place.address
         self.city = place.city
         self.location = place.location
@@ -59,7 +59,7 @@ class PlaceDetailsViewModel: NSObject {
     }
     
     func getPlaceImages(_ completionHandler: (() -> ())?) {
-        let _ = webService.getPhotosForPlace(place.venueId) { [weak self] (photos, response, error) in
+        let _ = webService.getPhotosForPlace(id: place.venueId) { [weak self] (photos, error) in
             if error == nil {
                 if let photos = photos, photos.count != 0 {
                     DispatchQueue.main.async {

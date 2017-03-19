@@ -142,7 +142,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     
     internal func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, showLoading: Bool = true) {
         showLoadingView(show: showLoading)
-        let _ = webService.getRecommendedPlacesNearLocation(location, searchTerm: searchTerm) { [weak self] (places, response, error) in
+        let _ = webService.getRecommendedPlacesNearLocation(location: location, searchTerm: searchTerm) { [weak self] (places, error) in
             if error == nil, let places = places {
                 self?.viewModel = CreatePlaceViewModel(results: places)
                 DispatchQueue.main.async (execute: { () -> Void in
