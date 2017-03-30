@@ -77,7 +77,6 @@ extension LocationSearchViewController: UISearchControllerDelegate {
         searchBar.becomeFirstResponder()
         searchBar.text = searchTerm
     }
-
 }
 
 extension LocationSearchViewController: UISearchBarDelegate {

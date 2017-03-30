@@ -37,7 +37,7 @@ public struct SearchPlace: Mappable {
         get {
             guard let photoDict = self.photoDict?.first else { return nil }
 
-            let size = "\(unwrapOrElse(photoDict["width"], fallback: "")) x \(unwrapOrElse(photoDict["height"], fallback: ""))"
+            let size = "\(unwrapOrElse(photoDict["width"], fallback: ""))x\(unwrapOrElse(photoDict["height"], fallback: ""))"
             return "\(unwrapOrElse(photoDict["prefix"], fallback: ""))\(size)\(unwrapOrElse(photoDict["suffix"], fallback: ""))"
 
         }

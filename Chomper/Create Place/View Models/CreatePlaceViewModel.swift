@@ -21,5 +21,4 @@ struct CreatePlaceViewModel {
     func numberOfRows() -> Int {
         return results.count
     }
-    
  }
