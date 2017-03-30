@@ -17,6 +17,7 @@ import WebServices
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    let webService = ChomperProvider()
 
     func applicationDidFinishLaunching(_ application: UIApplication) {
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -45,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //
         // Set the web service singleton for use with dependency injection later
         
-        let webService = ChomperProvider()
         DependencyInjector.sharedInstance.setSingleton(webService, proto: "\(ChomperWebServiceProvider.self)")
         
         //
@@ -125,8 +125,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             image: nil,
             selectedImage: nil
         )
-        
-        let createPlaceVC = CreatePlaceViewController(nibName: nil, bundle: nil)
+
+        let vm = CreatePlaceViewModel(webService: webService)
+        let createPlaceVC = CreatePlaceViewController(viewModel: vm)
         createPlaceVC.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
         createPlaceVC.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Search", comment: "My Places Tab Title"),

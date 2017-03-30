@@ -7,24 +7,28 @@ import Common
 import CoreLocation
 import GoogleMaps
 import Models
-import SwiftyJSON
+import RxSwift
 import WebServices
 
-class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
-    
-    // MARK: - Properties
-    
-    let locationManager = CLLocationManager()
-    
-    var viewModel: CreatePlaceViewModel?
-    var searchView: CreatePlaceSearchView!
-    
-    internal var searchLocationCoord: CLLocation?
+class CreatePlaceViewController: BaseViewController {
+    internal let locationManager = CLLocationManager()
+    internal var viewModel: CreatePlaceViewModel
+    internal var searchView: CreatePlaceSearchView!
+    internal var searchLocationCoord: CLLocation? = nil
 
-    private var loadingView: UIView!
-    private var loadingLabel: UILabel!
-    private var searchTerm: String?
-    private var tableVC: UITableViewController!
+    var searchTerm = Variable<String>("")
+    var location = Variable<CLLocation?>(nil)
+
+    private let disposeBag = DisposeBag()
+    private let loadingView = UIView()
+    private let loadingLabel = UILabel()
+    private let tableVC = UITableViewController()
+
+    required init(viewModel: CreatePlaceViewModel) {
+        self.viewModel = viewModel
+
+        super.init(nibName: nil, bundle: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +38,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         //
         // Set up tableViewController
         
-        tableVC = UITableViewController()
         tableVC.tableView.dataSource = self
         tableVC.tableView.delegate = self
         tableVC.view.translatesAutoresizingMaskIntoConstraints = false
@@ -52,17 +55,16 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         //
         // Set up search view
         
-        searchView = CreatePlaceSearchView()
         searchView.cancelAction = { [weak self] in
             self?.searchView.cancelSearch()
             self?.searchLocationCoord = nil
         }
         searchView.searchAction = { [weak self] in
             guard let location = self?.searchLocationCoord ?? self?.locationManager.location else { return }
-            self?.getRecommendedPlacesNearLocation(location: location, searchTerm: self?.searchView.textSearch.text)
+            self?.viewModel.fetchPlaces()
         }
         
-        searchView.textSearch.delegate = self
+        searchView.textField.delegate = self
         searchView.locationSearch.delegate = self
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
@@ -111,14 +113,10 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
             metrics: nil,
             views: views)
         )
-        
-        // 
-        // Call webService for recommended places near current location
 
-        guard let location = locationManager.location else { return }
-        getRecommendedPlacesNearLocation(location: location, searchTerm: nil)
+        setupBindings()
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         if searchView.layer.shadowPath == nil {
@@ -126,18 +124,26 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         }
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?)   {
-        super.init(nibName: nil, bundle: nil)
-        checkLocationPermission()
-    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Handlers
-    
-    internal func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, showLoading: Bool = true) {
+    private func setupBindings() {
+        viewModel
+            .searchResults
+            .asObservable()
+            .subscribe(onNext: { [weak self] _ in
+                self?.tableVC.tableView.reloadData()
+            })
+            .addDisposableTo(disposeBag)
+
+        searchView
+            .textUpdated
+            .bindTo(viewModel.searchTerm)
+            .addDisposableTo(disposeBag)
+    }
+
+    /*internal func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, showLoading: Bool = true) {
         showLoadingView(show: showLoading)
         let _ = webService.getRecommendedPlacesNearLocation(location: location, searchTerm: searchTerm) { [weak self] (places, error) in
             if error == nil, let places = places {
@@ -151,48 +157,18 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
             } else {
                 DispatchQueue.main.async(execute: { () -> Void in
                     self?.showLoadingView(show: false)
-                    self?.viewModel = nil
                     self?.tableVC.refreshControl?.endRefreshing()
                 })
 
                 // TODO: display no results placeholder view
             }
         }
-    }
+    }*/
     
     func handleRefresh() {
-        guard let location = searchLocationCoord ?? locationManager.location else { return }
-        getRecommendedPlacesNearLocation(location: location, searchTerm: searchView.textSearch.text, showLoading: false)
+       viewModel.fetchPlaces()
     }
-    
-    // MARK: - Helpers
-    
-    func checkLocationPermission() {
-        let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
-        let authStatus = CLLocationManager.authorizationStatus()
-        if authStatus == .notDetermined {
-            CM.locationManager.requestWhenInUseAuthorization()
-            return
-        } else if authStatus == .denied || authStatus == .restricted {
-            // TODO: Handle this
-            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .alert)
-            
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { (action) in
-                //
-            })
-            
-            alert.addAction(cancelAction)
-            
-            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .default, handler: { (action) in
-                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.openURL(url as URL)
-                }
-            })
-            
-            alert.addAction(confirmAction)
-        }
-    }
-    
+        
     // MARK: - Helpers
     
     func showLoadingView(show: Bool = false) {
@@ -211,13 +187,11 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     func createLoadingView() {
-        loadingView = UIView()
         loadingView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(loadingView)
         loadingView.backgroundColor = UIColor.softWhite()
         loadingView.isHidden = true
         
-        loadingLabel = UILabel()
         loadingView.addSubview(loadingLabel)
         loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
         loadingLabel.textColor = UIColor.darkOrange()
@@ -230,7 +204,7 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
     }
     
     func quickSave(indexPath: NSIndexPath) {
-        guard let place = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
+        let place = viewModel.searchResults.value[indexPath.row]
         self.mainContext.performChanges {
             var image: Image? = nil
             let listPlace = ListPlace.insertIntoContext(self.mainContext, address: place.address, city: place.city, downloadImageUrl: place.imageUrl, listName: defaultSavedList, location: place.location, phone: place.phone, placeId: place.venueId, placeName: place.name, price: place.priceValue as NSNumber?, notes: place.userNotes, rating: place.ratingValue as NSNumber?, state: place.state)
@@ -243,15 +217,45 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
         }
         tableVC.tableView.setEditing(false, animated: true)
     }
-    
-    // MARK: - UITableViewDataSource methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfRows() ?? 0
+}
+
+extension CreatePlaceViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+
+        let object = viewModel.searchResults.value[indexPath.row]
+        let vm = PlaceDetailsViewModel(place: object, webService: webService)
+        let vc = PlaceDetailsViewController(viewModel: vm)
+        let nc = BaseNavigationController(rootViewController: vc)
+        present(nc, animated: true, completion: nil)
     }
-    
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        quickSave(indexPath: indexPath as NSIndexPath)
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let save = UITableViewRowAction(style: .normal, title: "Favorite") { [unowned self] (_, indexPath) in
+            self.quickSave(indexPath: indexPath as NSIndexPath)
+        }
+        save.backgroundColor = UIColor.softOrange()
+        return [save]
+    }
+
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 82.0
+    }
+}
+
+extension CreatePlaceViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell, let object = viewModel?.results[indexPath.row] else {fatalError("Error config PlaceTableViewCell")}
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceTableViewCell.reuseIdentifier) as? PlaceTableViewCell else { fatalErrorInDebug(message: "Error config PlaceTableViewCell"); return UITableViewCell() }
+
+        let object = viewModel.searchResults.value[indexPath.row]
         cell.configureCell(withObject: object, imageCache: imageCache)
         if let image = (imageCache as? NSCache<AnyObject, AnyObject>)?.object(forKey: object.venueId as AnyObject) as? UIImage {
             cell.placeImageView.image = image
@@ -269,68 +273,38 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
                             }
                         }
                     }
-                }.resume()
+                    }.resume()
             }
         }
-        
+
         return cell
     }
-    
-    // MARK: - UITableViewDelegate methods
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 82.0
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        
-        guard let object = viewModel?.results[indexPath.row] else { fatalError("Error selected object is invalid") }
-        let vm = PlaceDetailsViewModel(place: object, webService: webService)
-        let vc = PlaceDetailsViewController(viewModel: vm)
-        let nc = BaseNavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        quickSave(indexPath: indexPath as NSIndexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let save = UITableViewRowAction(style: .normal, title: "Favorite") { [unowned self] (_, indexPath) in
-            self.quickSave(indexPath: indexPath as NSIndexPath)
-        }
-        save.backgroundColor = UIColor.softOrange()
-        return [save]
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.numberOfRows()
     }
 }
 
 extension CreatePlaceViewController: UITextFieldDelegate {
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         searchView.enableSearch()
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         guard let location = searchLocationCoord ?? locationManager.location else { return false }
-        getRecommendedPlacesNearLocation(location: location, searchTerm: textField.text)
+        viewModel.fetchPlaces()
         return true
     }
 }
 
 extension CreatePlaceViewController: UISearchBarDelegate {
-    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         let vc = LocationSearchViewController()
         vc.searchAction = { [weak self] (name, coordinate) in
             self?.searchView.locationSearch.text = name
             self?.searchLocationCoord = coordinate
-            self?.searchView.textSearch.becomeFirstResponder()
+            self?.searchView.textField.becomeFirstResponder()
         }
         vc.searchTerm = searchView.locationSearch.text
         let nc = UINavigationController(rootViewController: vc)

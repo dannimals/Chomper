@@ -1,7 +1,4 @@
 //
-//  BaseViewController.swift
-//  Chomper
-//
 //  Created by Danning Ge on 6/20/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
@@ -9,11 +6,6 @@
 import Common
 import Models
 import WebServices
-
-
-//
-// BaseViewControllerProtocol to be implemented by all UIViewController classes
-// With convenient accessors for webService, locationManager, and Core Data attributes
 
 protocol BaseViewControllerProtocol: class {
     var webService: ChomperWebServiceProvider { get }

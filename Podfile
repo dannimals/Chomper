@@ -8,6 +8,7 @@ def production_pods
     pod 'SwiftyJSON'
     pod 'FLEX', '~> 2.3.0', :configurations => ['Debug']
     pod 'RxSwift', '3.1.0'
+    pod 'RxCocoa', '3.1.0'
 end
 
 target 'Chomper' do

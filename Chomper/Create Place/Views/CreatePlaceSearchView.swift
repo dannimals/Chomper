@@ -1,13 +1,11 @@
 //
-//  CreatePlaceSearchView.swift
-//  Chomper
-//
 //  Created by Danning Ge on 7/1/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
 
 import Common
-import Foundation
+import RxCocoa
+import RxSwift
 
 class CreatePlaceSearchView: UIView {
     
@@ -16,12 +14,18 @@ class CreatePlaceSearchView: UIView {
     var cancelButton: UIButton!
     var locationSearch: UISearchBar!
     var searchButton: UIButton!
-    var textSearch: UITextField!
     var view: UIView!
+
+    let textField = UITextField()
+    let button = UIButton()
     
     var cancelAction: (() -> Void)?
     var searchAction: (() -> Void)?
-    
+
+    var textUpdated: Observable<String?> {
+        return textField.rx.text.asObservable()
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
@@ -66,19 +70,18 @@ class CreatePlaceSearchView: UIView {
         buttonContainerView.addSubview(searchButton)
 
         
-        textSearch = UITextField()
-        textSearch.tintColor = UIColor.darkOrange()
-        textSearch.clearButtonMode = .whileEditing
-        textSearch.returnKeyType = .search
-        textSearch.font = UIFont.chomperFontForTextStyle("p")
-        textSearch.textColor = UIColor.textColor()
-        textSearch.placeholder = NSLocalizedString("Search", comment: "Search")
-        textSearch.backgroundColor = UIColor.white
-        textSearch.layer.cornerRadius = 5.0
-        containerView.addArrangedSubview(textSearch)
+        textField.tintColor = UIColor.darkOrange()
+        textField.clearButtonMode = .whileEditing
+        textField.returnKeyType = .search
+        textField.font = UIFont.chomperFontForTextStyle("p")
+        textField.textColor = UIColor.textColor()
+        textField.placeholder = NSLocalizedString("Search", comment: "Search")
+        textField.backgroundColor = UIColor.white
+        textField.layer.cornerRadius = 5.0
+        containerView.addArrangedSubview(textField)
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15.0, height: 30.0))
-        textSearch.leftView = paddingView
-        textSearch.leftViewMode = .always
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
         
         locationSearch = UISearchBar()
         locationSearch.layer.cornerRadius = 5.0
@@ -109,11 +112,11 @@ class CreatePlaceSearchView: UIView {
             cancelButton.topAnchor.constraint(equalTo: buttonContainerView.topAnchor),
             searchButton.rightAnchor.constraint(equalTo: buttonContainerView.rightAnchor),
             searchButton.topAnchor.constraint(equalTo: buttonContainerView.topAnchor),
-            textSearch.heightAnchor.constraint(equalToConstant: 30.0),
+            textField.heightAnchor.constraint(equalToConstant: 30.0),
             heightConstraint
         ])
     }
-    
+
     // MARK: - Helpers
     
     func enableSearch() {
@@ -121,7 +124,7 @@ class CreatePlaceSearchView: UIView {
             self?.layer.shadowOpacity = 0
             self?.buttonContainerView.isHidden = false
             self?.locationSearch.isHidden = false
-            self?.textSearch.becomeFirstResponder()
+            self?.textField.becomeFirstResponder()
             }, completion: { [weak self] finished in
                 self?.setShadow()
         })
@@ -132,10 +135,10 @@ class CreatePlaceSearchView: UIView {
         UIView.animate(withDuration: 0.4, delay: 0.2, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: .curveEaseIn, animations: { [weak self] in
             self?.buttonContainerView.isHidden = true
             self?.locationSearch.isHidden = true
-            self?.textSearch.resignFirstResponder()
+            self?.textField.resignFirstResponder()
             }, completion: { [weak self] finished in
                 self?.locationSearch.text = nil
-                self?.textSearch.text = nil
+                self?.textField.text = nil
         })
     }
     
