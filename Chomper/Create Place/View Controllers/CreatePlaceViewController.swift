@@ -1,7 +1,4 @@
 //
-//  CreateNewPlaceViewController.swift
-//  Chomper
-//
 //  Created by Danning Ge on 6/20/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
@@ -161,7 +158,6 @@ class CreatePlaceViewController: BaseViewController, UITableViewDataSource, UITa
                 // TODO: display no results placeholder view
             }
         }
-
     }
     
     func handleRefresh() {

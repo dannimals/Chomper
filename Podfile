@@ -7,6 +7,7 @@ def production_pods
     pod 'GoogleMaps', '~> 1.13.2'
     pod 'SwiftyJSON'
     pod 'FLEX', '~> 2.3.0', :configurations => ['Debug']
+    pod 'RxSwift', '3.1.0'
 end
 
 target 'Chomper' do

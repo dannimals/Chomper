@@ -27,6 +27,7 @@ DEPENDENCIES:
   - GoogleMaps (~> 1.13.2)
   - Moya-ObjectMapper/RxSwift (= 2.3)
   - Moya/RxSwift (= 8.0.0)
+  - RxSwift (= 3.1.0)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -40,6 +41,6 @@ SPEC CHECKSUMS:
   RxSwift: 83ff553e7593fdfdcb2562933a64c0284dffdadc
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
 
-PODFILE CHECKSUM: e4b1f24be2aedb9fbb7f614236b5ce4e929a40de
+PODFILE CHECKSUM: 7d4d9b38559a0cddb31c841f5537844bcc9981d4
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0
