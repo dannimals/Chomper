@@ -8,25 +8,48 @@ import CoreLocation
 import RxSwift
 import WebServices
 
-class CreatePlaceViewModel {
-    let location = Variable<CLLocation?>(nil)
+class CreatePlaceViewModel: ViewModel {
     let searchResults = Variable<[SearchPlace]>([])
     let searchTerm = Variable<String?>(nil)
     let webService: ChomperWebServiceProvider
+    let locationService: LocationManagerType
 
 
-    init(webService: ChomperWebServiceProvider) {
+    init(locationService: LocationManagerType = ChomperLocationService(),
+         webService: ChomperWebServiceProvider) {
+        self.locationService = locationService
         self.webService = webService
+
+        super.init()
+
+        setupBindings()
     }
-    
-    // MARK: - Helpers
-    
+
+    func setupBindings() {
+        locationService
+            .authorizationStatus
+            .asObservable()
+            .subscribe(onNext: { [unowned self] status in
+                switch status {
+                case .notDetermined:
+                    self.locationService.requestLocationPermission()
+                case .authorizedWhenInUse:
+                    self.locationService.startUpdatingLocation()
+                default:
+                    self.locationService.stopUpdationLocation()
+                }
+            })
+            .addDisposableTo(disposeBag)
+    }
+
     func numberOfRows() -> Int {
         return searchResults.value.count
     }
 
-    func fetchPlaces() {
-        guard let location = location.value else { return }
+
+
+   func fetchPlaces() {
+        /*guard let location = locationService.location else { return }
 
         webService
             .getRecommendedPlacesNearLocation(location: location, searchTerm: searchTerm.value) { [unowned self] (searchResults, error) in
@@ -35,6 +58,7 @@ class CreatePlaceViewModel {
                 } else {
                     // TODO: Handle error
                 }
-        }
+        }*/
     }
  }
+

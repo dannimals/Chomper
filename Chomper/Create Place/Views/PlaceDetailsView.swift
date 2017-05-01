@@ -1,7 +1,4 @@
 //
-//  PlaceDetailsView.swift
-//  Chomper
-//
 //  Created by Danning Ge on 8/17/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
