@@ -14,7 +14,6 @@ class CreatePlaceViewModel: ViewModel {
     let webService: ChomperWebServiceProvider
     let locationService: LocationManagerType
 
-
     init(locationService: LocationManagerType = ChomperLocationService(),
          webService: ChomperWebServiceProvider) {
         self.locationService = locationService
@@ -46,9 +45,7 @@ class CreatePlaceViewModel: ViewModel {
         return searchResults.value.count
     }
 
-
-
-   func fetchPlaces() {
+    func fetchPlaces() {
         /*guard let location = locationService.location else { return }
 
         webService
@@ -60,5 +57,4 @@ class CreatePlaceViewModel: ViewModel {
                 }
         }*/
     }
- }
-
+}

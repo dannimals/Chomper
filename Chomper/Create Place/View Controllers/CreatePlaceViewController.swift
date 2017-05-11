@@ -11,15 +11,10 @@ import RxSwift
 import WebServices
 
 class CreatePlaceViewController: BaseViewController {
-    internal let locationManager = CLLocationManager()
+    internal var location = Variable<CLLocation?>(nil)
+    internal var searchView = LocationSearchView()
+    internal var searchTerm = Variable<String>("")
     internal var viewModel: CreatePlaceViewModel
-    internal var searchView: CreatePlaceSearchView!
-    internal var searchLocationCoord: CLLocation? = nil
-
-    var searchTerm = Variable<String>("")
-    var location = Variable<CLLocation?>(nil)
-
-    private let disposeBag = DisposeBag()
     private let loadingView = UIView()
     private let loadingLabel = UILabel()
     private let tableVC = UITableViewController()
@@ -35,9 +30,6 @@ class CreatePlaceViewController: BaseViewController {
         
         view.backgroundColor = UIColor.softWhite()
         
-        //
-        // Set up tableViewController
-        
         tableVC.tableView.dataSource = self
         tableVC.tableView.delegate = self
         tableVC.view.translatesAutoresizingMaskIntoConstraints = false
@@ -51,26 +43,9 @@ class CreatePlaceViewController: BaseViewController {
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .none
         tableVC.tableView.registerNib(PlaceTableViewCell.self)
-        
-        //
-        // Set up search view
-        
-        searchView.cancelAction = { [weak self] in
-            self?.searchView.cancelSearch()
-            self?.searchLocationCoord = nil
-        }
-        searchView.searchAction = { [weak self] in
-            guard let location = self?.searchLocationCoord ?? self?.locationManager.location else { return }
-            self?.viewModel.fetchPlaces()
-        }
-        
-        searchView.textField.delegate = self
-        searchView.locationSearch.delegate = self
+
         searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
-        
-        //
-        // Set up loading view
         
         createLoadingView()
         
@@ -134,12 +109,50 @@ class CreatePlaceViewController: BaseViewController {
             .asObservable()
             .subscribe(onNext: { [weak self] _ in
                 self?.tableVC.tableView.reloadData()
+                self?.showLoadingView(show: false)
+                self?.tableVC.refreshControl?.endRefreshing()
             })
             .addDisposableTo(disposeBag)
 
         searchView
             .textUpdated
             .bindTo(viewModel.searchTerm)
+            .addDisposableTo(disposeBag)
+
+        searchView
+            .textFieldDidBeginEditing
+            .subscribe(onNext: { [weak self] _ in
+                self?.searchView.enableSearch()
+            })
+            .addDisposableTo(disposeBag)
+
+        searchView
+            .cancelTapped
+            .subscribe(onNext: { [weak self] _ in
+                self?.searchView.cancelSearch()
+            })
+            .addDisposableTo(disposeBag)
+
+        searchView
+            .searchTapped
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel.fetchPlaces()
+            })
+            .addDisposableTo(disposeBag)
+
+        searchView
+            .locationSearchTapped
+            .subscribe(onNext: { [weak self] _ in
+                let viewController = LocationSearchViewController()
+                viewController.searchAction = { [weak self] (name, coordinate) in
+                    self?.searchTerm.value = name
+                    self?.location.value = coordinate
+                    self?.searchView.textField.becomeFirstResponder()
+                }
+                viewController.searchTerm = self?.searchTerm.value
+                let navController = UINavigationController(rootViewController: viewController)
+                self?.present(navController, animated: true, completion: nil)
+            })
             .addDisposableTo(disposeBag)
     }
 
@@ -168,9 +181,7 @@ class CreatePlaceViewController: BaseViewController {
     func handleRefresh() {
        viewModel.fetchPlaces()
     }
-        
-    // MARK: - Helpers
-    
+// TODO: REFACTOR THIS FUNC!!!
     func showLoadingView(show: Bool = false) {
         if show {
             loadingView.isHidden = false
@@ -282,32 +293,5 @@ extension CreatePlaceViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfRows()
-    }
-}
-
-extension CreatePlaceViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        searchView.enableSearch()
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        guard let location = searchLocationCoord ?? locationManager.location else { return false }
-        viewModel.fetchPlaces()
-        return true
-    }
-}
-
-extension CreatePlaceViewController: UISearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        let vc = LocationSearchViewController()
-        vc.searchAction = { [weak self] (name, coordinate) in
-            self?.searchView.locationSearch.text = name
-            self?.searchLocationCoord = coordinate
-            self?.searchView.textField.becomeFirstResponder()
-        }
-        vc.searchTerm = searchView.locationSearch.text
-        let nc = UINavigationController(rootViewController: vc)
-        present(nc, animated: true, completion: nil)
     }
 }
