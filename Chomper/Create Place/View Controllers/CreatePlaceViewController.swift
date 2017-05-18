@@ -155,28 +155,6 @@ class CreatePlaceViewController: BaseViewController {
             })
             .addDisposableTo(disposeBag)
     }
-
-    /*internal func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, showLoading: Bool = true) {
-        showLoadingView(show: showLoading)
-        let _ = webService.getRecommendedPlacesNearLocation(location: location, searchTerm: searchTerm) { [weak self] (places, error) in
-            if error == nil, let places = places {
-                self?.viewModel = CreatePlaceViewModel(results: places)
-                DispatchQueue.main.async (execute: { () -> Void in
-                    self?.tableVC.tableView.reloadData()
-                    self?.showLoadingView(show: false)
-                    self?.tableVC.refreshControl?.endRefreshing()
-                })
-                
-            } else {
-                DispatchQueue.main.async(execute: { () -> Void in
-                    self?.showLoadingView(show: false)
-                    self?.tableVC.refreshControl?.endRefreshing()
-                })
-
-                // TODO: display no results placeholder view
-            }
-        }
-    }*/
     
     func handleRefresh() {
        viewModel.fetchPlaces()

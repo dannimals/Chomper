@@ -1,7 +1,4 @@
 //
-//  AppDelegate.swift
-//  Chomper
-//
 //  Created by Danning Ge on 6/21/16.
 //  Copyright © 2016 Danning Ge. All rights reserved.
 //
@@ -42,37 +39,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 favorites.sequenceNum = 1
             }
         }
-
-        //
-        // Set the web service singleton for use with dependency injection later
         
         DependencyInjector.sharedInstance.setSingleton(webService, proto: "\(ChomperWebServiceProvider.self)")
         
-        //
-        // Set the location manager singleton for use with dependency injection later
-        
-        let chomperLocationManager = ChomperLocationManager.createChomperLocationManager()
-        DependencyInjector.sharedInstance.setSingleton(chomperLocationManager, proto: "\(ChomperLocationManagerProtocol.self)")
-        
-        //
-        // Set the image cache singleton for use with dependency injection later
-        
         let chomperImageCache = ChomperImageCache.createImageCache()
         DependencyInjector.sharedInstance.setSingleton(chomperImageCache, proto: "\(ChomperImageCacheProtocol.self)")
-        
-        //
-        // GoogleMaps authorization
-        
-        GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
-        
-        // 
-        // Ask user for location permission and set up tab view controllers
-        
-        getLocation()
-        setupTabBarVC()
 
-        //
-        // Set up navigation bar and other shared UI appearances
+        GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
+
+        setupTabBarVC()
         
         UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).tintColor = UIColor.white
         
@@ -141,34 +116,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarVC.selectedViewController = myPlacesVC
         window?.rootViewController = tabBarVC
         
-    }
-    
-    // MARK: - Handlers
-    
-    func getLocation() {
-        let CM = DependencyInjector.sharedInstance.singletonForProtocol("\(ChomperLocationManagerProtocol.self)")
-        let authStatus = CLLocationManager.authorizationStatus()
-        if authStatus == .notDetermined {
-            CM.locationManager.requestWhenInUseAuthorization()
-            return
-        } else if authStatus == .denied || authStatus == .restricted {
-            // TODO: Handle this
-            let alert = UIAlertController(title: NSLocalizedString("Location Access Disabled", comment: "Location access disabled"), message: NSLocalizedString("In order to find nearby places, Chomper needs access to your location while using the app.", comment: "location services disabled"), preferredStyle: .alert)
-
-            let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"), style: .cancel, handler: { (action) in
-                //
-            })
-            
-            alert.addAction(cancelAction)
-            
-            let confirmAction = UIAlertAction(title: NSLocalizedString("Open Settings", comment: "Open Settings"), style: .default, handler: { (action) in
-                if let url = NSURL(string:UIApplicationOpenSettingsURLString) {
-                    UIApplication.shared.openURL(url as URL)
-                }
-            })
-            
-            alert.addAction(confirmAction)
-        }
     }
 }
 

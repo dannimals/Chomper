@@ -9,6 +9,10 @@ import RxSwift
 import WebServices
 
 class CreatePlaceViewModel: ViewModel {
+    enum CreatePlaceError {
+        case getPlaces
+    }
+
     let searchResults = Variable<[SearchPlace]>([])
     let searchTerm = Variable<String?>(nil)
     let webService: ChomperWebServiceProvider
@@ -46,15 +50,14 @@ class CreatePlaceViewModel: ViewModel {
     }
 
     func fetchPlaces() {
-        /*guard let location = locationService.location else { return }
-
         webService
-            .getRecommendedPlacesNearLocation(location: location, searchTerm: searchTerm.value) { [unowned self] (searchResults, error) in
+            .getRecommendedPlacesNearLocation(location: locationService.location.value,
+                                              searchTerm: searchTerm.value) { [unowned self] (searchResults, error) in
                 if error == nil {
                     self.searchResults.value = unwrapOrElse(searchResults, fallback: [])
                 } else {
-                    // TODO: Handle error
+                    self.searchResults.value = []
                 }
-        }*/
+            }
     }
 }

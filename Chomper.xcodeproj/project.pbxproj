@@ -13,7 +13,6 @@
 		5828A48299A3B935ED75616F /* Pods_WebServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 591700B29B9867A1645D1A17 /* Pods_WebServices.framework */; };
 		6FEEE3057B70228BCD4A049B /* Pods_WebServicesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07EFEC56CE90128F23AC95A /* Pods_WebServicesTests.framework */; };
 		8DDE760333452A8A26210F55 /* Pods_ModelSyncTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52EC645F27FF68D8C5C45FF9 /* Pods_ModelSyncTests.framework */; };
-		9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */; };
 		9E096D671D2573D2002A59E1 /* CreatePlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */; };
 		9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */; };
 		9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */; };
@@ -273,7 +272,6 @@
 		90EB24C1E0DCBACFACADA3C6 /* Pods-ModelSyncTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ModelSyncTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ModelSyncTests/Pods-ModelSyncTests.debug.xcconfig"; sourceTree = "<group>"; };
 		927028BB66F362FE654ACE33 /* Pods_CommonTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CommonTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		984AE553BD2A5D1417DA75F2 /* Pods-CommonTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CommonTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CommonTests/Pods-CommonTests.debug.xcconfig"; sourceTree = "<group>"; };
-		9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChomperLocationManager.swift; sourceTree = "<group>"; };
 		9E096D651D2573D2002A59E1 /* CreatePlaceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewController.swift; sourceTree = "<group>"; };
 		9E096D681D2573EF002A59E1 /* CreatePlaceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaceViewModel.swift; sourceTree = "<group>"; };
 		9E096D6A1D25AE0D002A59E1 /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
@@ -705,7 +703,6 @@
 			isa = PBXGroup;
 			children = (
 				9EA30C7B1D6DF28000CDCE64 /* ChomperImageCache.swift */,
-				9E096D621D22E8E8002A59E1 /* ChomperLocationManager.swift */,
 				9EE2157E1D19B347004C7C53 /* Common.h */,
 				9EE216261D19BAA7004C7C53 /* DependencyInjector.swift */,
 				9EE216271D19BAA7004C7C53 /* Extensions */,
@@ -1792,7 +1789,6 @@
 			files = (
 				9E5110251D987CBB00A42EED /* Photo.swift in Sources */,
 				9E90F6181D33F968005A380B /* UIView+Extensions.swift in Sources */,
-				9E096D631D22E8E8002A59E1 /* ChomperLocationManager.swift in Sources */,
 				9EA30C821D75CC6400CDCE64 /* PlaceDetailsObjectProtocol.swift in Sources */,
 				9EE2162A1D19BAA7004C7C53 /* UIViewController+Extensions.swift in Sources */,
 				9E690AB91D45548A009574DF /* NSLayoutConstraint+Extensions.swift in Sources */,

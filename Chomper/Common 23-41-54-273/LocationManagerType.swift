@@ -10,11 +10,16 @@ import RxSwift
 
 protocol LocationManagerType: class {
     var authorizationStatus: Variable<CLAuthorizationStatus> { get }
-    var location: Driver<CLLocationCoordinate2D> { get }
+    var location: Variable<CLLocation> { get }
 
     func requestLocationPermission()
     func startUpdatingLocation()
     func stopUpdationLocation()
+}
+
+enum GeocodeError: Swift.Error {
+    case permission
+    case getLocation
 }
 
 class ChomperLocationService: LocationManagerType {
@@ -22,7 +27,7 @@ class ChomperLocationService: LocationManagerType {
     private let locationManager = CLLocationManager()
 
     let authorizationStatus = Variable(CLLocationManager.authorizationStatus())
-    let location: Driver<CLLocationCoordinate2D>
+    let location = Variable(CLLocation())
 
     init() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -32,12 +37,14 @@ class ChomperLocationService: LocationManagerType {
             .bindTo(authorizationStatus)
             .addDisposableTo(disposeBag)
 
-        location = locationManager.rx.didUpdateLocations
-            .asDriver(onErrorJustReturn: [])
-            .flatMap { locations in
-                unwrapOrElse(locations.last.map(Driver.just), fallback: Driver.empty())
+        locationManager
+            .rx.didUpdateLocations
+            .flatMapLatest { locations -> Observable<CLLocation> in
+                guard let location = locations.last else { return Observable.error(GeocodeError.getLocation) }
+                return Observable.just(location)
             }
-            .map { $0.coordinate }
+            .bindTo(location)
+            .addDisposableTo(disposeBag)
     }
 
     func requestLocationPermission() {
