@@ -50,8 +50,8 @@ class ListsTileViewController: UICollectionViewController, BaseViewControllerPro
         let id = "57fd74cb498ecd4ccc2510ee"
 
 //        chomperProvider.getDetailsForPlace(id: id)
-          chomperProvider.getRecommendedPlacesNearLocation(location: ll, searchTerm: nil) { (places, error) in
-        }
+//          chomperProvider.getRecommendedPlacesNearLocation(location: ll, searchTerm: nil) { (places, error) in
+//        }
         //TEST TEST TEST TEST
     }
     

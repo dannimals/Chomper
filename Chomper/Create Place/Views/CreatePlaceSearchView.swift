@@ -14,7 +14,6 @@ class LocationSearchView: UIView {
     var locationSearchBar = UISearchBar()
     var searchButton = UIButton()
     var view = UIView()
-    let button = UIButton()
     let textField = UITextField()
 
     var textUpdated: Observable<String?> {
@@ -32,7 +31,7 @@ class LocationSearchView: UIView {
         return searchButton.rx.tap.asObservable()
     }
 
-    var locationSearchTapped: Observable<Void> {
+    var searchBarBeginEditing: Observable<Void> {
         return locationSearchBar.rx.textDidBeginEditing.asObservable()
     }
 
@@ -72,7 +71,6 @@ class LocationSearchView: UIView {
         searchButton.setTitleColor(UIColor.softGrey(), for: .highlighted)
         buttonContainerView.addSubview(searchButton)
 
-        
         textField.tintColor = UIColor.darkOrange()
         textField.clearButtonMode = .whileEditing
         textField.returnKeyType = .search

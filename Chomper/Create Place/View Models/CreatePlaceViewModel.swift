@@ -9,7 +9,7 @@ import RxSwift
 import WebServices
 
 class CreatePlaceViewModel: ViewModel {
-    enum CreatePlaceError {
+    enum CreatePlaceError: Error {
         case getPlaces
     }
 
@@ -49,15 +49,12 @@ class CreatePlaceViewModel: ViewModel {
         return searchResults.value.count
     }
 
-    func fetchPlaces() {
-        webService
-            .getRecommendedPlacesNearLocation(location: locationService.location.value,
-                                              searchTerm: searchTerm.value) { [unowned self] (searchResults, error) in
-                if error == nil {
-                    self.searchResults.value = unwrapOrElse(searchResults, fallback: [])
-                } else {
-                    self.searchResults.value = []
-                }
+    func fetchSearchResults() -> Observable<[SearchPlace]?> {
+        return webService
+            .getRecommendedPlacesNearLocation(location: locationService.location.value, searchTerm: searchTerm.value) { (searchResults, error) -> [SearchPlace]? in
+                guard error == nil else { return nil }
+
+                return (unwrapOrElse(searchResults, fallback: []))
             }
     }
 }

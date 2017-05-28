@@ -15,8 +15,7 @@ class CreatePlaceViewController: BaseViewController {
     internal var searchView = LocationSearchView()
     internal var searchTerm = Variable<String>("")
     internal var viewModel: CreatePlaceViewModel
-    private let loadingView = UIView()
-    private let loadingLabel = UILabel()
+    internal let statusView = SearchStatusView()
     private let tableVC = UITableViewController()
 
     required init(viewModel: CreatePlaceViewModel) {
@@ -32,62 +31,36 @@ class CreatePlaceViewController: BaseViewController {
         
         tableVC.tableView.dataSource = self
         tableVC.tableView.delegate = self
-        tableVC.view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableVC.view)
         tableVC.tableView.keyboardDismissMode = .onDrag
         tableVC.tableView.tableFooterView = UIView()
         tableVC.refreshControl = UIRefreshControl()
         tableVC.refreshControl?.tintColor = UIColor.darkOrange()
         tableVC.refreshControl?.isEnabled = true
-        tableVC.refreshControl?.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        tableVC.refreshControl?.addTarget(self, action: #selector(searchTapped), for: .valueChanged)
         tableVC.tableView.contentInset = UIEdgeInsetsMake(0, 0, tabBarController!.tabBar.bounds.height, 0)
         tableVC.tableView.separatorStyle = .none
         tableVC.tableView.registerNib(PlaceTableViewCell.self)
-
-        searchView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(searchView)
-        
-        createLoadingView()
-        
-        let views: [String: AnyObject] = [
-            "searchView": searchView,
-            "tableVC": tableVC.view,
-            "loadingView": loadingView
-        ]
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[searchView][tableVC]|",
-            options: [],
-            metrics: nil,
-            views: views)
-        )
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|[searchView][loadingView]|",
-            options: [],
-            metrics: nil,
-            views: views)
-        )
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[tableVC]|",
-            options: [],
-            metrics: nil,
-            views: views)
-        )
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[searchView]|",
-            options: [],
-            metrics: nil,
-            views: views)
-        )
-        
-        view.addConstraints(NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|[loadingView]|",
-            options: [],
-            metrics: nil,
-            views: views)
-        )
+
+        searchView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(view)
+        }
+
+        view.addSubview(statusView)
+        statusView.snp.makeConstraints { make in
+            make.top.equalTo(searchView.snp.bottom)
+            make.leading.trailing.bottom.equalTo(view)
+        }
+
+        tableVC.tableView.snp.makeConstraints { make in
+            make.top.equalTo(searchView.snp.bottom)
+            make.leading.trailing.bottom.equalTo(view)
+        }
+
+        if viewModel.numberOfRows() == 0 {
+            showStatusViewWithText(text: "Start Searching!")
+        }
 
         setupBindings()
     }
@@ -104,16 +77,6 @@ class CreatePlaceViewController: BaseViewController {
     }
     
     private func setupBindings() {
-        viewModel
-            .searchResults
-            .asObservable()
-            .subscribe(onNext: { [weak self] _ in
-                self?.tableVC.tableView.reloadData()
-                self?.showLoadingView(show: false)
-                self?.tableVC.refreshControl?.endRefreshing()
-            })
-            .addDisposableTo(disposeBag)
-
         searchView
             .textUpdated
             .bindTo(viewModel.searchTerm)
@@ -135,13 +98,15 @@ class CreatePlaceViewController: BaseViewController {
 
         searchView
             .searchTapped
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel.fetchPlaces()
+            .subscribe(onNext: { [unowned self] _ in
+                self.searchTapped()
             })
             .addDisposableTo(disposeBag)
 
+        // TODO: REFACTOR this code
+        // this vc should not know about blocks in LocationSearchVC
         searchView
-            .locationSearchTapped
+            .searchBarBeginEditing
             .subscribe(onNext: { [weak self] _ in
                 let viewController = LocationSearchViewController()
                 viewController.searchAction = { [weak self] (name, coordinate) in
@@ -155,43 +120,40 @@ class CreatePlaceViewController: BaseViewController {
             })
             .addDisposableTo(disposeBag)
     }
-    
-    func handleRefresh() {
-       viewModel.fetchPlaces()
-    }
-// TODO: REFACTOR THIS FUNC!!!
-    func showLoadingView(show: Bool = false) {
-        if show {
-            loadingView.isHidden = false
-            loadingLabel.alpha = 0
-            UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat, .autoreverse], animations: { [weak self] in
-                self?.loadingLabel.alpha = 1
-                }, completion: nil)
-            view.bringSubview(toFront: loadingView)
-        } else {
-            UIView.animate(withDuration: 0.4, animations: { [weak self] in
-                self?.loadingView.isHidden = true
+
+    func searchTapped() {
+        hideStatusView()
+        ChomperLoadingHUD.show()
+
+        viewModel
+            .fetchSearchResults()
+            .asObservable()
+            .subscribe(onNext: { [weak self] results in
+                guard let results = results else {
+                    ChomperLoadingHUD.dismiss()
+                    self?.showStatusViewWithText(text: NSLocalizedString("Oops! No results were found", comment: "message"))
+                    return
+                }
+
+                self?.hideStatusView()
+                self?.viewModel.searchResults.value = results
+                self?.tableVC.tableView.reloadData()
+                ChomperLoadingHUD.dismiss()
+                self?.tableVC.refreshControl?.endRefreshing()
             })
-        }
+            .addDisposableTo(disposeBag)
     }
-    
-    func createLoadingView() {
-        loadingView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loadingView)
-        loadingView.backgroundColor = UIColor.softWhite()
-        loadingView.isHidden = true
-        
-        loadingView.addSubview(loadingLabel)
-        loadingLabel.text = NSLocalizedString("Loading", comment: "Loading")
-        loadingLabel.textColor = UIColor.darkOrange()
-        loadingLabel.font = UIFont.chomperFontForTextStyle("h4")
-       
-        NSLayoutConstraint.useAndActivateConstraints([
-            loadingLabel.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor),
-            loadingLabel.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor)
-        ])
+
+    func hideStatusView() {
+        view.sendSubview(toBack: statusView)
     }
-    
+
+    func showStatusViewWithText(text: String) {
+        statusView.updateLabel(text: text)
+        statusView.isHidden = false
+        view.bringSubview(toFront: statusView)
+    }
+
     func quickSave(indexPath: NSIndexPath) {
         let place = viewModel.searchResults.value[indexPath.row]
         self.mainContext.performChanges {

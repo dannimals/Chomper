@@ -130,6 +130,8 @@
 		9EF26C0C1E47BCF700AF8AF9 /* placephotos.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EF26C0B1E47BCF700AF8AF9 /* placephotos.json */; };
 		9EF26C0E1E47BD0400AF8AF9 /* recommendedplaces in Resources */ = {isa = PBXBuildFile; fileRef = 9EF26C0D1E47BD0400AF8AF9 /* recommendedplaces */; };
 		9EF26C101E47CC0000AF8AF9 /* SearchPlace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF26C0F1E47CC0000AF8AF9 /* SearchPlace.swift */; };
+		9EF621001EDB505B003C653A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF620FF1EDB505B003C653A /* LoadingView.swift */; };
+		9EF621021EDB57BC003C653A /* SearchStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF621011EDB57BC003C653A /* SearchStatusView.swift */; };
 		9EFAB8AF1DA1BD560055A8E0 /* ImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAB8AE1DA1BD560055A8E0 /* ImageCollectionCell.swift */; };
 		9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAB8B01DA1BD910055A8E0 /* ImageCollectionViewLayout.swift */; };
 		9EFAB8B31DA8802E0055A8E0 /* PlaceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFAB8B21DA8802E0055A8E0 /* PlaceDetailsViewModel.swift */; };
@@ -394,6 +396,8 @@
 		9EF26C0B1E47BCF700AF8AF9 /* placephotos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = placephotos.json; sourceTree = "<group>"; };
 		9EF26C0D1E47BD0400AF8AF9 /* recommendedplaces */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = recommendedplaces; sourceTree = "<group>"; };
 		9EF26C0F1E47CC0000AF8AF9 /* SearchPlace.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlace.swift; sourceTree = "<group>"; };
+		9EF620FF1EDB505B003C653A /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		9EF621011EDB57BC003C653A /* SearchStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStatusView.swift; sourceTree = "<group>"; };
 		9EFAB8AE1DA1BD560055A8E0 /* ImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionCell.swift; sourceTree = "<group>"; };
 		9EFAB8B01DA1BD910055A8E0 /* ImageCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9EFAB8B21DA8802E0055A8E0 /* PlaceDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewModel.swift; sourceTree = "<group>"; };
@@ -583,6 +587,7 @@
 				9EA30C751D64DB3300CDCE64 /* PlaceDetailsView.xib */,
 				9E1D27981D22D16100728012 /* PlaceTableViewCell.swift */,
 				9E1D27961D21C2BF00728012 /* PlaceTableViewCell.xib */,
+				9EF621011EDB57BC003C653A /* SearchStatusView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -606,6 +611,7 @@
 				9E34B2B71EB6E68900633D59 /* LocationManagerType.swift */,
 				9E34B2BA1EB6E68900633D59 /* ToggleControl.swift */,
 				9E34B2D41EB6E83E00633D59 /* ViewModel.swift */,
+				9EF620FF1EDB505B003C653A /* LoadingView.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -1738,6 +1744,7 @@
 				9EE216091D19B972004C7C53 /* AppDelegate.swift in Sources */,
 				9E34B2C31EB6E68900633D59 /* ToggleControl.swift in Sources */,
 				9E096D6B1D25AE0D002A59E1 /* PlaceDetailsViewController.swift in Sources */,
+				9EF621021EDB57BC003C653A /* SearchStatusView.swift in Sources */,
 				9EFAB8B11DA1BD910055A8E0 /* ImageCollectionViewLayout.swift in Sources */,
 				9E74E5FB1E3E6C30005F8BE0 /* AddToListViewModel.swift in Sources */,
 				9E34B2D31EB6E74300633D59 /* TableViewDelegate.swift in Sources */,
@@ -1766,6 +1773,7 @@
 				9EA30C7A1D6CC58500CDCE64 /* MapDetailsViewController.swift in Sources */,
 				9E34B2CD1EB6E74300633D59 /* CollectionDataProvider.swift in Sources */,
 				9E096D691D2573EF002A59E1 /* CreatePlaceViewModel.swift in Sources */,
+				9EF621001EDB505B003C653A /* LoadingView.swift in Sources */,
 				9EC2E55B1E1ED33600453B1E /* CustomToggleControl.swift in Sources */,
 				9E4736DF1D3954D500463665 /* ListsTableViewController.swift in Sources */,
 				9E4883011E2D43820014BB10 /* MapPlacesViewModel.swift in Sources */,

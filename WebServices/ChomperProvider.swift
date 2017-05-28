@@ -7,16 +7,16 @@ import Common
 import CoreLocation
 import Moya
 import Moya_ObjectMapper
-import SwiftyJSON
+import RxSwift
 
 public typealias PhotosCompletionHandler = ([SearchPhoto]?, Swift.Error?) -> Void
-public typealias PlacesCompletionHandler = ([SearchPlace]?, Swift.Error?) -> Void
+public typealias PlacesCompletionHandler = ([SearchPlace]?, Swift.Error?) -> [SearchPlace]?
 public typealias PlaceCompletionHandler = (SearchPlace?, Swift.Error?) -> Void
 
 public protocol ChomperWebServiceProvider {
     func getDetailsForPlace(id: String, completionHandler: @escaping PlaceCompletionHandler)
     func getPhotosForPlace(id: String, completionHandler: @escaping PhotosCompletionHandler)
-    func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler)
+    func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler) -> Observable<[SearchPlace]?>
 }
 
 public class ChomperProvider: ChomperWebServiceProvider {
@@ -49,16 +49,18 @@ public class ChomperProvider: ChomperWebServiceProvider {
         }
     }
 
-    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler) {
+    public func getRecommendedPlacesNearLocation(location: CLLocation, searchTerm: String?, completionHandler: @escaping PlacesCompletionHandler) -> Observable<[SearchPlace]?> {
+        let results = Variable<[SearchPlace]?>(nil)
         provider.request(.getRecommendedPlacesNearLocation(location: location, string: searchTerm)) { result in
             switch result {
             case let .success(response):
                 let response = try? response.mapObject(SearchPlacesResponse.self)
-                completionHandler(response?.searchPlaces, nil)
+                results.value = completionHandler(response?.searchPlaces, nil)
             case let .failure(error):
-                completionHandler(nil, error)
+                results.value = completionHandler(nil, error)
                 fatalErrorInDebug(message: "Get places failed with \(error)")
             }
         }
+        return results.asObservable()
     }
 }
