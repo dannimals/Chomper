@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         GMSServices.provideAPIKey("AIzaSyAS7NhnEsmUSxBbddG80VsOljZc2uaPQMk")
 
-        setupTabBarVC()
+        setupViewControllers()
         
         UINavigationBar.appearance(whenContainedInInstancesOf: [BaseNavigationController.self]).tintColor = UIColor.white
         
@@ -88,11 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
-    // MARK: - Helpers
-    
-    func setupTabBarVC() {
+
+    func setupViewControllers() {
         let myPlacesVC = ListsViewController(nibName: nil, bundle: nil)
         myPlacesVC.title = NSLocalizedString("Places", comment: "Places Tab Title")
         myPlacesVC.tabBarItem = UITabBarItem(
@@ -101,20 +98,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             selectedImage: nil
         )
 
-        let vm = CreatePlaceViewModel(webService: webService)
-        let createPlaceVC = CreatePlaceViewController(viewModel: vm)
-        createPlaceVC.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
-        createPlaceVC.tabBarItem = UITabBarItem(
+        let viewModel = CreatePlaceViewModel(webService: webService)
+        let createViewController = CreatePlaceViewController(viewModel: viewModel)
+        createViewController.title = NSLocalizedString("Search", comment: "Create Places Tab Title")
+        createViewController.tabBarItem = UITabBarItem(
             title: NSLocalizedString("Search", comment: "My Places Tab Title"),
             image: nil,
             selectedImage: nil
         )
         
-        let tabBarVC = UITabBarController()
-        let controllers = [myPlacesVC, createPlaceVC]
-        tabBarVC.viewControllers = controllers
-        tabBarVC.selectedViewController = myPlacesVC
-        window?.rootViewController = tabBarVC
+        let tabViewController = UITabBarController()
+        let controllers = [myPlacesVC, createViewController]
+        tabViewController.viewControllers = controllers
+        tabViewController.selectedViewController = myPlacesVC
+        window?.rootViewController = tabViewController
         
     }
 }
